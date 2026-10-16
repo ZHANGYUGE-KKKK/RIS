@@ -1,0 +1,21 @@
+{
+  "xsa": "/home/yyz/work/RIS/zynq/z035/pz7035_top.xsa",
+  "xsa_sha256": "68ecb607a45e26d91914326d9faa9796589f938aa0c214cdb3e60c08961ee8c6",
+  "included_bitstream_sha256": "77c4beff5960a51e69066d0d2d7eaa581a2e8ad3e2c8a5bd59c549bcc963e151",
+  "wns_ns": 0.183,
+  "whs_ns": 0.052,
+  "wpws_ns": 0.062,
+  "setup_hold_pulse_width_failures": [
+    0,
+    0,
+    0
+  ],
+  "archive_crc_ok": true,
+  "included_bit_matches_implementation": true,
+  "hwh_matches_output_products": true,
+  "gpio_and_dma_addresses_verified": true,
+  "status_gpio_padding_zero": true,
+  "rtl_xdc_preserved": true,
+  "ltx": "/home/yyz/work/RIS/zynq/z035/PZ_UART.runs/impl_1/pz7035_top.ltx",
+  "vivado_gui_implemented_design_and_timing_visible": true
+}

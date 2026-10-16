@@ -1,0 +1,17 @@
+{
+  "xsa_sha256": "68ecb607a45e26d91914326d9faa9796589f938aa0c214cdb3e60c08961ee8c6",
+  "platform_and_application_launch_match_latest_xsa": true,
+  "bsp_addresses_verified": true,
+  "new_drivers": [
+    "gpio_9361.c/.h",
+    "dma_9361.c/.h",
+    "mig_ddr.c/.h"
+  ],
+  "existing_ad9361_and_ris_drivers_preserved": true,
+  "host_behavior_tests_asan_ubsan_pass": true,
+  "real_bsp_arm_build_link_pass": true,
+  "xsct_app_build_blocked_by_existing_ide_workspace": true,
+  "auto_capture_enabled": false,
+  "board_programmed": false,
+  "elf": "/home/yyz/work/RIS/zynq/z035/vitis_code/key_ctrlll/Debug/key_ctrlll.elf"
+}

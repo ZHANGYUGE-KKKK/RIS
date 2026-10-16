@@ -1,0 +1,25 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
+| Date         : Tue Oct 13 14:07:37 2026
+| Host         : yyz-SER8 running 64-bit Ubuntu 24.04.1 LTS
+| Command      : report_exceptions -file /tmp/rfmc6000_bd_xdc_recheck/scoped_exceptions.rpt
+| Design       : rfmc_constraint_scope_top
+| Device       : 7z035-ffg900
+| Speed File   : -2  PRODUCTION 1.12 2019-11-22
+--------------------------------------------------------------------------------------------
+
+Exceptions Report
+
+Position  From                          Through         To                                                                        Setup           Hold            Status           
+--------  ----------------------------  --------------  ------------------------------------------------------------------------  --------------  --------------  -----------------
+1         [get_cells src_gray_ff_reg*]  *               [get_cells {dest_graysync_ff_reg[0]*}]                                    max_dpo=1000    -               
+3         [get_cells src_gray_ff_reg*]  *               [get_cells {dest_graysync_ff_reg[0]*}]                                    max_dpo=1000    -               
+5         [get_cells src_gray_ff_reg*]  *               [get_cells {dest_graysync_ff_reg[0]*}]                                    max_dpo=1000    -               
+7         [get_cells src_gray_ff_reg*]  *               [get_cells {dest_graysync_ff_reg[0]*}]                                    max_dpo=1000    -               
+9         *                             *               [get_cells {syncstages_ff_reg[0]}]                                        false           false           
+10        *                             *               [get_cells {syncstages_ff_reg[0]}]                                        false           false           
+11        *                             *               [get_cells {syncstages_ff_reg[0]}]                                        false           false           
+16        *                             *               [get_pins -quiet -hier -regexp {.*(ready_pipe_reg|arm_pipe_reg)\[0\]/D}]  false           false           
+17        *                             *               [get_pins -quiet -hier -regexp {.*g_status_cdc.*sync_pipe_reg\[0\]/D}]    false           false           
+

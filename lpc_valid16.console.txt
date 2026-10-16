@@ -1,0 +1,9 @@
+
+****** Vivado v2020.2 (64-bit)
+  **** SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+  **** IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+source run.tcl
+couldn't read file "run.tcl": no such file or directory
+INFO: [Common 17-206] Exiting Vivado at Sat Oct 10 16:06:28 2026...

@@ -1,0 +1,4 @@
+PASS: existing ris_board_test.xpr project
+synth_1: synth_design Complete!
+impl_1: write_bitstream Complete!
+72 pin constraints verified: 20 CLK + 50 DATA + 2 SYSCLK; 20 separate ODDR instances

@@ -1,0 +1,5 @@
+START Thu Oct 15 16:10:32 CST 2026
+PASS Thu Oct 15 16:21:04 CST 2026
+REPORTS=/home/yyz/work/RIS/zynq/z035/reports/gui_rebuild_20261015_161056
+XSA=/home/yyz/work/RIS/zynq/z035/pz7035_top.xsa
+PIN_MAP=PASS; ILA_CLOCK_PERIOD_NS=5.000

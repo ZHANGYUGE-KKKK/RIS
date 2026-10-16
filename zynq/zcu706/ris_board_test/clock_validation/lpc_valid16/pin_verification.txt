@@ -1,0 +1,19 @@
+sysclk_p expected=H9 actual=H9
+sysclk_n expected=G9 actual=G9
+LATCH_CLK2 expected=AB30 actual=AB30
+SHIFT_CLK2 expected=AB29 actual=AB29
+LATCH_CLK4 expected=AG15 actual=AG15
+SHIFT_CLK4 expected=AF15 actual=AF15
+LATCH_CLK5 expected=AC12 actual=AC12
+SHIFT_CLK5 expected=AB12 actual=AB12
+LATCH_CLK6 expected=AE15 actual=AE15
+SHIFT_CLK6 expected=AE16 actual=AE16
+LATCH_CLK7 expected=AC13 actual=AC13
+SHIFT_CLK7 expected=AC14 actual=AC14
+LATCH_CLK8 expected=AH13 actual=AH13
+SHIFT_CLK8 expected=AH14 actual=AH14
+LATCH_CLK9 expected=AF17 actual=AF17
+SHIFT_CLK9 expected=AF18 actual=AF18
+LATCH_CLK10 expected=AH16 actual=AH16
+SHIFT_CLK10 expected=AH17 actual=AH17
+PASS: 18 package pin constraints match routed design

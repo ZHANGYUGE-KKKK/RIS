@@ -1,0 +1,1 @@
+PASS: synthesis, placement, routing and bitstream generation

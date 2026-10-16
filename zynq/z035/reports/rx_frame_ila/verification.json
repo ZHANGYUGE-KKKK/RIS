@@ -1,0 +1,33 @@
+{
+  "build_reports": "/home/yyz/work/RIS/zynq/z035/reports/gui_rebuild_20261014_152018",
+  "build_completed": "2026-10-14 15:31:31 Asia/Shanghai",
+  "core": "ila_rx_frame",
+  "clock": "ref_clk200 / MIG ui_clk / clk_pll_i",
+  "implemented_period_ns": 5.0,
+  "probe_count": 14,
+  "probe_bits": 193,
+  "depth": 2048,
+  "input_pipeline_stages": 2,
+  "ila_uuid": "6FC3B1DD6BB45498B6E3C57B16A72A60",
+  "timing": {"WNS_ns": 0.183, "WHS_ns": 0.052, "WPWS_ns": 0.062, "failing_endpoints": 0, "minimum_bus_skew_slack_ns": 3.337},
+  "drc_errors": 0,
+  "simulations_pass": 4,
+  "atomic_snapshot_simulation_pass": true,
+  "rx_frequency_and_stopped_clock_simulation_pass": true,
+  "xsa_crc_pass": true,
+  "xsa_bit_matches_impl": true,
+  "ltx_probe_widths_and_signals_pass": true,
+  "existing_ddr_ila_preserved": true,
+  "hwh_normalized_unchanged": true,
+  "ps_init_unchanged": true,
+  "vitis_bit_and_xsa_synchronized": true,
+  "ila_ref200_change_implemented": true,
+  "new_bit_programmed_to_board": false,
+  "hardware_rx_ila_capture_pass": false,
+  "frame_error_root_cause_resolved": false,
+  "artifacts": {
+    "pz7035_top.xsa": {"sha256": "34f1d285b6cc6dbf86e6b55001e25474882e9a92e2503ac2661b7bbb49b87733", "bytes": 1129075},
+    "PZ_UART.runs/impl_1/pz7035_top.bit": {"sha256": "5098145163ff217247c7c1b5e3a3235d2008fc89e5b542b00059ddcf43e32ef7", "bytes": 13321510},
+    "PZ_UART.runs/impl_1/pz7035_top.ltx": {"sha256": "0a6990c0c922695ad9946eb774c37fea63393c94cac52c760dd39092ed7e713e", "bytes": 60144}
+  }
+}

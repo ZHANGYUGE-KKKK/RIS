@@ -1,0 +1,15 @@
+{
+  "PZ_UART.runs/impl_1/pz7035_top.bit": "1a5a82d9780d3819201ba88c46717d8085c33b1d5189565da8a49e196f40e214",
+  "PZ_UART.runs/impl_1/pz7035_top.ltx": "7b86eedaff8aa985a2b3a1d1a407070f30b3ebdfa859eece947d9667715d9c27",
+  "pz7035_top.xsa": "9c9f2a33b047e22942c10ddcb56461faa54a0501e9f049b65f92ad5d6b646932",
+  "config915": "28e37b4bc2a75e6dae62f51df779383cbeb23f7c2b2ae34e46cee9dcfdfef2fc",
+  "vitis_code/key_ctrlll/Debug/key_ctrlll.elf": "4ac55dab346193015278c5beb69edb8e51caf7e68167543517dda9abe1374d41",
+  "xsa_embedded_bit_matches": true,
+  "timing": {
+    "WNS_ns": 0.183,
+    "WHS_ns": 0.053,
+    "WPWS_ns": 0.062,
+    "failing_endpoints": 0
+  },
+  "implementation_reports": "reports/gui_rebuild_20261015_154945"
+}

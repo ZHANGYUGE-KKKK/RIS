@@ -1,0 +1,17 @@
+{
+  "method": "Project BIST Fs/16 test: compare each component with 16 valid tuples earlier, only within one batch with consecutive RX counters. No joins across batches. This checks the recorded IQ sequence, not completed DMA payload.",
+  "captures": {
+    "event_03.csv": {
+      "valid_tuples": 276,
+      "component_checks": 260,
+      "component_mismatches": 238,
+      "skipped_bad_counter_batches": 0
+    },
+    "event_05.csv": {
+      "valid_tuples": 276,
+      "component_checks": 272,
+      "component_mismatches": 227,
+      "skipped_bad_counter_batches": 0
+    }
+  }
+}

@@ -1,0 +1,4 @@
+Source SHA256: 28e37b4bc2a75e6dae62f51df779383cbeb23f7c2b2ae34e46cee9dcfdfef2fc
+Operations: 2568
+Opcode counts: Counter({1: 2543, 2: 10, 4: 8, 3: 2, 7: 1, 5: 1, 8: 1, 6: 1, 9: 1})
+Source external REFCLK bypass00917, no DCXO tuning, no final FDD enable, no BIST.

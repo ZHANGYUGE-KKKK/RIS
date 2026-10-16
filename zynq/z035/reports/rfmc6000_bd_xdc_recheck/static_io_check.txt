@@ -1,0 +1,5 @@
+key_ctrl_55_jm1.xdc: 34 LOCs
+rfmc6000_iq_axis_io.xdc: 16 LOCs
+MIG DDR3: 71 LOCs
+PIN_COLLISIONS: []
+CURRENT_TOP_ADC_PORTS: []

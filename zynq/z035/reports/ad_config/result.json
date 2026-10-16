@@ -1,0 +1,27 @@
+{
+  "executed_at": "2026-10-13",
+  "target": "xc7z035, Digilent JTAG-HS1 210512180081, Cortex-A9 #0",
+  "elf_sha256": "e4bccc3bc9ab1dce43bdf7d84e3cb500f30f5e69568b738ece68f38df745e3ec",
+  "mig_test": {
+    "result": "PASS",
+    "passed_stages": 9,
+    "errors": 0,
+    "checked_words": 7508012,
+    "elapsed_ms": 4802
+  },
+  "ad_config": {
+    "result": "FAILED",
+    "done": 1,
+    "return_code": -110,
+    "stage": 1,
+    "wait_register": "0x05E",
+    "wait_mask": "0x80",
+    "wait_value": 0,
+    "spi_transport_error": 0,
+    "spi_read_bytes": 5048,
+    "spi_written_bytes": 26,
+    "elapsed_ms": 875
+  },
+  "pending": "Implement CDCM6208 driver and hardware interface support, then verify its reference output before retrying AD9361 initialization.",
+  "note": "No successful full AD9361 initialization, no DMA capture started. User explicitly asked to continue tomorrow."
+}

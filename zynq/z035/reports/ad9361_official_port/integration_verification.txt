@@ -1,0 +1,2 @@
+PASS: all BD external ports unchanged; all original scalar-net connections preserved with receiver instance rename.
+PASS: legacy receiver RTL/CDC/ILA files unchanged; old constraints disabled in project.

@@ -1,0 +1,23 @@
+{
+  "core": "ila_rx_frame",
+  "clock": "ref_clk200",
+  "frequency_hz": 200000000,
+  "depth": 2048,
+  "input_pipe_stages": 2,
+  "probes": [
+    {"probe": 0, "width": 1, "signal": "diag_snapshot_valid_ref"},
+    {"probe": 1, "width": 1, "signal": "diag_snapshot_pulse_ref"},
+    {"probe": 2, "width": 1, "signal": "rx_clock_active_ref"},
+    {"probe": 3, "width": 24, "signal": "rx_edges_per_ms_ref"},
+    {"probe": 4, "width": 24, "signal": "rx_counter_ref"},
+    {"probe": 5, "width": 24, "signal": "diag_rx_counter_ref"},
+    {"probe": 6, "width": 16, "signal": "diag_frame_history_ref"},
+    {"probe": 7, "width": 64, "signal": "diag_sample_data_ref"},
+    {"probe": 8, "width": 12, "signal": "diag_rx_data_pair_ref"},
+    {"probe": 9, "width": 7, "signal": "diag_lane_fall_ref"},
+    {"probe": 10, "width": 7, "signal": "diag_lane_rise_ref"},
+    {"probe": 11, "width": 2, "signal": "diag_frame_pair_ref"},
+    {"probe": 12, "width": 2, "signal": "diag_phase_ref"},
+    {"probe": 13, "width": 8, "signal": "diag_flags_ref"}
+  ]
+}

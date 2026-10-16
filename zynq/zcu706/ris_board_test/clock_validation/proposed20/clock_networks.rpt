@@ -1,0 +1,20 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
+| Date         : Sat Oct 10 15:36:25 2026
+| Host         : yyz-SER8 running 64-bit Ubuntu 24.04.1 LTS
+| Command      : report_clock_networks -file /home/yyz/work/RIS/zynq/zcu706/ris_board_test/clock_validation/proposed20/clock_networks.rpt
+| Design       : clock_probe
+| Device       : 7z045-ffg900
+| Speed File   : -2  PRODUCTION 1.12 2019-11-22
+------------------------------------------------------------------------------------------------------------------------------------------
+
+Clock Networks Report
+
+
+Constrained Clocks
+-------------------
+
+Clock sysclk (200MHz)(endpoints: 20 clock, 0 nonclock)
+Port sysclk_p
+

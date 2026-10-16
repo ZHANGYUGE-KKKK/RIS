@@ -1,0 +1,49 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
+| Date         : Tue Oct 13 12:51:20 2026
+| Host         : yyz-SER8 running 64-bit Ubuntu 24.04.1 LTS
+| Command      : report_cdc -details -file cdc.rpt
+| Design       : rfmc6000_iq_axis
+| Device       : 7z035-ffg900
+| Speed File   : -2  PRODUCTION 1.12 2019-11-22
+------------------------------------------------------------------------------------
+
+CDC Report
+
+ID     Severity  Count  Description
+-----  --------  -----  ------------------------------------------
+CDC-3  Info         11  1-bit synchronized with ASYNC_REG property
+
+Source Clock: rf_rx
+Destination Clock: axis100
+CDC Type: No Common Primary Clock
+
+Row  ID     Severity  Description                                 Depth  Exception   Source (From)                                                                    Destination (To)
+---  -----  --------  ------------------------------------------  -----  ----------  -------------------------------------------------------------------------------  ----------------------------------------------------------------------------------------------
+  1  CDC-3  Info      1-bit synchronized with ASYNC_REG property      3  False Path  status_rx_reg[0]/C                                                               g_status_cdc[0].sync_pipe_reg[0]/D
+  2  CDC-3  Info      1-bit synchronized with ASYNC_REG property      3  False Path  status_rx_reg[1]/C                                                               g_status_cdc[1].sync_pipe_reg[0]/D
+  3  CDC-3  Info      1-bit synchronized with ASYNC_REG property      3  False Path  status_rx_reg[2]/C                                                               g_status_cdc[2].sync_pipe_reg[0]/D
+  4  CDC-3  Info      1-bit synchronized with ASYNC_REG property      3  False Path  status_rx_reg[3]/C                                                               g_status_cdc[3].sync_pipe_reg[0]/D
+  5  CDC-3  Info      1-bit synchronized with ASYNC_REG property      3  False Path  status_rx_reg[4]/C                                                               g_status_cdc[4].sync_pipe_reg[0]/D
+  6  CDC-3  Info      1-bit synchronized with ASYNC_REG property      3  False Path  status_rx_reg[5]/C                                                               g_status_cdc[5].sync_pipe_reg[0]/D
+  7  CDC-3  Info      1-bit synchronized with ASYNC_REG property      3  False Path  status_rx_reg[6]/C                                                               g_status_cdc[6].sync_pipe_reg[0]/D
+  8  CDC-3  Info      1-bit synchronized with ASYNC_REG property      3  False Path  i_cdc_fifo/xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.fifo_wr_rst_ic_reg/C  i_cdc_fifo/xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.wrst_rd_inst/syncstages_ff_reg[0]/D
+
+Source Clock: axis100
+Destination Clock: rf_rx
+CDC Type: No Common Primary Clock
+
+Row  ID     Severity  Description                                 Depth  Exception   Source (From)                                                                    Destination (To)
+---  -----  --------  ------------------------------------------  -----  ----------  -------------------------------------------------------------------------------  ----------------------------------------------------------------------------------------------
+  1  CDC-3  Info      1-bit synchronized with ASYNC_REG property      3  False Path  arm_axis_reg/C                                                                   arm_pipe_reg[0]/D
+  2  CDC-3  Info      1-bit synchronized with ASYNC_REG property      3  False Path  i_cdc_fifo/xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.fifo_rd_rst_ic_reg/C  i_cdc_fifo/xpm_fifo_base_inst/xpm_fifo_rst_inst/gen_rst_ic.rrst_wr_inst/syncstages_ff_reg[0]/D
+
+Source Clock: ref200
+Destination Clock: rf_rx
+CDC Type: No Common Primary Clock
+
+Row  ID     Severity  Description                                 Depth  Exception   Source (From)               Destination (To)
+---  -----  --------  ------------------------------------------  -----  ----------  --------------------------  -------------------
+  1  CDC-3  Info      1-bit synchronized with ASYNC_REG property      3  False Path  delay_configured_ref_reg/C  ready_pipe_reg[0]/D
+

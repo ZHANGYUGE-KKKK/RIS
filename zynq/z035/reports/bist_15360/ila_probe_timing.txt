@@ -1,0 +1,8 @@
+CORE ila_rx_frame
+max START=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/i_diag_clock_counter_cdc/dest_out_bin_ff_reg[19]/C END=ila_rx_frame/inst/PROBE_PIPE.shift_probes_reg[0][46]/D SRC_CLK=clk_pll_i DST_CLK=clk_pll_i SLACK=3.344
+min START=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/i_diag_clock_counter_cdc/dest_out_bin_ff_reg[17]/C END=ila_rx_frame/inst/PROBE_PIPE.shift_probes_reg[0][44]/D SRC_CLK=clk_pll_i DST_CLK=clk_pll_i SLACK=0.095
+CORE u_design_1_wrapper/design_1_i/ila_ddr
+max START=u_design_1_wrapper/design_1_i/mig_7series_0/u_design_1_mig_7series_0_0_mig/u_memc_ui_top_axi/mem_intfc0/ddr_phy_top0/u_ddr_calib_top/init_calib_complete_reg/C END=u_design_1_wrapper/design_1_i/ila_ddr/inst/PROBE_PIPE.shift_probes_reg[0][3]/D SRC_CLK=clk_pll_i DST_CLK=sys_clk_p SLACK=1.176
+min START=u_design_1_wrapper/design_1_i/proc_sys_reset_ddr/U0/ACTIVE_LOW_PR_OUT_DFF[0].FDRE_PER_N/C END=u_design_1_wrapper/design_1_i/ila_ddr/inst/PROBE_PIPE.shift_probes_reg[0][1]/D SRC_CLK=clk_pll_i DST_CLK=sys_clk_p SLACK=0.817
+HARDWARE hw_ila_1 CELL=u_design_1_wrapper/design_1_i/ila_ddr
+HARDWARE hw_ila_2 CELL=ila_rx_frame

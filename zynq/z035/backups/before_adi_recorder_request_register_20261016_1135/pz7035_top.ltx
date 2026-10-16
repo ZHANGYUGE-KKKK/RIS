@@ -1,0 +1,1503 @@
+{
+    "ltx_root": {
+        "version": 4,
+        "minor": 0,
+        "ltx_data": [
+            {
+                "name": "EDA_PROBESET",
+                "active": true,
+                "debug_cores": [
+                    {
+                        "type": "XSDB_V3",
+                        "name": "dbg_hub",
+                        "spec": "labtools_xsdbm_v3",
+                        "clk_input_freq_hz": "200000001"
+                    },
+                    {
+                        "type": "ILA_V3",
+                        "name": "u_design_1_wrapper/design_1_i/ila_ddr",
+                        "spec": "labtools_ila_v6",
+                        "ipName": "ila",
+                        "core_location": {
+                            "user_chain": 1,
+                            "slave_index": 0,
+                            "bscan_switch_index": 0
+                        },
+                        "uuid": "0FC25E63CAEA574A8AEA89161DE080EF",
+                        "pins": [
+                            {
+                                "name": "probe0",
+                                "id": 0,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 0,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/mig_7series_0_ui_clk_sync_rst",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe1",
+                                "id": 1,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 1,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/proc_sys_reset_0_peripheral_aresetn",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe2",
+                                "id": 2,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 2,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/mig_7series_0_mmcm_locked",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe3",
+                                "id": 3,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 3,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/mig_7series_0_init_calib_complete",
+                                        "isBus": false
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "ILA_V3",
+                        "name": "ila_ad9361_rx",
+                        "spec": "labtools_ila_v6",
+                        "core_location": {
+                            "user_chain": 1,
+                            "slave_index": 1,
+                            "bscan_switch_index": 0
+                        },
+                        "uuid": "ABD3947756075108AE30C8BE393E8055",
+                        "pins": [
+                            {
+                                "name": "probe0",
+                                "id": 4,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 0,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_valid_ref",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe1",
+                                "id": 5,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 5,
+                                "portIndex": 1,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_index_ref",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_index_ref[5]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_index_ref[4]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_index_ref[3]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_index_ref[2]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_index_ref[1]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_index_ref[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe2",
+                                "id": 6,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 15,
+                                "portIndex": 2,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[15]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[14]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[13]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[12]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[11]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[10]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[9]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[8]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[7]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[6]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[5]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[4]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[3]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[2]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[1]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_batch_ref[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe3",
+                                "id": 7,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 1,
+                                "portIndex": 3,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_frame_ref",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_frame_ref[1]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_frame_ref[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe4",
+                                "id": 8,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 1,
+                                "portIndex": 4,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_frame_previous_ref",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_frame_previous_ref[1]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_frame_previous_ref[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe5",
+                                "id": 9,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 5,
+                                "portIndex": 5,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_data_rise_ref",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_data_rise_ref[5]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_data_rise_ref[4]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_data_rise_ref[3]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_data_rise_ref[2]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_data_rise_ref[1]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_data_rise_ref[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe6",
+                                "id": 10,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 5,
+                                "portIndex": 6,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_data_fall_ref",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_data_fall_ref[5]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_data_fall_ref[4]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_data_fall_ref[3]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_data_fall_ref[2]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_data_fall_ref[1]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_raw_data_fall_ref[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe7",
+                                "id": 11,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 47,
+                                "portIndex": 7,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[47]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[46]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[45]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[44]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[43]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[42]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[41]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[40]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[39]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[38]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[37]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[36]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[35]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[34]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[33]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[32]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[31]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[30]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[29]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[28]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[27]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[26]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[25]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[24]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[23]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[22]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[21]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[20]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[19]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[18]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[17]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[16]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[15]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[14]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[13]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[12]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[11]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[10]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[9]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[8]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[7]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[6]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[5]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[4]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[3]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[2]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[1]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_data_ref[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe8",
+                                "id": 12,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 8,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_valid_ref",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe9",
+                                "id": 13,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 9,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_status_ref",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe10",
+                                "id": 14,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 10,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_official_rst_ref",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe11",
+                                "id": 15,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 63,
+                                "portIndex": 11,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[63]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[62]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[61]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[60]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[59]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[58]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[57]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[56]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[55]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[54]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[53]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[52]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[51]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[50]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[49]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[48]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[47]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[46]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[45]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[44]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[43]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[42]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[41]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[40]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[39]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[38]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[37]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[36]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[35]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[34]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[33]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[32]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[31]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[30]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[29]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[28]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[27]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[26]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[25]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[24]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[23]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[22]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[21]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[20]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[19]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[18]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[17]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[16]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[15]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[14]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[13]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[12]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[11]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[10]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[9]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[8]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[7]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[6]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[5]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[4]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[3]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[2]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[1]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_data_ref[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe12",
+                                "id": 16,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 12,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_sample_valid_ref",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe13",
+                                "id": 17,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 63,
+                                "portIndex": 13,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[63]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[62]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[61]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[60]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[59]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[58]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[57]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[56]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[55]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[54]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[53]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[52]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[51]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[50]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[49]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[48]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[47]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[46]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[45]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[44]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[43]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[42]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[41]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[40]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[39]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[38]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[37]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[36]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[35]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[34]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[33]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[32]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[31]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[30]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[29]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[28]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[27]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[26]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[25]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[24]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[23]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[22]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[21]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[20]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[19]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[18]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[17]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[16]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[15]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[14]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[13]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[12]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[11]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[10]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[9]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[8]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[7]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[6]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[5]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[4]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[3]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[2]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[1]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_data_ref[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe14",
+                                "id": 18,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 14,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_valid_ref",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe15",
+                                "id": 19,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 15,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_pending_last_ref",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe16",
+                                "id": 20,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 16,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_fifo_source_ready_ref",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe17",
+                                "id": 21,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 17,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_armed_rx_ref",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe18",
+                                "id": 22,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 18,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_overflow_rx_ref",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe19",
+                                "id": 23,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 19,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_frame_error_rx_ref",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe20",
+                                "id": 24,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 20,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_delay_error_rx_ref",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe21",
+                                "id": 25,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 23,
+                                "portIndex": 21,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[23]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[22]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[21]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[20]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[19]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[18]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[17]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[16]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[15]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[14]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[13]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[12]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[11]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[10]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[9]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[8]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[7]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[6]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[5]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[4]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[3]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[2]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[1]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/prefifo_rx_edge_counter_ref[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe22",
+                                "id": 26,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 11,
+                                "portIndex": 22,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_i_ref",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_i_ref[11]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_i_ref[10]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_i_ref[9]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_i_ref[8]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_i_ref[7]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_i_ref[6]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_i_ref[5]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_i_ref[4]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_i_ref[3]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_i_ref[2]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_i_ref[1]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_i_ref[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe23",
+                                "id": 27,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 11,
+                                "portIndex": 23,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_q_ref",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_q_ref[11]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_q_ref[10]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_q_ref[9]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_q_ref[8]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_q_ref[7]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_q_ref[6]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_q_ref[5]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_q_ref[4]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_q_ref[3]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_q_ref[2]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_q_ref[1]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx1_q_ref[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe24",
+                                "id": 28,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 11,
+                                "portIndex": 24,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_i_ref",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_i_ref[11]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_i_ref[10]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_i_ref[9]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_i_ref[8]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_i_ref[7]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_i_ref[6]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_i_ref[5]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_i_ref[4]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_i_ref[3]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_i_ref[2]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_i_ref[1]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_i_ref[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe25",
+                                "id": 29,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 11,
+                                "portIndex": 25,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_q_ref",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_q_ref[11]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_q_ref[10]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_q_ref[9]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_q_ref[8]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_q_ref[7]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_q_ref[6]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_q_ref[5]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_q_ref[4]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_q_ref[3]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_q_ref[2]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_q_ref[1]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx2_q_ref[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe26",
+                                "id": 30,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 23,
+                                "portIndex": 26,
+                                "nets": [
+                                    {
+                                        "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[23]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[22]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[21]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[20]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[19]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[18]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[17]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[16]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[15]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[14]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[13]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[12]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[11]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[10]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[9]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[8]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[7]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[6]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[5]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[4]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[3]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[2]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[1]"
+                                            },
+                                            {
+                                                "name": "u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_edges_per_ms_ref[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

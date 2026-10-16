@@ -1,0 +1,69 @@
+{
+  "profile": "RFMC6000 final RF profile adapted to FMCOMMS3 Y101 crystal",
+  "program_start": "2026-10-15 14:15:18 Asia/Shanghai",
+  "reference_hz": 40000000,
+  "external_reference": false,
+  "rx_tx_sample_hz": 61440000,
+  "rx_tx_bandwidth_hz": 30720000,
+  "rx_tx_fir_enabled": true,
+  "fir_factor": 2,
+  "fir_taps": 64,
+  "rx_lo_hz": 200000000,
+  "tx_lo_hz": 5997000000,
+  "rx_gain_db": [
+    5,
+    5
+  ],
+  "tx_attenuation_mdb": [
+    0,
+    0
+  ],
+  "rx_delay": "0x04",
+  "tx_delay": "0x40",
+  "automatic_delay_scan": false,
+  "lvds_bias_mv": 150,
+  "rtl_changed": false,
+  "fpga_idelay_taps": 8,
+  "fpga_falling_edge_delay": 0,
+  "rx_clock_chain_hz": [
+    983040000,
+    491520000,
+    245760000,
+    122880000,
+    122880000,
+    61440000
+  ],
+  "tx_clock_chain_hz": [
+    983040000,
+    245760000,
+    122880000,
+    122880000,
+    122880000,
+    61440000
+  ],
+  "config_pass": true,
+  "config_elapsed_ms": 676,
+  "pll_checks_pass": 20,
+  "frame_stability_checks_pass": 0,
+  "frame_stability_checks_total": 20,
+  "frame_error": "0x10",
+  "final_capture_status": "0x11",
+  "final_arm": 0,
+  "final_bist_enabled": false,
+  "expected_data_clk_hz": 245760000,
+  "ila_rx_edges_per_ms_decimal": 245766,
+  "ila_equivalent_rx_clock_hz": 245766000,
+  "ila_counter_nonmonotonic_steps": 0,
+  "ila_snapshot_frame_history": "0xC3C3",
+  "mig_calibration_complete": true,
+  "mig_memory_test": "SKIPPED: DMA init rejected latched capture FRAME error",
+  "dma_initialization_result": -8,
+  "dma_capture_started": false,
+  "iq_capture_pass": false,
+  "full_link_pass": false,
+  "sha256": {
+    "elf": "fcb32b7c8d44726fc7841996707dbba2d3c78a2ee1c35aea75e132b4fc785aaf",
+    "bit": "8a886ed8c0c44903e32d48a2334afba8cb8dffb0a74c82fd8c4e0128a48b6bae",
+    "xsa": "67a7b5e1a75e8477a46b983559ebb9b94d0855753e4025c903dc88ca43f22377"
+  }
+}

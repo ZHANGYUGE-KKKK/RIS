@@ -1,0 +1,45 @@
+DESIGN impl_1
+CORE ila_rx_frame CLOCK_NET=ila_rx_frame_ref_clk200 CLOCKS=clk_pll_i
+  PERIOD=5.000 SOURCE=u_design_1_wrapper/design_1_i/mig_7series_0/u_design_1_mig_7series_0_0_mig/u_ddr3_infrastructure/gen_mmcm.mmcm_i/CLKFBOUT
+  probe0 CLOCK=clk_pll_i BITS=1
+    EXAMPLE=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_snapshot_valid_ref_reg/Q NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_snapshot_valid_ref
+  probe1 CLOCK=clk_pll_i BITS=1
+    EXAMPLE=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_snapshot_pulse_ref_reg/Q NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_snapshot_pulse_ref
+  probe10 CLOCK=clk_pll_i BITS=7
+    EXAMPLE=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_lane_rise_ref_reg[6]/Q NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_lane_rise_ref[6]
+  probe11 CLOCK=clk_pll_i BITS=2
+    EXAMPLE=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_frame_pair_ref_reg[1]/Q NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_frame_pair_ref[1]
+  probe12 CLOCK=clk_pll_i BITS=2
+    EXAMPLE=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_phase_ref_reg[1]/Q NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_phase_ref[1]
+  probe13 CLOCK=clk_pll_i BITS=8
+    EXAMPLE=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_flags_ref_reg[7]/Q NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_flags_ref[7]
+  probe2 CLOCK=clk_pll_i BITS=1
+    EXAMPLE=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/rx_clock_active_ref_reg/Q NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/rx_clock_active_ref
+  probe3 CLOCK=clk_pll_i BITS=24
+    EXAMPLE=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/rx_edges_per_ms_ref_reg[23]/Q NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/rx_edges_per_ms_ref[23]
+  probe4 CLOCK=clk_pll_i BITS=24
+    EXAMPLE=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/i_diag_clock_counter_cdc/dest_out_bin_ff_reg[23]/Q NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/i_diag_clock_counter_cdc/dest_out_bin[23]
+  probe5 CLOCK=clk_pll_i BITS=24
+    EXAMPLE=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_rx_counter_ref_reg[23]/Q NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_rx_counter_ref[23]
+  probe6 CLOCK=clk_pll_i BITS=16
+    EXAMPLE=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_frame_history_ref_reg[15]/Q NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_frame_history_ref[15]
+  probe7 CLOCK=clk_pll_i BITS=64
+    EXAMPLE=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_sample_data_ref_reg[63]/Q NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_sample_data_ref[63]
+  probe8 CLOCK=clk_pll_i BITS=12
+    EXAMPLE=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_rx_data_pair_ref_reg[11]/Q NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_rx_data_pair_ref[11]
+  probe9 CLOCK=clk_pll_i BITS=7
+    EXAMPLE=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_lane_fall_ref_reg[6]/Q NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/diag_lane_fall_ref[6]
+CORE u_design_1_wrapper/design_1_i/ila_ddr CLOCK_NET=u_design_1_wrapper/design_1_i/util_ds_buf_0_IBUF_OUT CLOCKS=sys_clk_p
+  PERIOD=5.000 SOURCE=sys_clk_clk_p[0]
+  probe0 CLOCK=clk_pll_i BITS=1
+    EXAMPLE=u_design_1_wrapper/design_1_i/mig_7series_0/u_design_1_mig_7series_0_0_mig/u_ddr3_infrastructure/rstdiv0_sync_r1_reg_rep/Q NET=u_design_1_wrapper/design_1_i/mig_7series_0/u_design_1_mig_7series_0_0_mig/u_ddr3_infrastructure/rstdiv0_sync_r1_reg_rep_n_0
+  probe1 CLOCK=clk_pll_i BITS=1
+    EXAMPLE=u_design_1_wrapper/design_1_i/proc_sys_reset_ddr/U0/ACTIVE_LOW_PR_OUT_DFF[0].FDRE_PER_N/Q NET=u_design_1_wrapper/design_1_i/proc_sys_reset_ddr/U0/peripheral_aresetn[0]
+  probe2 CLOCK=clk_pll_i pll_clk3_out BITS=1
+    EXAMPLE=u_design_1_wrapper/design_1_i/mig_7series_0/u_design_1_mig_7series_0_0_mig/u_ddr3_infrastructure/gen_mmcm.mmcm_i/LOCKED NET=u_design_1_wrapper/design_1_i/mig_7series_0/u_design_1_mig_7series_0_0_mig/u_ddr3_infrastructure/FSM_onehot_sm_r_reg[2]
+  probe3 CLOCK=clk_pll_i BITS=1
+    EXAMPLE=u_design_1_wrapper/design_1_i/mig_7series_0/u_design_1_mig_7series_0_0_mig/u_memc_ui_top_axi/mem_intfc0/ddr_phy_top0/u_ddr_calib_top/init_calib_complete_reg/Q NET=u_design_1_wrapper/design_1_i/mig_7series_0/u_design_1_mig_7series_0_0_mig/u_memc_ui_top_axi/mem_intfc0/ddr_phy_top0/u_ddr_calib_top/phy_dout[5]
+i_diag_clock_counter_cdc/src_clk NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/rx_clk CLOCK=rfmc_rx
+i_diag_clock_counter_cdc/dest_clk NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/ref_clk200 CLOCK=clk_pll_i
+i_diag_snapshot_cdc/src_clk NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/rx_clk CLOCK=rfmc_rx
+i_diag_snapshot_cdc/dest_clk NET=u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/ref_clk200 CLOCK=clk_pll_i

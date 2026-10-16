@@ -1,0 +1,149 @@
+{
+  "event_00.csv": {
+    "captures": 1,
+    "samples": 2048,
+    "valid_records": 832,
+    "iq_records": 276,
+    "status_low": 147,
+    "armed_records": 448,
+    "frame_error_records": 448,
+    "delay_error_records": 0,
+    "overflow_records": 0,
+    "complete_batches": 13,
+    "counter_discontinuities": 0,
+    "index_discontinuities": 0,
+    "counter_examples": [],
+    "valid_spacing_histogram": {
+      "1": 198,
+      "8": 25,
+      "9": 40
+    },
+    "frame_histogram": {
+      "0": 336,
+      "1": 72,
+      "2": 77,
+      "3": 347
+    }
+  },
+  "event_01.csv": {
+    "captures": 1,
+    "samples": 2048,
+    "valid_records": 832,
+    "iq_records": 272,
+    "status_low": 148,
+    "armed_records": 395,
+    "frame_error_records": 391,
+    "delay_error_records": 0,
+    "overflow_records": 0,
+    "complete_batches": 13,
+    "counter_discontinuities": 2,
+    "index_discontinuities": 0,
+    "counter_examples": [
+      {
+        "file": "event_01.csv",
+        "batch": 12621,
+        "index": 58,
+        "previous": 4345651,
+        "current": 4345790,
+        "delta": 139
+      },
+      {
+        "file": "event_01.csv",
+        "batch": 12621,
+        "index": 59,
+        "previous": 4345790,
+        "current": 4345653,
+        "delta": 16777079
+      }
+    ],
+    "valid_spacing_histogram": {
+      "1": 194,
+      "8": 24,
+      "9": 41
+    },
+    "frame_histogram": {
+      "0": 327,
+      "1": 71,
+      "2": 78,
+      "3": 356
+    }
+  },
+  "event_02.csv": {
+    "captures": 1,
+    "samples": 2048,
+    "valid_records": 832,
+    "iq_records": 259,
+    "status_low": 147,
+    "armed_records": 435,
+    "frame_error_records": 433,
+    "delay_error_records": 0,
+    "overflow_records": 0,
+    "complete_batches": 13,
+    "counter_discontinuities": 0,
+    "index_discontinuities": 0,
+    "counter_examples": [],
+    "valid_spacing_histogram": {
+      "1": 181,
+      "8": 21,
+      "9": 44
+    },
+    "frame_histogram": {
+      "0": 331,
+      "1": 78,
+      "2": 76,
+      "3": 347
+    }
+  },
+  "event_03.csv": {
+    "captures": 1,
+    "samples": 2048,
+    "valid_records": 843,
+    "iq_records": 276,
+    "status_low": 148,
+    "armed_records": 448,
+    "frame_error_records": 448,
+    "delay_error_records": 0,
+    "overflow_records": 0,
+    "complete_batches": 13,
+    "counter_discontinuities": 0,
+    "index_discontinuities": 0,
+    "counter_examples": [],
+    "valid_spacing_histogram": {
+      "1": 200,
+      "8": 18,
+      "9": 44
+    },
+    "frame_histogram": {
+      "0": 352,
+      "1": 73,
+      "2": 71,
+      "3": 347
+    }
+  },
+  "event_05.csv": {
+    "captures": 1,
+    "samples": 2048,
+    "valid_records": 832,
+    "iq_records": 276,
+    "status_low": 144,
+    "armed_records": 411,
+    "frame_error_records": 410,
+    "delay_error_records": 0,
+    "overflow_records": 0,
+    "complete_batches": 13,
+    "counter_discontinuities": 0,
+    "index_discontinuities": 0,
+    "counter_examples": [],
+    "valid_spacing_histogram": {
+      "1": 201,
+      "8": 12,
+      "9": 50
+    },
+    "frame_histogram": {
+      "0": 353,
+      "1": 71,
+      "2": 70,
+      "3": 338
+    }
+  }
+}

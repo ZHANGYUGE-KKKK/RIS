@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/yyz/work/RIS/zynq/z035/PZ_UART.hw/hw_1/wave/hw_ila_data_3/hw_ila_data_3.wdb" id="1">
+         <top_modules>
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="2163fs"></ZoomEndTime>
+      <Cursor1Time time="217fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="136"></NameColumnWidth>
+      <ValueColumnWidth column_width="65"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="36" />
+   <wave_markers>
+   </wave_markers>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_lane_rise_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_lane_rise_ref[6:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_lane_rise_ref[6:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_lane_fall_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_lane_fall_ref[6:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_lane_fall_ref[6:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_lane_fall_d_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_lane_fall_d_ref[6:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_lane_fall_d_ref[6:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_rx_data_pair_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_rx_data_pair_ref[11:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_rx_data_pair_ref[11:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_frame_pair_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_frame_pair_ref[1:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_frame_pair_ref[1:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_alt_frame_pair_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_alt_frame_pair_ref[1:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_dbg_alt_frame_pair_ref[1:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_frame_window_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_frame_window_ref[3:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_dbg_frame_window_ref[3:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_monitor_valid_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_monitor_valid_ref</obj_property>
+      <obj_property name="ObjectShortName">prefifo_dbg_monitor_valid_ref</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_window_bad_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_window_bad_ref</obj_property>
+      <obj_property name="ObjectShortName">prefifo_dbg_window_bad_ref</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_sequence_bad_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_sequence_bad_ref</obj_property>
+      <obj_property name="ObjectShortName">prefifo_dbg_sequence_bad_ref</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_window_errors_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_window_errors_ref[15:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_dbg_window_errors_ref[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_sequence_errors_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_sequence_errors_ref[15:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_dbg_sequence_errors_ref[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_reference_iq_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_reference_iq_ref[47:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_dbg_reference_iq_ref[47:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_reference_valid_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_dbg_reference_valid_ref</obj_property>
+      <obj_property name="ObjectShortName">prefifo_dbg_reference_valid_ref</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_sample_data_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_sample_data_ref[63:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_sample_data_ref[63:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_sample_valid_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_sample_valid_ref</obj_property>
+      <obj_property name="ObjectShortName">prefifo_sample_valid_ref</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_phase_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_phase_ref[2:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_phase_ref[2:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_locked_rx_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_locked_rx_ref</obj_property>
+      <obj_property name="ObjectShortName">prefifo_locked_rx_ref</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_frame_error_rx_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_frame_error_rx_ref</obj_property>
+      <obj_property name="ObjectShortName">prefifo_frame_error_rx_ref</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_pending_data_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_pending_data_ref[63:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_pending_data_ref[63:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_pending_valid_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_pending_valid_ref</obj_property>
+      <obj_property name="ObjectShortName">prefifo_pending_valid_ref</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_pending_last_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_pending_last_ref</obj_property>
+      <obj_property name="ObjectShortName">prefifo_pending_last_ref</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_fifo_source_ready_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_fifo_source_ready_ref</obj_property>
+      <obj_property name="ObjectShortName">prefifo_fifo_source_ready_ref</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_armed_rx_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_armed_rx_ref</obj_property>
+      <obj_property name="ObjectShortName">prefifo_armed_rx_ref</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_overflow_rx_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_overflow_rx_ref</obj_property>
+      <obj_property name="ObjectShortName">prefifo_overflow_rx_ref</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_rx_resetn_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_rx_resetn_ref</obj_property>
+      <obj_property name="ObjectShortName">prefifo_rx_resetn_ref</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_rx_edge_counter_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_rx_edge_counter_ref[23:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_rx_edge_counter_ref[23:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_valid_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_valid_ref</obj_property>
+      <obj_property name="ObjectShortName">prefifo_valid_ref</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_index_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_index_ref[5:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_index_ref[5:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_batch_ref">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">u_design_1_wrapper/design_1_i/rfmc6000_iq_axis_0/inst/prefifo_batch_ref[15:0]</obj_property>
+      <obj_property name="ObjectShortName">prefifo_batch_ref[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="RECORD_VALID">
+      <obj_property name="ElementShortName">RECORD_VALID</obj_property>
+      <obj_property name="ObjectShortName">RECORD_VALID</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="RX1_I">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">RX1_I[11:0]</obj_property>
+      <obj_property name="ObjectShortName">RX1_I[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="label">RX1_I</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+      <obj_property name="CellHeight">100</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="RX1_Q">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">RX1_Q[11:0]</obj_property>
+      <obj_property name="ObjectShortName">RX1_Q[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="label">RX1_Q</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+      <obj_property name="CellHeight">100</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="RX2_I">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">RX2_I[11:0]</obj_property>
+      <obj_property name="ObjectShortName">RX2_I[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="label">RX2_I</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+      <obj_property name="CellHeight">100</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="RX2_Q">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">RX2_Q[11:0]</obj_property>
+      <obj_property name="ObjectShortName">RX2_Q[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="label">RX2_Q</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+      <obj_property name="CellHeight">100</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="REFERENCE_IQ_VALID">
+      <obj_property name="ElementShortName">REFERENCE_IQ_VALID</obj_property>
+      <obj_property name="ObjectShortName">REFERENCE_IQ_VALID</obj_property>
+   </wvobject>
+</wave_config>

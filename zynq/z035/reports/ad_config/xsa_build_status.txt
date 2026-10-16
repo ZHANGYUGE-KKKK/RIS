@@ -1,0 +1,3 @@
+2026-10-14 12:13:46 BEGIN: rebuilding with dedicated CDCM SYNCN high output
+2026-10-14 12:13:49 OUTPUT_PRODUCTS_READY
+2026-10-14 12:21:05 COMPLETE: XSA=/home/yyz/work/RIS/zynq/z035/pz7035_top.xsa REPORTS=/home/yyz/work/RIS/zynq/z035/reports/gui_rebuild_20261014_121349

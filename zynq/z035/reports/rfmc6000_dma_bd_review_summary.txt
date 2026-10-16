@@ -1,0 +1,137 @@
+Vivado 2020.2 review summary, 2026-10-13.
+Review/plan applied to temporary snapshot only.
+Full console log: /tmp/rfmc6000_bd_review/review_final_console.log
+Scalar STATUS_NET queries below check the six status wires; AXIS is connected as an interface.
+
+REVIEW_PHASE BEFORE_VALIDATE
+CONFIG rfmc6000_iq_axis_0 FIFO_DEPTH 4096
+CONFIG rfmc6000_iq_axis_0 PACKET_SAMPLES 4096
+CONFIG rfmc6000_iq_axis_0 INPUT_DELAY_TAPS "01000010000100001000010000100001000"
+CONFIG rfmc6000_iq_axis_0 I_ON_FALLING_EDGE 1
+CONFIG axis_data_fifo_0 TDATA_NUM_BYTES 1
+CONFIG axis_data_fifo_0 HAS_TKEEP 0
+CONFIG axis_data_fifo_0 HAS_TLAST 0
+CONFIG axis_data_fifo_0 FIFO_DEPTH 512
+CONFIG axis_data_fifo_0 FIFO_MODE 1
+CONFIG axis_data_fifo_0 IS_ACLK_ASYNC 0
+CONFIG axi_dma_0 c_include_sg 1
+CONFIG axi_dma_0 c_include_s2mm 1
+CONFIG axi_dma_0 c_m_axi_s2mm_data_width 32
+CONFIG axi_dma_0 c_s_axis_s2mm_tdata_width 32
+CONFIG axi_dma_0 c_sg_length_width 14
+CONFIG axi_dma_0 c_s2mm_burst_size 16
+CONFIG rst_ps_fclk0 C_EXT_RESET_HIGH 1
+CONFIG rst_ps_fclk0 C_AUX_RESET_HIGH 1
+CONFIG mig_7series_0 C0_S_AXI_DATA_WIDTH 
+CONFIG mig_7series_0 C0_S_AXI_SUPPORTS_NARROW_BURST 
+SPACE /processing_system7_0/Data
+SEG /processing_system7_0/Data/SEG_axi_dma_0_Reg OFFSET=0x81000000 RANGE=0x00010000
+SEG /processing_system7_0/Data/SEG_axi_gpio_9361_Reg OFFSET=0x80020000 RANGE=0x00000080
+SEG /processing_system7_0/Data/SEG_axi_gpio_ris_ctl_Reg OFFSET=0x80010000 RANGE=0x00000080
+SEG /processing_system7_0/Data/SEG_mig_7series_0_memaddr OFFSET=0x40000000 RANGE=0x40000000
+SPACE /axi_dma_0/Data_SG
+SPACE /axi_dma_0/Data_S2MM
+SPACE /mig_7series_0/memmap
+SEG /mig_7series_0/memmap/memaddr OFFSET= RANGE=0x40000000
+SPACE /axi_gpio_ris_ctl/S_AXI
+SEG /axi_gpio_ris_ctl/S_AXI/Reg OFFSET= RANGE=0x00001000
+SPACE /axi_gpio_9361/S_AXI
+SEG /axi_gpio_9361/S_AXI/Reg OFFSET= RANGE=0x00001000
+SPACE /axi_dma_0/S_AXI_LITE
+SEG /axi_dma_0/S_AXI_LITE/Reg OFFSET= RANGE=0x00001000
+CRITICAL WARNING: [BD 41-1356] Slave segment </mig_7series_0/memmap/memaddr> is not assigned into address space </axi_dma_0/Data_SG>. Please use Address Editor to either assign or exclude it.
+CRITICAL WARNING: [BD 41-1356] Slave segment </mig_7series_0/memmap/memaddr> is not assigned into address space </axi_dma_0/Data_S2MM>. Please use Address Editor to either assign or exclude it.
+INITIAL_VALIDATE_PASSED
+REVIEW_PHASE AFTER_VALIDATE
+CONFIG rfmc6000_iq_axis_0 FIFO_DEPTH 4096
+CONFIG rfmc6000_iq_axis_0 PACKET_SAMPLES 4096
+CONFIG rfmc6000_iq_axis_0 INPUT_DELAY_TAPS "01000010000100001000010000100001000"
+CONFIG rfmc6000_iq_axis_0 I_ON_FALLING_EDGE 1
+CONFIG axis_data_fifo_0 TDATA_NUM_BYTES 8
+CONFIG axis_data_fifo_0 HAS_TKEEP 1
+CONFIG axis_data_fifo_0 HAS_TLAST 1
+CONFIG axis_data_fifo_0 FIFO_DEPTH 512
+CONFIG axis_data_fifo_0 FIFO_MODE 1
+CONFIG axis_data_fifo_0 IS_ACLK_ASYNC 0
+CONFIG axi_dma_0 c_include_sg 1
+CONFIG axi_dma_0 c_include_s2mm 1
+CONFIG axi_dma_0 c_m_axi_s2mm_data_width 64
+CONFIG axi_dma_0 c_s_axis_s2mm_tdata_width 64
+CONFIG axi_dma_0 c_sg_length_width 14
+CONFIG axi_dma_0 c_s2mm_burst_size 16
+CONFIG rst_ps_fclk0 C_EXT_RESET_HIGH 0
+CONFIG rst_ps_fclk0 C_AUX_RESET_HIGH 1
+CONFIG mig_7series_0 C0_S_AXI_DATA_WIDTH 
+CONFIG mig_7series_0 C0_S_AXI_SUPPORTS_NARROW_BURST 
+SPACE /processing_system7_0/Data
+SEG /processing_system7_0/Data/SEG_axi_dma_0_Reg OFFSET=0x81000000 RANGE=0x00010000
+SEG /processing_system7_0/Data/SEG_axi_gpio_9361_Reg OFFSET=0x80020000 RANGE=0x00000080
+SEG /processing_system7_0/Data/SEG_axi_gpio_ris_ctl_Reg OFFSET=0x80010000 RANGE=0x00000080
+SEG /processing_system7_0/Data/SEG_mig_7series_0_memaddr OFFSET=0x40000000 RANGE=0x40000000
+SPACE /axi_dma_0/Data_SG
+SPACE /axi_dma_0/Data_S2MM
+SPACE /mig_7series_0/memmap
+SEG /mig_7series_0/memmap/memaddr OFFSET= RANGE=0x40000000
+SPACE /axi_gpio_ris_ctl/S_AXI
+SEG /axi_gpio_ris_ctl/S_AXI/Reg OFFSET= RANGE=0x00001000
+SPACE /axi_gpio_9361/S_AXI
+SEG /axi_gpio_9361/S_AXI/Reg OFFSET= RANGE=0x00001000
+SPACE /axi_dma_0/S_AXI_LITE
+SEG /axi_dma_0/S_AXI_LITE/Reg OFFSET= RANGE=0x00001000
+RFMC6000_DMA_MEMORY_PLAN_APPLIED: SG/S2MM MIG=0x40000000..0x7fffffff, stream=64, length=23, FIFO=16384
+REVIEW_PHASE AFTER_MEMORY_PLAN
+CONFIG rfmc6000_iq_axis_0 FIFO_DEPTH 4096
+CONFIG rfmc6000_iq_axis_0 PACKET_SAMPLES 4096
+CONFIG rfmc6000_iq_axis_0 INPUT_DELAY_TAPS "01000010000100001000010000100001000"
+CONFIG rfmc6000_iq_axis_0 I_ON_FALLING_EDGE 1
+CONFIG axis_data_fifo_0 TDATA_NUM_BYTES 8
+CONFIG axis_data_fifo_0 HAS_TKEEP 1
+CONFIG axis_data_fifo_0 HAS_TLAST 1
+CONFIG axis_data_fifo_0 FIFO_DEPTH 16384
+CONFIG axis_data_fifo_0 FIFO_MODE 1
+CONFIG axis_data_fifo_0 IS_ACLK_ASYNC 0
+CONFIG axi_dma_0 c_include_sg 1
+CONFIG axi_dma_0 c_include_s2mm 1
+CONFIG axi_dma_0 c_m_axi_s2mm_data_width 64
+CONFIG axi_dma_0 c_s_axis_s2mm_tdata_width 64
+CONFIG axi_dma_0 c_sg_length_width 23
+CONFIG axi_dma_0 c_s2mm_burst_size 16
+CONFIG rst_ps_fclk0 C_EXT_RESET_HIGH 0
+CONFIG rst_ps_fclk0 C_AUX_RESET_HIGH 1
+CONFIG mig_7series_0 C0_S_AXI_DATA_WIDTH 
+CONFIG mig_7series_0 C0_S_AXI_SUPPORTS_NARROW_BURST 
+SPACE /processing_system7_0/Data
+SEG /processing_system7_0/Data/SEG_axi_dma_0_Reg OFFSET=0x81000000 RANGE=0x00010000
+SEG /processing_system7_0/Data/SEG_axi_gpio_9361_Reg OFFSET=0x80020000 RANGE=0x00000080
+SEG /processing_system7_0/Data/SEG_axi_gpio_ris_ctl_Reg OFFSET=0x80010000 RANGE=0x00000080
+SEG /processing_system7_0/Data/SEG_mig_7series_0_memaddr OFFSET=0x40000000 RANGE=0x40000000
+SPACE /axi_dma_0/Data_SG
+SEG /axi_dma_0/Data_SG/SEG_mig_7series_0_memaddr OFFSET=0x40000000 RANGE=0x40000000
+SPACE /axi_dma_0/Data_S2MM
+SEG /axi_dma_0/Data_S2MM/SEG_mig_7series_0_memaddr OFFSET=0x40000000 RANGE=0x40000000
+SPACE /mig_7series_0/memmap
+SEG /mig_7series_0/memmap/memaddr OFFSET= RANGE=0x40000000
+SPACE /axi_gpio_ris_ctl/S_AXI
+SEG /axi_gpio_ris_ctl/S_AXI/Reg OFFSET= RANGE=0x00001000
+SPACE /axi_gpio_9361/S_AXI
+SEG /axi_gpio_9361/S_AXI/Reg OFFSET= RANGE=0x00001000
+SPACE /axi_dma_0/S_AXI_LITE
+SEG /axi_dma_0/S_AXI_LITE/Reg OFFSET= RANGE=0x00001000
+CONVERTER /axi_interconnect_0/s00_couplers/auto_cc xilinx.com:ip:axi_clock_converter:2.1
+CONVERTER /axi_interconnect_0/s00_couplers/auto_us xilinx.com:ip:axi_dwidth_converter:2.1
+CONVERTER_CONFIG /axi_interconnect_0/s00_couplers/auto_us SI_DATA_WIDTH 32
+CONVERTER_CONFIG /axi_interconnect_0/s00_couplers/auto_us MI_DATA_WIDTH 256
+CONVERTER /axi_interconnect_0/s01_couplers/auto_cc xilinx.com:ip:axi_clock_converter:2.1
+CONVERTER /axi_interconnect_0/s01_couplers/auto_us xilinx.com:ip:axi_dwidth_converter:2.1
+CONVERTER_CONFIG /axi_interconnect_0/s01_couplers/auto_us SI_DATA_WIDTH 32
+CONVERTER_CONFIG /axi_interconnect_0/s01_couplers/auto_us MI_DATA_WIDTH 256
+CONVERTER /axi_interconnect_0/s02_couplers/auto_cc xilinx.com:ip:axi_clock_converter:2.1
+CONVERTER /axi_interconnect_0/s02_couplers/auto_us xilinx.com:ip:axi_dwidth_converter:2.1
+CONVERTER_CONFIG /axi_interconnect_0/s02_couplers/auto_us SI_DATA_WIDTH 64
+CONVERTER_CONFIG /axi_interconnect_0/s02_couplers/auto_us MI_DATA_WIDTH 256
+STATUS_NET rfmc6000_iq_axis_0/rx_ready 
+STATUS_NET rfmc6000_iq_axis_0/frame_locked 
+STATUS_NET rfmc6000_iq_axis_0/capture_active 
+STATUS_NET rfmc6000_iq_axis_0/overflow 
+STATUS_NET rfmc6000_iq_axis_0/frame_error 
+STATUS_NET rfmc6000_iq_axis_0/delay_error 

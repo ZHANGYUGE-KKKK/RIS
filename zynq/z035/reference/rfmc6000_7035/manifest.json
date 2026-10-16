@@ -1,0 +1,127 @@
+{
+  "archive": "/home/yyz/ALLdoc/RFMC6000/3 FPGA\u6d4b\u8bd5\u4f8b\u7a0b/adaloop_deepreads.zip",
+  "member_prefix": "adaloop_deepreads/vitis_7035/ad9361_app/src/",
+  "files": [
+    {
+      "path": "src/README.txt",
+      "bytes": 41,
+      "sha256": "265e6e74d7913c397b2e78997cb08682ffdae7c838f321a3f21f521f51e92dbc"
+    },
+    {
+      "path": "src/Xilinx.spec",
+      "bytes": 36,
+      "sha256": "f100af82b444989adf5aad4ad612b9ae3b4ddac007f5d9653f1abf254235b085"
+    },
+    {
+      "path": "src/ad9361.c",
+      "bytes": 216758,
+      "sha256": "ba314faf57a1261549e1c32a9b282f929aa7b3241dc24b9f96e639197cf6cac5"
+    },
+    {
+      "path": "src/ad9361.h",
+      "bytes": 133410,
+      "sha256": "16b9f830b53c6bc474d1724df589cef46a719c22ee951ecb0e6cc16f4a3fd612"
+    },
+    {
+      "path": "src/ad9361_api.c",
+      "bytes": 68251,
+      "sha256": "7c6717a6ac9acbbd30d1f086382552541539406a0bae0bb4b07695a3b99cf615"
+    },
+    {
+      "path": "src/ad9361_api.h",
+      "bytes": 28869,
+      "sha256": "54503b9b8ef01390526ffdf1eec96f17c6d5d307ee13250cb952cf45ca6d7c41"
+    },
+    {
+      "path": "src/ad9361_config.c",
+      "bytes": 3037,
+      "sha256": "e0cf1a5230832aab75a2af874da3df0df116ddd07218d82674ff09ff8b47a575"
+    },
+    {
+      "path": "src/ad9361_config.h",
+      "bytes": 350,
+      "sha256": "96b968c55a3bfa76901e4c36fb762079a8e5ecd22b03797f76be868612efc3a1"
+    },
+    {
+      "path": "src/common.h",
+      "bytes": 3822,
+      "sha256": "96892b7eedd21fc836fbeff956937d3f02710bd231c2713f76a3901f358d909a"
+    },
+    {
+      "path": "src/config.h",
+      "bytes": 3146,
+      "sha256": "2199fea7df93e7159aec617ffb686d86d858d0167e4b63a7b23d35932234ef53"
+    },
+    {
+      "path": "src/gpio_initial.h",
+      "bytes": 835,
+      "sha256": "fec759ca5b45467f0f7e5ae5b1c4b29e7655ace4aa9d59d5a9c7b6da014553a1"
+    },
+    {
+      "path": "src/io_control.h",
+      "bytes": 390,
+      "sha256": "5380797c2731d278ea8b7b2f73fe4f269c9105b57dd0b15654426c5e71d607af"
+    },
+    {
+      "path": "src/lscript.ld",
+      "bytes": 6165,
+      "sha256": "036fa734ddab09ccd1c46faa0cbde14b82ff66a46a6b80329ed799c8b3284472"
+    },
+    {
+      "path": "src/main.c",
+      "bytes": 9912,
+      "sha256": "260575da4ad16da14fbba7c971bede0958ba53291feda5809af1f8c0b4e2dc3a"
+    },
+    {
+      "path": "src/parameters.h",
+      "bytes": 3303,
+      "sha256": "2512acf7d501ec272644f0e7fd81e0cab5ffd8306cd45d1917435c12685decd5"
+    },
+    {
+      "path": "src/platform.c",
+      "bytes": 11251,
+      "sha256": "bcc14e911e224018f5c7a3d8fe178b40abafdd636c3382cf511d551ab1305270"
+    },
+    {
+      "path": "src/platform.h",
+      "bytes": 6796,
+      "sha256": "c96b65ecacacda1564e140d742d54179302e3b87fbf5c0fe454cec191d6df197"
+    },
+    {
+      "path": "src/radio_set.h",
+      "bytes": 20751,
+      "sha256": "2a5603e5aab165f4cdb18010fb3da68169868925edef28cc11576f1d68ee7deb"
+    },
+    {
+      "path": "src/spi_ctrl.c",
+      "bytes": 3885,
+      "sha256": "45f791ae3d0939d212f221e7896192af4c2fb2b1571c9cbb668d437869e83fbf"
+    },
+    {
+      "path": "src/spi_ctrl.h",
+      "bytes": 551,
+      "sha256": "1b68da0ab862986ac1fc1039149e7510b7cb71a42d2265d5b82dd34f689a74e7"
+    },
+    {
+      "path": "src/util.c",
+      "bytes": 10871,
+      "sha256": "5f4e8b394685e40d495ee0702c01f21087ed86d455dde81c8fe6a4254ceb7d40"
+    },
+    {
+      "path": "src/util.h",
+      "bytes": 5308,
+      "sha256": "a77f35a9d9ea78f8d9f5e6048a611325a4565a278a2b5954ba9c4590ce0e34dd"
+    },
+    {
+      "path": "src/xadc.c",
+      "bytes": 825,
+      "sha256": "7e97f0ea0215ff73195398ad4451d95fd687bdf18cbb4a034854d762c5f313a2"
+    },
+    {
+      "path": "src/xadc.h",
+      "bytes": 137,
+      "sha256": "6627892eb99f477be7610ed04acaa21326287f38ac0603fd7557703b106a4fbb"
+    }
+  ],
+  "verification": "Every extracted file is byte-for-byte identical to its archive member."
+}

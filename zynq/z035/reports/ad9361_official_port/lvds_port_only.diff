@@ -1,0 +1,36 @@
+--- official
++++ debug-port-copy
+@@ -35,7 +35,7 @@
+ 
+ `timescale 1ns/100ps
+ 
+-module axi_ad9361_lvds_if #(
++module ad9361_rx_lvds_if #(
+ 
+   parameter   FPGA_TECHNOLOGY = 0,
+   parameter   DAC_IODELAY_ENABLE = 0,
+@@ -46,6 +46,12 @@
+   parameter   DELAY_REFCLK_FREQUENCY = 200,
+   parameter   RX_NODPA = 0
+ ) (
++
++  // Port-only adaptation: debug taps, with no receive algorithm changes.
++  output [1:0] debug_frame,
++  output [1:0] debug_frame_previous,
++  output [5:0] debug_data_rise,
++  output [5:0] debug_data_fall,
+ 
+   // physical interface (receive)
+ 
+@@ -167,6 +173,11 @@
+   wire    [ 1:0]      rx_frame_s;
+   wire                locked_s;
+   wire                rx_error;
++
++  assign debug_frame = rx_frame_s;
++  assign debug_frame_previous = rx_frame;
++  assign debug_data_rise = rx_data_1_s;
++  assign debug_data_fall = rx_data_0_s;
+ 
+   // drp interface signals
+ 

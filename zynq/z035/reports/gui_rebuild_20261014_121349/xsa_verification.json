@@ -1,0 +1,22 @@
+{
+  "xsa_sha256": "7d5ece8adb4b3492312ce72cb707e12e49de62a2b452a9341dbba8d07e5345c3",
+  "bit_sha256": "b782657d6effa57ae77005b0f6e3a172ade8f656955c89b8ec5aebf2b0fa6d31",
+  "wns_ns": 0.183,
+  "whs_ns": 0.052,
+  "wpws_ns": 0.062,
+  "timing_failures": [
+    0,
+    0,
+    0
+  ],
+  "bus_skew_min_slack_ns": 3.364,
+  "drc_errors": 0,
+  "zip_crc_valid": true,
+  "embedded_bit_matches_implementation": true,
+  "hwh_matches_output_products": true,
+  "hwh_unchanged_from_pre_sync_fix": true,
+  "cdcm_sync": "AG26 LVCMOS18 constant high; software SYNCN R3.5",
+  "unused_pins_default_preserved": true,
+  "platform_and_app_download_bitstreams_synchronized": true,
+  "vitis_gui_hardware_spec_and_app_build_completed": true
+}

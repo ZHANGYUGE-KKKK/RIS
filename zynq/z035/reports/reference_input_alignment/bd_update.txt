@@ -1,0 +1,4 @@
+PASS: BD validated and saved
+FALLING_EDGE_DELAY=1
+INPUT_DELAY_TAPS=0x318C6318C
+Hardware build/programming not performed.

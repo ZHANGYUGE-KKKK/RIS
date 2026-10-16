@@ -1,0 +1,30 @@
+{
+  "executed_at": "2026-10-13T16:40:57.679547+08:00",
+  "target": "xc7z035 / Digilent JTAG-HS1 210512180081 / Cortex-A9 #0",
+  "result": "PASS",
+  "return_code": 0,
+  "passed_stages": 9,
+  "errors": 0,
+  "checked_u32_words": 7508012,
+  "elapsed_ms": 4802,
+  "report_ps_ddr_address": "0x00114898",
+  "contiguous_scratch": [
+    "0x41000000",
+    "0x417fffff"
+  ],
+  "sparse_64k_windows": [
+    "0x49000000",
+    "0x51000000",
+    "0x61000000",
+    "0x7fff0000"
+  ],
+  "address_probes": "0x41000000 + (1 << bit), bit 2..29; 0x7ffffffc",
+  "cache": "normal non-cacheable MMU sections; volatile accesses and DSB barriers",
+  "dma": "S2MM halted; no SG descriptors submitted",
+  "capture_arm": 0,
+  "scope": "PS GP0 to MIG memory test; not a DMA or full 1 GiB cell test",
+  "helloworld_sha256": "c1d7ea916ecf0ba6dcccc496aa863081b6166aaab97b230fb5ea415d0d951c67",
+  "elf_sha256": "f7e72a16fcfa533c2c2a756a2890747ff5b6818106a0f04349ddaa6efead3f0e",
+  "bitstream_sha256": "77c4beff5960a51e69066d0d2d7eaa581a2e8ad3e2c8a5bd59c549bcc963e151",
+  "xsa_sha256": "68ecb607a45e26d91914326d9faa9796589f938aa0c214cdb3e60c08961ee8c6"
+}

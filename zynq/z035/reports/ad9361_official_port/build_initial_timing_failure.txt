@@ -1,0 +1,11 @@
+START Fri Oct 16 11:12:29 CST 2026
+FAIL Timing did not close; see /home/yyz/work/RIS/zynq/z035/reports/gui_rebuild_20261016_111254/timing_route.rpt
+Timing did not close; see /home/yyz/work/RIS/zynq/z035/reports/gui_rebuild_20261016_111254/timing_route.rpt
+    while executing
+"error "Timing did not close; see $ris_reports/timing_route.rpt""
+    invoked from within
+"if {![string match {*All user specified timing constraints are met.*} $ris_summary]} {
+    error "Timing did not close; see $ris_reports/timing_route...."
+    (file "/home/yyz/work/RIS/zynq/z035/scripts/rebuild_export_current.tcl" line 49)
+    invoked from within
+"source $adi_root/scripts/rebuild_export_current.tcl"

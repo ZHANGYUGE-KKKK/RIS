@@ -1,0 +1,23 @@
+{
+  "new_top_ports": [
+    "SPI_6208_io0_io",
+    "SPI_6208_io1_io",
+    "SPI_6208_sck_io",
+    "SPI_6208_ss_io"
+  ],
+  "preserved_original_top_ports": 76,
+  "wrapper_port_widths_and_connections": "PASS",
+  "preserved_existing_xdc_commands": "PASS",
+  "gpio_emio_width": 1,
+  "pending_gpio_signals": [
+    "CDCM_SYNC",
+    "REF_SELECT2",
+    "REF_SELECT"
+  ],
+  "vivado_rtl_elaboration": "PASS",
+  "pin_binding_and_package_checks": "PASS",
+  "default_iostandard_ports": [],
+  "unbound_top_ports": [],
+  "unused_spi_chip_selects_at_top": [],
+  "verification_log": "reports/ad_config/cdcm6208_top_verify.log"
+}

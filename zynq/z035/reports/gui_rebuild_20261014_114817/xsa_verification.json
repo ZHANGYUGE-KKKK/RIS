@@ -1,0 +1,35 @@
+{
+  "xsa": "/home/yyz/work/RIS/zynq/z035/pz7035_top.xsa",
+  "generated_local_time": "2026-10-14T11:55:29",
+  "xsa_sha256": "0060a537c2b998bafe40ebe740239790f38dedc234bc6565d91c542db88bcb81",
+  "included_bitstream_sha256": "04df2a7d17e8190c04eeb85d38a28ce36c23dd3e90a5f8590d4050369a129c4d",
+  "wns_ns": 0.183,
+  "whs_ns": 0.052,
+  "wpws_ns": 0.062,
+  "setup_hold_pulse_width_failures": [
+    0,
+    0,
+    0
+  ],
+  "bus_skew_min_slack_ns": 3.364,
+  "drc_errors": 0,
+  "drc_warnings": 2,
+  "archive_crc_ok": true,
+  "included_bit_matches_implementation": true,
+  "hwh_matches_output_products": true,
+  "spi1_emio_enabled": true,
+  "spi1_baseaddr": "0xE0007000",
+  "gpio_emio_width": 1,
+  "cdcm_sync_ref_select2_ref_select_present": false,
+  "source_files_preserved": {
+    "PZ_UART.srcs/sources_1/bd/design_1/design_1.bd": true,
+    "PZ_UART.srcs/sources_1/bd/design_1/hdl/design_1_wrapper.v": true,
+    "PZ_UART.srcs/sources_1/new/pz7035_top.v": true,
+    "PZ_UART.srcs/constrs_1/new/key_ctrl_55_jm1.xdc": true,
+    "PZ_UART.srcs/constrs_1/new/rfmc6000_iq_axis_io.xdc": true,
+    "PZ_UART.srcs/constrs_1/new/rfmc6000_iq_axis_cdc.xdc": true,
+    "PZ_UART.srcs/sources_1/new/rfmc6000_iq_axis.v": true
+  },
+  "ltx": "/home/yyz/work/RIS/zynq/z035/PZ_UART.runs/impl_1/pz7035_top.ltx",
+  "vivado_gui_implemented_design_and_timing_visible": true
+}

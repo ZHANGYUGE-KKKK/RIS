@@ -1,0 +1,154 @@
+{
+  "core_version": "0xa0300",
+  "pn_done": 1,
+  "pn_result": -4,
+  "restore_readback": 0,
+  "tested_points": 1537,
+  "passed_points": 0,
+  "channel_status": [
+    2,
+    2,
+    2,
+    2
+  ],
+  "sample_delta": 60099,
+  "edge_delta": 180359,
+  "spi_pass": [
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  ],
+  "fpga_pass": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "capture_arm": 0,
+  "board_dma_capture_test": false,
+  "mig": {
+    "done": 1,
+    "result": 0,
+    "stages": 9,
+    "errors": 0,
+    "checked_words": 7520812,
+    "elapsed_ms": 4755
+  },
+  "ila": {
+    "captures": 3,
+    "complete_64_rx_cycle_banks": 39,
+    "record_continuity": "FAIL",
+    "counter_errors": [
+      {
+        "capture": "rx_0.csv",
+        "bank": 18050,
+        "index": 5,
+        "previous": 12930629,
+        "current": 12930631,
+        "delta": 2
+      },
+      {
+        "capture": "rx_2.csv",
+        "bank": 60141,
+        "index": 39,
+        "previous": 7826196,
+        "current": 7826061,
+        "delta": 16777081
+      },
+      {
+        "capture": "rx_2.csv",
+        "bank": 60141,
+        "index": 47,
+        "previous": 7826068,
+        "current": 7826198,
+        "delta": 130
+      }
+    ],
+    "valid_records": 2552,
+    "official_valid_records": 810,
+    "official_status_low": 456,
+    "raw_frame_pair_histogram": {
+      "3": 1073,
+      "1": 222,
+      "0": 1031,
+      "2": 226
+    },
+    "interior_raw_frame_run_lengths": {
+      "10:1": 214,
+      "11:5": 146,
+      "01:1": 212,
+      "00:4": 83,
+      "11:4": 54,
+      "00:5": 115,
+      "11:6": 1,
+      "00:1": 1
+    },
+    "rx_edges_per_200000_ref_cycles_range": [
+      172295,
+      173956
+    ],
+    "raw_debug_iq_tuples": 810,
+    "pn_validated": false
+  }
+}

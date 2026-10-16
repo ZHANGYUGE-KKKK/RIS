@@ -1,0 +1,127 @@
+{
+  "captures": 60,
+  "samples": 122880,
+  "valid_records": 50484,
+  "iq_records": 16025,
+  "status_low": 8943,
+  "armed_records": 0,
+  "frame_error_records": 0,
+  "delay_error_records": 0,
+  "overflow_records": 0,
+  "complete_batches": 767,
+  "counter_discontinuities": 40,
+  "index_discontinuities": 0,
+  "counter_examples": [
+    {
+      "file": "baseline_002.csv",
+      "batch": 45157,
+      "index": 53,
+      "previous": 4671607,
+      "current": 4671609,
+      "delta": 2
+    },
+    {
+      "file": "baseline_003.csv",
+      "batch": 3234,
+      "index": 48,
+      "previous": 8799642,
+      "current": 8799644,
+      "delta": 2
+    },
+    {
+      "file": "baseline_008.csv",
+      "batch": 51191,
+      "index": 9,
+      "previous": 11572507,
+      "current": 11572509,
+      "delta": 2
+    },
+    {
+      "file": "baseline_011.csv",
+      "batch": 44134,
+      "index": 1,
+      "previous": 5252266,
+      "current": 5252384,
+      "delta": 118
+    },
+    {
+      "file": "baseline_017.csv",
+      "batch": 51349,
+      "index": 9,
+      "previous": 13063889,
+      "current": 13063752,
+      "delta": 16777079
+    },
+    {
+      "file": "baseline_017.csv",
+      "batch": 51349,
+      "index": 10,
+      "previous": 13063752,
+      "current": 13063891,
+      "delta": 139
+    },
+    {
+      "file": "baseline_018.csv",
+      "batch": 5224,
+      "index": 49,
+      "previous": 16291245,
+      "current": 16291110,
+      "delta": 16777081
+    },
+    {
+      "file": "baseline_018.csv",
+      "batch": 5224,
+      "index": 50,
+      "previous": 16291110,
+      "current": 16291247,
+      "delta": 137
+    },
+    {
+      "file": "baseline_018.csv",
+      "batch": 5232,
+      "index": 29,
+      "previous": 16292299,
+      "current": 16292168,
+      "delta": 16777085
+    },
+    {
+      "file": "baseline_018.csv",
+      "batch": 5232,
+      "index": 30,
+      "previous": 16292168,
+      "current": 16292301,
+      "delta": 133
+    },
+    {
+      "file": "baseline_025.csv",
+      "batch": 11319,
+      "index": 12,
+      "previous": 5715709,
+      "current": 5715577,
+      "delta": 16777084
+    },
+    {
+      "file": "baseline_025.csv",
+      "batch": 11319,
+      "index": 13,
+      "previous": 5715577,
+      "current": 5715711,
+      "delta": 134
+    }
+  ],
+  "valid_spacing_histogram": {
+    "1": 11325,
+    "2": 3,
+    "6": 1,
+    "7": 1,
+    "8": 1226,
+    "9": 2651,
+    "10": 9
+  },
+  "frame_histogram": {
+    "0": 20485,
+    "1": 4477,
+    "2": 4498,
+    "3": 21024
+  }
+}

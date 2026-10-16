@@ -1,0 +1,41 @@
+{
+  "build_reports": "/home/yyz/work/RIS/zynq/z035/reports/gui_rebuild_20261014_143218",
+  "core": "ila_rx_frame",
+  "clock": "AD9361 DATA_CLK -> RX BUFG",
+  "sample_clock_constraint_mhz": 245.76,
+  "probe_count": 19,
+  "probe_bits": 105,
+  "depth": 2048,
+  "input_pipeline_stages": 2,
+  "ila_uuid": "6FC3B1DD6BB45498B6E3C57B16A72A60",
+  "timing": {
+    "WNS_ns": 0.183,
+    "WHS_ns": 0.052,
+    "WPWS_ns": 0.062,
+    "failing_endpoints": 0
+  },
+  "simulations_pass": 4,
+  "top_unchanged": true,
+  "bd_unchanged": true,
+  "capture_rtl_functional_text_unchanged": true,
+  "existing_constraints_unchanged": true,
+  "xsa_crc_pass": true,
+  "xsa_bit_matches_impl": true,
+  "hwh_semantically_unchanged": true,
+  "ps_init_unchanged": true,
+  "vitis_bit_and_xsa_synchronized": true,
+  "artifacts": {
+    "pz7035_top.xsa": {
+      "sha256": "3c53789419097872b248f25ed79c2bd6f087039a76fe72a5780cec897dd3f20f",
+      "bytes": 1098828
+    },
+    "PZ_UART.runs/impl_1/pz7035_top.bit": {
+      "sha256": "f816354004ef9d6b237f61592cc421999a1ead5797c7a7d6d4c628ca54890a0e",
+      "bytes": 13321510
+    },
+    "PZ_UART.runs/impl_1/pz7035_top.ltx": {
+      "sha256": "21be7527450f09bf919be039f586c85438c05e088b5f2a1a8a066dd27f30e32d",
+      "bytes": 41663
+    }
+  }
+}

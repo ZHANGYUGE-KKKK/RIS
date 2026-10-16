@@ -1,0 +1,13 @@
+2026-10-14 14:22:26 BEGIN
+2026-10-14 14:22:48 OUTPUT_PRODUCTS_READY
+2026-10-14 14:26:42 FAILED: Implementation failed: opt_design ERROR
+Implementation failed: opt_design ERROR
+    while executing
+"error "Implementation failed: [get_property STATUS [get_runs impl_1]]""
+    invoked from within
+"if {[get_property PROGRESS [get_runs impl_1]] ne "100%"} {
+    error "Implementation failed: [get_property STATUS [get_runs impl_1]]"
+}"
+    (file "/home/yyz/work/RIS/zynq/z035/scripts/rebuild_export_current.tcl" line 33)
+    invoked from within
+"source $rx_project_dir/scripts/rebuild_export_current.tcl"

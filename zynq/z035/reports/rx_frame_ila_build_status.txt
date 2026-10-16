@@ -1,0 +1,2 @@
+2026-10-14 14:44:30 COMPLETE: XSA=/home/yyz/work/RIS/zynq/z035/pz7035_top.xsa LTX=/home/yyz/work/RIS/zynq/z035/PZ_UART.runs/impl_1/pz7035_top.ltx REPORTS=/home/yyz/work/RIS/zynq/z035/reports/gui_rebuild_20261014_143218
+Synthesis, route, timing, bus skew, bitstream and XSA passed. Optional debug-object property report replaced by implemented cell report.

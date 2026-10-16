@@ -1,0 +1,24 @@
+# Fallback for CLI builds before Vitis regenerates its managed makefiles for
+# src/drivers. If Vitis already included an object, leave its rules intact.
+ifeq ($(filter ./src/drivers/ad9361.o src/drivers/ad9361.o,$(OBJS)),)
+C_SRCS += ../src/drivers/ad9361.c
+OBJS += ./src/drivers/ad9361.o
+C_DEPS += ./src/drivers/ad9361.d
+
+ifneq ($(MAKECMDGOALS),clean)
+-include ./src/drivers/ad9361.d
+endif
+
+src/drivers/%.o: ../src/drivers/%.c
+	@mkdir -p $(@D)
+	arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../key_ctrl/export/key_ctrl/sw/key_ctrl/standalone_domain/bspinclude/include -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
+endif
+
+ifeq ($(filter ./src/drivers/gpio_ris.o src/drivers/gpio_ris.o,$(OBJS)),)
+C_SRCS += ../src/drivers/gpio_ris.c
+OBJS += ./src/drivers/gpio_ris.o
+C_DEPS += ./src/drivers/gpio_ris.d
+ifneq ($(MAKECMDGOALS),clean)
+-include ./src/drivers/gpio_ris.d
+endif
+endif

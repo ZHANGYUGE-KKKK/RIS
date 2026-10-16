@@ -1,0 +1,15 @@
+  1  Digilent JTAG-HS1 210512180081
+     2  arm_dap (idcode 4ba00477 irlen 4)
+     3  xc7z035 (idcode 23732093 irlen 6 fpga)
+        4  bscan-switch (idcode 04900101 irlen 1 fpga)
+           5  unknown (idcode 04900220 irlen 1 fpga)
+Cannot halt processor core, timeout
+    invoked from within
+"::tcf::eval -progress {apply {{msg} {puts $msg}}} {tcf_send_command tcfchan#0 RunControl suspend s e JTAG-jsn-JTAG-HS1-210512180081-4ba00477-0.0}"
+    (procedure "::tcf::send_command" line 4)
+    invoked from within
+"::tcf::send_command $chan RunControl suspend s e [list $ctx]"
+    (procedure "stop" line 14)
+    invoked from within
+"stop"
+    (file "/tmp/fmcomms3_debug_stop.tcl" line 5)

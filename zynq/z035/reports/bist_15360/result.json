@@ -1,0 +1,62 @@
+{
+  "profile": "FMCOMMS3 basic RX BIST, 15.36 MSPS / 960 kHz",
+  "program_start": "2026-10-15 13:21:29 Asia/Shanghai",
+  "reference_hz": 40000000,
+  "rx_tx_sample_hz": 15360000,
+  "rx_tx_bandwidth_hz": 5000000,
+  "rx_tx_fir_enabled": false,
+  "rx_lo_hz": 200000000,
+  "tx_lo_hz": 5997000000,
+  "rx_gain_db": [
+    5,
+    5
+  ],
+  "lvds_bias_mv": 150,
+  "rx_clock_chain_hz": [
+    983040000,
+    122880000,
+    61440000,
+    30720000,
+    15360000,
+    15360000
+  ],
+  "tx_clock_chain_hz": [
+    983040000,
+    122880000,
+    61440000,
+    30720000,
+    15360000,
+    15360000
+  ],
+  "expected_data_clk_hz": 61440000,
+  "bist_tone_hz": 960000,
+  "bist_level_dbfs": -6,
+  "bist_on_register": "0x5B",
+  "bist_off_register": "0x12",
+  "config_pass": true,
+  "pll_checks_pass": 20,
+  "frame_delay_points_tested": 256,
+  "frame_delay_points_pass": 0,
+  "frame_stability_checks_pass": 0,
+  "frame_stability_checks_total": 20,
+  "applied_delay": "0x57 (restored fallback; not validated at this rate)",
+  "mig_passed_stages": 9,
+  "mig_errors": 0,
+  "mig_checked_words": 7520812,
+  "dma_capture_started": false,
+  "prbs_test_started": false,
+  "iq_capture_pass": false,
+  "final_arm": 0,
+  "final_capture_status": "0x01",
+  "final_bist_enabled": false,
+  "ila_clock_nominal_hz": 200000000,
+  "ila_reported_rx_edges_per_ms": 1444225,
+  "ila_counter_nonmonotonic_steps": 1,
+  "clock_counter_is_reliable_frequency_measurement": false,
+  "diagnostic_note": "Counter anomalies and invalid FRAME require checking DATA_CLK waveform/termination and clock-monitor CDC; they do not establish an analog frequency or unique root cause.",
+  "sha256": {
+    "elf": "6fc2a576a6063c3606b70badfcece7d94606e99b3f7176250034e0eb9873637f",
+    "xsa": "67a7b5e1a75e8477a46b983559ebb9b94d0855753e4025c903dc88ca43f22377",
+    "bit": "8a886ed8c0c44903e32d48a2334afba8cb8dffb0a74c82fd8c4e0128a48b6bae"
+  }
+}

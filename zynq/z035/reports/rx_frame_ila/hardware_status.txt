@@ -1,0 +1,18 @@
+2026-10-14 14:42:25 PROGRAMMED: xc7z035_1
+2026-10-14 14:42:25 FAILED: ERROR: [Common 17-58] 'hw_ila_2' is not a valid first class Tcl object.
+
+ERROR: [Common 17-58] 'hw_ila_2' is not a valid first class Tcl object.
+
+    while executing
+"list_property $obj"
+    ("foreach" body line 3)
+    invoked from within
+"foreach obj [concat $rx_ila $rx_ddr $rx_ports] {
+  puts $rx_f "OBJECT $obj"
+  foreach prop [list_property $obj] {puts $rx_f "$prop = [get_property $pr..."
+2026-10-14 14:43:28 FAILED: ERROR: [Labtools 27-3428] Ila core [hw_ila_2] clock has stopped. Unable to arm ILA core.
+
+ERROR: [Labtools 27-3428] Ila core [hw_ila_2] clock has stopped. Unable to arm ILA core.
+
+    while executing
+"run_hw_ila -trigger_now $rx_ila"

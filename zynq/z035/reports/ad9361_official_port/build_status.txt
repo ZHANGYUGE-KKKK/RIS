@@ -1,0 +1,5 @@
+START Fri Oct 16 11:37:13 CST 2026
+PASS Fri Oct 16 11:45:55 CST 2026
+REPORTS=/home/yyz/work/RIS/zynq/z035/reports/gui_rebuild_20261016_113741
+XSA=/home/yyz/work/RIS/zynq/z035/pz7035_top.xsa
+ADI_RX=0x82000000; ILA=200MHz

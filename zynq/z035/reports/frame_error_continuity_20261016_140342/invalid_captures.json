@@ -1,0 +1,4 @@
+{
+  "event_04.csv": "Trial 4 failed its GPIO readiness recheck before issuing ARM. ILA did not trigger; the original timeout handling exported the previous capture. SHA256 equals event_03.csv. Excluded from all evidence and statistics.",
+  "event_04.ila": "Same stale timeout data; do not use as trial 4 evidence."
+}
