@@ -1,0 +1,7 @@
+{
+  "date": "2026-10-21T14:19:22.818616+08:00",
+  "module_user_confirmed": "MT8JTF12864HZ-1G6G1, 1 GiB installed, board powered on",
+  "original_bit_sha256": "f94e7ffbc1413ebfa571aa86ae14f774a74e3b4dd4108c299dc979daa3a417ca",
+  "original_xsa_sha256": "1a81366a216e6914647ba57707edcb2a47157065d39c204bf8b7a03d9667cb1d",
+  "constraints": "No frequency reduction; no RF configuration change"
+}

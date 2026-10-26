@@ -1,0 +1,61 @@
+AD9361 RX 板级验收结果：失败，当前不能用于有效 IQ 接收
+2026-10-16，AD-FMCOMMS3 / xc7z035，config915，15.36 MSPS。
+
+已完成完整 Vivado 综合、布局布线、BIT/LTX/XSA 导出，更新现有 Vitis
+key_ctrl 平台、重新编译 key_ctrlll，并通过 JTAG 下载和运行两次。
+PuTTY 保持占用串口；测试输出从其已有日志文件读取，没有并行读取串口。
+
+最终产物：
+  XSA: ../../pz7035_top.xsa
+  BIT/LTX: ../../PZ_UART.runs/impl_1/pz7035_top.bit / pz7035_top.ltx
+  ELF: ../../vitis_code/key_ctrlll/Debug/key_ctrlll.elf
+XSA、平台导入 XSA、独立 BIT、IDE 调试 BIT 的一致性已核对。
+下载时的精确哈希见 download_manifest.json；构建证据见 BUILD_NOTES.md。
+
+最终硬件结果（第二次运行）：
+  普通接收观察 5.017117 s，有效 IQ=0，50/50 窗口未通过。
+  FPGA DATA/FRAME 32x32 网格加七路单独 32 taps，共 1248 点，PN 通过 0 点。
+  PN 持续观察 5.015779 s，有效 IQ=0，FRAME 没有锁定。
+  恢复普通接收后观察 5.014932 s，有效 IQ=0，FRAME 仍未锁定。
+  独立 ADI 测频器：普通接收 169.713 MHz，PN 178.510 MHz，恢复后 171.118 MHz。
+  修正后的短子窗口计数均值：170.880 / 178.337 / 170.316 MHz。
+  PLL 只读检查 20/20 通过；GPIO 最终为 0x01（READY=1，FRAME_LOCKED=0），ARM=0。
+
+上述 MHz 是 FPGA 内部识别到的时钟边沿率，不是示波器对芯片引脚的测量。
+当前模式理论 DATA_CLK 应为 4 x 15.36 = 61.44 MHz；实际接收到的数字时钟
+明显不符合这一关系，而且随测试数据源变化。当前没有足够证据确认异常发生在
+AD9361 输出、实物连接/端接、输入波形，还是受异常输入影响的接收/观测路径。
+不能据此认定 AD9361 芯片损坏，也不能宣布重写模块已经通过板级验收。
+
+原来的 100ms 单次 24bit 模差在异常高频下会多次回绕，第一轮的 2~21 MHz
+结果不可作为真实边沿率。驱动已改成约 1ms 子窗口累加，并用 64bit CPU 时间
+保证每个观察窗口至少 100ms。模型验证覆盖 61.44/245.76/500 MHz。
+第二轮仍出现个别 FRAME 计数不连续，导致单个累计窗口的表观 FRAME 频率异常；
+不将该值解释为物理 FRAME 频率。无有效 IQ、未锁定和独立时钟测量的结论不变。
+PN 错误锁存或 frame_fault 为零也不表示通过：解帧从未获得有效数据/稳定锁定。
+
+最终另抓取三份 4096 点 ILA：ila_final/。原始记录显示观测 FIFO 持续有效、
+RX 序号跳变、没有 sample_valid/FRAME lock；结论与软件一致。
+第一轮保留在 run1_original_monitor/；初次 ILA 在 ila/。
+完整第二轮串口输出：uart_board_test.log。
+逐窗口计数、扫描掩码及寄存器快照：board_results.json 与 *_report.bin。
+
+保持和恢复：
+  17 个 RF/config915 配置源文件哈希全部未变。
+  仅临时写 BIST 3F4/3F5/3F6，已恢复并回读为 53/00/30。
+  000/006/010/011/012/03C/03D/03E 前后完全一致，restore_status=0。
+  006=0F、010=C8、011=00、012=10 保持不变；七路 FPGA taps 恢复为 0。
+  没有进行 DMA IQ 验收：PN/有效数据前置条件不满足。
+
+设计验证边界：
+  四组真实 UNISIM/XPM 仿真通过，含原始引脚数据及诊断 ABI 检查。
+  当前已定义内部时序 WNS=+0.183ns、WHS=+0.054ns，无 Critical CDC/DRC。
+  板级输入到达窗口未知，输入延时约束不完整；内部时序通过不等于外部 LVDS
+  时序签核。临时按245.76MHz复查时两套测频计数器仍有超过2ns余量，但部分
+  复位/FRAME路径失败，且静态分析不能排除不规则短脉冲。
+
+硬件核对：用户确认 AD-FMCOMMS3，现有 FMC/FPGA 引脚映射与原理图一致。
+Bank13 实物 VCCO、接收端约100Ω外部差分终端仍未确认，用户也不确定。
+下一步应实测这两项，并在 FPGA 接收端查看 DATA_CLK 差分波形和频率。
+资料、页面图像和具体未知项见 hardware_findings.txt。
+本轮没有修改 VCCO、差分端接、9361 时序寄存器或板上物理连接。

@@ -1,0 +1,1 @@
+PASS: full-project synthesis and rewritten ILA probe validation

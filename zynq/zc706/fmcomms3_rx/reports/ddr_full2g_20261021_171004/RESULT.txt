@@ -1,0 +1,65 @@
+ZC706 原接收工程：完整 2 GiB 地址扩展与 IQ 检查
+日期：2026-10-21
+工程：/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx
+
+结果：本轮容量、描述符、数据格式及抽查稳定性检查通过。
+BIT/XSA、原 Vitis key_ctrl 平台/BSP、key_ctrlll 应用均已更新，已通过 JTAG 下载到板。
+AD9361 CONFIG2P4、2400 MHz LO、15.36 MSPS、MGC 及接口时序配置保持原样。
+
+容量
+物理 DDR：MT16JSF25664HZ-1G4F1，2 GiB，2Rx8，DDR3-1333。
+DMA SG/S2MM 地址：0x00000000..0x7fffffff。
+前 4 MiB 用作 SG 描述符；有效 IQ：0x00400000..0x7fffffff。
+最大 2044 MiB = 2143289344 字节 = 267911168 组双通道 IQ。
+每组仍为小端 int16 [I1,Q1,I2,Q2]，12 位有效位，每组 8 字节。
+15.36 MSPS 下标称时长 17.442133 秒。
+GP0 固定 1 GiB CPU 窗口，通过 0x83000000 bit0 切换低/高半区；
+DMA 直接访问完整地址范围，连续采集期间不依赖 CPU 切窗。
+
+构建与自检
+时序：WNS 0.355 ns，WHS 0.047 ns，WPWS 0.062 ns；约束全部满足。
+所有板级引脚、双 Rank 引脚及 AD9361 延时参考 200 MHz 检查通过。
+PN：1248/1248；RF mismatch=0，restore=0。
+恢复 RF 后 clock/frame：50/50；RF CLOCK TEST：20/20。
+21 个受保护 RF 文件哈希不变。
+AXI3 切窗 RTL 仿真通过；真实 mig_ddr.c 的跨窗/末字节/恢复 bank0 测试通过。
+网络服务本地仿真/边界检查通过：协议 14 项、GUI 9 项；配置 5 项、频谱 10 项通过。
+上述本地测试不连接板端 TCP。
+export/manifest.json 的 11 项导出物及原 Vitis 路径哈希全部一致。
+
+板级数据检查
+两半区固定图案：8 个选定物理页，4 种图案，交替读回共 96/96 一致。
+先写所有页再交错读取，覆盖两半区同偏移，检查地址别名；不是整片 March 测试。
+8 MiB IQ：256/256 BD 完成，68273 us；两次完整存档 SHA256 一致，格式错误 0。
+
+满容量 IQ：id=0000000eca6b4471。
+2143289344 字节，65408/65408 BD，实际 DMA 采集耗时 17441257 us。
+全部 65408 个 BD 在 3 阶段检查，issues=000，重复读取差异=0000。
+最后 BD：ID=65407，BUF=0x7fff8000，actual=32768，NEXT=0，均符合布局。
+17 个 4 KiB 抽查页：DMA 完成、DMA 复位、PL 重新准备三个阶段的 3 次读取 CRC 全部一致。
+changed_dma/changed_pl/unstable/memcpy_diff 全部为 0。
+串口 d/g 再次确认上述状态和 MGC76/76；串口原始记录：serial/live.log。
+
+用户要求仅串口/JTAG后，不再发起板端 TCP 请求；后台下载在复查时已经结束。
+已有完整本地 BIN 保留并离线检查，没有发起第二次满容量网络下载。
+全文件检查 8176 个 256 KiB 块：CRC 全部一致，四分量格式错误 [0,0,0,0]。
+完整 BIN：captures/rx_full2g_full_read1.bin，配套元数据同名 .bin.json。
+SHA256：6c5bdf120d9ae620f380b301e11e3d975b6f75202be45d52270f4250820c5b53。
+早期网口读出发生超时并续传，详细记录保留；这不是本轮串口/JTAG检查方法。
+
+独立 JTAG 复查：19 个 IQ 页，每页读 3 次，57/57 一致；
+与固件三阶段 CRC 和已存 BIN 一致，覆盖 0x3ffff000、0x40000000、0x7ffff000。
+读取完已恢复 bank0。详见 frozen_full_result.json / frozen_full.log。
+整份 BIN 全格式校验见 full_file_result.json；JTAG 本身仅抽查上述 19 页。
+
+结论范围
+本轮未复现此前的 12 位符号扩展/数据格式错误，完整容量采集和高半区访问均正常。
+这不证明未知 RF IQ 的样本序号连续，也不代表完成 RF 增益或功率校准。
+严格验证丢样/重复样本仍需贯穿整段采集的已知连续测试序列。
+
+结束状态
+满容量 IQ 仍冻结在 PL DDR，ARM=0，尚未释放；CPU bank=0。
+串口测试进程已退出，CuteCom 已恢复打开 /dev/ttyUSB0，115200 8N1。
+在 CuteCom 中发送 d 可重看诊断；r 会释放冻结数据，随后 c/v 可分别采集 8 MiB/1 秒。
+导出物：export/zc706_top.bit、export/zc706_top.xsa、export/key_ctrlll.elf。
+Vitis 原工作区：vitis_code；版本标识 RX diagnostic version=8。

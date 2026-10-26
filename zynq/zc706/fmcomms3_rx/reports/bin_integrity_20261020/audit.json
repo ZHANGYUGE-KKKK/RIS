@@ -1,0 +1,129 @@
+{
+  "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/captures/rx_20261020_152935_717.bin",
+  "metadata": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/captures/rx_20261020_152935_717.bin.json",
+  "capture_id": "0000000950e577a2",
+  "profile": "CONFIG2P4",
+  "sample_rate_hz": 15360000,
+  "rx_lo_hz": 2400000000,
+  "file_bytes": 122880000,
+  "metadata_bytes": 122880000,
+  "tuples": 15360000,
+  "expected_sha256": "2dcc621ec17f81c1567984b2545098e56daeef7c12ca40573931c16897545f4d",
+  "actual_sha256": "2dcc621ec17f81c1567984b2545098e56daeef7c12ca40573931c16897545f4d",
+  "sha256_match": true,
+  "checked_chunks": 469,
+  "expected_chunks": 469,
+  "crc_mismatches": [],
+  "malformed_tuples": 1069651,
+  "malformed_tuple_percent": 6.963873697916667,
+  "malformed_component_words": 1094786,
+  "components": {
+    "I1": {
+      "malformed_words": 373453,
+      "min_value": -32768,
+      "max_value": 32767,
+      "first_malformed": {
+        "tuple": 116914,
+        "file_offset": 935312,
+        "file_offset_hex": "0xe4590",
+        "pl_address_hex": "0x404e4590",
+        "time_ms": 7.611588541666666,
+        "value": -2059,
+        "raw_hex": "0xF7F5"
+      }
+    },
+    "Q1": {
+      "malformed_words": 319843,
+      "min_value": -32768,
+      "max_value": 32767,
+      "first_malformed": {
+        "tuple": 1780302,
+        "file_offset": 14242418,
+        "file_offset_hex": "0xd95272",
+        "pl_address_hex": "0x41195272",
+        "time_ms": 115.905078125,
+        "value": -8353,
+        "raw_hex": "0xDF5F"
+      }
+    },
+    "I2": {
+      "malformed_words": 75329,
+      "min_value": -32768,
+      "max_value": 32767,
+      "first_malformed": {
+        "tuple": 4425774,
+        "file_offset": 35406196,
+        "file_offset_hex": "0x21c4174",
+        "pl_address_hex": "0x425c4174",
+        "time_ms": 288.13632812500003,
+        "value": 32708,
+        "raw_hex": "0x7FC4"
+      }
+    },
+    "Q2": {
+      "malformed_words": 326161,
+      "min_value": -32768,
+      "max_value": 32767,
+      "first_malformed": {
+        "tuple": 195415,
+        "file_offset": 1563326,
+        "file_offset_hex": "0x17dabe",
+        "pl_address_hex": "0x4057dabe",
+        "time_ms": 12.722330729166666,
+        "value": 13007,
+        "raw_hex": "0x32CF"
+      }
+    }
+  },
+  "board_query": {
+    "host": "192.168.1.10",
+    "port": 5001,
+    "command": "STATUS",
+    "result": "TimeoutError: timed out"
+  },
+  "source_checks": {
+    "rtl": "Sign-extends every 12-bit component before capture FIFO",
+    "capture": "READY verifies DMA/status/count/config, not complete payload IQ sign extension",
+    "crc": "Board CRC is computed after PL DDR to PS memcpy; it does not verify pre-CRC data integrity",
+    "reset": "FCLK0 resets capture/DMA and upstream AXI ports; MIG physical reset uses separate rstn"
+  },
+  "prefix_analysis": {
+    "RX1": {
+      "samples": 65536,
+      "duration_ms": 4.266666666666667,
+      "peak_hz": -84843.75,
+      "rms_counts": 1592.91949386858,
+      "clipped": 0
+    },
+    "RX2": {
+      "samples": 65536,
+      "duration_ms": 4.266666666666667,
+      "peak_hz": -84843.75,
+      "rms_counts": 40.61544152124682,
+      "clipped": 0
+    }
+  },
+  "fft_error": "RX1 I1 采样点 116914（从 0 计），文件偏移 935312（0xE4590）：数值 -2059（0xF7F5）不是有效的 12 位符号扩展。已停止分析；请检查采集及存储/读出数据的完整性。",
+  "serial_query": {
+    "device": "/dev/ttyUSB0",
+    "settings": "115200 8N1",
+    "frontend": "CuteCom",
+    "log": "serial/cutecom_live.txt",
+    "commands": [
+      "g",
+      "s",
+      "s"
+    ],
+    "startup_pn": "PASS 1248/1248",
+    "startup_restored_rf": "PASS 50/50",
+    "startup_rf_clock": "PASS 20/20",
+    "live_gain_requested_active": [
+      76,
+      76
+    ],
+    "live_snapshot_4": "DMA -9, DMA=00011008 BD=8C000000 RX=07",
+    "live_snapshot_5": "DMA -9, DMA=00011008 BD=8C000000 RX=07",
+    "firmware_programmed": false,
+    "rf_configuration_changed": false
+  }
+}

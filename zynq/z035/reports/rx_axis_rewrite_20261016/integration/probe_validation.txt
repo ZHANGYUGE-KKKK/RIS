@@ -1,0 +1,5 @@
+PASS probe0: debug_axis_data[63:0], 64 connected bits
+PASS probe1: debug_axis_flags[9:0], 10 connected bits
+PASS probe2: debug_sample_count[23:0], 24 connected bits
+PASS probe3: debug_clock_count[23:0], 24 connected bits
+PASS receiver ILA UUID=abd3947756075108ae30c8be393e8055; all 122 probe bits match

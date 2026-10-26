@@ -1,0 +1,18 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+----------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
+| Date         : Mon Oct 26 15:33:28 2026
+| Host         : yyz-SER8 running 64-bit Ubuntu 24.04.1 LTS
+| Command      : report_cdc -file /home/yyz/work/RIS/zynq/zc706/ris_ctrl_unit/reports/fast_toggle/cdc.rpt
+| Design       : ris_ctrl_unit_top
+| Device       : 7z045-ffg900
+| Speed File   : -2  PRODUCTION 1.12 2019-11-22
+----------------------------------------------------------------------------------------------------------
+
+CDC Report
+
+Severity  Source Clock  Destination Clock  CDC Type      Exceptions  Endpoints  Safe  Unsafe  Unknown  No ASYNC_REG  
+--------  ------------  -----------------  ------------  ----------  ---------  ----  ------  -------  ------------  
+Info      raw_fast      clk_fpga_0         Safely Timed  None               36    36       0        0             0  
+Info      clk_fpga_0    raw_fast           Safely Timed  None              114   114       0        0             0  
+

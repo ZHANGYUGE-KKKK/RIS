@@ -1,0 +1,370 @@
+{
+  "capture_id": "0000000eca6b4471",
+  "sampled_only": true,
+  "pages": 19,
+  "readbacks": 57,
+  "checks_pass": true,
+  "rows": [
+    {
+      "dma_address": 4194304,
+      "cpu_address": 1077936128,
+      "bank": 0,
+      "offset": 0,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        3893865066,
+        3893865066,
+        3893865066
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "69bf36743b28645c952811d6d587f893e577ddef286b860d5d6dd66a2bd079d2"
+    },
+    {
+      "dma_address": 4222976,
+      "cpu_address": 1077964800,
+      "bank": 0,
+      "offset": 28672,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        2611396967,
+        2611396967,
+        2611396967
+      ],
+      "match_firmware_three_phases": null,
+      "readbacks_identical": true,
+      "sha256": "03f5d5bbddce1134af7f87c897ea032707342ceca1f9c60a3a73ba6c138ec719"
+    },
+    {
+      "dma_address": 4227072,
+      "cpu_address": 1077968896,
+      "bank": 0,
+      "offset": 32768,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        840866942,
+        840866942,
+        840866942
+      ],
+      "match_firmware_three_phases": null,
+      "readbacks_identical": true,
+      "sha256": "f2004147f46a7fc3ace143d3023c6f1b8af6ed2806b9420dd56ce5817206f3a7"
+    },
+    {
+      "dma_address": 4718592,
+      "cpu_address": 1078460416,
+      "bank": 0,
+      "offset": 524288,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        736953657,
+        736953657,
+        736953657
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "6eec405758042bed37f4bbc1022294bf71a7ea51cb05e0654c60143897cc64fa"
+    },
+    {
+      "dma_address": 4870144,
+      "cpu_address": 1078611968,
+      "bank": 0,
+      "offset": 675840,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        3349411531,
+        3349411531,
+        3349411531
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "000db38ab43ea5d11a78499b0c475ee6574b19a03c67b67474209ab42a53ac31"
+    },
+    {
+      "dma_address": 5128192,
+      "cpu_address": 1078870016,
+      "bank": 0,
+      "offset": 933888,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        2196207938,
+        2196207938,
+        2196207938
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "ffb2563d252c01639ea12b444ffd4b447ffe899096d66fdda7e4209e3a12bd5f"
+    },
+    {
+      "dma_address": 5242880,
+      "cpu_address": 1078984704,
+      "bank": 0,
+      "offset": 1048576,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        3338914836,
+        3338914836,
+        3338914836
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "8481eca405dd6c88a7f69cff7ddeef262ae6d78618d10242e756d02fb271d357"
+    },
+    {
+      "dma_address": 5652480,
+      "cpu_address": 1079394304,
+      "bank": 0,
+      "offset": 1458176,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        3688635806,
+        3688635806,
+        3688635806
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "d27e390320f7a5e378f117fb690c9ece77ee079f478f63fe92c3994475bad559"
+    },
+    {
+      "dma_address": 5767168,
+      "cpu_address": 1079508992,
+      "bank": 0,
+      "offset": 1572864,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        3854255449,
+        3854255449,
+        3854255449
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "77dfcaa59e0b0f036f0ca3eb3993874ab002f2e4f9bcd312be5236263d2a0f8e"
+    },
+    {
+      "dma_address": 6291456,
+      "cpu_address": 1080033280,
+      "bank": 0,
+      "offset": 2097152,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        2018849637,
+        2018849637,
+        2018849637
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "c2a06ac00f5c57b9530db638b0af204cabbc863a48980c4033f366727c165115"
+    },
+    {
+      "dma_address": 7340032,
+      "cpu_address": 1081081856,
+      "bank": 0,
+      "offset": 3145728,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        3816410594,
+        3816410594,
+        3816410594
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "f94e460cd088ef8cb45cd3dc65919f6e0a91c9ad40f8f4a927d52cd703e52512"
+    },
+    {
+      "dma_address": 18366464,
+      "cpu_address": 1092108288,
+      "bank": 0,
+      "offset": 14172160,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        3396943594,
+        3396943594,
+        3396943594
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "40b1654bf1314fadc35e84c247f907855b137be6ccf243200029179fae2883d6"
+    },
+    {
+      "dma_address": 39600128,
+      "cpu_address": 1113341952,
+      "bank": 0,
+      "offset": 35405824,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        4227821346,
+        4227821346,
+        4227821346
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "6f0654b72a76833395d8b3d3aadfd0a8daf5e5db812aa0db3d7febef49ae9b18"
+    },
+    {
+      "dma_address": 540016640,
+      "cpu_address": 1613758464,
+      "bank": 0,
+      "offset": 535822336,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        3384801012,
+        3384801012,
+        3384801012
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "fe00f4e0bdac8af1abfcb13a8b5115774335c035892ebb4428e611b09b52b523"
+    },
+    {
+      "dma_address": 1073737728,
+      "cpu_address": 2147479552,
+      "bank": 0,
+      "offset": 1069543424,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        1733807821,
+        1733807821,
+        1733807821
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "ddc026c9c9cab8a2ca7c82ae69a132a567b4e46eb006c484f2d5e4d19b51e297"
+    },
+    {
+      "dma_address": 1073741824,
+      "cpu_address": 1073741824,
+      "bank": 1,
+      "offset": 1069547520,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        3135727564,
+        3135727564,
+        3135727564
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "c8c22d4f5044c68618440ecbc99d9ef678f3efa6af805a1c49f3f352ee96dc20"
+    },
+    {
+      "dma_address": 1075838976,
+      "cpu_address": 1075838976,
+      "bank": 1,
+      "offset": 1071644672,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        1274701353,
+        1274701353,
+        1274701353
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "405158bf949e4d1b58f9016c79806ace1a9362cb3de6f4f593aac5af96a86e3b"
+    },
+    {
+      "dma_address": 1611661312,
+      "cpu_address": 1611661312,
+      "bank": 1,
+      "offset": 1607467008,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        1739541196,
+        1739541196,
+        1739541196
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "12b805597dc4c28870dea3148c8371a9e91af9224599c76c130fb25e7b7c5bed"
+    },
+    {
+      "dma_address": 2147479552,
+      "cpu_address": 2147479552,
+      "bank": 1,
+      "offset": 2143285248,
+      "match_saved_file": [
+        true,
+        true,
+        true
+      ],
+      "crc32": [
+        4220501394,
+        4220501394,
+        4220501394
+      ],
+      "match_firmware_three_phases": true,
+      "readbacks_identical": true,
+      "sha256": "dc20d14b422e5054014df2bafe58d61b1eaf479c84561ec3b92f8da9b20cc746"
+    }
+  ]
+}

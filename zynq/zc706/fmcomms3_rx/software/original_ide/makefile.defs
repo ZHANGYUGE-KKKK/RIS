@@ -1,0 +1,87 @@
+# Fallback for CLI builds before Vitis regenerates its managed makefiles for
+# src/drivers. If Vitis already included an object, leave its rules intact.
+ifeq ($(filter ./src/drivers/cdcm6208.o src/drivers/cdcm6208.o,$(OBJS)),)
+C_SRCS += ../src/drivers/cdcm6208.c
+OBJS += ./src/drivers/cdcm6208.o
+C_DEPS += ./src/drivers/cdcm6208.d
+ifneq ($(MAKECMDGOALS),clean)
+-include ./src/drivers/cdcm6208.d
+endif
+endif
+
+ifeq ($(filter ./src/drivers/ad9361.o src/drivers/ad9361.o,$(OBJS)),)
+C_SRCS += ../src/drivers/ad9361.c
+OBJS += ./src/drivers/ad9361.o
+C_DEPS += ./src/drivers/ad9361.d
+
+ifneq ($(MAKECMDGOALS),clean)
+-include ./src/drivers/ad9361.d
+endif
+
+src/drivers/%.o: ../src/drivers/%.c
+	@mkdir -p $(@D)
+	arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../key_ctrl/export/key_ctrl/sw/key_ctrl/standalone_domain/bspinclude/include -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
+endif
+
+ifeq ($(filter ./src/drivers/gpio_ris.o src/drivers/gpio_ris.o,$(OBJS)),)
+C_SRCS += ../src/drivers/gpio_ris.c
+OBJS += ./src/drivers/gpio_ris.o
+C_DEPS += ./src/drivers/gpio_ris.d
+ifneq ($(MAKECMDGOALS),clean)
+-include ./src/drivers/gpio_ris.d
+endif
+endif
+
+# Include the reference configuration port in CLI builds until Vitis refreshes
+# src/ad_config. Managed-build objects, when present, keep their own rules.
+AD_CONFIG_SRCS := $(wildcard ../src/ad_config/*.c)
+AD_CONFIG_OBJS := $(patsubst ../src/%.c,./src/%.o,$(AD_CONFIG_SRCS))
+AD_CONFIG_MISSING_OBJS := $(filter-out $(addprefix ./,$(patsubst ./%,%,$(OBJS))),$(AD_CONFIG_OBJS))
+ifneq ($(strip $(AD_CONFIG_MISSING_OBJS)),)
+C_SRCS += $(patsubst ./src/%.o,../src/%.c,$(AD_CONFIG_MISSING_OBJS))
+OBJS += $(AD_CONFIG_MISSING_OBJS)
+C_DEPS += $(AD_CONFIG_MISSING_OBJS:.o=.d)
+ifneq ($(MAKECMDGOALS),clean)
+-include $(AD_CONFIG_MISSING_OBJS:.o=.d)
+endif
+src/ad_config/%.o: ../src/ad_config/%.c
+	@mkdir -p $(@D)
+	arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../key_ctrl/export/key_ctrl/sw/key_ctrl/standalone_domain/bspinclude/include -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
+endif
+
+ifeq ($(filter ./src/drivers/gpio_9361.o src/drivers/gpio_9361.o,$(OBJS)),)
+C_SRCS += ../src/drivers/gpio_9361.c
+OBJS += ./src/drivers/gpio_9361.o
+C_DEPS += ./src/drivers/gpio_9361.d
+ifneq ($(MAKECMDGOALS),clean)
+-include ./src/drivers/gpio_9361.d
+endif
+endif
+
+ifeq ($(filter ./src/drivers/dma_9361.o src/drivers/dma_9361.o,$(OBJS)),)
+C_SRCS += ../src/drivers/dma_9361.c
+OBJS += ./src/drivers/dma_9361.o
+C_DEPS += ./src/drivers/dma_9361.d
+ifneq ($(MAKECMDGOALS),clean)
+-include ./src/drivers/dma_9361.d
+endif
+endif
+
+ifeq ($(filter ./src/drivers/mig_ddr.o src/drivers/mig_ddr.o,$(OBJS)),)
+C_SRCS += ../src/drivers/mig_ddr.c
+OBJS += ./src/drivers/mig_ddr.o
+C_DEPS += ./src/drivers/mig_ddr.d
+ifneq ($(MAKECMDGOALS),clean)
+-include ./src/drivers/mig_ddr.d
+endif
+endif
+
+ifeq ($(filter ./src/drivers/rx_9361.o src/drivers/rx_9361.o,$(OBJS)),)
+C_SRCS += ../src/drivers/rx_9361.c
+OBJS += ./src/drivers/rx_9361.o
+C_DEPS += ./src/drivers/rx_9361.d
+ifneq ($(MAKECMDGOALS),clean)
+-include ./src/drivers/rx_9361.d
+endif
+endif
+

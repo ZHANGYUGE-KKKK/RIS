@@ -1,0 +1,6 @@
+{
+  "downloaded_bit_sha256": "21b2b4deb7ad8bed1a41e8969deee520e232635c79de658fa9c44d7302d252b2",
+  "canonical_bit_sha256": "2b00fa124d7d6e5d9ddeaab7c473585c14ab6087e2177bfa4d958af1a6107680",
+  "configuration_payload_sha256": "b9a6aed81b31ad04f2f907b63a7607612c24254de811ae6bab7b1d2c6ef9c42c",
+  "note": "Vivado BIT header names/timestamps differ; actual FPGA configuration payload is identical. GUI launch copy aligned with canonical XSA bit after verification."
+}

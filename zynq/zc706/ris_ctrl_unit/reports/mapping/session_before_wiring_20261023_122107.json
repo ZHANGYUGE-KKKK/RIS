@@ -1,0 +1,23 @@
+{
+  "format": "RIS-FPC-MAPPING",
+  "version": 1,
+  "geometry": {
+    "rows": 20,
+    "columns": 20,
+    "half_rows": 10,
+    "columns_per_port": 4,
+    "ports_per_side": 5,
+    "view": "topology_BIAS_at_top"
+  },
+  "channel_convention": "five_chips_ascending_each_Q0_to_Q7_not_connector_pin_number",
+  "ports": {
+    "1": "T1",
+    "2": "T2",
+    "3": "T3",
+    "4": "B4",
+    "5": "B3",
+    "6": "B1"
+  },
+  "channels": [],
+  "notes": ""
+}

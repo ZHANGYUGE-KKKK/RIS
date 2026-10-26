@@ -1,0 +1,103 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
+| Date         : Fri Oct 23 11:04:46 2026
+| Host         : yyz-SER8 running 64-bit Ubuntu 24.04.1 LTS
+| Command      : report_utilization -hierarchical -file /home/yyz/work/RIS/zynq/zc706/ris_ctrl_unit/reports/board16_project/utilization.rpt
+| Design       : ris_ctrl_unit_top
+| Device       : 7z045ffg900-2
+| Design State : Routed
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Utilization Design Information
+
+Table of Contents
+-----------------
+1. Utilization by Hierarchy
+
+1. Utilization by Hierarchy
+---------------------------
+
++---------------------------------------+--------------------------------------------+------------+------------+---------+------+-------+--------+--------+------------+
+|                Instance               |                   Module                   | Total LUTs | Logic LUTs | LUTRAMs | SRLs |  FFs  | RAMB36 | RAMB18 | DSP Blocks |
++---------------------------------------+--------------------------------------------+------------+------------+---------+------+-------+--------+--------+------------+
+| ris_ctrl_unit_top                     |                                      (top) |      10938 |      10937 |       0 |    1 | 14382 |      0 |      8 |          0 |
+|   (ris_ctrl_unit_top)                 |                                      (top) |          0 |          0 |       0 |    0 |     0 |      0 |      0 |          0 |
+|   u_system                            |                         ris_system_wrapper |      10938 |      10937 |       0 |    1 | 14382 |      0 |      8 |          0 |
+|     ris_system_i                      |                                 ris_system |      10938 |      10937 |       0 |    1 | 14382 |      0 |      8 |          0 |
+|       control_bus                     |                   ris_system_control_bus_0 |          0 |          0 |       0 |    0 |     0 |      0 |      0 |          0 |
+|         s00_couplers                  |                   s00_couplers_imp_13N5GM1 |          0 |          0 |       0 |    0 |     0 |      0 |      0 |          0 |
+|           auto_pc                     |                       ris_system_auto_pc_0 |          0 |          0 |       0 |    0 |     0 |      0 |      0 |          0 |
+|       controller                      |                    ris_system_controller_0 |      10923 |      10923 |       0 |    0 | 14357 |      0 |      8 |          0 |
+|         inst                          |                         ris_controller_axi |      10923 |      10923 |       0 |    0 | 14357 |      0 |      8 |          0 |
+|           u_axi                       |                             ris_axi4_slave |       2765 |       2765 |       0 |    0 |   165 |      0 |      0 |          0 |
+|           u_core                      |                        ris_controller_core |       8212 |       8212 |       0 |    0 | 14192 |      0 |      8 |          0 |
+|             (u_core)                  |                        ris_controller_core |       5946 |       5946 |       0 |    0 | 12911 |      0 |      0 |          0 |
+|             u_array                   |                              ris_595_array |       2074 |       2074 |       0 |    0 |  1236 |      0 |      0 |          0 |
+|               (u_array)               |                              ris_595_array |        749 |        749 |       0 |    0 |    36 |      0 |      0 |          0 |
+|               chip[0].u_byte          |                               ris_595_byte |         23 |         23 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[10].u_byte         |                             ris_595_byte_0 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[11].u_byte         |                             ris_595_byte_1 |         21 |         21 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[12].u_byte         |                             ris_595_byte_2 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[13].u_byte         |                             ris_595_byte_3 |         21 |         21 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[14].u_byte         |                             ris_595_byte_4 |         25 |         25 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[15].u_byte         |                             ris_595_byte_5 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[16].u_byte         |                             ris_595_byte_6 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[17].u_byte         |                             ris_595_byte_7 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[18].u_byte         |                             ris_595_byte_8 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[19].u_byte         |                             ris_595_byte_9 |         24 |         24 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[1].u_byte          |                            ris_595_byte_10 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[20].u_byte         |                            ris_595_byte_11 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[21].u_byte         |                            ris_595_byte_12 |         21 |         21 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[22].u_byte         |                            ris_595_byte_13 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[23].u_byte         |                            ris_595_byte_14 |         21 |         21 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[24].u_byte         |                            ris_595_byte_15 |         33 |         33 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[25].u_byte         |                            ris_595_byte_16 |         31 |         31 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[26].u_byte         |                            ris_595_byte_17 |         30 |         30 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[27].u_byte         |                            ris_595_byte_18 |         31 |         31 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[28].u_byte         |                            ris_595_byte_19 |         32 |         32 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[29].u_byte         |                            ris_595_byte_20 |         32 |         32 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[2].u_byte          |                            ris_595_byte_21 |         25 |         25 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[30].u_byte         |                            ris_595_byte_22 |         39 |         39 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[31].u_byte         |                            ris_595_byte_23 |         38 |         38 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[32].u_byte         |                            ris_595_byte_24 |         41 |         41 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[33].u_byte         |                            ris_595_byte_25 |         34 |         34 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[34].u_byte         |                            ris_595_byte_26 |         38 |         38 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[35].u_byte         |                            ris_595_byte_27 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[36].u_byte         |                            ris_595_byte_28 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[37].u_byte         |                            ris_595_byte_29 |         25 |         25 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[38].u_byte         |                            ris_595_byte_30 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[39].u_byte         |                            ris_595_byte_31 |         26 |         26 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[3].u_byte          |                            ris_595_byte_32 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[40].u_byte         |                            ris_595_byte_33 |         26 |         26 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[41].u_byte         |                            ris_595_byte_34 |         33 |         33 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[42].u_byte         |                            ris_595_byte_35 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[43].u_byte         |                            ris_595_byte_36 |         30 |         30 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[44].u_byte         |                            ris_595_byte_37 |         40 |         40 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[45].u_byte         |                            ris_595_byte_38 |         25 |         25 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[46].u_byte         |                            ris_595_byte_39 |         36 |         36 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[47].u_byte         |                            ris_595_byte_40 |         39 |         39 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[48].u_byte         |                            ris_595_byte_41 |         33 |         33 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[49].u_byte         |                            ris_595_byte_42 |         54 |         54 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[4].u_byte          |                            ris_595_byte_43 |         26 |         26 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[5].u_byte          |                            ris_595_byte_44 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[6].u_byte          |                            ris_595_byte_45 |         23 |         23 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[7].u_byte          |                            ris_595_byte_46 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[8].u_byte          |                            ris_595_byte_47 |         22 |         22 |       0 |    0 |    24 |      0 |      0 |          0 |
+|               chip[9].u_byte          |                            ris_595_byte_48 |         24 |         24 |       0 |    0 |    24 |      0 |      0 |          0 |
+|             u_frames                  |                              ris_frame_ram |        209 |        209 |       0 |    0 |    45 |      0 |      8 |          0 |
+|       ps7                             |                           ris_system_ps7_0 |          0 |          0 |       0 |    0 |     0 |      0 |      0 |          0 |
+|         inst                          | processing_system7_v5_5_processing_system7 |          0 |          0 |       0 |    0 |     0 |      0 |      0 |          0 |
+|       reset_pl                        |                      ris_system_reset_pl_0 |         15 |         14 |       0 |    1 |    25 |      0 |      0 |          0 |
+|         U0                            |                             proc_sys_reset |         15 |         14 |       0 |    1 |    25 |      0 |      0 |          0 |
+|           (U0)                        |                             proc_sys_reset |          0 |          0 |       0 |    0 |     1 |      0 |      0 |          0 |
+|           EXT_LPF                     |                                        lpf |          4 |          3 |       0 |    1 |     9 |      0 |      0 |          0 |
+|             (EXT_LPF)                 |                                        lpf |          2 |          1 |       0 |    1 |     5 |      0 |      0 |          0 |
+|             ACTIVE_LOW_EXT.ACT_LO_EXT |                                   cdc_sync |          2 |          2 |       0 |    0 |     4 |      0 |      0 |          0 |
+|           SEQ                         |                               sequence_psr |         11 |         11 |       0 |    0 |    15 |      0 |      0 |          0 |
+|             (SEQ)                     |                               sequence_psr |          6 |          6 |       0 |    0 |     9 |      0 |      0 |          0 |
+|             SEQ_COUNTER               |                                    upcnt_n |          5 |          5 |       0 |    0 |     6 |      0 |      0 |          0 |
++---------------------------------------+--------------------------------------------+------------+------------+---------+------+-------+--------+--------+------------+
+* Note: The sum of lower-level cells may be larger than their parent cells total, due to cross-hierarchy LUT combining
+
+

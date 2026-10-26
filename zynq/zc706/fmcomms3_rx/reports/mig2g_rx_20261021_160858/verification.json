@@ -1,0 +1,457 @@
+{
+  "finished_local": "2026-10-21T16:59:50.702882+08:00",
+  "project": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx",
+  "dimm": "Micron MT16JSF25664HZ-1G4F1, 2GiB 2Rx8 DDR3-1333",
+  "hardware": {
+    "mig_part": "MT16JTF25664HZ-1G4",
+    "row_bits": 14,
+    "column_bits": 10,
+    "bank_bits": 3,
+    "ranks": 2,
+    "data_bits": 64,
+    "tck_ps": 1500,
+    "ddr_ck_hz": 666666667,
+    "ui_hz": 166666667,
+    "rx_idelay_ref_hz": 200000000,
+    "mapped_base": "0x40000000",
+    "mapped_bytes": 1073741824,
+    "capture_max_bytes": 1069547520
+  },
+  "rf": {
+    "profile": "CONFIG2P4",
+    "rx_lo_hz": 2400000000,
+    "tx_lo_hz": 2400000000,
+    "sample_rate_hz": 15360000,
+    "mgc_indices": [
+      76,
+      76
+    ],
+    "files_and_protected_regs_unchanged": true
+  },
+  "startup_checks": {
+    "config2p4_applied": true,
+    "baseline_50_windows": true,
+    "pn_1248": true,
+    "pn_stability": true,
+    "restored_rf_stability": true,
+    "clock_20_checks": true,
+    "adi_status_20_checks": true,
+    "rf_original_restored": true,
+    "driver_v7": true,
+    "all_1s_bd_checked": true,
+    "gain_still_76": true
+  },
+  "source_checks": {
+    "physical_mig_matches_tested_2g": true,
+    "pins_match_tested_2g": true,
+    "ps_dma_aperture_unchanged": true,
+    "axi_connections_unchanged": true,
+    "dma_and_receiver_parameters_unchanged": true,
+    "rf_files_unchanged": 21,
+    "tested_application_files": 53,
+    "interface_adaptation": {
+      "C0_S_AXI_ID_WIDTH": {
+        "bist": "1",
+        "receiver": "2"
+      },
+      "ModuleName": {
+        "bist": "ddr_test_mig_7series_0_0",
+        "receiver": "design_1_mig_7series_0_0"
+      },
+      "C0_S_AXI_SUPPORTS_NARROW_BURST": {
+        "bist": "1",
+        "receiver": "0"
+      }
+    }
+  },
+  "artifact_hashes": {
+    "export/zc706_top.bit": "08a316408e9f5b9c9c4bf588ed47c1b52a0150b0b73cb8ee1df63cc9737cc020",
+    "export/zc706_top.ltx": "bf8ef24df7dd691876f55b60231af93fc2935818c7df4adabde3bf3acabe8299",
+    "export/zc706_top.xsa": "2029e22fc1a07c541a6f37e056619515b998182e0b8ac1879a5c533c5e5ddf25",
+    "export/key_ctrlll.elf": "3aa93305c54a09fb31297b69699235943c121e67b813200a53b95b1030b5ff9c",
+    "export/key_ctrlll_2p4.elf": "3aa93305c54a09fb31297b69699235943c121e67b813200a53b95b1030b5ff9c",
+    "export/key_ctrlll_dma_debug.elf": "3aa93305c54a09fb31297b69699235943c121e67b813200a53b95b1030b5ff9c",
+    "export/fsbl.elf": "0ba99d91f7f6aa8534d05f7acb59a293be63edb54e30d5000513dba5c4050e7a",
+    "vitis_code/key_ctrl/export/key_ctrl/hw/zc706_top.xsa": "2029e22fc1a07c541a6f37e056619515b998182e0b8ac1879a5c533c5e5ddf25",
+    "vitis_code/key_ctrl/export/key_ctrl/hw/ps7_init.tcl": "9eb9ff6eaf0c3dd04faa39a85e0c266df1c9eee21f481ec822ed20839636a5bf",
+    "vitis_code/key_ctrlll/Debug/key_ctrlll.elf": "3aa93305c54a09fb31297b69699235943c121e67b813200a53b95b1030b5ff9c",
+    "vitis_code/key_ctrlll/_ide/bitstream/zc706_top.bit": "08a316408e9f5b9c9c4bf588ed47c1b52a0150b0b73cb8ee1df63cc9737cc020"
+  },
+  "artifact_hash_checks": {
+    "export/zc706_top.bit": true,
+    "export/zc706_top.ltx": true,
+    "export/zc706_top.xsa": true,
+    "export/key_ctrlll.elf": true,
+    "export/key_ctrlll_2p4.elf": true,
+    "export/key_ctrlll_dma_debug.elf": true,
+    "export/fsbl.elf": true,
+    "vitis_code/key_ctrl/export/key_ctrl/hw/zc706_top.xsa": true,
+    "vitis_code/key_ctrl/export/key_ctrl/hw/ps7_init.tcl": true,
+    "vitis_code/key_ctrlll/Debug/key_ctrlll.elf": true,
+    "vitis_code/key_ctrlll/_ide/bitstream/zc706_top.bit": true
+  },
+  "xsa_embedded_bit_matches": true,
+  "timing": {
+    "wns_ns": 0.355,
+    "whs_ns": 0.041,
+    "wpws_ns": 0.062,
+    "constraints_met": true
+  },
+  "board_audit_pass": true,
+  "mig_ila_snapshot": {
+    "samples": 1024,
+    "ui_reset": 0,
+    "resetn": 1,
+    "mmcm_locked": 1,
+    "calib_complete": 1,
+    "source": "200MHz ILA, synchronized diagnostic flags",
+    "short_snapshot_only": true
+  },
+  "known_pages": {
+    "comparisons": 96,
+    "passed": 96,
+    "failed": 0,
+    "sampled_only": true
+  },
+  "captures": {
+    "8m": {
+      "requested_bytes": 8388608,
+      "capture_id": "0000001583b5d842",
+      "label": "8m",
+      "files": [
+        {
+          "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/reports/mig2g_rx_20261021_160858/captures/rx_2g_8m_read1.bin",
+          "bytes": 8388608,
+          "tuples": 1048576,
+          "sha256": "a7cd0eacdebb10aeac0cf33d9cd6b8c7302a13b2b547f34e041ee6f18f676342",
+          "bad_I1_Q1_I2_Q2": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "min": [
+            -638,
+            -637,
+            -269,
+            -334
+          ],
+          "max": [
+            621,
+            624,
+            272,
+            268
+          ],
+          "rail_tuples_RX1_RX2": [
+            0,
+            0
+          ],
+          "duplicate_packet_copies": 0,
+          "adjacent_duplicate_packets": 0,
+          "stored_file_sha_matches": true,
+          "stored_chunk_crcs_match": true,
+          "network_read_bad": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "checks_pass": true
+        },
+        {
+          "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/reports/mig2g_rx_20261021_160858/captures/rx_2g_8m_read2.bin",
+          "bytes": 8388608,
+          "tuples": 1048576,
+          "sha256": "a7cd0eacdebb10aeac0cf33d9cd6b8c7302a13b2b547f34e041ee6f18f676342",
+          "bad_I1_Q1_I2_Q2": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "min": [
+            -638,
+            -637,
+            -269,
+            -334
+          ],
+          "max": [
+            621,
+            624,
+            272,
+            268
+          ],
+          "rail_tuples_RX1_RX2": [
+            0,
+            0
+          ],
+          "duplicate_packet_copies": 0,
+          "adjacent_duplicate_packets": 0,
+          "stored_file_sha_matches": true,
+          "stored_chunk_crcs_match": true,
+          "network_read_bad": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "checks_pass": true
+        }
+      ],
+      "rf_registers_unchanged": true,
+      "readbacks_identical": true,
+      "bd_ok": true,
+      "sampled_ddr_ok": true,
+      "all_words_valid": true,
+      "continuity_proven": false,
+      "network_transfer": {
+        "complete_downloads": 2,
+        "resumed_after_one_timeout": false,
+        "additional_uninterrupted_transfer": false
+      },
+      "checks_pass": true
+    },
+    "1s": {
+      "requested_bytes": 122880000,
+      "capture_id": "0000001e77d6f6e4",
+      "label": "1s",
+      "files": [
+        {
+          "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/reports/mig2g_rx_20261021_160858/captures/rx_2g_1s_read1.bin",
+          "bytes": 122880000,
+          "tuples": 15360000,
+          "sha256": "bfa66defc6e0805f3a2c6f604bf4440965c29afd6c34f867b086b0c1aca78f2c",
+          "bad_I1_Q1_I2_Q2": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "min": [
+            -2048,
+            -2048,
+            -619,
+            -588
+          ],
+          "max": [
+            2047,
+            2047,
+            596,
+            593
+          ],
+          "rail_tuples_RX1_RX2": [
+            684,
+            0
+          ],
+          "duplicate_packet_copies": 0,
+          "adjacent_duplicate_packets": 0,
+          "stored_file_sha_matches": true,
+          "stored_chunk_crcs_match": true,
+          "network_read_bad": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "checks_pass": true
+        },
+        {
+          "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/reports/mig2g_rx_20261021_160858/captures/rx_2g_1s_read2.bin",
+          "bytes": 122880000,
+          "tuples": 15360000,
+          "sha256": "bfa66defc6e0805f3a2c6f604bf4440965c29afd6c34f867b086b0c1aca78f2c",
+          "bad_I1_Q1_I2_Q2": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "min": [
+            -2048,
+            -2048,
+            -619,
+            -588
+          ],
+          "max": [
+            2047,
+            2047,
+            596,
+            593
+          ],
+          "rail_tuples_RX1_RX2": [
+            684,
+            0
+          ],
+          "duplicate_packet_copies": 0,
+          "adjacent_duplicate_packets": 0,
+          "stored_file_sha_matches": true,
+          "stored_chunk_crcs_match": true,
+          "network_read_bad": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "checks_pass": true
+        },
+        {
+          "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/reports/mig2g_rx_20261021_160858/captures/rx_2g_1s_read3.bin",
+          "bytes": 122880000,
+          "tuples": 15360000,
+          "sha256": "bfa66defc6e0805f3a2c6f604bf4440965c29afd6c34f867b086b0c1aca78f2c",
+          "bad_I1_Q1_I2_Q2": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "min": [
+            -2048,
+            -2048,
+            -619,
+            -588
+          ],
+          "max": [
+            2047,
+            2047,
+            596,
+            593
+          ],
+          "rail_tuples_RX1_RX2": [
+            684,
+            0
+          ],
+          "duplicate_packet_copies": 0,
+          "adjacent_duplicate_packets": 0,
+          "stored_file_sha_matches": true,
+          "stored_chunk_crcs_match": true,
+          "network_read_bad": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "checks_pass": true
+        }
+      ],
+      "rf_registers_unchanged": true,
+      "readbacks_identical": true,
+      "bd_ok": true,
+      "sampled_ddr_ok": true,
+      "all_words_valid": true,
+      "continuity_proven": false,
+      "network_transfer": {
+        "complete_downloads": 3,
+        "resumed_after_one_timeout": true,
+        "additional_uninterrupted_transfer": true
+      },
+      "checks_pass": true
+    }
+  },
+  "jtag_frozen": {
+    "8m": {
+      "capture_id": "0000001583b5d842",
+      "sampled_only": true,
+      "pages": 14,
+      "readbacks": 42,
+      "checks_pass": true
+    },
+    "1s": {
+      "capture_id": "0000001e77d6f6e4",
+      "sampled_only": true,
+      "pages": 17,
+      "readbacks": 51,
+      "checks_pass": true
+    }
+  },
+  "fft_read_check": [
+    {
+      "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/captures/rx_20261021_2g_8MiB.bin",
+      "channel": 1,
+      "fft_points": 65536,
+      "averages": 16,
+      "analyzed_tuples": 1048576,
+      "total_tuples": 1048576,
+      "sample_rate_hz": 15360000.0,
+      "lo_hz": 2400000000.0,
+      "rms_counts": 78.03672096710491,
+      "peak_hz": 1902421.875,
+      "peak_dbfs": -52.81902512839585,
+      "clipped_in_analysis_window": 0,
+      "format_error": false
+    },
+    {
+      "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/captures/rx_20261021_2g_8MiB.bin",
+      "channel": 2,
+      "fft_points": 65536,
+      "averages": 16,
+      "analyzed_tuples": 1048576,
+      "total_tuples": 1048576,
+      "sample_rate_hz": 15360000.0,
+      "lo_hz": 2400000000.0,
+      "rms_counts": 34.748906770154456,
+      "peak_hz": -3840000.0,
+      "peak_dbfs": -55.619359793336834,
+      "clipped_in_analysis_window": 0,
+      "format_error": false
+    },
+    {
+      "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/captures/rx_20261021_2g_1s.bin",
+      "channel": 1,
+      "fft_points": 65536,
+      "averages": 16,
+      "analyzed_tuples": 1048576,
+      "total_tuples": 15360000,
+      "sample_rate_hz": 15360000.0,
+      "lo_hz": 2400000000.0,
+      "rms_counts": 94.45925719846056,
+      "peak_hz": 3912890.625,
+      "peak_dbfs": -52.16661070983016,
+      "clipped_in_analysis_window": 0,
+      "format_error": false
+    },
+    {
+      "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/captures/rx_20261021_2g_1s.bin",
+      "channel": 2,
+      "fft_points": 65536,
+      "averages": 16,
+      "analyzed_tuples": 1048576,
+      "total_tuples": 15360000,
+      "sample_rate_hz": 15360000.0,
+      "lo_hz": 2400000000.0,
+      "rms_counts": 50.04055083039517,
+      "peak_hz": -3840000.0,
+      "peak_dbfs": -55.82806584852682,
+      "clipped_in_analysis_window": 0,
+      "format_error": false
+    }
+  ],
+  "unit_checks": {
+    "config2p4_tests": 5,
+    "network_capture_tests": 12,
+    "capture_mmu_asan_ubsan": true
+  },
+  "final_board_state": {
+    "state": "ready",
+    "capture_id": "0000001e77d6f6e4",
+    "bytes": 122880000,
+    "debug_read_ops": 1408,
+    "debug_read_bad": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "link_mbps": 1000,
+    "uart_restored_to_cutecom": true
+  },
+  "limitations": [
+    "Normal RF IQ has no known sample sequence; these checks do not prove absence of every dropped/reordered sample.",
+    "RX project retains a 1GiB CPU/DMA aperture despite 2GiB physical DIMM; upper rank capacity is not exercised by these RX captures.",
+    "One TCP timeout occurred during second 1s download. Resume succeeded, all hashes agree; independent third full download also succeeded. Cause unproven.",
+    "1s RX1 has 684 tuples touching +/-12-bit rails; sign extension remains valid. RF amplitude/gain assessment is separate.",
+    "Changing the DIMM and its timing together does not prove the previous 1GiB DIMM itself is faulty."
+  ],
+  "continuity_proven": false,
+  "checks_pass": true
+}

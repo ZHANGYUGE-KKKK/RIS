@@ -1,0 +1,126 @@
+ZC706 / FMCOMMS3：TCP控制台与PL DDR原始IQ导出，firmware v3
+
+Tk图形界面
+  ./run_rx_gui.sh 或 python3 host/rx706_gui.py
+  提供连接、MiB/秒长度设置、板卡日志、采集/下载、暂停续传和DDR释放。
+  详细操作见TK_GUI_GUIDE.txt；现有固件和bin格式保持兼容。
+
+交付与边界
+  ELF: export/key_ctrlll.elf；Vitis应用: vitis_code/key_ctrlll。
+  当前版本已完成交叉编译和主机测试，尚未自动下载板卡。
+  原BIT/XSA、9361 config915、LO、采样率、增益、时序和TX BIST设置保持原样。
+  启动仍执行原初始化、临时PN测试/恢复、时钟检查；通过后开放采集。
+  UART继续镜像日志并接受原按键；TCP控制台提供相同业务。
+
+接线与IP
+  网线连接电脑与ZC706 RJ45，建议在启动程序前插好。
+  电脑有线网卡设置192.168.10.1，掩码255.255.255.0，不需要网关。
+  板卡固定192.168.10.10/24；控制台TCP5000，采集/数据TCP5001。
+  电脑有线网卡/转接器需要支持千兆。status中的link_mbps应为1000。
+  IP常量位于src/drivers/rx_network.h，修改后重编译ELF。
+  使用匹配ZC706平台的Vitis配置下载运行ELF；现有BIT不用重建。
+  也可在项目根目录手动运行原下载入口（会复位、下载BIT并运行ELF）：
+    /home/yyz/vivado2020.2/main/Vitis/2020.2/bin/xsct scripts/program_zc706.tcl run
+
+Python控制（标准库，无需pip；下列命令在本项目根目录运行）
+  查看启动和业务日志：
+    python3 host/rx706.py console
+  等待RX EXTERNAL TEST READY / version=3，输入g/s/0/1/2/q后回车。
+  g=只读增益；s=128KiB射频诊断快照；0/1/2=原三步外部RF测试。
+  q退出本轮三步测试后服务器继续工作；此时t可重新开始三步测试。
+  /exit或Ctrl+C只断开本机控制台连接。
+  控制台回放最近128KiB日志；慢客户端造成丢弃时status.log_overruns会增加。
+  矢网频率/功率和RF开关仍需人工设置，网络按键不会控制仪器。
+
+  另一个终端查看状态：
+    python3 host/rx706.py status
+  state=empty表示可启动；unavailable表示启动检查未通过/尚未完成。
+  数字接口通过PN即可采集，不要求RF的0/1/2三步已PASS。
+  启动期间尚未进入业务循环时状态请求可能等待；可先从console观察启动。
+
+  先采集并保存128KiB：
+    python3 host/rx706.py capture --mib 0.125 -o captures/rx_128k.bin
+  或先从8MiB开始：
+    python3 host/rx706.py capture --mib 8 -o captures/rx_8m.bin
+  成功后显示capture_id，生成bin和bin.json，原数据仍冻结在PL DDR。
+  下一次采集前必须显式释放当前ID：
+    python3 host/rx706.py release 在此填入status显示的capture_id
+  随后可逐级验证128MiB和1020MiB：
+    python3 host/rx706.py capture --mib 1020 -o captures/rx_1020m.bin
+  --mib默认为1020，范围>0到1020，步进0.03125MiB（一个32KiB AXIS包）。
+  --note可记录人工设置，例如 --note "917MHz; source setting -80dBm"。
+
+  只采集，稍后下载：
+    python3 host/rx706.py capture --mib 1020 --no-download
+    python3 host/rx706.py download -o captures/rx_full.bin
+  同一份冻结数据可下载多次，换输出文件名即可。
+  中断下载后续传，文件名必须与首次一致：
+    python3 host/rx706.py download -o captures/rx_full.bin --resume
+  数据接收中使用.bin.part和.bin.part.json；全部校验通过才生成正式bin。
+  续传会核对采集ID/格式/配置，以及已接收部分的本地CRC。
+  板子复位或发生新采集后不能将新数据接到旧的部分文件后面。
+  原始数据保留到显式release或板卡重启；release后不再支持该ID下载。
+
+  终止正在执行的大容量采集：
+    python3 host/rx706.py abort
+  这次部分数据标为无效，不可导出。q只退出原外部RF三步测试，不等于abort。
+  在大容量采集中收到的串口/控制台按键会推迟到采集结束后处理。
+  可通过独立控制台或KEY接口发送已有业务按键：
+    python3 host/rx706.py key s
+  日志在console连接中显示；key接口只确认按键已排队。
+
+容量、格式与时间
+  PL DDR共1GiB，0x40000000..0x403FFFFF预留4MiB给DMA和管理。
+  有效数据区0x40400000..0x7FFFFFFF，上限1020MiB=1069547520字节。
+  最大32640个描述符，每个64字节；每包32768字节=4096组IQ。
+  最大133693440组{I1,Q1,I2,Q2}，Fs=15.36MSPS时长8.704秒。
+  8.704秒是一次连续采样的时间，不包括准备描述符、复位和网络传输。
+  先采后传；ARM发出后到采集结束，不执行大块DDR导出或RF诊断采样。
+  网络传输速率需实测，不能用千兆链路标称值推算实际持续导出性能。
+
+  bin只含原始样本，顺序I1,Q1,I2,Q2，每项小端有符号int16，12位符号扩展。
+  不含TCP头/JSON头/CRC，不执行FFT、去直流、加窗、归一化或抽取。
+  bin.json记录完整性、SHA256、分块CRC、Fs、名义LO配置、RF寄存器前后回读、
+  DMA/捕获状态、数据长度和采集ID。计数单位tuples指双通道同一时刻的4项IQ。
+  capture_status是在DMA完成前检查的状态；tail_status记录完成后的尾部状态，
+  源继续产生数据导致的尾部FIFO溢出与有效窗口内错误分别记录。
+  数据导出成功表示传输和采集完整，不等于RF信号质量/功率标定合格。
+
+MATLAB
+  addpath('host');
+  [rx1,rx2,meta] = read_rx706('captures/rx_full.bin',0,1048576);
+  Fs = meta.capture.sample_rate_hz;
+  函数按起始tuple和tuple数量读取一个块，返回single复数，避免整GiB转double。
+  读取下一块时将起始tuple改为1048576。原始int16仍可直接通过fread读取。
+
+实现与重建
+  ./build_rx_network.sh生成/安装lwip211 1.2 BSP，编译应用并更新export。
+  HSI独立生成在vitis_code/network_bsp，不需要关闭占用工作区的Vitis IDE。
+  平台的standalone_domain已加入lwIP；FSBL域和硬件保持原样。
+  IDE重新编译前对平台和应用Refresh；makefile.defs保留新增驱动及lwip4链接项。
+  本机工具路径在脚本内沿用既有Vivado/Vitis2020.2安装。
+  ./tests/run_network_capture.sh：ASan/UBSan驱动状态/地址检查、分段TCP协议、
+  CRC失败、断线续传、旧ID拒绝、本地部分文件损坏和禁止覆盖测试。
+  ./tests/run_rx_tone.sh：原射频诊断算法回归。
+  reports/network_capture保存原固件备份、构建和测试记录。
+
+协议（TCP5001）
+  一次只允许一个未完成请求，ASCII命令以换行结束；响应为一行JSON。
+  HELLO / STATUS
+  CAPTURE <字节数>
+  READ <capture_id> <字节偏移> <字节数>
+  RELEASE <capture_id>
+  ABORT
+  KEY <单个业务字符>
+  READ的JSON头含type=data、capture_id、offset、length、crc32，随后紧跟length
+  个二进制字节。每块最大262144字节，偏移/长度均为8的倍数。
+  CRC为IEEE CRC32（与Python zlib.crc32一致）。响应头不写入bin。
+  每个端口各允许一个客户端；可同时打开一个console和一个数据控制连接。
+  采集中禁止再次启动或读取未完成数据；数据就绪后禁止再次采集直到release。
+
+上板验证顺序
+  1. 网络协商到1000Mbps，console可见启动PN/时钟检查结果并可执行g/s。
+  2. 128KiB、8MiB、128MiB、1020MiB依次采集/导出，检查DMA/FIFO错误。
+  3. 同一冻结数据下载两次SHA256相同；中断后--resume得到同一SHA256。
+  4. MATLAB确认通道排列、12位符号扩展、文件长度和已知917MHz输入的频谱。
+  当前尚无本版千兆链路和1020MiB连续采样的板级验证结果。

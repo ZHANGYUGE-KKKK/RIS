@@ -1,0 +1,252 @@
+{
+  "register_checks": {
+    "002": {
+      "actual": 222,
+      "expected": 222,
+      "matches": true
+    },
+    "003": {
+      "actual": 222,
+      "expected": 222,
+      "matches": true
+    },
+    "004": {
+      "actual": 3,
+      "expected": 3,
+      "matches": true
+    },
+    "006": {
+      "actual": 15,
+      "expected": 15,
+      "matches": true
+    },
+    "007": {
+      "actual": 0,
+      "expected": 0,
+      "matches": true
+    },
+    "009": {
+      "actual": 7,
+      "expected": 7,
+      "matches": true
+    },
+    "00A": {
+      "actual": 2,
+      "expected": 2,
+      "matches": true
+    },
+    "010": {
+      "actual": 200,
+      "expected": 200,
+      "matches": true
+    },
+    "011": {
+      "actual": 0,
+      "expected": 0,
+      "matches": true
+    },
+    "012": {
+      "actual": 16,
+      "expected": 16,
+      "matches": true
+    },
+    "013": {
+      "actual": 1,
+      "expected": 1,
+      "matches": true
+    },
+    "014": {
+      "actual": 35,
+      "expected": 35,
+      "matches": true
+    },
+    "015": {
+      "actual": 12,
+      "expected": 12,
+      "matches": true
+    },
+    "03C": {
+      "actual": 33,
+      "expected": 33,
+      "matches": true
+    },
+    "03D": {
+      "actual": 0,
+      "expected": 0,
+      "matches": true
+    },
+    "03E": {
+      "actual": 0,
+      "expected": 0,
+      "matches": true
+    },
+    "041": {
+      "actual": 18,
+      "expected": 18,
+      "matches": true
+    },
+    "042": {
+      "actual": 92,
+      "expected": 92,
+      "matches": true
+    },
+    "043": {
+      "actual": 41,
+      "expected": 41,
+      "matches": true
+    },
+    "044": {
+      "actual": 24,
+      "expected": 24,
+      "matches": true
+    },
+    "045": {
+      "actual": 0,
+      "expected": 0,
+      "matches": true
+    },
+    "292": {
+      "actual": 8,
+      "expected": 8,
+      "matches": true
+    },
+    "293": {
+      "actual": 128,
+      "expected": 128,
+      "matches": true
+    },
+    "294": {
+      "actual": 0,
+      "expected": 0,
+      "matches": true
+    },
+    "2AB": {
+      "actual": 7,
+      "expected": 7,
+      "matches": true
+    },
+    "2AC": {
+      "actual": 255,
+      "expected": 255,
+      "matches": true
+    },
+    "3F4": {
+      "actual": 83,
+      "expected": 83,
+      "matches": true
+    },
+    "3F5": {
+      "actual": 0,
+      "expected": 0,
+      "matches": true
+    },
+    "3F6": {
+      "actual": 48,
+      "expected": 48,
+      "matches": true
+    }
+  },
+  "bbpll_hz": 983040000.7659314,
+  "rx_clock_stages_hz": [
+    245760000.19148284,
+    122880000.09574142,
+    61440000.04787071,
+    30720000.023935355,
+    15360000.011967678
+  ],
+  "tx_clock_stages_hz": [
+    245760000.19148284,
+    122880000.09574142,
+    61440000.04787071,
+    30720000.023935355,
+    15360000.011967678
+  ],
+  "pll_locks": {
+    "bbpll": true,
+    "rx": true,
+    "tx": true
+  },
+  "trials": [
+    {
+      "index": 0,
+      "reg010": "C8",
+      "reg03d": "00",
+      "reg03e": "00",
+      "reg006": "0F",
+      "pn_result": -4,
+      "channel_status": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "sample_delta": 594673,
+      "edge_delta": 1789392,
+      "estimated_rx_mhz": 178.85527588553046
+    },
+    {
+      "index": 1,
+      "reg010": "C9",
+      "reg03d": "00",
+      "reg03e": "00",
+      "reg006": "0F",
+      "pn_result": -4,
+      "channel_status": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "sample_delta": 590852,
+      "edge_delta": 1445124,
+      "estimated_rx_mhz": 144.6341765100559
+    },
+    {
+      "index": 2,
+      "reg010": "C8",
+      "reg03d": "FF",
+      "reg03e": "0F",
+      "reg006": "0F",
+      "pn_result": -4,
+      "channel_status": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "sample_delta": 592805,
+      "edge_delta": 1784252,
+      "estimated_rx_mhz": 179.01610604716456
+    },
+    {
+      "index": 3,
+      "reg010": "C9",
+      "reg03d": "FF",
+      "reg03e": "0F",
+      "reg006": "0F",
+      "pn_result": -4,
+      "channel_status": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "sample_delta": 591408,
+      "edge_delta": 1452003,
+      "estimated_rx_mhz": 145.43911421532806
+    }
+  ],
+  "pn_pass_count": 0,
+  "restore_result": 0,
+  "changed_spi_restored": true,
+  "fpga_delays_unchanged": true,
+  "final_arm": 0,
+  "final_flags": 1,
+  "core_control": 0,
+  "pn_select": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

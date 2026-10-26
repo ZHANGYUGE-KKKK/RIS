@@ -1,0 +1,2 @@
+PASS: isolated full-project synthesis; explicit receiver ILA XDC; implemented four probes and all 122 bit connections verified from LTX; 100 MHz receiver clock verified.
+No route, bitstream or hardware programming performed. Full-design DRC still reports the existing MIG PLIDC-2 warning; timing closure is not claimed.

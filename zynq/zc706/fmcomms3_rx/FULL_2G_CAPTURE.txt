@@ -1,0 +1,65 @@
+ZC706 完整 2 GiB PL DDR 采集（2026-10-21）
+
+容量和时长
+物理 DDR：2 GiB，MT16JSF25664HZ-1G4F1，2Rx8 DDR3-1333。
+前 4 MiB 预留给 SG 描述符，最大有效 IQ：2044 MiB = 2143289344 字节。
+保持 15.36 MSPS、双通道、小端 int16 I1/Q1/I2/Q2，每组 8 字节。
+最大 267911168 组 IQ，约 17.442133 秒；65408 个 BD，每个 32 KiB。
+长度按 4096 组 IQ（32 KiB）对齐；输入秒数时 GUI 自动向上取整。
+
+串口/JTAG 调试（当前采用）
+115200，8N1；CuteCom 发送 ASCII 单字符即可。
+d：查看当前冻结采集、BD 检查及各阶段 CRC；g：只读查询增益及路径。
+c：采集 8 MiB；v：采集 1 秒；r：显式释放当前冻结采集。
+未释放的冻结采集不会被 c/v 覆盖。本轮满容量数据保留在板上，尚未释放。
+JTAG 检查可直接读 CPU 窗口；切 bank 前须停止所有会读 PL DDR 的软件请求，
+完成后恢复 bank=0，避免影响位于低半区的 BD。不要同时运行网口下载。
+本轮通过串口复查和 JTAG 的 19 页、每页 3 次读回（57/57），包括边界和末尾。
+已有的完整 BIN 离线逐字检查：I1/Q1/I2/Q2 格式错误均为 0；
+实测满容量 DMA 采集耗时 17.441257 秒，65408/65408 BD 完成。
+未知 RF 数据无法严格证明样本序号连续；后续需已知连续测试序列验证丢点。
+
+上位机操作
+以下网口操作留待用户启用板端网络后使用；本轮后续板测仅用串口/JTAG。
+重新启动 host/rx706_gui.py，使正在运行的 Python 进程加载新的容量上限。
+连接 192.168.1.10，长度可选择“秒”或“MiB”。
+“满容量”设置为 2044 MiB；完成后先下载，再释放，避免覆盖冻结数据。
+命令行例子：
+python3 host/rx706.py capture --mib 2044 --output captures/rx_full_2g.bin
+已有冻结采集时：
+python3 host/rx706.py download --output captures/rx_full_2g.bin
+中断后使用相同文件名加 --resume；需要同名 .part 和 .part.json。
+BIN 和同名 .bin.json 一起保留，现有 FFT/Matlab 数据排列不变。
+
+地址含义（板级调试时必须区分）
+DMA 的 PL DDR 总线地址：0x00000000..0x7fffffff，共 2 GiB。
+BD 总线地址：0x00000000..0x003fffff。
+IQ 总线地址：0x00400000..0x7fffffff。
+上述地址属于 PL DMA 的地址空间，不是 Cortex-A9 的 PS DDR 物理地址。
+不得在 PS 中直接解引用 0x00400000 来读取 IQ。
+
+Zynq GP0 固定只有 1 GiB CPU 地址窗口：0x40000000..0x7fffffff。
+新增 axi_gpio_ddr_bank（0x83000000）的 bit0 选择这个窗口对应哪半内存：
+bank=0：CPU window 对应 DDR 总线 0x00000000..0x3fffffff。
+bank=1：CPU window 对应 DDR 总线 0x40000000..0x7fffffff。
+CPU 地址 = 0x40000000 + (DMA 总线地址 & 0x3fffffff)。
+GP1 的原 DMA/GPIO/RX 控制寄存器地址保持不变。
+DMA SG/S2MM 不经过 CPU 切窗，整个长采集只提交一次完整 BD 链表。
+
+软件保证
+mig_ddr_read() 自动处理跨 1 GiB 边界的请求，完成后恢复 bank 0。
+SG 描述符始终位于 bank 0：DMA 使用总线地址，XAxiDma 使用独立 CPU 虚拟地址。
+切换前后执行 DSB；CPU 窗口使用 Device 内存属性，避免缓存和推测读取。
+CPU0 独占窗口，IRQ 不使用它；PS DDR、代码、栈、堆和网口缓存保持在 PS DDR。
+连续指针接口只适用于一个 bank 内的短诊断采集；大采集使用分块读取接口。
+DEBUG 会检查 1 GiB 边界前后，以及末尾页，保留原有 BD/格式/重复读取诊断。
+
+硬件和软件必须配套
+版本标识：RX diagnostic version=8。
+重新生成 BIT/XSA，原 key_ctrl 平台、key_ctrlll 应用及全部导出 ELF 均须配套。
+AD9361 CONFIG2P4、LO、采样率、MGC 和时序配置不因本次容量扩展而改变。
+
+测试结果入口
+reports/full2g_active.txt 指向本轮报告。
+以报告中的 RESULT.txt / verification.json 为最终板测结论；
+单元测试和时序通过本身不能替代板上完整采集、下载和格式检查。

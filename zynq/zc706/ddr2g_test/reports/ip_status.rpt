@@ -1,0 +1,91 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
+| Date         : Wed Oct 21 15:11:18 2026
+| Host         : yyz-SER8 running 64-bit Ubuntu 24.04.1 LTS
+| Command      : report_ip_status
+------------------------------------------------------------------------------------
+
+IP Status Summary
+
+1. Project IP Status
+--------------------
+Your project uses 14 IP. Some of these IP may have undergone changes in this release of the software. Please review the recommended actions.
+
+More information on the Xilinx versioning policy is available at www.xilinx.com.
+
+Project IP Instances
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| Instance Name             | Status     | Recommendation      | Change    | IP Name            | IP      | New Version   | New        | Original Part        |
+|                           |            |                     | Log       |                    | Version |               | License    |                      |
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| ddr_test_bist_0           | Up-to-date | No changes required | Change    | ddr_bist_v1_0      | 1.0     | 1.0 (Rev. 1)  | Included   | xc7z045ffg900-2      |
+|                           |            |                     | Log not   |                    | (Rev.   |               |            |                      |
+|                           |            |                     | available |                    | 1)      |               |            |                      |
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| ddr_test_clkbuf_0         | Up-to-date | No changes required |  *(1)     | Utility Buffer     | 2.1     | 2.1 (Rev. 23) | Included   | xc7z045ffg900-2      |
+|                           |            |                     |           |                    | (Rev.   |               |            |                      |
+|                           |            |                     |           |                    | 23)     |               |            |                      |
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| ddr_test_control_bus_0    | Up-to-date | No changes required |  *(2)     | AXI Interconnect   | 2.1     | 2.1 (Rev. 23) | Included   | xc7z045ffg900-2      |
+|                           |            |                     |           |                    | (Rev.   |               |            |                      |
+|                           |            |                     |           |                    | 23)     |               |            |                      |
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| ddr_test_control_gpio_0   | Up-to-date | No changes required |  *(3)     | AXI GPIO           | 2.0     | 2.0 (Rev. 24) | Included   | xc7z045ffg900-2      |
+|                           |            |                     |           |                    | (Rev.   |               |            |                      |
+|                           |            |                     |           |                    | 24)     |               |            |                      |
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| ddr_test_diag_0           | Up-to-date | No changes required | Change    | diag_cdc_v1_0      | 1.0     | 1.0 (Rev. 1)  | Included   | xc7z045ffg900-2      |
+|                           |            |                     | Log not   |                    | (Rev.   |               |            |                      |
+|                           |            |                     | available |                    | 1)      |               |            |                      |
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| ddr_test_error_gpio_0     | Up-to-date | No changes required |  *(4)     | AXI GPIO           | 2.0     | 2.0 (Rev. 24) | Included   | xc7z045ffg900-2      |
+|                           |            |                     |           |                    | (Rev.   |               |            |                      |
+|                           |            |                     |           |                    | 24)     |               |            |                      |
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| ddr_test_inv_reset_0      | Up-to-date | No changes required |  *(5)     | Utility Vector     | 2.0     | 2.0 (Rev. 1)  | Included   | xc7z045ffg900-2      |
+|                           |            |                     |           | Logic              | (Rev.   |               |            |                      |
+|                           |            |                     |           |                    | 1)      |               |            |                      |
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| ddr_test_mig_0            | Up-to-date | No changes required |  *(6)     | Memory Interface   | 4.2     | 4.2 (Rev. 1)  | Included   | xc7z045ffg900-2      |
+|                           |            |                     |           | Generator (MIG 7   | (Rev.   |               |            |                      |
+|                           |            |                     |           | Series)            | 1)      |               |            |                      |
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| ddr_test_mig_clock_0      | Up-to-date | No changes required |  *(7)     | Clocking Wizard    | 6.0     | 6.0 (Rev. 6)  | Included   | xc7z045ffg900-2      |
+|                           |            |                     |           |                    | (Rev.   |               |            |                      |
+|                           |            |                     |           |                    | 6)      |               |            |                      |
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| ddr_test_mig_reset_gate_0 | Up-to-date | No changes required |  *(8)     | Utility Vector     | 2.0     | 2.0 (Rev. 1)  | Included   | xc7z045ffg900-2      |
+|                           |            |                     |           | Logic              | (Rev.   |               |            |                      |
+|                           |            |                     |           |                    | 1)      |               |            |                      |
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| ddr_test_ps7_0            | Up-to-date | No changes required |  *(9)     | ZYNQ7 Processing   | 5.5     | 5.5 (Rev. 6)  | Included   | xc7z045ffg900-2      |
+|                           |            |                     |           | System             | (Rev.   |               |            |                      |
+|                           |            |                     |           |                    | 6)      |               |            |                      |
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| ddr_test_reset_cpu_0      | Up-to-date | No changes required |  *(10)    | Processor System   | 5.0     | 5.0 (Rev. 13) | Included   | xc7z045ffg900-2      |
+|                           |            |                     |           | Reset              | (Rev.   |               |            |                      |
+|                           |            |                     |           |                    | 13)     |               |            |                      |
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| ddr_test_reset_ddr_0      | Up-to-date | No changes required |  *(11)    | Processor System   | 5.0     | 5.0 (Rev. 13) | Included   | xc7z045ffg900-2      |
+|                           |            |                     |           | Reset              | (Rev.   |               |            |                      |
+|                           |            |                     |           |                    | 13)     |               |            |                      |
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+| ddr_test_value_gpio_0     | Up-to-date | No changes required |  *(12)    | AXI GPIO           | 2.0     | 2.0 (Rev. 24) | Included   | xc7z045ffg900-2      |
+|                           |            |                     |           |                    | (Rev.   |               |            |                      |
+|                           |            |                     |           |                    | 24)     |               |            |                      |
++---------------------------+------------+---------------------+-----------+--------------------+---------+---------------+------------+----------------------+
+*(1) /home/yyz/vivado2020.2/main/Vivado/2020.2/data/rsb/iprepos/util_ds_buf_v2_1/doc/util_ds_buf_v2_1_changelog.txt
+*(2) /home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xilinx/axi_interconnect_v2_1/doc/axi_interconnect_v2_1_changelog.txt
+*(3) /home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xilinx/axi_gpio_v2_0/doc/axi_gpio_v2_0_changelog.txt
+*(4) /home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xilinx/axi_gpio_v2_0/doc/axi_gpio_v2_0_changelog.txt
+*(5) /home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xilinx/util_vector_logic_v2_0/doc/util_vector_logic_v2_0_changelog.txt
+*(6) /home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xilinx/mig_7series_v4_2/doc/mig_7series_v4_2_changelog.txt
+*(7) /home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xilinx/clk_wiz_v6_0/doc/clk_wiz_v6_0_changelog.txt
+*(8) /home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xilinx/util_vector_logic_v2_0/doc/util_vector_logic_v2_0_changelog.txt
+*(9) /home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xilinx/processing_system7_v5_5/doc/processing_system7_v5_5_changelog.txt
+*(10) /home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xilinx/proc_sys_reset_v5_0/doc/proc_sys_reset_v5_0_changelog.txt
+*(11) /home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xilinx/proc_sys_reset_v5_0/doc/proc_sys_reset_v5_0_changelog.txt
+*(12) /home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xilinx/axi_gpio_v2_0/doc/axi_gpio_v2_0_changelog.txt
+
+

@@ -1,0 +1,1830 @@
+{
+  "tested_reads": 96,
+  "failed_reads": 60,
+  "rows": [
+    {
+      "address": "30000000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "01001bd1",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "30000000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "01001bd1",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "30000000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "01001bd1",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "30000000",
+      "pattern": "ones",
+      "trial": 0,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "f154670a",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "30000000",
+      "pattern": "ones",
+      "trial": 1,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "f154670a",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "30000000",
+      "pattern": "ones",
+      "trial": 2,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "f154670a",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "30000000",
+      "pattern": "random",
+      "trial": 0,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c3551f92",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "30000000",
+      "pattern": "random",
+      "trial": 1,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c3551f92",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "30000000",
+      "pattern": "random",
+      "trial": 2,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c3551f92",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "30000000",
+      "pattern": "zero",
+      "trial": 0,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c71c0011",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "30000000",
+      "pattern": "zero",
+      "trial": 1,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c71c0011",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "30000000",
+      "pattern": "zero",
+      "trial": 2,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c71c0011",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "40400000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "01001bd1",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "40400000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "01001bd1",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "40400000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "01001bd1",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "40400000",
+      "pattern": "ones",
+      "trial": 0,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "f154670a",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "40400000",
+      "pattern": "ones",
+      "trial": 1,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "f154670a",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "40400000",
+      "pattern": "ones",
+      "trial": 2,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "f154670a",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "40400000",
+      "pattern": "random",
+      "trial": 0,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c3551f92",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "40400000",
+      "pattern": "random",
+      "trial": 1,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c3551f92",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "40400000",
+      "pattern": "random",
+      "trial": 2,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c3551f92",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "40400000",
+      "pattern": "zero",
+      "trial": 0,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c71c0011",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "40400000",
+      "pattern": "zero",
+      "trial": 1,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c71c0011",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "40400000",
+      "pattern": "zero",
+      "trial": 2,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c71c0011",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "404e4000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bad_bytes": 10,
+      "bad_by_lane_mod8": [
+        0,
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "1280ba48",
+      "xor_or": 255,
+      "first_bad_offset": 73
+    },
+    {
+      "address": "404e4000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bad_bytes": 6,
+      "bad_by_lane_mod8": [
+        0,
+        6,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "e55eca1f",
+      "xor_or": 127,
+      "first_bad_offset": 529
+    },
+    {
+      "address": "404e4000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bad_bytes": 9,
+      "bad_by_lane_mod8": [
+        0,
+        9,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "d1ce57fc",
+      "xor_or": 255,
+      "first_bad_offset": 441
+    },
+    {
+      "address": "404e4000",
+      "pattern": "ones",
+      "trial": 0,
+      "bad_bytes": 6,
+      "bad_by_lane_mod8": [
+        0,
+        6,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "71d1c004",
+      "xor_or": 255,
+      "first_bad_offset": 177
+    },
+    {
+      "address": "404e4000",
+      "pattern": "ones",
+      "trial": 1,
+      "bad_bytes": 5,
+      "bad_by_lane_mod8": [
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "57068c6f",
+      "xor_or": 255,
+      "first_bad_offset": 25
+    },
+    {
+      "address": "404e4000",
+      "pattern": "ones",
+      "trial": 2,
+      "bad_bytes": 10,
+      "bad_by_lane_mod8": [
+        0,
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "6af698c7",
+      "xor_or": 255,
+      "first_bad_offset": 129
+    },
+    {
+      "address": "404e4000",
+      "pattern": "random",
+      "trial": 0,
+      "bad_bytes": 4,
+      "bad_by_lane_mod8": [
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "39003e04",
+      "xor_or": 254,
+      "first_bad_offset": 409
+    },
+    {
+      "address": "404e4000",
+      "pattern": "random",
+      "trial": 1,
+      "bad_bytes": 13,
+      "bad_by_lane_mod8": [
+        0,
+        13,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "67997b4d",
+      "xor_or": 255,
+      "first_bad_offset": 409
+    },
+    {
+      "address": "404e4000",
+      "pattern": "random",
+      "trial": 2,
+      "bad_bytes": 7,
+      "bad_by_lane_mod8": [
+        0,
+        7,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "1980c44d",
+      "xor_or": 255,
+      "first_bad_offset": 409
+    },
+    {
+      "address": "404e4000",
+      "pattern": "zero",
+      "trial": 0,
+      "bad_bytes": 9,
+      "bad_by_lane_mod8": [
+        0,
+        9,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "dba9ffd9",
+      "xor_or": 255,
+      "first_bad_offset": 1
+    },
+    {
+      "address": "404e4000",
+      "pattern": "zero",
+      "trial": 1,
+      "bad_bytes": 14,
+      "bad_by_lane_mod8": [
+        0,
+        14,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "845b4291",
+      "xor_or": 255,
+      "first_bad_offset": 289
+    },
+    {
+      "address": "404e4000",
+      "pattern": "zero",
+      "trial": 2,
+      "bad_bytes": 9,
+      "bad_by_lane_mod8": [
+        0,
+        9,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "3a4e1a19",
+      "xor_or": 255,
+      "first_bad_offset": 473
+    },
+    {
+      "address": "40580000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bad_bytes": 111,
+      "bad_by_lane_mod8": [
+        0,
+        111,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "63e2013a",
+      "xor_or": 255,
+      "first_bad_offset": 113
+    },
+    {
+      "address": "40580000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bad_bytes": 117,
+      "bad_by_lane_mod8": [
+        0,
+        117,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "0a406421",
+      "xor_or": 255,
+      "first_bad_offset": 97
+    },
+    {
+      "address": "40580000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bad_bytes": 107,
+      "bad_by_lane_mod8": [
+        0,
+        107,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "ac90ee19",
+      "xor_or": 255,
+      "first_bad_offset": 41
+    },
+    {
+      "address": "40580000",
+      "pattern": "ones",
+      "trial": 0,
+      "bad_bytes": 121,
+      "bad_by_lane_mod8": [
+        0,
+        121,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "00c25c0a",
+      "xor_or": 255,
+      "first_bad_offset": 1
+    },
+    {
+      "address": "40580000",
+      "pattern": "ones",
+      "trial": 1,
+      "bad_bytes": 99,
+      "bad_by_lane_mod8": [
+        0,
+        99,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "7d7e01ae",
+      "xor_or": 255,
+      "first_bad_offset": 49
+    },
+    {
+      "address": "40580000",
+      "pattern": "ones",
+      "trial": 2,
+      "bad_bytes": 101,
+      "bad_by_lane_mod8": [
+        0,
+        101,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "5adb3b62",
+      "xor_or": 255,
+      "first_bad_offset": 17
+    },
+    {
+      "address": "40580000",
+      "pattern": "random",
+      "trial": 0,
+      "bad_bytes": 103,
+      "bad_by_lane_mod8": [
+        0,
+        103,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "a9ce21db",
+      "xor_or": 255,
+      "first_bad_offset": 17
+    },
+    {
+      "address": "40580000",
+      "pattern": "random",
+      "trial": 1,
+      "bad_bytes": 125,
+      "bad_by_lane_mod8": [
+        0,
+        125,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "be95e117",
+      "xor_or": 255,
+      "first_bad_offset": 1
+    },
+    {
+      "address": "40580000",
+      "pattern": "random",
+      "trial": 2,
+      "bad_bytes": 112,
+      "bad_by_lane_mod8": [
+        0,
+        112,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "bce56139",
+      "xor_or": 255,
+      "first_bad_offset": 9
+    },
+    {
+      "address": "40580000",
+      "pattern": "zero",
+      "trial": 0,
+      "bad_bytes": 93,
+      "bad_by_lane_mod8": [
+        0,
+        93,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "5cf1725e",
+      "xor_or": 255,
+      "first_bad_offset": 41
+    },
+    {
+      "address": "40580000",
+      "pattern": "zero",
+      "trial": 1,
+      "bad_bytes": 86,
+      "bad_by_lane_mod8": [
+        0,
+        86,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "89bf68c1",
+      "xor_or": 255,
+      "first_bad_offset": 9
+    },
+    {
+      "address": "40580000",
+      "pattern": "zero",
+      "trial": 2,
+      "bad_bytes": 89,
+      "bad_by_lane_mod8": [
+        0,
+        89,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "72d5f9f7",
+      "xor_or": 255,
+      "first_bad_offset": 25
+    },
+    {
+      "address": "41184000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bad_bytes": 250,
+      "bad_by_lane_mod8": [
+        250,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "7926b10f",
+      "xor_or": 255,
+      "first_bad_offset": 8
+    },
+    {
+      "address": "41184000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bad_bytes": 252,
+      "bad_by_lane_mod8": [
+        251,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "7d4217ec",
+      "xor_or": 255,
+      "first_bad_offset": 0
+    },
+    {
+      "address": "41184000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bad_bytes": 235,
+      "bad_by_lane_mod8": [
+        234,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "a62ea04d",
+      "xor_or": 255,
+      "first_bad_offset": 0
+    },
+    {
+      "address": "41184000",
+      "pattern": "ones",
+      "trial": 0,
+      "bad_bytes": 258,
+      "bad_by_lane_mod8": [
+        253,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "249490a4",
+      "xor_or": 255,
+      "first_bad_offset": 16
+    },
+    {
+      "address": "41184000",
+      "pattern": "ones",
+      "trial": 1,
+      "bad_bytes": 229,
+      "bad_by_lane_mod8": [
+        227,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "5515da9b",
+      "xor_or": 255,
+      "first_bad_offset": 0
+    },
+    {
+      "address": "41184000",
+      "pattern": "ones",
+      "trial": 2,
+      "bad_bytes": 256,
+      "bad_by_lane_mod8": [
+        252,
+        0,
+        0,
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "7c031c1a",
+      "xor_or": 255,
+      "first_bad_offset": 8
+    },
+    {
+      "address": "41184000",
+      "pattern": "random",
+      "trial": 0,
+      "bad_bytes": 235,
+      "bad_by_lane_mod8": [
+        233,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "2b5100c5",
+      "xor_or": 255,
+      "first_bad_offset": 8
+    },
+    {
+      "address": "41184000",
+      "pattern": "random",
+      "trial": 1,
+      "bad_bytes": 214,
+      "bad_by_lane_mod8": [
+        212,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "efe46932",
+      "xor_or": 255,
+      "first_bad_offset": 40
+    },
+    {
+      "address": "41184000",
+      "pattern": "random",
+      "trial": 2,
+      "bad_bytes": 260,
+      "bad_by_lane_mod8": [
+        257,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "53a97ac6",
+      "xor_or": 255,
+      "first_bad_offset": 0
+    },
+    {
+      "address": "41184000",
+      "pattern": "zero",
+      "trial": 0,
+      "bad_bytes": 253,
+      "bad_by_lane_mod8": [
+        248,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "deb7c520",
+      "xor_or": 255,
+      "first_bad_offset": 0
+    },
+    {
+      "address": "41184000",
+      "pattern": "zero",
+      "trial": 1,
+      "bad_bytes": 251,
+      "bad_by_lane_mod8": [
+        248,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "b83cda2e",
+      "xor_or": 255,
+      "first_bad_offset": 8
+    },
+    {
+      "address": "41184000",
+      "pattern": "zero",
+      "trial": 2,
+      "bad_bytes": 264,
+      "bad_by_lane_mod8": [
+        262,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "47633055",
+      "xor_or": 255,
+      "first_bad_offset": 0
+    },
+    {
+      "address": "425c4000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bad_bytes": 45,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        1,
+        22,
+        21,
+        0,
+        1
+      ],
+      "crc": "ebccb1ab",
+      "xor_or": 255,
+      "first_bad_offset": 124
+    },
+    {
+      "address": "425c4000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bad_bytes": 44,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        1,
+        21,
+        22,
+        0,
+        0
+      ],
+      "crc": "829a25ab",
+      "xor_or": 255,
+      "first_bad_offset": 13
+    },
+    {
+      "address": "425c4000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bad_bytes": 44,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        3,
+        24,
+        17,
+        0,
+        0
+      ],
+      "crc": "f74f4e76",
+      "xor_or": 255,
+      "first_bad_offset": 27
+    },
+    {
+      "address": "425c4000",
+      "pattern": "ones",
+      "trial": 0,
+      "bad_bytes": 45,
+      "bad_by_lane_mod8": [
+        1,
+        0,
+        0,
+        0,
+        19,
+        25,
+        0,
+        0
+      ],
+      "crc": "3cd7e5f6",
+      "xor_or": 255,
+      "first_bad_offset": 197
+    },
+    {
+      "address": "425c4000",
+      "pattern": "ones",
+      "trial": 1,
+      "bad_bytes": 48,
+      "bad_by_lane_mod8": [
+        1,
+        0,
+        0,
+        0,
+        19,
+        28,
+        0,
+        0
+      ],
+      "crc": "3ecec0b6",
+      "xor_or": 255,
+      "first_bad_offset": 252
+    },
+    {
+      "address": "425c4000",
+      "pattern": "ones",
+      "trial": 2,
+      "bad_bytes": 46,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        2,
+        17,
+        27,
+        0,
+        0
+      ],
+      "crc": "792522d3",
+      "xor_or": 255,
+      "first_bad_offset": 149
+    },
+    {
+      "address": "425c4000",
+      "pattern": "random",
+      "trial": 0,
+      "bad_bytes": 52,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        1,
+        27,
+        24,
+        0,
+        0
+      ],
+      "crc": "a63d1ca1",
+      "xor_or": 255,
+      "first_bad_offset": 124
+    },
+    {
+      "address": "425c4000",
+      "pattern": "random",
+      "trial": 1,
+      "bad_bytes": 55,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        2,
+        30,
+        23,
+        0,
+        0
+      ],
+      "crc": "c70302dc",
+      "xor_or": 255,
+      "first_bad_offset": 132
+    },
+    {
+      "address": "425c4000",
+      "pattern": "random",
+      "trial": 2,
+      "bad_bytes": 47,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        1,
+        29,
+        17,
+        0,
+        0
+      ],
+      "crc": "0f4cdd70",
+      "xor_or": 255,
+      "first_bad_offset": 60
+    },
+    {
+      "address": "425c4000",
+      "pattern": "zero",
+      "trial": 0,
+      "bad_bytes": 36,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        1,
+        20,
+        15,
+        0,
+        0
+      ],
+      "crc": "01a3df25",
+      "xor_or": 255,
+      "first_bad_offset": 84
+    },
+    {
+      "address": "425c4000",
+      "pattern": "zero",
+      "trial": 1,
+      "bad_bytes": 37,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        1,
+        21,
+        15,
+        0,
+        0
+      ],
+      "crc": "f6612b3c",
+      "xor_or": 255,
+      "first_bad_offset": 69
+    },
+    {
+      "address": "425c4000",
+      "pattern": "zero",
+      "trial": 2,
+      "bad_bytes": 42,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        1,
+        24,
+        17,
+        0,
+        0
+      ],
+      "crc": "6547150e",
+      "xor_or": 255,
+      "first_bad_offset": 92
+    },
+    {
+      "address": "4792f000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bad_bytes": 19,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        19,
+        0,
+        0,
+        0
+      ],
+      "crc": "3e382f0b",
+      "xor_or": 255,
+      "first_bad_offset": 196
+    },
+    {
+      "address": "4792f000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bad_bytes": 21,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        21,
+        0,
+        0,
+        0
+      ],
+      "crc": "ad44c586",
+      "xor_or": 255,
+      "first_bad_offset": 500
+    },
+    {
+      "address": "4792f000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bad_bytes": 23,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        21,
+        1,
+        0,
+        1
+      ],
+      "crc": "ebeffad5",
+      "xor_or": 255,
+      "first_bad_offset": 116
+    },
+    {
+      "address": "4792f000",
+      "pattern": "ones",
+      "trial": 0,
+      "bad_bytes": 19,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        18,
+        1,
+        0,
+        0
+      ],
+      "crc": "818edd60",
+      "xor_or": 255,
+      "first_bad_offset": 452
+    },
+    {
+      "address": "4792f000",
+      "pattern": "ones",
+      "trial": 1,
+      "bad_bytes": 16,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        16,
+        0,
+        0,
+        0
+      ],
+      "crc": "3071b4fe",
+      "xor_or": 255,
+      "first_bad_offset": 116
+    },
+    {
+      "address": "4792f000",
+      "pattern": "ones",
+      "trial": 2,
+      "bad_bytes": 17,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        17,
+        0,
+        0,
+        0
+      ],
+      "crc": "b3fa961a",
+      "xor_or": 255,
+      "first_bad_offset": 252
+    },
+    {
+      "address": "4792f000",
+      "pattern": "random",
+      "trial": 0,
+      "bad_bytes": 18,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        18,
+        0,
+        0,
+        0
+      ],
+      "crc": "d94e39fe",
+      "xor_or": 255,
+      "first_bad_offset": 36
+    },
+    {
+      "address": "4792f000",
+      "pattern": "random",
+      "trial": 1,
+      "bad_bytes": 15,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        14,
+        0,
+        0,
+        1
+      ],
+      "crc": "db98112a",
+      "xor_or": 255,
+      "first_bad_offset": 36
+    },
+    {
+      "address": "4792f000",
+      "pattern": "random",
+      "trial": 2,
+      "bad_bytes": 21,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        21,
+        0,
+        0,
+        0
+      ],
+      "crc": "c7680bec",
+      "xor_or": 255,
+      "first_bad_offset": 36
+    },
+    {
+      "address": "4792f000",
+      "pattern": "zero",
+      "trial": 0,
+      "bad_bytes": 14,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        1,
+        13,
+        0,
+        0,
+        0
+      ],
+      "crc": "d8a14358",
+      "xor_or": 255,
+      "first_bad_offset": 676
+    },
+    {
+      "address": "4792f000",
+      "pattern": "zero",
+      "trial": 1,
+      "bad_bytes": 12,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        12,
+        0,
+        0,
+        0
+      ],
+      "crc": "98ecf3f7",
+      "xor_or": 255,
+      "first_bad_offset": 300
+    },
+    {
+      "address": "4792f000",
+      "pattern": "zero",
+      "trial": 2,
+      "bad_bytes": 12,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        12,
+        0,
+        0,
+        0
+      ],
+      "crc": "e833e6db",
+      "xor_or": 255,
+      "first_bad_offset": 164
+    },
+    {
+      "address": "70000000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "01001bd1",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "70000000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "01001bd1",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "70000000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "01001bd1",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "70000000",
+      "pattern": "ones",
+      "trial": 0,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "f154670a",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "70000000",
+      "pattern": "ones",
+      "trial": 1,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "f154670a",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "70000000",
+      "pattern": "ones",
+      "trial": 2,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "f154670a",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "70000000",
+      "pattern": "random",
+      "trial": 0,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c3551f92",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "70000000",
+      "pattern": "random",
+      "trial": 1,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c3551f92",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "70000000",
+      "pattern": "random",
+      "trial": 2,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c3551f92",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "70000000",
+      "pattern": "zero",
+      "trial": 0,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c71c0011",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "70000000",
+      "pattern": "zero",
+      "trial": 1,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c71c0011",
+      "xor_or": 0,
+      "first_bad_offset": null
+    },
+    {
+      "address": "70000000",
+      "pattern": "zero",
+      "trial": 2,
+      "bad_bytes": 0,
+      "bad_by_lane_mod8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "crc": "c71c0011",
+      "xor_or": 0,
+      "first_bad_offset": null
+    }
+  ]
+}

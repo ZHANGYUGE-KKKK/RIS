@@ -1,0 +1,38 @@
+{
+  "source": "user UART log",
+  "physical_module": "MT16JSF25664HZ-1G4F1",
+  "capacity_bytes": 2147483648,
+  "suite": "PASS",
+  "patterns": [
+    {
+      "pattern": "ZERO",
+      "elapsed_ms": 7992,
+      "error_words": 0,
+      "bus_error": 0
+    },
+    {
+      "pattern": "ONES",
+      "elapsed_ms": 7981,
+      "error_words": 0,
+      "bus_error": 0
+    },
+    {
+      "pattern": "AA55",
+      "elapsed_ms": 7893,
+      "error_words": 0,
+      "bus_error": 0
+    },
+    {
+      "pattern": "ADDRESS_XOR",
+      "elapsed_ms": 7900,
+      "error_words": 0,
+      "bus_error": 0
+    },
+    {
+      "pattern": "INVERSE_ADDRESS_XOR",
+      "elapsed_ms": 7994,
+      "error_words": 0,
+      "bus_error": 0
+    }
+  ]
+}

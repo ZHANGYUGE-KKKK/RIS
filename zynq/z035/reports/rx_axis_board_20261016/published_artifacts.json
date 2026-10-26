@@ -1,0 +1,19 @@
+{
+  "backup": "/home/yyz/work/RIS/zynq/z035/backups/before_rx_board_publish_20261016_180747",
+  "rtl_sha256": "9e18a38d233bf723319d35c09968da39f2be7d5b9f4a50f992844a19c2e5979e",
+  "snapshot": "/tmp/ad9361_rx_validation_68_1792144654",
+  "artifacts": [
+    {
+      "path": "/home/yyz/work/RIS/zynq/z035/PZ_UART.runs/impl_1/pz7035_top.bit",
+      "sha256": "f589670ea1b5656d9d44f17854c3ceca053a18b6fca33e8b0d0cc0260e3d331b"
+    },
+    {
+      "path": "/home/yyz/work/RIS/zynq/z035/PZ_UART.runs/impl_1/pz7035_top.ltx",
+      "sha256": "f0c1b8a4027b3393bcd4d745635ae144bcec0f9c73b6a198bcdded8c6f628f81"
+    },
+    {
+      "path": "/home/yyz/work/RIS/zynq/z035/pz7035_top.xsa",
+      "sha256": "116014f6aa08bdd908ef0f83317725f5eaafead4feee057f298faa00ad549d99"
+    }
+  ]
+}

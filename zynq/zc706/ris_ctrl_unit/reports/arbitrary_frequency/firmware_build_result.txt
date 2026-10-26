@@ -1,0 +1,5 @@
+Final firmware built in native Vitis GUI: 15:36:56 Build Finished. See vitis_build_ready.png.
+Prior headless XSCT attempts could not build the app in the already open IDE workspace (duplicate lwip4 setting, then Invalid Workspace).
+Platform hardware was updated successfully. GUI build used matching software copies and produced the new ELF with ris_fast_start_hz/ticks.
+GUI launch programmed BIT, initialized PS7, downloaded ELF and continued on cable 210299995170 at 15:39. See vitis_download.log.
+CLI build should run with this Vitis workspace closed; when IDE is open use Refresh/Build Project and its existing Debug launch.

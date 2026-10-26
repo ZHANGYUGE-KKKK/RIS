@@ -1,0 +1,56 @@
+ZC706 PL SO-DIMM capacity research — 2026-10-21
+
+Scope: research only. No hardware, firmware, MIG, or clock changes performed.
+Current development remains on the user-confirmed1GiB MT8JTF12864HZ-1G6G1.
+
+Official board documentation:
+UG954 v1.8 p19 specifies the supplied/qualified1GB,64-bit DDR3-1600 SO-DIMM.
+It does NOT publish a guaranteed maximum replacement module capacity.
+Table1-4 p19-23 routes A0..A15, BA0..BA2, DQ0..63, S0#/S1#, CKE0/CKE1,
+ODT0/ODT1, and two clock pairs from the PL to J1.
+Notable additional pins: A14 G11, A15 C6, S1# H8, CKE1 C7, ODT1 C9.
+https://docs.amd.com/api/khub/documents/m4fPXowvxKd5JZRfe046WQ/content
+
+Controller capability:
+AMD DS176 v4.2 lists single/dual-rank SODIMM, x8/x16 devices, and1/2/4/8Gb
+DDR3 component density support. Gb is bits per component, not module GB.
+https://docs.amd.com/r/en-US/ds176_7Series_MIS/DDR3-SDRAM-Features
+With64 data bits, eight x8 devices per rank, and two ranks,8Gb devices
+would mathematically yield16GiB. This is a component/organization inference,
+NOT an AMD guarantee that a16GiB replacement has been validated on ZC706.
+
+8GiB adaptation candidate:
+Micron MT16JTF1G64HZ-1G6E1 (obsolete part, no current stock claim)
+204-pin unbuffered non-ECC DDR3 SO-DIMM;1.5V;2Rx8;64-bit.
+16x4Gb (512M×8) components;4GiB/rank;8GiB total.
+Row16 / Column10 / Bank3 / two ranks.
+DDR3-1600, CK800MHz, tCK1.25ns, CL-tRCD-tRP11-11-11.
+Official Micron SPD catalog confirms exact part number, density/rank/width,
+timing and voltage encoding. Its tRFC is260ns, unlike current1GiB profile110ns.
+https://www.micron.com/products/obsolete/obsolete-sodimm/part-catalog/part-detail/spd-data/mt16jtf1g64hz-1g6e1
+Manufacturer-authored family datasheet, mirror (p1-2):
+https://media.digikey.com/pdf/Data%20Sheets/Micron%20Technology%20Inc%20PDFs/MT16JTF_64HZ_Rev2013.pdf
+
+Engineering conclusion:
+The ZC706 connector signals and the MIG feature set provide a basis to design
+for this8GiB2Rx8 module; board-specific operation and full-capacity integrity
+have NOT been validated. It is not a plug-and-play replacement for current BIT.
+MIG rank/row/timing/pins and all address handling require redesign/validation.
+The local Vivado2020.2 MIG memory-part library contains MT16JTF1G64HZ-1G4,
+not an observed -1G6 entry. Running the candidate at its1600MT/s grade needs
+a verified custom/equivalent part profile; this research did not generate one.
+
+Address path limitation:
+8GiB byte addressing needs33bits;16GiB needs34bits. Existing MIG is30bits,
+AXI DMA is configured for32-bit addresses, PS Cortex-A9/GP addresses are32bits,
+and current PL DDR CPU aperture is only1GiB(0x40000000..0x7fffffff).
+Increasing memory depth alone cannot expose the whole8GiB to this software.
+A widened PL memory/DMA path plus a PS access window or staging/read engine
+would be needed. The33-bit capacity requirement is mathematical; native UI
+addresses count DRAM locations differently and must not be confused with AXI
+byte addresses. Local MIG4.2 component.xml permits AXI addr-width model values
+up to36; this metadata is not a proof that every module/configuration builds.
+
+No upgrade implementation or purchase was performed. Candidate is for future
+adaptation and board testing, not a promise of compatibility or a root-cause
+fix for the current1GiB data error.

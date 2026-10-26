@@ -1,0 +1,27 @@
+/axi_dma_0/Data_SG
+/axi_dma_0/Data_SG/SEG_mig_7series_0_memaddr offset=0x00000000 range=0x80000000
+/axi_dma_0/Data_S2MM
+/axi_dma_0/Data_S2MM/SEG_mig_7series_0_memaddr offset=0x00000000 range=0x80000000
+/processing_system7_0/Data
+/processing_system7_0/Data/SEG_ad9361_rx_axis_0_reg0 offset=0x82000000 range=0x00010000
+/processing_system7_0/Data/SEG_axi_dma_0_Reg offset=0x81000000 range=0x00010000
+/processing_system7_0/Data/SEG_axi_gpio_9361_Reg offset=0x80020000 range=0x00000080
+/processing_system7_0/Data/SEG_axi_gpio_ris_ctl_Reg offset=0x80010000 range=0x00000080
+/processing_system7_0/Data/SEG_ddr_cpu_window_reg0 offset=0x40000000 range=0x40000000
+/processing_system7_0/Data/SEG_axi_gpio_ddr_bank_Reg offset=0x83000000 range=0x00010000
+/ddr_cpu_window/M_AXI
+/ddr_cpu_window/M_AXI/SEG_mig_7series_0_memaddr offset=0x00000000 range=0x80000000
+/axi_dma_0/S_AXI_LITE
+/axi_dma_0/S_AXI_LITE/Reg offset= range=0x00001000
+/mig_7series_0/memmap
+/mig_7series_0/memmap/memaddr offset= range=0x80000000
+/axi_gpio_ris_ctl/S_AXI
+/axi_gpio_ris_ctl/S_AXI/Reg offset= range=0x00001000
+/axi_gpio_9361/S_AXI
+/axi_gpio_9361/S_AXI/Reg offset= range=0x00001000
+/ddr_cpu_window/S_AXI
+/ddr_cpu_window/S_AXI/reg0 offset= range=0x40000000
+/ad9361_rx_axis_0/S_AXI
+/ad9361_rx_axis_0/S_AXI/reg0 offset= range=0x00010000
+/axi_gpio_ddr_bank/S_AXI
+/axi_gpio_ddr_bank/S_AXI/Reg offset= range=0x00001000

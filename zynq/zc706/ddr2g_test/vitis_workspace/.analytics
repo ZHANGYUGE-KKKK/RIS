@@ -1,0 +1,20 @@
+timestamp=[2026-10-21 15:16:13], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:01.498, duration_ms=1498, data={}
+timestamp=[2026-10-21 15:16:20], mode=APP_CREATION, duration=0:00:03.911, duration_ms=3911, data={name=ddr2g_test, project_type=sdk, os=standalone, processor=cortex-a9, runtime=C/C++, platform=ddr2g_platform, application_type=application}
+timestamp=[2026-10-21 15:16:21], mode=BUILD, duration=0:00:00.531, duration_ms=531, data={name=ddr2g_test, configuration=Debug, clean_build=false}
+timestamp=[2026-10-21 15:36:36], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:01.338, duration_ms=1338, data={}
+timestamp=[2026-10-21 15:36:37], mode=BUILD, duration=0:00:00.496, duration_ms=496, data={name=ddr2g_test, configuration=Debug, clean_build=false}
+timestamp=[2026-10-21 15:39:08], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:01.412, duration_ms=1412, data={}
+timestamp=[2026-10-21 15:39:10], mode=BUILD, duration=0:00:00.496, duration_ms=496, data={name=ddr2g_test, configuration=Debug, clean_build=false}
+timestamp=[2026-10-21 15:47:28], mode=WORKBENCH_START, duration=0:00:04.433, duration_ms=4433, data={}
+timestamp=[2026-10-21 15:47:28], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:00.012, duration_ms=12, data={}
+timestamp=[2026-10-21 15:47:28], mode=WORKBENCH_UI_INIT, duration=0:00:00.196, duration_ms=196, data={editors_count=0, platform_editors_count=0, projects_count=2, platform_projects_count=0, active_platform_editor=false, projects=ddr2g_test,ddr2g_test_system}
+timestamp=[2026-10-21 15:48:18], mode=WORKBENCH_START, duration=0:00:04.362, duration_ms=4362, data={}
+timestamp=[2026-10-21 15:48:18], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:00.011, duration_ms=11, data={}
+timestamp=[2026-10-21 15:48:18], mode=WORKBENCH_UI_INIT, duration=0:00:00.232, duration_ms=232, data={editors_count=0, platform_editors_count=0, projects_count=3, platform_projects_count=0, active_platform_editor=false, projects=RemoteSystemsTempFiles,ddr2g_test,ddr2g_test_system}
+timestamp=[2026-10-21 15:49:43], mode=WORKBENCH_START, duration=0:00:04.494, duration_ms=4494, data={}
+timestamp=[2026-10-21 15:49:43], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:00.019, duration_ms=19, data={}
+timestamp=[2026-10-21 15:49:44], mode=WORKBENCH_UI_INIT, duration=0:00:00.238, duration_ms=238, data={editors_count=0, platform_editors_count=0, projects_count=3, platform_projects_count=0, active_platform_editor=false, projects=RemoteSystemsTempFiles,ddr2g_test,ddr2g_test_system}
+timestamp=[2026-10-21 15:50:28], mode=WORKBENCH_START, duration=0:00:04.589, duration_ms=4589, data={}
+timestamp=[2026-10-21 15:50:28], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:00.017, duration_ms=17, data={}
+timestamp=[2026-10-21 15:50:28], mode=WORKBENCH_UI_INIT, duration=0:00:00.248, duration_ms=248, data={editors_count=0, platform_editors_count=0, projects_count=3, platform_projects_count=0, active_platform_editor=false, projects=RemoteSystemsTempFiles,ddr2g_test,ddr2g_test_system}
+timestamp=[2026-10-21 15:56:25], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:01.861, duration_ms=1861, data={}

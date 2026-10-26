@@ -1,0 +1,933 @@
+--- before/vitis_code/key_ctrlll/src/helloworld.c
++++ vitis_code/key_ctrlll/src/helloworld.c
+@@ -1039,9 +1039,10 @@
+ {
+     char key;
+     xil_printf("\r\n%s\r\nPress %c when ready, or q to stop: ", message, expected);
+-    xil_printf("[g=read gain, s=capture current RF without a test verdict]\r\n");
++    xil_printf("[g=read gain, s=capture current RF, d=DMA/DDR debug record]\r\n");
+     for (;;) {
+         key = inbyte();
++        if (key == 'd' || key == 'D') { capture_store_debug_print(); continue; }
+         if (key == 'q' || key == 'Q') { xil_printf("q\r\n"); return -1; }
+         if (key == 'g' || key == 'G' || key == 's' || key == 'S') {
+             int status;
+@@ -1153,6 +1154,7 @@
+      * sticky-ARM FIFO resets. DMA's poll checked errors before completion;
+      * post-window flags never validate or invalidate unowned tail data. */
+     reset_status = rx_external_rearm();
++    dma_diag_print(dma_9361_last_debug(), "snapshot_after_stop");
+     if (reset_status != 0) {
+         rx_external_report.failure_mask |= 0x80U;
+         xil_printf("RX EXT stop/reset/readback FAILED; stop testing and reload hardware\r\n");
+@@ -1224,7 +1226,7 @@
+     char prompt[192];
+     memset(&rx_external_report, 0, sizeof(rx_external_report));
+     rx_external_report.magic = 0x52584558U; /* RXEX */
+-    rx_external_report.version = 4U;
++    rx_external_report.version = 5U;
+     rx_external_report.result = -1;
+     rx_external_report.capture_clean = 1U;
+     rx_external_report.failure_mask = 0x100U; /* Setup/readback until ready. */
+@@ -1238,7 +1240,7 @@
+         capture_store_init(&receiver, &capture, rx_external_rearm, rx_store_rf_read);
+     rx_external_report.failure_mask = 0U;
+     xil_printf("\r\nRX EXTERNAL TEST READY: connect 3671E PORT1 -> RX1A; RX1 is the tested channel\r\n");
+-    xil_printf("RX diagnostic version=4: UART/TCP console; g=read gain, s=current-RF snapshot\r\n");
++    xil_printf("RX diagnostic version=5: raw BD/preflight and sampled DDR checks; g=gain s=snapshot d=DMA/DDR debug\r\n");
+     xil_printf("Profile=" RX_RF_PROFILE_NAME "; RX/TX LO=%u MHz; " RX_RF_TX_DESCRIPTION ".\r\n",
+                (unsigned)RX_RF_LO_MHZ);
+     xil_printf("RF configuration remains unchanged during the external test.\r\n");
+@@ -1340,12 +1342,13 @@
+     else
+         xil_printf("RX EXTERNAL TEST SKIPPED: initialization, PN, restored clock/frame must pass first; ARM=0\r\n");
+     Xil_DCacheFlush(); dsb();
+-    xil_printf("RX network service remains active; g=gain s=snapshot t=three-step test, q=return here\r\n");
++    xil_printf("RX network service remains active; g=gain s=snapshot d=DMA/DDR debug t=three-step test, q=return here\r\n");
+     (void)external_result;
+     for (;;) {
+         char key = inbyte();
+         if (capture_store.state == CAP_STORE_UNAVAILABLE) continue;
+-        if (key == 'g' || key == 'G') (void)rx_external_gain_read("manual", &rx_manual_gain_report);
++        if (key == 'd' || key == 'D') capture_store_debug_print();
++        else if (key == 'g' || key == 'G') (void)rx_external_gain_read("manual", &rx_manual_gain_report);
+         else if (key == 's' || key == 'S') (void)rx_external_snapshot();
+         else if (key == 't' || key == 'T') (void)rx_external_selftest();
+     }
+--- before/vitis_code/key_ctrlll/src/drivers/rx_control.c
++++ vitis_code/key_ctrlll/src/drivers/rx_control.c
+@@ -41,6 +41,11 @@
+         }
+         goto reply;
+     }
++    if (count == 1U && !strcmp(word[0], "DEBUG")) {
++        n = capture_store_debug_json(out, 8192U);
++        if (n <= 0) goto bad;
++        goto reply;
++    }
+     if (count == 2U && !strcmp(word[0], "CAPTURE") && !number(word[1], &a)) {
+         rc = capture_store_begin(a);
+         if (!rc) { n = capture_store_json(out, RX_NET_FRAME_BYTES); goto reply; }
+@@ -49,7 +54,7 @@
+     } else if (count == 1U && !strcmp(word[0], "ABORT")) {
+         capture_store_abort(); rc = 0;
+     } else if (count == 2U && !strcmp(word[0], "KEY") && strlen(word[1]) == 1U &&
+-               strchr("gs012qtGSQT", word[1][0])) {
++               strchr("gsd012qtGSDQT", word[1][0])) {
+         rc = rx_network_queue_key(word[1][0]);
+     } else if (count == 4U && !strcmp(word[0], "READ") &&
+                !number(word[2], &a) && !number(word[3], &b)) {
+--- before/vitis_code/key_ctrlll/src/drivers/capture_store.h
++++ vitis_code/key_ctrlll/src/drivers/capture_store.h
+@@ -3,6 +3,7 @@
+ #include "dma_9361.h"
+ #include "capture_format.h"
+ #include "xtime_l.h"
++#include "capture_debug.h"
+ #define CAPTURE_RF_REGS 14U
+ enum capture_store_state { CAP_STORE_UNAVAILABLE, CAP_STORE_EMPTY,
+     CAP_STORE_CAPTURING, CAP_STORE_READY, CAP_STORE_FAILED };
+@@ -15,6 +16,9 @@
+     u32 capture_status, tail_status, elapsed_us;
+     int result, reset_verified;
+     XTime start;
++    dma_diag_record dma_debug;
++    capture_debug_report debug;
++    u32 debug_elapsed_us, read_ops, read_bad[4], first_read_bad_offset, first_read_bad_raw;
+ } capture_store_record;
+ extern capture_store_record capture_store;
+ void capture_store_init(dma_9361_device *dma, gpio_9361_device *gpio,
+@@ -29,4 +33,6 @@
+ const char *capture_store_state_name(void);
+ /* Stable metadata/config readback. Output is a complete JSON line. */
+ int capture_store_json(char *buffer, unsigned capacity);
++void capture_store_debug_print(void);
++int capture_store_debug_json(char *buffer, unsigned capacity);
+ #endif
+--- before/vitis_code/key_ctrlll/src/drivers/dma_9361.c
++++ vitis_code/key_ctrlll/src/drivers/dma_9361.c
+@@ -5,6 +5,7 @@
+ #include "xparameters.h"
+ #include "xstatus.h"
+ #include "xtime_l.h"
++#include "xpseudo_asm.h"
+ 
+ #ifndef XPAR_AXI_DMA_0_DEVICE_ID
+ #error "Regenerate the key_ctrl BSP from the XSA containing axi_dma_0."
+@@ -13,6 +14,8 @@
+ #define DMA_9361_RESET_US   10000U
+ #define DMA_9361_POLL_LIMIT 1000000U
+ static void (*service_hook)(void);
++static dma_diag_record last_debug;
++const dma_diag_record *dma_9361_last_debug(void) { return &last_debug; }
+ void dma_9361_set_service_hook(void (*service)(void)) { service_hook = service; }
+ 
+ typedef char dma_9361_sample_must_be_eight_bytes[
+@@ -58,10 +61,69 @@
+     return DMA_9361_OK;
+ }
+ 
++static void save_debug(dma_9361_device *dev, int result)
++{
++    dma_diag_record *d = &dev->debug;
++    d->control = XAxiDma_ReadReg(dev->dma.RegBase, XAXIDMA_RX_OFFSET + XAXIDMA_CR_OFFSET);
++    d->status = XAxiDma_ReadReg(dev->dma.RegBase, XAXIDMA_RX_OFFSET + XAXIDMA_SR_OFFSET);
++    d->current = XAxiDma_ReadReg(dev->dma.RegBase, XAXIDMA_RX_OFFSET + XAXIDMA_CDESC_OFFSET);
++    d->tail = XAxiDma_ReadReg(dev->dma.RegBase, XAXIDMA_RX_OFFSET + XAXIDMA_TDESC_OFFSET);
++    d->result = result;
++    if (d->issues && d->address) {
++        const volatile u32 *raw = (const volatile u32 *)(UINTPTR)d->address;
++        u32 i;
++        dsb();
++        for (i = 0U; i < 16U; ++i) {
++            d->repeat[i] = raw[i];
++            if (d->repeat[i] != d->raw[i]) d->changed_words |= 1U << i;
++        }
++        dsb();
++    }
++    last_debug = *d;
++}
++
++static u32 inspect_bd(dma_9361_device *dev, XAxiDma_Bd *bd, u32 index, u32 receiving)
++{
++    dma_diag_record *d = &dev->debug;
++    const volatile u32 *raw = (const volatile u32 *)bd;
++    u32 i;
++    d->index = index;
++    d->address = (u32)(UINTPTR)bd;
++    d->expected_next = (u32)dev->bd_base + (index + 1U == dev->packet_count ? 0U : (index + 1U) * 64U);
++    d->expected_buffer = (u32)dev->buffer_base + index * DMA_9361_PACKET_BYTES;
++    d->max_length = XAxiDma_GetRxRing(&dev->dma)->MaxTransferLen;
++    dsb();
++    for (i = 0U; i < 16U; ++i) d->raw[i] = raw[i];
++    dsb();
++    d->issues = dma_diag_check(d->raw, d->expected_next, d->expected_buffer,
++                              index, DMA_9361_PACKET_BYTES, d->max_length, receiving);
++    return d->issues;
++}
++
++static int inspect_chain(dma_9361_device *dev, u32 stage)
++{
++    XAxiDma_BdRing *ring = XAxiDma_GetRxRing(&dev->dma);
++    XAxiDma_Bd *bd = dev->bd_set;
++    u32 i;
++    dev->debug.stage = stage;
++    for (i = 0U; i < dev->packet_count; ++i) {
++        if (inspect_bd(dev, bd, i, 0U)) return -1;
++        if (stage == DMA_DIAG_PREPARE) ++dev->debug.prepared_checked;
++        else ++dev->debug.submitted_checked;
++        bd = (XAxiDma_Bd *)XAxiDma_BdRingNext(ring, bd);
++        if (service_hook && (i & 63U) == 63U) service_hook();
++    }
++    return 0;
++}
++
+ static int fail(dma_9361_device *dev, int reason)
+ {
+     int reset_status;
+ 
++    /* Snapshot before XAxiDma_Reset, and preserve the original terminal
++     * transfer record when rearm later calls abort on COMPLETE/FAILED. */
++    if (dev->state != DMA_9361_COMPLETE && dev->state != DMA_9361_FAILED)
++        save_debug(dev, reason);
+     gpio_9361_release_arm(dev->capture);
+     if (dev->started)
+         dev->needs_pl_reset = 1U;
+@@ -152,6 +214,7 @@
+     dev->bd_bytes = (u32)bd_bytes;
+     dev->buffer_bytes = (u32)buffer_bytes;
+     dev->packet_count = packet_count;
++    memset(&dev->debug, 0, sizeof(dev->debug));
+     if (XAxiDma_BdRingCreate(ring, bd_base, bd_base,
+                             XAXIDMA_BD_MINIMUM_ALIGNMENT, packet_count)
+         != XST_SUCCESS)
+@@ -173,6 +236,7 @@
+         bd = (XAxiDma_Bd *)XAxiDma_BdRingNext(ring, bd);
+         if (service_hook && (i & 63U) == 63U) service_hook();
+     }
++    if (inspect_chain(dev, DMA_DIAG_PREPARE)) return fail(dev, DMA_9361_ERR_RING);
+     dev->state = DMA_9361_PREPARED;
+     return DMA_9361_OK;
+ }
+@@ -199,9 +263,12 @@
+         return DMA_9361_ERR_NOT_READY;
+     }
+     ring = XAxiDma_GetRxRing(&dev->dma);
+-    if (XAxiDma_BdRingToHw(ring, dev->packet_count, dev->bd_set)
+-        != XST_SUCCESS || XAxiDma_BdRingStart(ring) != XST_SUCCESS)
++    if (XAxiDma_BdRingToHw(ring, dev->packet_count, dev->bd_set) != XST_SUCCESS)
+         return fail(dev, DMA_9361_ERR_DMA);
++    /* Channel is still stopped: read back the complete submitted chain
++     * before enabling hardware, so CPU/DDR/SG setup faults are distinguishable. */
++    if (inspect_chain(dev, DMA_DIAG_SUBMIT)) return fail(dev, DMA_9361_ERR_RING);
++    if (XAxiDma_BdRingStart(ring) != XST_SUCCESS) return fail(dev, DMA_9361_ERR_DMA);
+     /* Set this conservatively before ARM, so a startup race/error cannot
+      * permit reuse of potentially nonempty FIFOs without system reset.
+      */
+@@ -217,8 +284,6 @@
+     XAxiDma_BdRing *ring;
+     XAxiDma_Bd *set, *bd;
+     int count, i, status;
+-    const u32 required = XAXIDMA_BD_STS_COMPLETE_MASK |
+-                         XAXIDMA_BD_STS_RXSOF_MASK | XAXIDMA_BD_STS_RXEOF_MASK;
+ 
+     if (dev == NULL)
+         return DMA_9361_ERR_ARGUMENT;
+@@ -238,17 +303,17 @@
+     ring = XAxiDma_GetRxRing(&dev->dma);
+     count = XAxiDma_BdRingFromHw(ring, XAXIDMA_ALL_BDS, &set);
+     bd = set;
++    dev->debug.stage = DMA_DIAG_RECEIVE;
+     for (i = 0; i < count; ++i) {
+-        dev->last_bd_status = XAxiDma_BdGetSts(bd);
+-        if (dev->last_bd_status & XAXIDMA_BD_STS_ALL_ERR_MASK)
++        u32 issues = inspect_bd(dev, bd, dev->completed_packets, 1U);
++        /* Read status/length/address/ID once into PS memory, then validate
++         * that same snapshot. BdGetSts intentionally masks out the length. */
++        dev->last_bd_status = dev->debug.raw[7] & XAXIDMA_BD_STS_ALL_MASK;
++        if (issues & DMA_DIAG_HWERROR)
+             return fail(dev, DMA_9361_ERR_DMA);
+-        if ((dev->last_bd_status & required) != required ||
+-            XAxiDma_BdGetActualLength(bd, ring->MaxTransferLen)
+-                != DMA_9361_PACKET_BYTES ||
+-            XAxiDma_BdGetId(bd) != dev->completed_packets ||
+-            XAxiDma_BdGetBufAddr(bd) != dev->buffer_base +
+-                            dev->completed_packets * DMA_9361_PACKET_BYTES)
++        if (issues)
+             return fail(dev, DMA_9361_ERR_PACKET);
++        ++dev->debug.completed_checked;
+         ++dev->completed_packets;
+         dev->received_bytes += DMA_9361_PACKET_BYTES;
+         bd = (XAxiDma_Bd *)XAxiDma_BdRingNext(ring, bd);
+@@ -268,6 +333,8 @@
+     gpio_9361_release_arm(dev->capture);
+     dev->needs_pl_reset = 1U;
+     dev->state = DMA_9361_COMPLETE;
++    dev->debug.stage = DMA_DIAG_DONE;
++    save_debug(dev, DMA_9361_OK);
+     return DMA_9361_OK;
+ }
+ 
+@@ -304,6 +371,14 @@
+     if (!dev->ready)
+         return DMA_9361_ERR_NOT_READY;
+     return fail(dev, DMA_9361_ERR_ABORTED);
++}
++
++int dma_9361_quiesce(dma_9361_device *dev)
++{
++    if (!dev || !dev->ready || dev->state != DMA_9361_COMPLETE)
++        return DMA_9361_ERR_STATE;
++    dsb();
++    return reset_dma(dev);
+ }
+ 
+ int dma_9361_get_samples(const dma_9361_device *dev,
+--- before/vitis_code/key_ctrlll/src/drivers/capture_store.c
++++ vitis_code/key_ctrlll/src/drivers/capture_store.c
+@@ -2,6 +2,7 @@
+ #include "../ad_config/rf_profile.h"
+ #include <stdio.h>
+ #include <string.h>
++#include "xil_printf.h"
+ capture_store_record capture_store;
+ static dma_9361_device *dma;
+ static gpio_9361_device *gpio;
+@@ -19,8 +20,9 @@
+ }
+ static void finish(int result)
+ {
+-    XTime now;
++    XTime now, debug_start;
+     int reset;
++    preparing = 1;
+     XTime_GetTime(&now);
+     capture_store.elapsed_us = (u32)((now - capture_store.start) * 1000000U / COUNTS_PER_SECOND);
+     capture_store.completed_packets = dma->completed_packets;
+@@ -35,11 +37,27 @@
+     if (!result && (read_configuration(capture_store.rf_after) ||
+         memcmp(capture_store.rf_before, capture_store.rf_after, CAPTURE_RF_REGS)))
+         result = DMA_9361_ERR_CONFIG;
++    capture_store.dma_debug = *dma_9361_last_debug();
++    XTime_GetTime(&debug_start);
++    if (!result) {
++        /* Tail descriptors have completed; source/FIFOs may overflow while
++         * diagnosis runs, but DMA owns no further payload buffers. No UART
++         * printing or new capture is allowed until stop/rearm is complete. */
++        capture_debug_begin(&capture_store.debug, CAPTURE_DATA_BASE, capture_store.layout.bytes);
++        capture_debug_measure(&capture_store.debug, 0U);
++        result = dma_9361_quiesce(dma);
++        if (!result) capture_debug_measure(&capture_store.debug, 1U);
++    }
+     reset = rearm_capture();
+     capture_store.reset_verified = reset == 0;
+     if (reset) result = DMA_9361_ERR_RESET_REQUIRED;
++    if (!result) capture_debug_measure(&capture_store.debug, 2U);
++    XTime_GetTime(&now);
++    capture_store.debug_elapsed_us = (u32)((now-debug_start)*1000000U/COUNTS_PER_SECOND);
+     capture_store.result = result;
+     capture_store.state = result ? CAP_STORE_FAILED : CAP_STORE_READY;
++    capture_store_debug_print();
++    preparing = 0;
+ }
+ int capture_store_begin(u32 bytes)
+ {
+@@ -52,6 +70,7 @@
+     if (!capture_store.reset_verified) return DMA_9361_ERR_NOT_READY;
+     if (capture_make_layout(bytes, &layout)) return DMA_9361_ERR_ARGUMENT;
+     memset(&capture_store, 0, sizeof(capture_store));
++    capture_store.first_read_bad_offset = 0xFFFFFFFFU;
+     capture_store.layout = layout;
+     capture_store.state = CAP_STORE_CAPTURING;
+     capture_store.result = DMA_9361_PENDING;
+@@ -96,11 +115,26 @@
+ }
+ int capture_store_read(const char *id, u32 offset, u32 bytes, void *dst)
+ {
+-    if (capture_store.state != CAP_STORE_READY || strcmp(capture_store.id, id) ||
++    u32 i;
++    const unsigned char *data = dst;
++    if (!id || !dst || capture_store.state != CAP_STORE_READY || strcmp(capture_store.id, id) ||
+         !bytes || bytes > CAPTURE_CHUNK_BYTES || (offset | bytes) % CAPTURE_TUPLE_BYTES ||
+         offset > capture_store.layout.bytes || bytes > capture_store.layout.bytes - offset)
+         return -1;
+     memcpy(dst, (const void *)(UINTPTR)(CAPTURE_DATA_BASE + offset), bytes);
++    ++capture_store.read_ops;
++    /* Count exactly the bytes sent, without changing or suppressing invalid
++     * IQ. Counts describe read requests, including retries, not unique samples. */
++    for (i = 0U; i < bytes; i += 2U) {
++        u32 value = (u32)data[i] | (u32)data[i+1U] << 8;
++        if (value > 0x07FFU && value < 0xF800U) {
++            ++capture_store.read_bad[(i/2U) & 3U];
++            if (capture_store.first_read_bad_offset == 0xFFFFFFFFU) {
++                capture_store.first_read_bad_offset = offset+i;
++                capture_store.first_read_bad_raw = value;
++            }
++        }
++    }
+     return 0;
+ }
+ int capture_store_keys_blocked(void)
+@@ -114,6 +148,30 @@
+ {
+     static const char *const names[] = {"unavailable", "empty", "capturing", "ready", "failed"};
+     return names[capture_store.state];
++}
++void capture_store_debug_print(void)
++{
++    if (capture_store.state == CAP_STORE_CAPTURING) return;
++    if (!capture_store.layout.bytes) {
++        dma_diag_print(dma_9361_last_debug(), "last_transfer");
++        xil_printf("RXDBG no bulk capture record; g/s diagnostics are separate\r\n");
++        return;
++    }
++    xil_printf("RXDBG WINDOW id=%s state=%s result=%d requested=%u received=%u packets=%u/%u reset_verified=%d\r\n",
++        capture_store.id, capture_store_state_name(), capture_store.result,
++        capture_store.layout.bytes, capture_store.received_bytes,
++        capture_store.completed_packets, capture_store.layout.packets, capture_store.reset_verified);
++    dma_diag_print(&capture_store.dma_debug, capture_store.id);
++    capture_debug_print(&capture_store.debug, capture_store.id);
++    xil_printf("RXDBG READ requests=%u bad_I1Q1I2Q2=%u/%u/%u/%u first_offset=%08x raw=%04x diagnostic_us=%u\r\n",
++        capture_store.read_ops, capture_store.read_bad[0], capture_store.read_bad[1],
++        capture_store.read_bad[2], capture_store.read_bad[3], capture_store.first_read_bad_offset,
++        capture_store.first_read_bad_raw, capture_store.debug_elapsed_us);
++}
++int capture_store_debug_json(char *buffer, unsigned capacity)
++{
++    if (capture_store.state == CAP_STORE_CAPTURING) return -1;
++    return capture_debug_json(&capture_store.debug, capture_store.id, buffer, capacity);
+ }
+ int capture_store_json(char *b, unsigned capacity)
+ {
+@@ -125,6 +183,12 @@
+         "\"valid_bits\":12,\"data_base\":%u,\"max_bytes\":%u,\"chunk_bytes\":%u,"
+         "\"duration_us\":%u,\"elapsed_us\":%u,\"result\":%d,\"reset_verified\":%d,"
+         "\"dma_status\":%u,\"bd_status\":%u,\"capture_status\":%u,\"tail_status\":%u,"
++        "\"debug_version\":1,\"debug_probe_bytes\":%u,\"debug_phases\":%u,"
++        "\"debug_changed_dma\":%u,\"debug_changed_pl\":%u,\"debug_unstable\":%u,\"debug_memcpy_diff\":%u,"
++        "\"debug_elapsed_us\":%u,\"debug_read_ops\":%u,\"debug_read_bad\":[%u,%u,%u,%u],"
++        "\"debug_first_bad_offset\":%u,\"debug_first_bad_raw\":%u,"
++        "\"debug_bd_issues\":%u,\"debug_bd_index\":%u,\"debug_bd_raw_status\":%u,\"debug_bd_actual\":%u,"
++        "\"debug_bd_words\":[%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u],"
+         "\"rf_regs\":[6,16,250,251,253,265,268,1012,1013,1014,3,4,688,693],"
+         "\"rf_before\":[%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u],"
+         "\"rf_after\":[%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u]}\n",
+@@ -138,6 +202,18 @@
+         capture_store.result, capture_store.reset_verified,
+         (unsigned)capture_store.dma_status,(unsigned)capture_store.bd_status,
+         (unsigned)capture_store.capture_status,(unsigned)capture_store.tail_status,
++        (unsigned)capture_store.debug.count*CAPTURE_DEBUG_PROBE_BYTES, (unsigned)capture_store.debug.phases,
++        (unsigned)capture_store.debug.changed_dma, (unsigned)capture_store.debug.changed_pl,
++        (unsigned)capture_store.debug.unstable, (unsigned)capture_store.debug.copy_mismatch,
++        (unsigned)capture_store.debug_elapsed_us, (unsigned)capture_store.read_ops,
++        (unsigned)capture_store.read_bad[0], (unsigned)capture_store.read_bad[1], (unsigned)capture_store.read_bad[2], (unsigned)capture_store.read_bad[3],
++        (unsigned)capture_store.first_read_bad_offset, (unsigned)capture_store.first_read_bad_raw,
++        (unsigned)capture_store.dma_debug.issues, (unsigned)capture_store.dma_debug.index,
++        (unsigned)capture_store.dma_debug.raw[7], (unsigned)capture_store.dma_debug.raw[7] & (unsigned)capture_store.dma_debug.max_length,
++        (unsigned)capture_store.dma_debug.raw[0], (unsigned)capture_store.dma_debug.raw[1], (unsigned)capture_store.dma_debug.raw[2], (unsigned)capture_store.dma_debug.raw[3],
++        (unsigned)capture_store.dma_debug.raw[4], (unsigned)capture_store.dma_debug.raw[5], (unsigned)capture_store.dma_debug.raw[6], (unsigned)capture_store.dma_debug.raw[7],
++        (unsigned)capture_store.dma_debug.raw[8], (unsigned)capture_store.dma_debug.raw[9], (unsigned)capture_store.dma_debug.raw[10], (unsigned)capture_store.dma_debug.raw[11],
++        (unsigned)capture_store.dma_debug.raw[12], (unsigned)capture_store.dma_debug.raw[13], (unsigned)capture_store.dma_debug.raw[14], (unsigned)capture_store.dma_debug.raw[15],
+         capture_store.rf_before[0],capture_store.rf_before[1],capture_store.rf_before[2],capture_store.rf_before[3],
+         capture_store.rf_before[4],capture_store.rf_before[5],capture_store.rf_before[6],capture_store.rf_before[7],
+         capture_store.rf_before[8],capture_store.rf_before[9],capture_store.rf_before[10],capture_store.rf_before[11],
+--- before/vitis_code/key_ctrlll/src/drivers/dma_9361.h
++++ vitis_code/key_ctrlll/src/drivers/dma_9361.h
+@@ -4,6 +4,7 @@
+ #include "xaxidma.h"
+ #include "gpio_9361.h"
+ #include "mig_ddr.h"
++#include "dma_diag.h"
+ 
+ #ifdef __cplusplus
+ extern "C" {
+@@ -66,6 +67,7 @@
+     u32 last_dma_status;
+     u32 last_bd_status;
+     u32 last_capture_status;
++    dma_diag_record debug;
+     int last_error;
+     enum dma_9361_state state;
+     u8 ready;
+@@ -96,6 +98,11 @@
+  * reset if ARM was issued. Partial buffers are invalid after any failure.
+  */
+ int dma_9361_abort(dma_9361_device *dev);
++/* Stop/reset DMA after completion, preserving DDR and the diagnostic record.
++ * This does not clear the capture FIFOs or permit another ARM. */
++int dma_9361_quiesce(dma_9361_device *dev);
++/* Last transfer snapshot survives init/rearm; no live PL reads or resets. */
++const dma_diag_record *dma_9361_last_debug(void);
+ /* Data becomes CPU-owned only after a successful poll/wait. Another capture
+  * requires PL/system reset to flush both FIFOs and clear latched ARM/errors.
+  * Source continues sampling after this finite window and may then overflow.
+--- before/vitis_code/key_ctrlll/makefile.defs
++++ vitis_code/key_ctrlll/makefile.defs
+@@ -8,7 +8,7 @@
+ endif
+ -include src/drivers/rx_tone.d
+ 
+-RX_NET_SOURCES := capture_format capture_store rx_network rx_control
++RX_NET_SOURCES := capture_format capture_debug dma_diag capture_store rx_network rx_control
+ $(foreach name,$(RX_NET_SOURCES),$(if $(filter ../src/drivers/$(name).c,$(C_SRCS)),,$(eval C_SRCS += ../src/drivers/$(name).c)$(eval OBJS += ./src/drivers/$(name).o)$(eval C_DEPS += ./src/drivers/$(name).d)))
+ # The generated makefile includes C_DEPS before loading this file. Include the
+ # supplemental drivers' dependencies here so header edits rebuild their objects.
+--- before/host/rx706.py
++++ host/rx706.py
+@@ -183,6 +183,14 @@
+     validate_capture(final)
+     if final["capture_id"] != info["capture_id"] or final["bytes"] != size:
+         raise ProtocolError("capture changed during download")
++    # The initial snapshot predates READ diagnostics. Preserve the final
++    # counters too, without changing the frozen source identity used by resume.
++    saved["capture_final"] = final
++    if info.get("debug_version") == 1:
++        debug = client.request("DEBUG")
++        if debug.get("capture_id") != info["capture_id"]:
++            raise ProtocolError("diagnostic record belongs to another capture")
++        saved["debug"] = debug
+     _check_cancel(cancel_event)
+     saved.update(complete=True, sha256=digest.hexdigest(), file_bytes=size,
+                  saved_utc=datetime.now(timezone.utc).isoformat())
+@@ -217,14 +225,14 @@
+                 ended.set()
+ 
+         threading.Thread(target=receive, daemon=True).start()
+-        print("Console: g/s/0/1/2/q; t restarts the three-step test after it ends. /exit disconnects.")
++        print("Console: g/s/d/0/1/2/q; d prints DMA/DDR debug. t restarts the test. /exit disconnects.")
+         try:
+             while not ended.is_set():
+                 key = input().strip()
+                 if key == "/exit":
+                     break
+-                if len(key) != 1 or key not in "gs012qtGSQT":
+-                    print("Send one of g s 0 1 2 q t, or /exit")
++                if len(key) != 1 or key not in "gsd012qtGSDQT":
++                    print("Send one of g s d 0 1 2 q t, or /exit")
+                     continue
+                 connection.sendall(key.encode("ascii"))
+         except (EOFError, KeyboardInterrupt):
+@@ -238,10 +246,11 @@
+     parser.add_argument("--timeout", type=float, default=30)
+     commands = parser.add_subparsers(dest="command", required=True)
+     commands.add_parser("status")
++    commands.add_parser("debug", help="read the saved, sampled DMA/DDR diagnostic record")
+     shell = commands.add_parser("console")
+     shell.add_argument("--console-port", type=int, default=5000)
+     key = commands.add_parser("key")
+-    key.add_argument("key", choices=list("gs012qt"))
++    key.add_argument("key", choices=list("gsd012qt"))
+     commands.add_parser("abort")
+     release = commands.add_parser("release", help="explicitly unlock/discard the current frozen capture")
+     release.add_argument("capture_id")
+@@ -262,6 +271,8 @@
+     with Client(args.host, args.port, args.timeout) as client:
+         if args.command == "status":
+             print(json.dumps(client.request("STATUS"), indent=2))
++        elif args.command == "debug":
++            print(json.dumps(client.request("DEBUG"), indent=2))
+         elif args.command == "key":
+             print(client.request(f"KEY {args.key}"))
+         elif args.command == "abort":
+--- before/tests/test_network_core.c
++++ tests/test_network_core.c
+@@ -13,6 +13,7 @@
+ static gpio_9361_device gpio;
+ static XTime clock_ticks;
+ static int dma_result, reset_result, change_config, auto_complete, polls;
++static int mutate_dma, mutate_pl;
+ static unsigned char response[RX_NET_FRAME_BYTES];
+ static char pending[RX_NET_COMMAND_BYTES];
+ static int pending_valid;
+@@ -40,9 +41,20 @@
+     if (!dma_result) { d->completed_packets = d->packet_count; d->received_bytes = d->buffer_bytes; }
+     return dma_result;
+ }
++const dma_diag_record *dma_9361_last_debug(void) { return &device.debug; }
++int dma_9361_quiesce(dma_9361_device *d)
++{
++    if (mutate_dma) ((u32 *)d->buffer_base)[0] ^= 0x10000U;
++    return 0;
++}
++void fake_barrier(void) {}
+ int gpio_9361_get_status(gpio_9361_device *g, u32 *status)
+ { (void)g; *status = 3; return 0; }
+-static int rearm(void) { return reset_result; }
++static int rearm(void)
++{
++    if (mutate_pl) ((u32 *)(UINTPTR)CAPTURE_DATA_BASE)[1] ^= 1U;
++    return reset_result;
++}
+ static int config(u8 *v)
+ {
+     memset(v, 0, CAPTURE_RF_REGS);
+@@ -65,12 +77,20 @@
+ {
+     static int mapped;
+     if (!mapped) {
+-        void *p = mmap((void *)(UINTPTR)CAPTURE_DATA_BASE, 8U*1024U*1024U,
++        /* ASan reserves the very top of the board's DDR address range for
++         * its shadow. The unsanitized RPC fixture can reserve the whole GiB
++         * virtually; pages are only committed for the bounded probe reads. */
++#ifdef TEST_MAIN
++        const u32 mapped_bytes = 8U*1024U*1024U;
++#else
++        const u32 mapped_bytes = CAPTURE_MAX_BYTES;
++#endif
++        void *p = mmap((void *)(UINTPTR)CAPTURE_DATA_BASE, mapped_bytes,
+                        PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED_NOREPLACE, -1, 0);
+         assert(p == (void *)(UINTPTR)CAPTURE_DATA_BASE); mapped=1;
+     }
+     memset(&device,0,sizeof(device));
+-    reset_result=change_config=auto_complete=0; dma_result=DMA_9361_PENDING;
++    reset_result=change_config=auto_complete=mutate_dma=mutate_pl=0; dma_result=DMA_9361_PENDING;
+     capture_store_init(&device,&gpio,rearm,config);
+ }
+ unsigned test_rpc(const char *cmd, const void **reply)
+@@ -89,7 +109,7 @@
+ {
+     capture_layout l;
+     unsigned char block[64];
+-    char id[17], json[2048];
++    char id[17], json[8192];
+     const void *reply;
+     assert(capture_make_layout(0,&l));
+     assert(capture_make_layout(CAPTURE_MAX_BYTES+32768U,&l));
+@@ -131,8 +151,17 @@
+     assert(capture_store.state==CAP_STORE_FAILED && !capture_store.reset_verified);
+     assert(capture_store_begin(32768)==DMA_9361_ERR_NOT_READY);
+     test_reset(); assert(!capture_store_begin(CAPTURE_MAX_BYTES));
+-    dma_result=0; capture_store_poll();
+-    assert(capture_store.received_bytes==CAPTURE_MAX_BYTES);
++    /* The hardware top-of-DDR overlaps ASan's host shadow region. Validate
++     * full-GiB probe planning without dereferencing that host address range. */
++    {
++        capture_debug_report plan;
++        u32 i;
++        capture_debug_begin(&plan,CAPTURE_DATA_BASE,CAPTURE_MAX_BYTES);
++        assert(plan.count>10 && plan.count<=CAPTURE_DEBUG_MAX_PROBES);
++        for(i=0;i<plan.count;++i)
++            assert(plan.probe[i].offset<=CAPTURE_MAX_BYTES-CAPTURE_DEBUG_PROBE_BYTES);
++    }
++    capture_store_abort();
+     assert(capture_store_json(json,sizeof(json))>0);
+     assert(strstr(json,"1069547520") && strstr(json,"133693440"));
+     assert(test_rpc("STATUS",&reply)>0 && strstr(reply,"\"link_mbps\":1000"));
+@@ -140,6 +169,36 @@
+     assert(test_rpc("CAPTURE 4294967296",&reply)>0 && strstr(reply,"\"ok\":false"));
+     assert(test_rpc("CAPTURE -1",&reply)>0 && strstr(reply,"\"ok\":false"));
+     assert(test_rpc("KEY s",&reply)>0 && queued_key=='s');
++    assert(test_rpc("KEY d",&reply)>0 && queued_key=='d');
++    /* Exercise real probe reads and the stop/rearm phase ordering. */
++    test_reset(); assert(!capture_store_begin(32768));
++    mutate_dma=mutate_pl=1; dma_result=0; capture_store_poll();
++    assert(capture_store.debug.phases==7U);
++    assert(capture_store.debug.changed_dma==1U && capture_store.debug.changed_pl==1U);
++    assert(!capture_store.debug.unstable && !capture_store.debug.copy_mismatch);
++    assert(capture_store_debug_json(json,sizeof(json))>0);
++    assert(strstr(json,"\"sampled_only\":true"));
++    assert(capture_store_debug_json(json,32)==-1);
++    ((u16 *)(UINTPTR)CAPTURE_DATA_BASE)[3]=0x3915U;
++    assert(!capture_store_read(capture_store.id,0,64,block));
++    assert(((u16 *)block)[3]==0x3915U); /* raw invalid data must be preserved */
++    assert(capture_store.read_bad[3]==1U && capture_store.first_read_bad_offset==6U);
++    assert(test_rpc("DEBUG",&reply)>0 && strstr(reply,"\"changed_dma\":1"));
++    /* The classifier must retain the raw actual length, validate ring wrap,
++     * and report independent faults instead of a single packet error. */
++    {
++        u32 bd[16]={0};
++        bd[0]=0x40000000U; bd[2]=0x40400000U; bd[6]=32768U;
++        bd[7]=0x8C008000U;
++        assert(dma_diag_check(bd,bd[0],bd[2],0,32768,0x7fffff,1)==0);
++        bd[7]=0x8C000000U;
++        assert(dma_diag_check(bd,bd[0],bd[2],0,32768,0x7fffff,1)==DMA_DIAG_LENGTH);
++        bd[7]=0x80008000U; bd[0]+=64; bd[2]+=8; bd[13]=1;
++        assert(dma_diag_check(bd,0x40000000U,0x40400000U,0,32768,0x7fffff,1)==
++               (DMA_DIAG_FLAGS|DMA_DIAG_NEXT|DMA_DIAG_BUFFER|DMA_DIAG_ID));
++        bd[7]=0; bd[0]=0x40000000U; bd[2]=0x40400000U; bd[13]=0;
++        assert(!dma_diag_check(bd,bd[0],bd[2],0,32768,0x7fffff,0));
++    }
+     puts("PASS: maximum layout, CRC32, capture ownership, timeout, abort, RF/reset failures and command bounds");
+     return 0;
+ }
+--- before/tests/run_network_capture.sh
++++ tests/run_network_capture.sh
+@@ -3,7 +3,7 @@
+ root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+ build=$(mktemp -d)
+ trap 'rm -rf "$build"' EXIT
+-sources=("$root/tests/test_network_core.c" "$root/vitis_code/key_ctrlll/src/drivers/capture_format.c" "$root/vitis_code/key_ctrlll/src/drivers/capture_store.c" "$root/vitis_code/key_ctrlll/src/drivers/rx_control.c")
++sources=("$root/tests/test_network_core.c" "$root/vitis_code/key_ctrlll/src/drivers/capture_format.c" "$root/vitis_code/key_ctrlll/src/drivers/capture_debug.c" "$root/vitis_code/key_ctrlll/src/drivers/dma_diag.c" "$root/vitis_code/key_ctrlll/src/drivers/capture_store.c" "$root/vitis_code/key_ctrlll/src/drivers/rx_control.c")
+ flags=(-std=c11 -D_GNU_SOURCE -Wall -Wextra -Werror -I"$root/tests/network_stubs" -I"$root/vitis_code/key_ctrlll/src/drivers")
+ if [[ -n "${RX706_TEST_PROFILE:-}" ]]; then
+     flags+=("-DRX_RF_PROFILE=$RX706_TEST_PROFILE")
+--- before/tests/test_rx706.py
++++ tests/test_rx706.py
+@@ -106,6 +106,19 @@
+                          (-2048, -2047, -2046, -2045))
+         self.assertFalse(Path(str(self.output) + '.part').exists())
+         self.assertEqual(json.loads(Path(str(self.output) + '.json').read_text())['file_bytes'], SIZE)
++        self.assertEqual(saved['capture_final']['debug_read_ops'], 3)
++        self.assertEqual(saved['capture_final']['debug_read_bad'], [0, 0, 0, 0])
++        self.assertEqual(saved['debug']['capture_id'], self.info['capture_id'])
++        self.assertTrue(saved['debug']['sampled_only'])
++        self.assertEqual(saved['debug']['phases'], 7)
++        self.assertGreater(len(saved['debug']['probes']), 0)
++        for probe in saved['debug']['probes']:
++            self.assertLessEqual(probe['offset'] + probe['length'], SIZE)
++            for measurement in probe['measurements']:
++                self.assertEqual(len(measurement), 9)
++                self.assertEqual(measurement[0], measurement[1])
++                self.assertEqual(measurement[0], measurement[2])
++                self.assertEqual(measurement[3:7], [0, 0, 0, 0])
+ 
+     def test_profile_metadata_survives_bin_export(self):
+         profile = int(os.environ.get('RX706_TEST_PROFILE', '2400'))
+--- before/NETWORK_CAPTURE_GUIDE.txt
++++ NETWORK_CAPTURE_GUIDE.txt
+@@ -1,4 +1,7 @@
+-ZC706 / FMCOMMS3：TCP控制台与PL DDR原始IQ导出，firmware v3
++ZC706 / FMCOMMS3：TCP控制台与PL DDR原始IQ导出，diagnostic firmware v5
++
++DMA/DDR诊断：本版增加BD读回、复位前后窗口校验、下载非法字统计及串口d命令。
++重抓步骤、日志解释和检查范围见DMA_DEBUG_GUIDE.txt。现有BIT/XSA及BIN格式不变。
+ 
+ 2026-10-20更新：当前ELF默认CONFIG2P4，RX/TX LO=2400 MHz，Fs=15.36 MSPS，
+ 常态TX BIST关闭。2.4 GHz上板检查与切回915 MHz的方法见CONFIG2P4_RX_GUIDE.txt。
+--- /dev/null
++++ vitis_code/key_ctrlll/src/drivers/capture_debug.c
+@@ -0,0 +1,124 @@
++#include "capture_debug.h"
++#include "capture_format.h"
++#include "xpseudo_asm.h"
++#include "xil_printf.h"
++#include <stdarg.h>
++#include <stdio.h>
++#include <string.h>
++
++static u32 samples[3][CAPTURE_DEBUG_PROBE_BYTES/4U] __attribute__((aligned(64)));
++
++static void add_probe(capture_debug_report *r, u32 offset)
++{
++    u32 i;
++    if (r->bytes < CAPTURE_DEBUG_PROBE_BYTES || offset > r->bytes - CAPTURE_DEBUG_PROBE_BYTES)
++        return;
++    offset &= ~(CAPTURE_DEBUG_PROBE_BYTES - 1U);
++    for (i = 0U; i < r->count; ++i) if (r->probe[i].offset == offset) return;
++    if (r->count < CAPTURE_DEBUG_MAX_PROBES) r->probe[r->count++].offset = offset;
++}
++
++void capture_debug_begin(capture_debug_report *r, u32 base, u32 bytes)
++{
++    static const u32 offsets[] = {
++        0U, 0x80000U, 0xA5000U, 0xE4000U, 0x100000U, 0x164000U,
++        0x180000U, 0x200000U, 0x300000U, 0xD84000U, 0x21C4000U };
++    u32 i;
++    memset(r, 0, sizeof(*r));
++    r->version = CAPTURE_DEBUG_VERSION; r->base = base; r->bytes = bytes;
++    for (i = 0U; i < sizeof(offsets)/sizeof(offsets[0]); ++i) add_probe(r, offsets[i]);
++    add_probe(r, bytes/4U); add_probe(r, bytes/2U); add_probe(r, bytes/4U*3U);
++    if (bytes >= CAPTURE_DEBUG_PROBE_BYTES) add_probe(r, bytes-CAPTURE_DEBUG_PROBE_BYTES);
++}
++
++void capture_debug_measure(capture_debug_report *r, u32 phase)
++{
++    u32 i, pass, word;
++    if (phase >= CAPTURE_DEBUG_PHASES || r->version != CAPTURE_DEBUG_VERSION) return;
++    for (i = 0U; i < r->count; ++i) {
++        capture_debug_probe *p = &r->probe[i];
++        capture_debug_measurement *m = &p->phase[phase];
++        const volatile u32 *source = (const volatile u32 *)(UINTPTR)(r->base+p->offset);
++        memset(m, 0, sizeof(*m)); m->first_bad_offset = 0xFFFFFFFFU;
++        for (pass = 0U; pass < 2U; ++pass) {
++            dsb();
++            for (word = 0U; word < CAPTURE_DEBUG_PROBE_BYTES/4U; ++word)
++                samples[pass][word] = source[word];
++            dsb();
++        }
++        memcpy(samples[2], (const void *)(UINTPTR)(r->base+p->offset), CAPTURE_DEBUG_PROBE_BYTES);
++        dsb();
++        for (pass = 0U; pass < 3U; ++pass) m->crc[pass] = capture_crc32(samples[pass], CAPTURE_DEBUG_PROBE_BYTES);
++        if (m->crc[0] != m->crc[1]) r->unstable |= 1U << i;
++        if (m->crc[0] != m->crc[2]) r->copy_mismatch |= 1U << i;
++        if (phase == 1U && m->crc[0] != p->phase[0].crc[0]) r->changed_dma |= 1U << i;
++        if (phase == 2U && m->crc[0] != p->phase[1].crc[0]) r->changed_pl |= 1U << i;
++        for (word = 0U; word < CAPTURE_DEBUG_PROBE_BYTES/4U; ++word) {
++            u32 half;
++            for (half = 0U; half < 2U; ++half) {
++                u32 value = (samples[0][word] >> (half*16U)) & 0xFFFFU;
++                if (value > 0x07FFU && value < 0xF800U) {
++                    ++m->bad[(word*2U+half) & 3U];
++                    if (m->first_bad_offset == 0xFFFFFFFFU) {
++                        m->first_bad_offset = p->offset + word*4U + half*2U;
++                        m->first_bad_value = value;
++                    }
++                }
++            }
++        }
++    }
++    r->phases |= 1U << phase;
++}
++
++void capture_debug_print(const capture_debug_report *r, const char *id)
++{
++    u32 i, phase;
++    xil_printf("RXDBG CAPTURE id=%s version=%u phases=%x probes=%u sampled_bytes=%u total_bytes=%u (sampled only)\r\n",
++        id, r->version, r->phases, r->count, r->count*CAPTURE_DEBUG_PROBE_BYTES, r->bytes);
++    xil_printf("RXDBG SUMMARY changed_dma=%04x changed_pl=%04x unstable=%04x memcpy_diff=%04x\r\n",
++        r->changed_dma, r->changed_pl, r->unstable, r->copy_mismatch);
++    for (i = 0U; i < r->count; ++i) {
++        xil_printf("RXDBG PROBE %u offset=%08x address=%08x\r\n", i, r->probe[i].offset, r->base+r->probe[i].offset);
++        for (phase = 0U; phase < CAPTURE_DEBUG_PHASES; ++phase) {
++            const capture_debug_measurement *m = &r->probe[i].phase[phase];
++            if (!(r->phases & (1U << phase))) continue;
++            xil_printf("RXDBG phase=%u CRC=%08x/%08x/%08x bad_I1Q1I2Q2=%u/%u/%u/%u first_offset=%08x raw=%04x\r\n",
++                phase, m->crc[0], m->crc[1], m->crc[2], m->bad[0], m->bad[1], m->bad[2], m->bad[3],
++                m->first_bad_offset, m->first_bad_value);
++        }
++    }
++    xil_printf("RXDBG phase 0=DMA_done 1=DMA_reset 2=PL_rearm; CRC=A/B/memcpy; zero masks do not certify the whole buffer\r\n");
++}
++
++static void append(char *out, unsigned capacity, unsigned *used, const char *fmt, ...)
++    __attribute__((format(printf, 4, 5)));
++static void append(char *out, unsigned capacity, unsigned *used, const char *fmt, ...)
++{
++    int n;
++    va_list args;
++    if (*used >= capacity) return;
++    va_start(args, fmt); n = vsnprintf(out+*used, capacity-*used, fmt, args); va_end(args);
++    if (n < 0 || (unsigned)n >= capacity-*used) *used = capacity;
++    else *used += (unsigned)n;
++}
++
++int capture_debug_json(const capture_debug_report *r, const char *id, char *out, unsigned capacity)
++{
++    unsigned used = 0U;
++    u32 i, phase;
++    append(out, capacity, &used,
++        "{\"ok\":true,\"capture_id\":\"%s\",\"version\":%u,\"sampled_only\":true,\"base\":%u,\"bytes\":%u,"
++        "\"phases\":%u,\"changed_dma\":%u,\"changed_pl\":%u,\"unstable\":%u,\"memcpy_diff\":%u,\"probes\":[",
++        id, (unsigned)r->version, (unsigned)r->base, (unsigned)r->bytes, (unsigned)r->phases, (unsigned)r->changed_dma, (unsigned)r->changed_pl, (unsigned)r->unstable, (unsigned)r->copy_mismatch);
++    for (i = 0U; i < r->count; ++i) {
++        append(out, capacity, &used, "%s{\"offset\":%u,\"length\":4096,\"measurements\":[", i ? "," : "", (unsigned)r->probe[i].offset);
++        for (phase = 0U; phase < CAPTURE_DEBUG_PHASES; ++phase) {
++            const capture_debug_measurement *m = &r->probe[i].phase[phase];
++            append(out, capacity, &used, "%s[%u,%u,%u,%u,%u,%u,%u,%u,%u]", phase ? "," : "",
++                (unsigned)m->crc[0], (unsigned)m->crc[1], (unsigned)m->crc[2], (unsigned)m->bad[0], (unsigned)m->bad[1], (unsigned)m->bad[2], (unsigned)m->bad[3], (unsigned)m->first_bad_offset, (unsigned)m->first_bad_value);
++        }
++        append(out, capacity, &used, "]}");
++    }
++    append(out, capacity, &used, "]}\n");
++    return used < capacity ? (int)used : -1;
++}
+--- /dev/null
++++ vitis_code/key_ctrlll/src/drivers/capture_debug.h
+@@ -0,0 +1,31 @@
++#ifndef CAPTURE_DEBUG_H
++#define CAPTURE_DEBUG_H
++#include "xil_types.h"
++
++#define CAPTURE_DEBUG_VERSION 1U
++#define CAPTURE_DEBUG_MAX_PROBES 16U
++#define CAPTURE_DEBUG_PROBE_BYTES 4096U
++#define CAPTURE_DEBUG_PHASES 3U
++typedef struct {
++    u32 crc[3]; /* volatile read A, volatile read B, memcpy */
++    u32 bad[4], first_bad_offset, first_bad_value;
++} capture_debug_measurement;
++typedef struct {
++    u32 offset;
++    capture_debug_measurement phase[CAPTURE_DEBUG_PHASES];
++} capture_debug_probe;
++typedef struct {
++    u32 version, base, bytes, count, phases;
++    u32 changed_dma, changed_pl, unstable, copy_mismatch;
++    capture_debug_probe probe[CAPTURE_DEBUG_MAX_PROBES];
++} capture_debug_report;
++
++/* Non-destructive bounded samples only: never a full-buffer validity verdict.
++ * Phase 0=DMA completed; 1=DMA reset only; 2=full capture rearm completed.
++ * Call only after DMA has finished writing the entire owned payload. */
++void capture_debug_begin(capture_debug_report *report, u32 base, u32 bytes);
++void capture_debug_measure(capture_debug_report *report, u32 phase);
++void capture_debug_print(const capture_debug_report *report, const char *id);
++int capture_debug_json(const capture_debug_report *report, const char *id,
++                       char *out, unsigned capacity);
++#endif
+--- /dev/null
++++ vitis_code/key_ctrlll/src/drivers/dma_diag.c
+@@ -0,0 +1,40 @@
++#include "dma_diag.h"
++#include "xil_printf.h"
++
++u32 dma_diag_check(const u32 r[16], u32 next, u32 buffer, u32 index,
++                  u32 bytes, u32 mask, u32 receiving)
++{
++    u32 issues = 0U;
++    if (r[0] != next || r[1] != 0U) issues |= DMA_DIAG_NEXT;
++    if (r[2] != buffer || r[3] != 0U) issues |= DMA_DIAG_BUFFER;
++    if (r[13] != index) issues |= DMA_DIAG_ID;
++    if ((r[6] & mask) != bytes || (r[6] & ~mask) != 0U)
++        issues |= DMA_DIAG_CONTROL;
++    if (receiving) {
++        if ((r[7] & 0x8C000000U) != 0x8C000000U) issues |= DMA_DIAG_FLAGS;
++        if ((r[7] & mask) != bytes) issues |= DMA_DIAG_LENGTH;
++        if (r[7] & 0x70000000U) issues |= DMA_DIAG_HWERROR;
++    } else if (r[7] != 0U) {
++        issues |= DMA_DIAG_FLAGS;
++    }
++    return issues;
++}
++
++void dma_diag_print(const dma_diag_record *r, const char *tag)
++{
++    u32 i;
++    xil_printf("RXDBG DMA %s: version=%u stage=%u result=%d issues=%03x index=%u BD=%08x checked=%u/%u/%u\r\n",
++        tag, DMA_DIAG_VERSION, r->stage, r->result, r->issues, r->index,
++        r->address, r->prepared_checked, r->submitted_checked, r->completed_checked);
++    xil_printf("RXDBG DMA regs: CR=%08x SR=%08x CUR=%08x TAIL=%08x max_length=%u\r\n",
++        r->control, r->status, r->current, r->tail, r->max_length);
++    xil_printf("RXDBG BD: raw_status=%08x actual=%u control=%08x ID=%u BUF=%08x expected=%08x NEXT=%08x expected=%08x repeat_diff=%04x\r\n",
++        r->raw[7], r->raw[7] & r->max_length, r->raw[6], r->raw[13],
++        r->raw[2], r->expected_buffer, r->raw[0], r->expected_next, r->changed_words);
++    if (!r->issues && r->result == 0) return;
++    for (i = 0U; i < 16U; i += 4U)
++        xil_printf("RXDBG BD words[%u]: %08x %08x %08x %08x; repeat: %08x %08x %08x %08x\r\n",
++            i, r->raw[i], r->raw[i+1], r->raw[i+2], r->raw[i+3],
++            r->repeat[i], r->repeat[i+1], r->repeat[i+2], r->repeat[i+3]);
++    xil_printf("RXDBG issues: 001=SOF/EOF/complete 002=actual_length 004=ID 008=buffer 010=next 020=control_length 040=BD_hw_error\r\n");
++}
+--- /dev/null
++++ vitis_code/key_ctrlll/src/drivers/dma_diag.h
+@@ -0,0 +1,30 @@
++#ifndef DMA_DIAG_H
++#define DMA_DIAG_H
++#include "xil_types.h"
++
++#define DMA_DIAG_VERSION 1U
++#define DMA_DIAG_FLAGS   0x001U
++#define DMA_DIAG_LENGTH  0x002U
++#define DMA_DIAG_ID      0x004U
++#define DMA_DIAG_BUFFER  0x008U
++#define DMA_DIAG_NEXT    0x010U
++#define DMA_DIAG_CONTROL 0x020U
++#define DMA_DIAG_HWERROR 0x040U
++
++enum dma_diag_stage { DMA_DIAG_NONE, DMA_DIAG_PREPARE,
++    DMA_DIAG_SUBMIT, DMA_DIAG_RECEIVE, DMA_DIAG_DONE };
++typedef struct {
++    u32 stage, issues, index, address, expected_next, expected_buffer, max_length;
++    u32 raw[16], repeat[16], changed_words;
++    u32 control, status, current, tail;
++    u32 prepared_checked, submitted_checked, completed_checked;
++    int result;
++} dma_diag_record;
++
++/* Raw BD layout is the AXI DMA non-multichannel, 32-bit-address layout.
++ * Stage RECEIVE checks one complete 32-KiB packet per descriptor.
++ * Unlike XAxiDma_BdGetSts, raw[7] retains the actual-length field. */
++u32 dma_diag_check(const u32 raw[16], u32 expected_next, u32 expected_buffer,
++                  u32 index, u32 bytes, u32 max_length, u32 receiving);
++void dma_diag_print(const dma_diag_record *record, const char *tag);
++#endif

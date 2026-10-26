@@ -1,0 +1,17 @@
+{
+  "pid": 3247818,
+  "ports": {
+    "1": "T1",
+    "2": "T2",
+    "3": "T3",
+    "4": "B4",
+    "5": "B3",
+    "6": "B1"
+  },
+  "mapped_units": 240,
+  "measured_units": 0,
+  "selected_FPC": 2,
+  "selected_CH": 1,
+  "recovery_backup": "/home/yyz/work/RIS/zynq/zc706/ris_ctrl_unit/reports/mapping/session_before_wiring_20261023_122107.json",
+  "board_commands_sent": 0
+}

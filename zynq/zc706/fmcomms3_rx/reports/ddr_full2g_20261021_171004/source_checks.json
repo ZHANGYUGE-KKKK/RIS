@@ -1,0 +1,9 @@
+{
+  "full_2g_dma_and_window_master": true,
+  "one_gib_cpu_window": true,
+  "peripheral_addresses_unchanged": true,
+  "ps_rf_dma_parameters_unchanged": true,
+  "mig_physical_timing_and_pins_match_tested_2g": true,
+  "protected_rf_files": 21,
+  "application_and_window_sources_pinned": true
+}

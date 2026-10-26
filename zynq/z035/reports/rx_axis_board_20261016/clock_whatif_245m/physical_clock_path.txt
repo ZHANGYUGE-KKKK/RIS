@@ -1,0 +1,103 @@
+PORT rx_clk_p PACKAGE_PIN=R27 IOSTANDARD=LVDS_25
+NETS rx_clk_p u_design_1_wrapper/rx_clk_p u_design_1_wrapper/design_1_i/rx_clk_p u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/rx_clk_p u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+PINS u_design_1_wrapper/rx_clk_p u_design_1_wrapper/design_1_i/rx_clk_p u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/rx_clk_p u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/I
+PORT rx_clk_n PACKAGE_PIN=T27 IOSTANDARD=LVDS_25
+NETS rx_clk_n u_design_1_wrapper/rx_clk_n u_design_1_wrapper/design_1_i/rx_clk_n u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/rx_clk_n u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_n
+PINS u_design_1_wrapper/rx_clk_n u_design_1_wrapper/design_1_i/rx_clk_n u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/rx_clk_n u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_n u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/IB
+PORT rx_frame_p PACKAGE_PIN=R25 IOSTANDARD=LVDS_25
+NETS rx_frame_p u_design_1_wrapper/rx_frame_p u_design_1_wrapper/design_1_i/rx_frame_p u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/rx_frame_p u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_frame_p
+PINS u_design_1_wrapper/rx_frame_p u_design_1_wrapper/design_1_i/rx_frame_p u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/rx_frame_p u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_frame_p u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].g_frame.u_input/I
+PORT rx_frame_n PACKAGE_PIN=R26 IOSTANDARD=LVDS_25
+NETS rx_frame_n u_design_1_wrapper/rx_frame_n u_design_1_wrapper/design_1_i/rx_frame_n u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/rx_frame_n u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_frame_n
+PINS u_design_1_wrapper/rx_frame_n u_design_1_wrapper/design_1_i/rx_frame_n u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/rx_frame_n u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_frame_n u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].g_frame.u_input/IB
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].g_data.u_input REF=IBUFDS LOC=IOB_X0Y212 BEL=IOB33M.INBUF_EN
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].g_data.u_input/O NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pad_data_0 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].g_data.u_input/I NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_data_p[0] CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].g_data.u_input/IB NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_data_n[0] CLOCK=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].u_ddr REF=IDDR LOC=ILOGIC_X0Y212 BEL=ILOGICE2.IFF
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].u_ddr/Q1 NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].u_ddr_n_0 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].u_ddr/Q2 NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].u_ddr_n_1 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].u_ddr/C NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk CLOCK=rfmc_rx
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].u_ddr/CE NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/<const1> CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].u_ddr/D NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/delayed_data_0 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].u_ddr/R NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_reset CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].u_ddr/S NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/<const0> CLOCK=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].g_data.u_input REF=IBUFDS LOC=IOB_X0Y244 BEL=IOB33M.INBUF_EN
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].g_data.u_input/O NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pad_data_1 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].g_data.u_input/I NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_data_p[1] CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].g_data.u_input/IB NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_data_n[1] CLOCK=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].u_ddr REF=IDDR LOC=ILOGIC_X0Y244 BEL=ILOGICE2.IFF
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].u_ddr/Q1 NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].u_ddr_n_0 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].u_ddr/Q2 NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].u_ddr_n_1 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].u_ddr/C NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk CLOCK=rfmc_rx
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].u_ddr/CE NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/<const1> CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].u_ddr/D NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/delayed_data_1 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].u_ddr/R NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_reset CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].u_ddr/S NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/<const0> CLOCK=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].g_data.u_input REF=IBUFDS LOC=IOB_X0Y216 BEL=IOB33M.INBUF_EN
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].g_data.u_input/O NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pad_data_2 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].g_data.u_input/I NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_data_p[2] CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].g_data.u_input/IB NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_data_n[2] CLOCK=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].u_ddr REF=IDDR LOC=ILOGIC_X0Y216 BEL=ILOGICE2.IFF
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].u_ddr/Q1 NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].u_ddr_n_0 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].u_ddr/Q2 NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].u_ddr_n_1 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].u_ddr/C NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk CLOCK=rfmc_rx
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].u_ddr/CE NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/<const1> CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].u_ddr/D NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/delayed_data_2 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].u_ddr/R NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_reset CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].u_ddr/S NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/<const0> CLOCK=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].g_data.u_input REF=IBUFDS LOC=IOB_X0Y206 BEL=IOB33M.INBUF_EN
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].g_data.u_input/O NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pad_data_3 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].g_data.u_input/I NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_data_p[3] CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].g_data.u_input/IB NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_data_n[3] CLOCK=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].u_ddr REF=IDDR LOC=ILOGIC_X0Y206 BEL=ILOGICE2.IFF
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].u_ddr/Q1 NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].u_ddr_n_0 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].u_ddr/Q2 NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].u_ddr_n_1 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].u_ddr/C NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk CLOCK=rfmc_rx
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].u_ddr/CE NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/<const1> CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].u_ddr/D NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/delayed_data_3 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].u_ddr/R NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_reset CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].u_ddr/S NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/<const0> CLOCK=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].g_data.u_input REF=IBUFDS LOC=IOB_X0Y246 BEL=IOB33M.INBUF_EN
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].g_data.u_input/O NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pad_data_4 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].g_data.u_input/I NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_data_p[4] CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].g_data.u_input/IB NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_data_n[4] CLOCK=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].u_ddr REF=IDDR LOC=ILOGIC_X0Y246 BEL=ILOGICE2.IFF
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].u_ddr/Q1 NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].u_ddr_n_0 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].u_ddr/Q2 NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].u_ddr_n_1 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].u_ddr/C NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk CLOCK=rfmc_rx
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].u_ddr/CE NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/<const1> CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].u_ddr/D NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/delayed_data_4 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].u_ddr/R NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_reset CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].u_ddr/S NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/<const0> CLOCK=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].g_data.u_input REF=IBUFDS LOC=IOB_X0Y242 BEL=IOB33M.INBUF_EN
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].g_data.u_input/O NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pad_data_5 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].g_data.u_input/I NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_data_p[5] CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].g_data.u_input/IB NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_data_n[5] CLOCK=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].u_ddr REF=IDDR LOC=ILOGIC_X0Y242 BEL=ILOGICE2.IFF
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].u_ddr/Q1 NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].u_ddr_n_0 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].u_ddr/Q2 NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].u_ddr_n_1 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].u_ddr/C NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk CLOCK=rfmc_rx
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].u_ddr/CE NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/<const1> CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].u_ddr/D NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/delayed_data_5 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].u_ddr/R NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_reset CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].u_ddr/S NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/<const0> CLOCK=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].g_frame.u_input REF=IBUFDS LOC=IOB_X0Y224 BEL=IOB33M.INBUF_EN
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].g_frame.u_input/O NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pad_data_6 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].g_frame.u_input/I NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_frame_p CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].g_frame.u_input/IB NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_frame_n CLOCK=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].u_ddr REF=IDDR LOC=ILOGIC_X0Y224 BEL=ILOGICE2.IFF
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].u_ddr/Q1 NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/early_data_6 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].u_ddr/Q2 NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/late_data_6 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].u_ddr/C NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk CLOCK=rfmc_rx
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].u_ddr/CE NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/<const1> CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].u_ddr/D NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/delayed_data_6 CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].u_ddr/R NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_reset CLOCK=
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].u_ddr/S NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/<const0> CLOCK=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input REF=IBUFDS LOC=IOB_X0Y222 BEL=IOB33M.INBUF_EN
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad CLOCK=rfmc_rx
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/I NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p CLOCK=rfmc_rx
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/IB NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_n CLOCK=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock REF=BUFG LOC=BUFGCTRL_X0Y19 BEL=BUFG.BUFG
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk CLOCK=rfmc_rx
+  PIN u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/I NET=u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad CLOCK=rfmc_rx

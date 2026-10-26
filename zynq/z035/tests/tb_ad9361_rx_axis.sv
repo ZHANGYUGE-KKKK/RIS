@@ -1,9 +1,10 @@
 `timescale 1ns/1ps
 module tb_ad9361_rx_axis;
     parameter integer PACKET_WORDS=7;
+    parameter real RX_HALF_PERIOD_NS=2.0345;
     reg rx_clk=0, ref_clk=0, axis_clk=0, resetn=0, arm=0;
     reg rx_running=1;
-    always #2.0345 if(rx_running) rx_clk=~rx_clk;
+    always #(RX_HALF_PERIOD_NS) if(rx_running) rx_clk=~rx_clk;
     always #2.5 ref_clk=~ref_clk;
     always #5 axis_clk=~axis_clk;
     reg [5:0] data=0;
@@ -223,6 +224,22 @@ module tb_ad9361_rx_axis;
         rd(16'h1004,value);
         if(value<1000) $fatal(1,"RX edge counter failed");
         $display("PASS: official AXI-Lite and live sample/clock diagnostic registers");
+        begin : check_counter_rates
+            reg [31:0] edges_before,edges_after,samples_before,samples_after;
+            integer expected_edges;
+            rd(16'h1004,edges_before);rd(16'h1000,samples_before);
+            #100000;
+            rd(16'h1004,edges_after);rd(16'h1000,samples_after);
+            expected_edges=100000.0/(2.0*RX_HALF_PERIOD_NS);
+            // AXI transactions and CDC add a small bounded interval.
+            if(((edges_after-edges_before)&24'hffffff)<expected_edges-16 ||
+               ((edges_after-edges_before)&24'hffffff)>expected_edges+128)
+                $fatal(1,"RX clock diagnostic reports the wrong frequency");
+            if(((samples_after-samples_before)&24'hffffff)<expected_edges/4-16 ||
+               ((samples_after-samples_before)&24'hffffff)>expected_edges/4+32)
+                $fatal(1,"ADC sample diagnostic reports the wrong rate");
+            $display("PASS: measured RX clock and sample counts match the independent source period");
+        end
         $display("PASS: all four official PN monitors lock on independent standard PRBS streams");
         pn_corrupt=1;#10000;rd(16'h0404,value);
         if(!(value&6))$fatal(1,"PN checker failed to detect data corruption");
@@ -248,7 +265,7 @@ module tb_ad9361_rx_axis;
         rx_running=1;#600;@(negedge axis_clk);resetn=1;pn_mode=0;pn_device=0;
         configure();
         if(trace_checks<128 || oracle_checks<1000)$fatal(1,"Insufficient oracle/trace checks");
-        $display("AD9361_OFFICIAL_RX_TEST_PASS PACKET=%0d ORACLE=%0d TRACE=%0d",PACKET_WORDS,oracle_checks,trace_checks);
+        $display("AD9361_OFFICIAL_RX_TEST_PASS PACKET=%0d HALF_NS=%0.4f ORACLE=%0d TRACE=%0d",PACKET_WORDS,RX_HALF_PERIOD_NS,oracle_checks,trace_checks);
         $finish;
     end
     initial begin #1000000;$fatal(1,"Test timed out");end

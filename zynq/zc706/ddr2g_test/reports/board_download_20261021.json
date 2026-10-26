@@ -1,0 +1,24 @@
+{
+  "time": "2026-10-21T15:56:19.785998+08:00",
+  "programmed": true,
+  "running": true,
+  "method": "JTAG, volatile FPGA BIT and PS ELF, scripts/program.tcl run",
+  "serial_owned_by_user": true,
+  "uart": "115200 8N1",
+  "memory_test_run_by_agent": false,
+  "memory_test_result": "pending user UART log",
+  "artifacts_sha256": {
+    "ddr2g_test.bit": "4bc251969fd1ba7befc0016f43e64287747a77cb12f47a82eee58200584d08ad",
+    "ddr2g_test.elf": "89fbb30790db44838cb2a8ab4e86184db07b9c1c34c45187d984130ce059ac59",
+    "ddr2g_test.xsa": "c8607e3a82bb96d624e5e5a2d67ccb0d62cb05a5216a830adeb90021122e44ac",
+    "ps7_init.c": "c253548021ed66041d4dce5d356e3df705c83dde60fb570c16010067d3a6d919",
+    "ps7_init.h": "5b8035108f6453d048d5a9086835216dc717c36f5521df63e9b17ff5d054236d",
+    "ps7_init.tcl": "530b9a0a957f6f9bf3912fb9df2a1abadd0378d932f3d6bc4cff3f64d2a36d35"
+  },
+  "gui_workspace_projects_registered": [
+    "ddr2g_platform",
+    "ddr2g_test",
+    "ddr2g_test_system"
+  ],
+  "workspace_import_log": "reports/import_workspace.log"
+}

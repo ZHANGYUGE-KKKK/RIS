@@ -1,0 +1,140 @@
+{
+  "40000000": {
+    "sizes": [
+      4096,
+      4096,
+      4096,
+      4096
+    ],
+    "crcs": [
+      "16b4cc39",
+      "16b4cc39",
+      "16b4cc39",
+      "16b4cc39"
+    ],
+    "distinct": 1,
+    "changed_words_first_two": 0,
+    "xor_or": "0x0",
+    "first_changed": []
+  },
+  "40400000": {
+    "sizes": [
+      4096,
+      4096,
+      4096,
+      4096
+    ],
+    "crcs": [
+      "d3184589",
+      "d3184589",
+      "d3184589",
+      "d3184589"
+    ],
+    "distinct": 1,
+    "changed_words_first_two": 0,
+    "xor_or": "0x0",
+    "first_changed": []
+  },
+  "404e4000": {
+    "sizes": [
+      4096,
+      4096,
+      4096,
+      4096
+    ],
+    "crcs": [
+      "da4f9c2a",
+      "aca31677",
+      "fdc3bc23",
+      "5cd22ef1"
+    ],
+    "distinct": 4,
+    "changed_words_first_two": 8,
+    "xor_or": "0xff00",
+    "first_changed": [
+      {
+        "address": "0x404e4180",
+        "a": "0x1a0015",
+        "b": "0x1a0215"
+      },
+      {
+        "address": "0x404e41a0",
+        "a": "0xc6fe",
+        "b": "0xfffe"
+      },
+      {
+        "address": "0x404e41f8",
+        "a": "0xffef0010",
+        "b": "0xffef2d10"
+      }
+    ]
+  },
+  "40580000": {
+    "sizes": [
+      4096,
+      4096,
+      4096,
+      4096
+    ],
+    "crcs": [
+      "c1f96ae3",
+      "8d79d2a9",
+      "d44ffe3e",
+      "869669f0"
+    ],
+    "distinct": 4,
+    "changed_words_first_two": 53,
+    "xor_or": "0xff00",
+    "first_changed": [
+      {
+        "address": "0x40580050",
+        "a": "0xfff159fc",
+        "b": "0xfff1fffc"
+      },
+      {
+        "address": "0x40580068",
+        "a": "0x380000",
+        "b": "0x388300"
+      },
+      {
+        "address": "0x40580098",
+        "a": "0xfffd53fb",
+        "b": "0xfffdfffb"
+      }
+    ]
+  },
+  "40bff000": {
+    "sizes": [
+      4096,
+      4096,
+      4096,
+      4096
+    ],
+    "crcs": [
+      "4f741a9f",
+      "00dccccc",
+      "a4a7b45b",
+      "2bdc2adb"
+    ],
+    "distinct": 4,
+    "changed_words_first_two": 12,
+    "xor_or": "0xff00",
+    "first_changed": [
+      {
+        "address": "0x40bff0b8",
+        "a": "0xfff531de",
+        "b": "0xfff5ffde"
+      },
+      {
+        "address": "0x40bff250",
+        "a": "0xfff1ffde",
+        "b": "0xfff119de"
+      },
+      {
+        "address": "0x40bff600",
+        "a": "0x2b800",
+        "b": "0x20000"
+      }
+    ]
+  }
+}

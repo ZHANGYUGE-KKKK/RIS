@@ -1,0 +1,19 @@
+{
+  "application_version": 2,
+  "changed_source_files_this_update": [
+    "vitis_code/key_ctrlll/src/helloworld.c",
+    "vitis_code/key_ctrlll/src/drivers/rx_tone.c",
+    "vitis_code/key_ctrlll/src/drivers/rx_tone.h"
+  ],
+  "all_ad9361_config_files_unchanged": true,
+  "all_hardware_artifacts_unchanged": true,
+  "existing_ad9361_register_write_calls_unchanged": true,
+  "new_rf_diagnostic_functions_read_only": true,
+  "source_manifest_and_migration_check": "PASS",
+  "arm_application_build": "PASS",
+  "host_algorithms_ASan_UBSan": "PASS including weak-tone expected-band search",
+  "staged_export_checksums": "PASS",
+  "elf_sha256": "b7b44db5139439f2691673c393b305885ede934f23207dd3d1cd61936dd7996a",
+  "version1_user_board_evidence": "PN and three DMA windows / RF frequency tracking passed; clipping at -15/-20/-30dBm prevents RF acceptance",
+  "version2_new_functions_board_test": "NOT RUN; operator-controlled VNA test required"
+}

@@ -1,0 +1,123 @@
+{
+  "file": "captures/rx_20261020_163252_687.bin",
+  "user_source_power_dbm": -60,
+  "sample_rate_hz": 15360000,
+  "lo_hz": 2400000000,
+  "bytes": 122880000,
+  "tuples": 15360000,
+  "sha256": "d6babf3c31bc2ee77304bd53d354b43b58196a899e0a2e00a820e4084307db4a",
+  "sha_matches": true,
+  "all_chunk_crcs_match": true,
+  "checked_chunks": 469,
+  "malformed_tuples": 768363,
+  "malformed_percent": 5.00236328125,
+  "components": {
+    "I1": {
+      "malformed": 262817,
+      "first_malformed": {
+        "tuple": 84962,
+        "file_offset": 679696,
+        "pl_address": "0x404a5f10",
+        "time_ms": 5.531380208333333,
+        "value": 14613,
+        "raw_hex": "0x3915"
+      },
+      "minimum": -32768,
+      "maximum": 32767
+    },
+    "Q1": {
+      "malformed": 232039,
+      "first_malformed": {
+        "tuple": 1771911,
+        "file_offset": 14175290,
+        "pl_address": "0x41184c3a",
+        "time_ms": 115.3587890625,
+        "value": -7290,
+        "raw_hex": "0xE386"
+      },
+      "minimum": -32768,
+      "maximum": 32767
+    },
+    "I2": {
+      "malformed": 52395,
+      "first_malformed": {
+        "tuple": 4425786,
+        "file_offset": 35406292,
+        "pl_address": "0x425c41d4",
+        "time_ms": 288.13710937499997,
+        "value": 14323,
+        "raw_hex": "0x37F3"
+      },
+      "minimum": -32768,
+      "maximum": 32767
+    },
+    "Q2": {
+      "malformed": 236024,
+      "first_malformed": {
+        "tuple": 182687,
+        "file_offset": 1461502,
+        "pl_address": "0x40564cfe",
+        "time_ms": 11.893684895833333,
+        "value": 30205,
+        "raw_hex": "0x75FD"
+      },
+      "minimum": -32768,
+      "maximum": 32767
+    }
+  },
+  "windows": [
+    {
+      "file": "captures/rx_20261020_163252_687.bin",
+      "label": "-60dBm",
+      "channel": 1,
+      "peak_hz": -83203.125,
+      "peak_dbfs": -51.35918742166577,
+      "rms_counts": 73.20175290119505,
+      "clipped": 0,
+      "median_band_bin_dbfs": -81.90852696198532,
+      "samples": 65536
+    },
+    {
+      "file": "captures/rx_20261020_163252_687.bin",
+      "label": "-60dBm",
+      "channel": 2,
+      "peak_hz": -3840000.0,
+      "peak_dbfs": -55.603636646928834,
+      "rms_counts": 29.289046089369236,
+      "clipped": 0,
+      "median_band_bin_dbfs": -82.99561103748954,
+      "samples": 65536
+    },
+    {
+      "file": "captures/rx_20261020_161630_852.bin",
+      "label": "-10dBm",
+      "channel": 1,
+      "peak_hz": -83203.125,
+      "peak_dbfs": -0.7598965897511052,
+      "rms_counts": 1935.9769829493123,
+      "clipped": 836,
+      "median_band_bin_dbfs": -78.64125380566838,
+      "samples": 65536
+    },
+    {
+      "file": "captures/rx_20261020_161630_852.bin",
+      "label": "-10dBm",
+      "channel": 2,
+      "peak_hz": -83203.125,
+      "peak_dbfs": -46.20659504487627,
+      "rms_counts": 36.86784639960044,
+      "clipped": 0,
+      "median_band_bin_dbfs": -82.41814772813558,
+      "samples": 65536
+    }
+  ],
+  "rx1_same_window_comparison": {
+    "samples": 65536,
+    "duration_ms": 4.266666666666667,
+    "source_decrease_db": 50,
+    "peak_decrease_db": 50.599290831914665,
+    "clipped_before": 836,
+    "clipped_after": 0,
+    "frequency_shift_hz": 0.0
+  }
+}

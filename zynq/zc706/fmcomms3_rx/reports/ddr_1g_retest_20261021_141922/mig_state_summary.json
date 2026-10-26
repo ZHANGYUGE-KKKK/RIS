@@ -1,0 +1,17 @@
+{
+  "samples": 1024,
+  "signals": {
+    "u_design_1_wrapper/design_1_i/mig_7series_0_ui_clk_sync_rst": [
+      "0"
+    ],
+    "u_design_1_wrapper/design_1_i/proc_sys_reset_0_peripheral_aresetn": [
+      "1"
+    ],
+    "u_design_1_wrapper/design_1_i/mig_7series_0_mmcm_locked": [
+      "1"
+    ],
+    "u_design_1_wrapper/design_1_i/mig_7series_0_init_calib_complete": [
+      "1"
+    ]
+  }
+}

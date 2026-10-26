@@ -1,0 +1,17 @@
+{
+  "host/ris_gui.py": "de0fc6e74cdeee8664bf597f7aa8bd0cacdefa2f92d047b63e6bee669755bd0d",
+  "host/ris_mapping.py": "f64cd57ba66417daa15a222cca0a61793cc351b2f2d5bcd4f4077de28ba9c76e",
+  "host/ris_mapping_gui.py": "04149b27132dafb726ea219d6b6f139413f75163b73455c153e7d208d7445958",
+  "host/README.txt": "df319b57b0129d0e36e0ee7634a83957dc855be203a09be7823a2363def78c23",
+  "tests/test_ris_mapping.py": "e4b73b7cb2aa8bafdde139bccf19bd2a64fc14620a17a7e476407befe7daa1ce",
+  "tests/test_ris_mapping_gui.py": "ac3a70ff5dd25651b57544b04043514b0d9db11e787eb4c7be821cc3231fb395",
+  "README.txt": "e10b52bbd3a365a98311c00f1ec621820c83784685332828aeda8a613bafaa74",
+  "host/ris_topology.py": "535c3340c0d1c0f4ad5a2f3ff062f0d0bb7916b4abe338beced5d26617c496cb",
+  "host/ris_manual_control.py": "75922d483635e5e11fdb61d138f446582e0b842c49062aa2aecbc801039eb691",
+  "tests/test_ris_manual_control.py": "306a119020f21f6e0dae8617c1407bcba8404bf05065f01dd4fe572420fe848b",
+  "host/ris_patterns.py": "ec6b3364578bb88ea187b3468da23457a54cb223c58247b60e04ce3e02763084",
+  "host/ris_pattern_player.py": "2384490d23caaa62b2cb012d4749136fd0e12da352adf51b28a9fc80b601f3cb",
+  "host/ris_pattern_gui.py": "ae9823cb60eab628400810c4dbdcdde3fda6757ee11b6c4cff309f5c3bcb3e7c",
+  "tests/test_ris_patterns.py": "434794c9217037ffb1316ae7d2c2ff54049c471598f4e3cb4c1acd72bb43e68c",
+  "tests/test_ris_pattern_gui.py": "ddc84a96a7c4c1aae89788f626a5a216db01feb1ba846ec2c7c28cc7166bd9b0"
+}

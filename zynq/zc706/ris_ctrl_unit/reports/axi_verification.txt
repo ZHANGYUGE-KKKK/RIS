@@ -1,0 +1,35 @@
+RIS AXI4 controller verification
+Date: 2026-10-21 17:16:24 CST
+Tool: Vivado/XSim 2020.2; part xc7z045ffg900-2
+Project: vivado_axi/ris_ctrl_unit.xpr; base 0x41200000
+Synthesis directive: RuntimeOptimized (RTL checking, not routed timing closure).
+
+PASS: New PS/AXI4 block design validated and generated.
+PASS: Fifty ris_595_byte instances confirmed in synthesized hierarchy.
+PASS: All 72 RIS outputs assigned package pins and LVCMOS25; no black boxes.
+PASS: Synthesis: zero errors and critical warnings; DRC: zero violations.
+PASS: Complete AXI4 testbench, 50-chip shift/latch behavioral model.
+PASS: AW/W ordering, B/R backpressure stability, IDs, bursts, WSTRB and invalid shapes.
+PASS: All 50 individual chips, arbitrary masks, group preservation, atomic snapshots.
+PASS: HOLD, finite/looping SEQUENCE, STREAM prefill/refill and underflow recovery.
+PASS: PAUSE/RESUME, live period changes, manual insertion, APPLY_AND_HOLD.
+PASS: All 14 opcodes, publication protection, incomplete data rejection.
+PASS: Queue saturation, urgent stop cancellation, reset preemption and retained results.
+PASS: Illegal timing-state injection disables OE and returns FAILED; reset recovers.
+PASS: 100 MHz clock domain with 1 MHz complete-frame STCP cadence in simulation.
+
+Resources (unplaced): 38601 LUTs; 27146 flip-flops; no inferred latches.
+Logical pattern RAM: 256 x 64-byte slots = 16 KiB, two-read distributed RAM.
+Unplaced setup WNS: 0.026 ns; failing setup endpoints: 0.
+Unplaced hold WHS: -0.008 ns; failing hold endpoints: 8195.
+LIMIT: Timing is not closed. Placement/routing must resolve/check hold and setup.
+LIMIT: No physical board verification, bitstream generation or programming.
+LIMIT: No DDR playback DMA, network uploader or Vitis application implemented.
+
+Source SHA-256:
+e37e23dac9b9e87f9b3bd61db9c51cc3200373b5af20e32218b7252e66ed77f9  rtl/ris_controller_axi.v
+7ad01d99a1ba74497010fbcbe152e9e94b346910abb690e6a755f03fe994848b  rtl/ris_axi4_slave.v
+e543e04716c57ee9ed5cf10797b5f99867c03412e7dcfa8605d6c0ec6bfa8c56  rtl/ris_controller_core.sv
+169268057cf959e3018ab9a3d96b1764d050a7b0555952f52748d1b90546f4db  rtl/ris_frame_ram.v
+1f93c5c56457c406deaa2ff467f77910d07f82222daf57ef9c2d2329563a1fbb  rtl/ris_595_array.v
+a4d0967b8db28feab65337531f23d7c9b61b88dc3903ac24664499fb8b954658  rtl/ris_595_byte.v

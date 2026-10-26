@@ -1,0 +1,19 @@
+frame: vitis_network - ris_network/src/main.c - Vitis IDE 
+page tab: Debug
+page tab: Explorer
+page tab: Assistant
+page tab: ris_protocol.h
+page tab: main.c
+page tab: Variables
+page tab: Breakpoints
+page tab: Expressions
+page tab: Registers
+page tab: Memory
+page tab: Console
+page tab: Vitis Serial Terminal
+page tab: Executables
+page tab: Debug Shell
+page tab: Vitis Log
+page tab: Problems
+page tab: XSCT Console
+page tab: Emulation Console

@@ -1,0 +1,977 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
+| Date         : Fri Oct 16 18:15:36 2026
+| Host         : yyz-SER8 running 64-bit Ubuntu 24.04.1 LTS
+| Command      : report_timing -from [get_clocks rfmc_rx] -to [get_clocks rfmc_rx] -delay_type min -max_paths 20 -path_type full_clock_expanded -file /home/yyz/work/RIS/zynq/z035/reports/rx_axis_board_20261016/clock_whatif_245m/rx_hold_245m.rpt
+| Design       : pz7035_top
+| Device       : 7z035-ffg900
+| Speed File   : -2  PRODUCTION 1.12 2019-11-22
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             0.070ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[52]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_5/DIADI[7]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.654ns  (logic 0.206ns (31.511%)  route 0.448ns (68.489%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.057ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    4.209ns
+    Source Clock Delay      (SCD):    3.780ns
+    Clock Pessimism Removal (CPR):    0.373ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     0.717 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750     2.467    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     2.550 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.230     3.780    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X32Y216        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[52]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X32Y216        FDRE (Prop_fdre_C_Q)         0.206     3.986 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[52]/Q
+                         net (fo=1, routed)           0.448     4.433    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[52]
+    RAMB36_X2Y42         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_5/DIADI[7]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.433     4.209    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X2Y42         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_5/CLKARDCLK
+                         clock pessimism             -0.373     3.836    
+    RAMB36_X2Y42         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[7])
+                                                      0.527     4.363    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_5
+  -------------------------------------------------------------------
+                         required time                         -4.363    
+                         arrival time                           4.433    
+  -------------------------------------------------------------------
+                         slack                                  0.070    
+
+Slack (MET) :             0.071ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[48]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_5/DIADI[3]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.655ns  (logic 0.206ns (31.463%)  route 0.449ns (68.537%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.057ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    4.209ns
+    Source Clock Delay      (SCD):    3.780ns
+    Clock Pessimism Removal (CPR):    0.373ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     0.717 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750     2.467    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     2.550 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.230     3.780    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X32Y216        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[48]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X32Y216        FDRE (Prop_fdre_C_Q)         0.206     3.986 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[48]/Q
+                         net (fo=1, routed)           0.449     4.434    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[48]
+    RAMB36_X2Y42         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_5/DIADI[3]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.433     4.209    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X2Y42         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_5/CLKARDCLK
+                         clock pessimism             -0.373     3.836    
+    RAMB36_X2Y42         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[3])
+                                                      0.527     4.363    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_5
+  -------------------------------------------------------------------
+                         required time                         -4.363    
+                         arrival time                           4.434    
+  -------------------------------------------------------------------
+                         slack                                  0.071    
+
+Slack (MET) :             0.074ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[49]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_5/DIADI[4]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.658ns  (logic 0.206ns (31.304%)  route 0.452ns (68.696%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.057ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    4.209ns
+    Source Clock Delay      (SCD):    3.780ns
+    Clock Pessimism Removal (CPR):    0.373ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     0.717 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750     2.467    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     2.550 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.230     3.780    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X32Y216        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[49]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X32Y216        FDRE (Prop_fdre_C_Q)         0.206     3.986 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[49]/Q
+                         net (fo=1, routed)           0.452     4.438    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[49]
+    RAMB36_X2Y42         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_5/DIADI[4]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.433     4.209    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X2Y42         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_5/CLKARDCLK
+                         clock pessimism             -0.373     3.836    
+    RAMB36_X2Y42         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[4])
+                                                      0.527     4.363    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_5
+  -------------------------------------------------------------------
+                         required time                         -4.363    
+                         arrival time                           4.438    
+  -------------------------------------------------------------------
+                         slack                                  0.074    
+
+Slack (MET) :             0.078ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[30]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/DIADI[30]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.660ns  (logic 0.206ns (31.194%)  route 0.454ns (68.806%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.056ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    4.276ns
+    Source Clock Delay      (SCD):    3.847ns
+    Clock Pessimism Removal (CPR):    0.374ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     0.717 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750     2.467    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     2.550 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.297     3.847    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X8Y209         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[30]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X8Y209         FDRE (Prop_fdre_C_Q)         0.206     4.053 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[30]/Q
+                         net (fo=1, routed)           0.454     4.507    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[30]
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/DIADI[30]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.500     4.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/CLKBWRCLK
+                         clock pessimism             -0.374     3.902    
+    RAMB36_X0Y41         RAMB36E1 (Hold_ramb36e1_CLKBWRCLK_DIADI[30])
+                                                      0.527     4.429    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg
+  -------------------------------------------------------------------
+                         required time                         -4.429    
+                         arrival time                           4.507    
+  -------------------------------------------------------------------
+                         slack                                  0.078    
+
+Slack (MET) :             0.078ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[46]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/DIBDI[14]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.661ns  (logic 0.206ns (31.167%)  route 0.455ns (68.833%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.056ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    4.276ns
+    Source Clock Delay      (SCD):    3.847ns
+    Clock Pessimism Removal (CPR):    0.374ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     0.717 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750     2.467    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     2.550 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.297     3.847    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X8Y209         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[46]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X8Y209         FDRE (Prop_fdre_C_Q)         0.206     4.053 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[46]/Q
+                         net (fo=1, routed)           0.455     4.508    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[46]
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/DIBDI[14]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.500     4.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/CLKBWRCLK
+                         clock pessimism             -0.374     3.902    
+    RAMB36_X0Y41         RAMB36E1 (Hold_ramb36e1_CLKBWRCLK_DIBDI[14])
+                                                      0.527     4.429    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg
+  -------------------------------------------------------------------
+                         required time                         -4.429    
+                         arrival time                           4.508    
+  -------------------------------------------------------------------
+                         slack                                  0.078    
+
+Slack (MET) :             0.083ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[19]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/DIADI[19]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.668ns  (logic 0.206ns (30.855%)  route 0.462ns (69.145%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.058ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    4.276ns
+    Source Clock Delay      (SCD):    3.845ns
+    Clock Pessimism Removal (CPR):    0.374ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     0.717 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750     2.467    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     2.550 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.295     3.845    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X8Y213         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[19]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X8Y213         FDRE (Prop_fdre_C_Q)         0.206     4.051 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[19]/Q
+                         net (fo=1, routed)           0.462     4.512    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[19]
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/DIADI[19]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.500     4.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/CLKBWRCLK
+                         clock pessimism             -0.374     3.902    
+    RAMB36_X0Y41         RAMB36E1 (Hold_ramb36e1_CLKBWRCLK_DIADI[19])
+                                                      0.527     4.429    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg
+  -------------------------------------------------------------------
+                         required time                         -4.429    
+                         arrival time                           4.512    
+  -------------------------------------------------------------------
+                         slack                                  0.083    
+
+Slack (MET) :             0.085ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_rx_channel_0/i_rx_pnmon/adc_pn1_data_pn_reg[10]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_rx_channel_0/i_rx_pnmon/adc_pn_data_pn_reg[10]/D
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.183ns  (logic 0.128ns (70.125%)  route 0.055ns (29.875%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.011ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.357ns
+    Source Clock Delay      (SCD):    1.980ns
+    Clock Pessimism Removal (CPR):    0.366ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.418     0.418 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           0.920     1.338    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.026     1.364 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        0.616     1.980    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_rx_channel_0/i_rx_pnmon/rx_clk
+    SLICE_X47Y226        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_rx_channel_0/i_rx_pnmon/adc_pn1_data_pn_reg[10]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X47Y226        FDRE (Prop_fdre_C_Q)         0.100     2.080 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_rx_channel_0/i_rx_pnmon/adc_pn1_data_pn_reg[10]/Q
+                         net (fo=1, routed)           0.055     2.134    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_rx_channel_0/i_up_adc_channel/adc_pn_data_pn_reg[23][10]
+    SLICE_X46Y226        LUT6 (Prop_lut6_I0_O)        0.028     2.162 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_rx_channel_0/i_up_adc_channel/adc_pn_data_pn[10]_i_1/O
+                         net (fo=1, routed)           0.000     2.162    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_rx_channel_0/i_rx_pnmon/adc_pn_data_pn_reg[23]_0[10]
+    SLICE_X46Y226        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_rx_channel_0/i_rx_pnmon/adc_pn_data_pn_reg[10]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.491     0.491 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           0.996     1.487    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.030     1.517 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        0.840     2.357    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_rx_channel_0/i_rx_pnmon/rx_clk
+    SLICE_X46Y226        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_rx_channel_0/i_rx_pnmon/adc_pn_data_pn_reg[10]/C
+                         clock pessimism             -0.366     1.991    
+    SLICE_X46Y226        FDRE (Hold_fdre_C_D)         0.087     2.078    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_rx_channel_0/i_rx_pnmon/adc_pn_data_pn_reg[10]
+  -------------------------------------------------------------------
+                         required time                         -2.078    
+                         arrival time                           2.162    
+  -------------------------------------------------------------------
+                         slack                                  0.085    
+
+Slack (MET) :             0.087ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[32]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_3/DIADI[5]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.666ns  (logic 0.178ns (26.709%)  route 0.488ns (73.291%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.053ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    4.203ns
+    Source Clock Delay      (SCD):    3.778ns
+    Clock Pessimism Removal (CPR):    0.373ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     0.717 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750     2.467    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     2.550 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.228     3.778    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X33Y218        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[32]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X33Y218        FDRE (Prop_fdre_C_Q)         0.178     3.956 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[32]/Q
+                         net (fo=1, routed)           0.488     4.444    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[32]
+    RAMB36_X2Y43         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_3/DIADI[5]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.427     4.203    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X2Y43         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_3/CLKARDCLK
+                         clock pessimism             -0.373     3.830    
+    RAMB36_X2Y43         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[5])
+                                                      0.527     4.357    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_3
+  -------------------------------------------------------------------
+                         required time                         -4.357    
+                         arrival time                           4.444    
+  -------------------------------------------------------------------
+                         slack                                  0.087    
+
+Slack (MET) :             0.091ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/DIADI[0]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.676ns  (logic 0.178ns (26.330%)  route 0.498ns (73.670%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.058ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    4.276ns
+    Source Clock Delay      (SCD):    3.845ns
+    Clock Pessimism Removal (CPR):    0.374ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     0.717 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750     2.467    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     2.550 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.295     3.845    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X9Y211         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X9Y211         FDRE (Prop_fdre_C_Q)         0.178     4.023 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[0]/Q
+                         net (fo=1, routed)           0.498     4.521    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[0]
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/DIADI[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.500     4.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/CLKBWRCLK
+                         clock pessimism             -0.374     3.902    
+    RAMB36_X0Y41         RAMB36E1 (Hold_ramb36e1_CLKBWRCLK_DIADI[0])
+                                                      0.527     4.429    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg
+  -------------------------------------------------------------------
+                         required time                         -4.429    
+                         arrival time                           4.521    
+  -------------------------------------------------------------------
+                         slack                                  0.091    
+
+Slack (MET) :             0.092ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[20]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_2/DIADI[2]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.691ns  (logic 0.206ns (29.818%)  route 0.485ns (70.182%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.072ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    4.196ns
+    Source Clock Delay      (SCD):    3.775ns
+    Clock Pessimism Removal (CPR):    0.350ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     0.717 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750     2.467    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     2.550 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.225     3.775    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X34Y221        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[20]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X34Y221        FDRE (Prop_fdre_C_Q)         0.206     3.981 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[20]/Q
+                         net (fo=1, routed)           0.485     4.466    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[20]
+    RAMB36_X2Y44         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_2/DIADI[2]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.420     4.196    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X2Y44         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_2/CLKARDCLK
+                         clock pessimism             -0.350     3.846    
+    RAMB36_X2Y44         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[2])
+                                                      0.527     4.373    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_2
+  -------------------------------------------------------------------
+                         required time                         -4.373    
+                         arrival time                           4.466    
+  -------------------------------------------------------------------
+                         slack                                  0.092    
+
+Slack (MET) :             0.092ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[25]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_2/DIADI[7]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.692ns  (logic 0.206ns (29.775%)  route 0.486ns (70.225%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.073ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    4.196ns
+    Source Clock Delay      (SCD):    3.774ns
+    Clock Pessimism Removal (CPR):    0.350ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     0.717 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750     2.467    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     2.550 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.224     3.774    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X34Y222        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[25]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X34Y222        FDRE (Prop_fdre_C_Q)         0.206     3.980 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[25]/Q
+                         net (fo=1, routed)           0.486     4.466    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[25]
+    RAMB36_X2Y44         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_2/DIADI[7]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.420     4.196    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X2Y44         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_2/CLKARDCLK
+                         clock pessimism             -0.350     3.846    
+    RAMB36_X2Y44         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[7])
+                                                      0.527     4.373    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_2
+  -------------------------------------------------------------------
+                         required time                         -4.373    
+                         arrival time                           4.466    
+  -------------------------------------------------------------------
+                         slack                                  0.092    
+
+Slack (MET) :             0.093ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/tuple_pending_reg/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/overflow_rx_reg/D
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.191ns  (logic 0.128ns (66.970%)  route 0.063ns (33.030%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.011ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.357ns
+    Source Clock Delay      (SCD):    1.981ns
+    Clock Pessimism Removal (CPR):    0.365ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.418     0.418 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           0.920     1.338    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.026     1.364 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        0.617     1.981    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X37Y224        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/tuple_pending_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X37Y224        FDRE (Prop_fdre_C_Q)         0.100     2.081 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/tuple_pending_reg/Q
+                         net (fo=2, routed)           0.063     2.144    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/tuple_pending
+    SLICE_X36Y224        LUT6 (Prop_lut6_I3_O)        0.028     2.172 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/overflow_rx_i_1/O
+                         net (fo=1, routed)           0.000     2.172    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/overflow_rx_i_1_n_0
+    SLICE_X36Y224        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/overflow_rx_reg/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.491     0.491 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           0.996     1.487    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.030     1.517 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        0.840     2.357    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X36Y224        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/overflow_rx_reg/C
+                         clock pessimism             -0.365     1.992    
+    SLICE_X36Y224        FDRE (Hold_fdre_C_D)         0.087     2.079    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/overflow_rx_reg
+  -------------------------------------------------------------------
+                         required time                         -2.079    
+                         arrival time                           2.172    
+  -------------------------------------------------------------------
+                         slack                                  0.093    
+
+Slack (MET) :             0.094ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[22]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_2/DIADI[4]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.692ns  (logic 0.178ns (25.706%)  route 0.514ns (74.294%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.072ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    4.196ns
+    Source Clock Delay      (SCD):    3.775ns
+    Clock Pessimism Removal (CPR):    0.350ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     0.717 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750     2.467    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     2.550 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.225     3.775    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X39Y221        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[22]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X39Y221        FDRE (Prop_fdre_C_Q)         0.178     3.953 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[22]/Q
+                         net (fo=1, routed)           0.514     4.467    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[22]
+    RAMB36_X2Y44         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_2/DIADI[4]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.420     4.196    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X2Y44         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_2/CLKARDCLK
+                         clock pessimism             -0.350     3.846    
+    RAMB36_X2Y44         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[4])
+                                                      0.527     4.373    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_2
+  -------------------------------------------------------------------
+                         required time                         -4.373    
+                         arrival time                           4.467    
+  -------------------------------------------------------------------
+                         slack                                  0.094    
+
+Slack (MET) :             0.096ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[31]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_3/DIADI[3]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.675ns  (logic 0.178ns (26.364%)  route 0.497ns (73.636%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.053ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    4.203ns
+    Source Clock Delay      (SCD):    3.778ns
+    Clock Pessimism Removal (CPR):    0.373ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     0.717 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750     2.467    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     2.550 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.228     3.778    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X33Y218        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[31]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X33Y218        FDRE (Prop_fdre_C_Q)         0.178     3.956 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[31]/Q
+                         net (fo=5, routed)           0.497     4.453    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[30]
+    RAMB36_X2Y43         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_3/DIADI[3]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.427     4.203    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X2Y43         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_3/CLKARDCLK
+                         clock pessimism             -0.373     3.830    
+    RAMB36_X2Y43         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[3])
+                                                      0.527     4.357    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_3
+  -------------------------------------------------------------------
+                         required time                         -4.357    
+                         arrival time                           4.453    
+  -------------------------------------------------------------------
+                         slack                                  0.096    
+
+Slack (MET) :             0.099ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[15]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/DIADI[15]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.684ns  (logic 0.206ns (30.128%)  route 0.478ns (69.872%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.058ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    4.276ns
+    Source Clock Delay      (SCD):    3.845ns
+    Clock Pessimism Removal (CPR):    0.374ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     0.717 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750     2.467    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     2.550 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.295     3.845    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X8Y213         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[15]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X8Y213         FDRE (Prop_fdre_C_Q)         0.206     4.051 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[15]/Q
+                         net (fo=1, routed)           0.478     4.528    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[15]
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/DIADI[15]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.500     4.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/CLKBWRCLK
+                         clock pessimism             -0.374     3.902    
+    RAMB36_X0Y41         RAMB36E1 (Hold_ramb36e1_CLKBWRCLK_DIADI[15])
+                                                      0.527     4.429    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg
+  -------------------------------------------------------------------
+                         required time                         -4.429    
+                         arrival time                           4.528    
+  -------------------------------------------------------------------
+                         slack                                  0.099    
+
+Slack (MET) :             0.101ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/wrp_inst/count_value_i_reg[2]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/ADDRBWRADDR[8]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.291ns  (logic 0.091ns (31.277%)  route 0.200ns (68.723%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.045ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.440ns
+    Source Clock Delay      (SCD):    2.031ns
+    Clock Pessimism Removal (CPR):    0.365ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.418     0.418 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           0.920     1.338    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.026     1.364 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        0.667     2.031    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/wrp_inst/wr_clk
+    SLICE_X9Y207         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/wrp_inst/count_value_i_reg[2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X9Y207         FDRE (Prop_fdre_C_Q)         0.091     2.122 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/wrp_inst/count_value_i_reg[2]/Q
+                         net (fo=8, routed)           0.200     2.322    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/addra[2]
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/ADDRBWRADDR[8]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.491     0.491 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           0.996     1.487    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.030     1.517 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        0.924     2.440    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/CLKBWRCLK
+                         clock pessimism             -0.365     2.075    
+    RAMB36_X0Y41         RAMB36E1 (Hold_ramb36e1_CLKBWRCLK_ADDRBWRADDR[8])
+                                                      0.145     2.220    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg
+  -------------------------------------------------------------------
+                         required time                         -2.220    
+                         arrival time                           2.322    
+  -------------------------------------------------------------------
+                         slack                                  0.101    
+
+Slack (MET) :             0.104ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[40]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/DIBDI[8]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.710ns  (logic 0.206ns (29.014%)  route 0.504ns (70.986%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.079ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    4.276ns
+    Source Clock Delay      (SCD):    3.848ns
+    Clock Pessimism Removal (CPR):    0.350ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     0.717 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750     2.467    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     2.550 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.298     3.848    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X12Y206        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[40]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X12Y206        FDRE (Prop_fdre_C_Q)         0.206     4.054 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[40]/Q
+                         net (fo=1, routed)           0.504     4.558    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[40]
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/DIBDI[8]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.500     4.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/CLKBWRCLK
+                         clock pessimism             -0.350     3.926    
+    RAMB36_X0Y41         RAMB36E1 (Hold_ramb36e1_CLKBWRCLK_DIBDI[8])
+                                                      0.527     4.453    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg
+  -------------------------------------------------------------------
+                         required time                         -4.453    
+                         arrival time                           4.558    
+  -------------------------------------------------------------------
+                         slack                                  0.104    
+
+Slack (MET) :             0.107ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[57]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_6/DIADI[3]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.464ns  (logic 0.118ns (25.441%)  route 0.346ns (74.559%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.061ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.390ns
+    Source Clock Delay      (SCD):    1.984ns
+    Clock Pessimism Removal (CPR):    0.346ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.418     0.418 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           0.920     1.338    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.026     1.364 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        0.620     1.984    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X34Y228        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[57]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X34Y228        FDRE (Prop_fdre_C_Q)         0.118     2.102 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/pending_data_reg[57]/Q
+                         net (fo=1, routed)           0.346     2.447    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[57]
+    RAMB36_X2Y45         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_6/DIADI[3]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.491     0.491 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           0.996     1.487    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.030     1.517 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        0.874     2.390    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X2Y45         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_6/CLKARDCLK
+                         clock pessimism             -0.346     2.044    
+    RAMB36_X2Y45         RAMB36E1 (Hold_ramb36e1_CLKARDCLK_DIADI[3])
+                                                      0.296     2.340    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_capture_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_6
+  -------------------------------------------------------------------
+                         required time                         -2.340    
+                         arrival time                           2.447    
+  -------------------------------------------------------------------
+                         slack                                  0.107    
+
+Slack (MET) :             0.108ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/DIADI[3]
+                            (rising edge-triggered cell RAMB36E1 clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.467ns  (logic 0.118ns (25.257%)  route 0.349ns (74.743%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.064ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.440ns
+    Source Clock Delay      (SCD):    2.031ns
+    Clock Pessimism Removal (CPR):    0.346ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.418     0.418 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           0.920     1.338    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.026     1.364 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        0.667     2.031    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X10Y208        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X10Y208        FDRE (Prop_fdre_C_Q)         0.118     2.149 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/raw_record_rx_reg[3]/Q
+                         net (fo=1, routed)           0.349     2.498    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/dina[3]
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/DIADI[3]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.491     0.491 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           0.996     1.487    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.030     1.517 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        0.924     2.440    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clka
+    RAMB36_X0Y41         RAMB36E1                                     r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/CLKBWRCLK
+                         clock pessimism             -0.346     2.094    
+    RAMB36_X0Y41         RAMB36E1 (Hold_ramb36e1_CLKBWRCLK_DIADI[3])
+                                                      0.296     2.390    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_observation_fifo/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg
+  -------------------------------------------------------------------
+                         required time                         -2.390    
+                         arrival time                           2.498    
+  -------------------------------------------------------------------
+                         slack                                  0.108    
+
+Slack (MET) :             0.108ns  (arrival time - required time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_arm_cdc/syncstages_ff_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_arm_cdc/syncstages_ff_reg[1]/D
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             rfmc_rx
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (rfmc_rx rise@0.000ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        0.155ns  (logic 0.100ns (64.566%)  route 0.055ns (35.434%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.357ns
+    Source Clock Delay      (SCD):    1.981ns
+    Clock Pessimism Removal (CPR):    0.376ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.418     0.418 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           0.920     1.338    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.026     1.364 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        0.617     1.981    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_arm_cdc/dest_clk
+    SLICE_X37Y225        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_arm_cdc/syncstages_ff_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X37Y225        FDRE (Prop_fdre_C_Q)         0.100     2.081 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_arm_cdc/syncstages_ff_reg[0]/Q
+                         net (fo=1, routed)           0.055     2.136    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_arm_cdc/syncstages_ff[0]
+    SLICE_X37Y225        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_arm_cdc/syncstages_ff_reg[1]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.491     0.491 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           0.996     1.487    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.030     1.517 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        0.840     2.357    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_arm_cdc/dest_clk
+    SLICE_X37Y225        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_arm_cdc/syncstages_ff_reg[1]/C
+                         clock pessimism             -0.376     1.981    
+    SLICE_X37Y225        FDRE (Hold_fdre_C_D)         0.047     2.028    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_arm_cdc/syncstages_ff_reg[1]
+  -------------------------------------------------------------------
+                         required time                         -2.028    
+                         arrival time                           2.136    
+  -------------------------------------------------------------------
+                         slack                                  0.108    
+
+
+
+

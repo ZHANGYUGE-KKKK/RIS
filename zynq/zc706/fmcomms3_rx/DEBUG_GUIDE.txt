@@ -1,0 +1,107 @@
+当前发布固件为version=3，已加入lwIP TCP控制台和PL DDR导出；操作见NETWORK_CAPTURE_GUIDE.txt。
+原g/s/0/1/2诊断流程保留，下文version=2记录对应此前只读诊断版本。
+
+ZC706 + FMCOMMS3（FMC HPC）移植交付
+2026-10-19，Vivado / Vitis 2020.2
+
+状态：工程、BIT/LTX/XSA、Vitis 平台/BSP/应用均已准备并编译完成。
+本轮没有连接或烧写板卡，没有执行新的上板 PN/DMA 测试；后续由用户人工 debug。
+
+后续软件更新：已增加交互式外部RX单音测试，见 RX_TEST_GUIDE.txt。
+当前ELF诊断version=2，在各STEP等待处可发g读实际增益，发s独立采集IQ。
+本版只读9361诊断寄存器，见RX_GAIN_DIAGNOSTIC.txt；未修改RF配置或硬件。
+当前ELF在原PN/恢复/时钟检查通过后，等待串口0/1/2，依次采集RF OFF、
+916MHz、917MHz三组IQ，检查频谱和频率跟踪；仅更新应用，BIT/XSA及9361配置未改。
+用户已提供新板PN 1248/1248通过的截图。
+用户随后已验证version=1的三步DMA和外部改频响应，但-15/-20/-30dBm均发生RX1削顶，
+尚未通过完整RF判据；version=2新增g/s与增益回读功能未自动上板运行。
+
+入口
+  Vivado 工程：vivado/PZ_UART.xpr，器件 xc7z045ffg900-2，顶层 zc706_top。
+  Vitis 工作区：vitis_code/，平台 key_ctrl，应用 key_ctrlll（Debug）。
+  ./open_vitis.sh 可直接打开这个工作区。
+  完整交付文件位于 export/：
+    zc706_top.bit / zc706_top.ltx / zc706_top.xsa
+    key_ctrlll.elf / fsbl.elf / manifest.json
+  可执行 ELF 同时位于 vitis_code/key_ctrlll/Debug/key_ctrlll.elf。
+  _ide/bitstream 与 _ide/psinit 已放入匹配的新 BIT/LTX 和 PS 初始化脚本。
+
+保留内容
+  从 ../../z035 复制；原目录及此处原有 ris_board_test 工程均保留。
+  91 个原 RTL、ADI 库、应用与驱动源文件逐字节一致，C 配置与 config915 未改。
+  上述为迁移完成时的快照证明。software/src继续保留该快照；活动应用后来仅修改
+  helloworld.c并增加rx_tone.c/.h，实现用户要求的外部RX验证。所有ad_config文件仍一致。
+  BD 的 19 个逻辑模块、信号连接、AXI 连接和地址映射保持一致。
+  证明：reports/migration/integrity.json、original_sources.sha256.json。
+  software/src 是迁移时的软件快照；Vitis 应用 src 是已编译的工作副本。
+  legacy_z035_scripts/ 是旧板脚本档案，人工下载请使用下述 ZC706 专用入口。
+
+必要板级适配
+  PS 使用官方 ZC706 DDR/MIO 预设；CPU=666.667MHz，FCLK0=100MHz，SPI=166.667MHz。
+  USB-UART 改为 UART1，MIO48/49，115200 8N1；BSP STDOUT=0xE0001000。
+  GPIO EMIO[0] 仍是绝对 GPIO54，SPI0/SS0、SPI1 内部占位接口均保留。
+  PL DDR 使用官方 ZC706 1GB、64位 SODIMM 引脚/器件配置，800MHz DDR、200MHz UI。
+  原工程是32位物理DDR；仅新板级封装改为64位DQ、8位DM/DQS、14位地址。
+  MIG 的 AXI 数据宽度仍为256位，软件可见范围仍为0x40000000..0x7FFFFFFF。
+  SW13 PL_CPU_RESET（A8）为高有效，新板封装反相后接原低有效 rstn。
+  SW9 中心键（K15）为高有效，新板封装反相后保持原 KEY1 按键极性。
+
+FMC 接线与电气配置
+  FMCOMMS3 必须插 J37 HPC；25路 RIS 输出位于空闲 J5 LPC。
+  完整 FMC 信号表：constraints/pin_mapping.csv。
+  RIS按 out_1_1_0..out_5_5_0 行优先顺序，使用 LPC LA00..LA12 的 P/N 单线。
+  本工程按 ZC706 默认 VADJ=2.5V 配置：FMC控制/RIS输出 LVCMOS25。
+  8对RX输入 LVDS_25，片内100欧差分端接已在最终网表核对为TRUE。
+  DATA_CLK：AF20/AG20；FRAME：AG21/AH21；SPI MOSI/MISO：V28/V29；
+  SCLK/CS：T28/R28；RESETB：P30。其他信号见 CSV 和板级 XDC。
+
+约束和时序
+  constraints/zc706_board.xdc：200MHz系统时钟、复位、按键及异步控制边界。
+  constraints/zc706_fmcomms3_hpc.xdc：HPC引脚、电平、端接和61.44MHz接收时钟。
+  constraints/zc706_ris_lpc.xdc：25路RIS引脚，异步电平输出，无外部采样时钟。
+  constraints/zc706_rx_timing.xdc：DDR双沿输入预算、SPI边界及7路初始IDELAY。
+  constraints/zc706_mig.prj：ZC706 SODIMM；DDR物理/时序XDC由MIG生成。
+  保留原RX/DDR ILA、XPM及ADI控制CDC约束。
+
+  最终 WNS=+0.177ns，WHS=+0.048ns，TNS/THS=0，无未布线网。
+  首轮7路RX输入保持违例约0.2ns，已通过XDC将初始IDELAY设为4 taps
+  （约0.31ns）修复；AXI延时寄存器兼容，软件仍可扫描0..31。
+  这里改变的是板级物理初始化约束，原接收RTL和9361 SPI配置未修改。
+  RX ILA五组探针共171位已验证；DDR ILA仍可观察锁定/校准/复位。
+  证据：reports/implementation/board_audit.txt、timing_route.rpt、route_status.rpt。
+
+人工 debug 入口
+  1. 打开上述 Vitis 工作区，选择 key_ctrlll，使用 Launch on Hardware / Debug。
+     确认使用 export/zc706_top.bit、此工作区的新平台和 Debug/key_ctrlll.elf。
+  2. 也可在 hw_server 已监听 localhost:3121 时手工运行：
+     /home/yyz/vivado2020.2/main/Vitis/2020.2/bin/xsct scripts/program_zc706.tcl
+     该命令下载 BIT、执行新 PS 初始化、下载 ELF，然后保持CPU停止。
+     末尾加 run 才开始运行应用。迁移过程未执行这条下载脚本。
+  3. ILA探针文件使用 export/zc706_top.ltx。应用先执行原诊断流程：
+     config915初始化、临时PN扫描和恢复、统计输出后，进入交互式外部RX测试。
+     按0/1/2才各启动一次有限DMA，分析后复位接收/FIFO并恢复FPGA延时，ARM回到0。
+
+明确保留的边界
+  静态RX预算采用AD9361 LVDS tDDRX/tDDDV=0.25..1.25ns、006=0F；
+  每个芯片延时tap的0.20..0.40ns及PCB偏斜±0.50ns是明确的工程预算，
+  不是实测或厂商保证的板级PVT界限。静态时序通过基于这些预算及初始FPGA tap=4，
+  用户运行时扫描其他tap仍需PN验证，不能据此宣称已经上板通过。
+  report_cdc 保留55条 CDC-7，全部是原 key_ctrl_55 的外部异步复位到寄存器CLR；
+  为遵守保留业务硬件的要求，没有增加复位同步器或改动该模块。RX数据CDC无Critical。
+  DRC无Error/Critical，保留MIG厂商PLL缓冲、无负载以及DMA BRAM模式提示。
+  check_timing中MIG DQS输入的校准型PHY边界、DDR RESET异步输出、RIS异步控制及
+  PS7 SPI硬核的datapath边界仍有对应提示；无无时钟寄存器或未约束内部端点。
+  详细原始报告均在 reports/implementation/。
+
+后续重建
+  关闭此工作区的Vitis窗口后，在本目录运行 ./build_all.sh。
+  正常重建使用现有本地工程，不需要原z035目录；旧板脚本不会被调用。
+  原复制源和生成新板BD的适配步骤保留在 scripts/prepare_zc706.tcl，
+  已生成BD的Tcl导出为 scripts/zc706_bd_export.tcl。
+
+依据
+  本地 ../ZC706_Rev2_0.pdf：FPGA bank、FMC HPC/LPC及DDR原理图；
+  官方Vivado 2020.2 zc706/1.4板文件、PS预设与MIG引脚/器件配置。
+  ZC706 UG954：https://docs.amd.com/api/khub/documents/m4fPXowvxKd5JZRfe046WQ/content
+  AD9361 Rev G：https://www.analog.com/media/en/technical-documentation/data-sheets/AD9361.pdf
+  UG671本地原件：../../z035/reference/rfmc6000_7035/docs/AD9361_Register_Map_Reference_Manual_UG-671.pdf

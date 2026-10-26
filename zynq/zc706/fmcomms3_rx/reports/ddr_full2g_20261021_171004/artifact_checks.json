@@ -1,0 +1,13 @@
+{
+  "export/zc706_top.bit": true,
+  "export/zc706_top.ltx": true,
+  "export/zc706_top.xsa": true,
+  "export/key_ctrlll.elf": true,
+  "export/key_ctrlll_2p4.elf": true,
+  "export/key_ctrlll_dma_debug.elf": true,
+  "export/fsbl.elf": true,
+  "vitis_code/key_ctrl/export/key_ctrl/hw/zc706_top.xsa": true,
+  "vitis_code/key_ctrl/export/key_ctrl/hw/ps7_init.tcl": true,
+  "vitis_code/key_ctrlll/Debug/key_ctrlll.elf": true,
+  "vitis_code/key_ctrlll/_ide/bitstream/zc706_top.bit": true
+}

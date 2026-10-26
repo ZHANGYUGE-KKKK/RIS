@@ -1,0 +1,30 @@
+{
+  "source_pdf": "zynq/zc706/SCH_Schematic1_2026-10-20.pdf",
+  "source_pdf_sha256": "6cac74d2db6ef00ded0107798dc926c0a39780511727059b0e3628af064dcf3b",
+  "carrier_pdf": "zynq/zc706/ZC706_Rev2_0.pdf",
+  "carrier_pdf_sha256": "7e4c53e6d55b73aa52fa1d5b7ec96beb7578ea14919ecd44de316233d1514545",
+  "source_revision": "User confirmed final PDF and RIS_Q223 PCB connection; continuity concern closed",
+  "reviewed_pages": 4,
+  "independent_serial_data": 50,
+  "shift_clocks": 10,
+  "latch_clocks": 10,
+  "global_controls": 2,
+  "mapped_signals": 72,
+  "unique_carrier_pins": 72,
+  "fpga_banks": [
+    10,
+    12
+  ],
+  "clock_contact_pins_used_as_data": [
+    "G02",
+    "G03",
+    "H04",
+    "H05"
+  ],
+  "physical_validation": "NOT RUN; daughterboard not connected yet",
+  "schematic_only_review": true,
+  "unchanged_firmware_sources": true,
+  "unchanged_rf_config_bit_xsa": true,
+  "unchanged_elf_sha256": "9f23faa2b3aea84c01fe7cf21e19d8573a9b52d9b837df78f3f8c563ef44fb42",
+  "ris_q223": "PCB connection confirmed by user on 2026-10-20; no further continuity action requested"
+}

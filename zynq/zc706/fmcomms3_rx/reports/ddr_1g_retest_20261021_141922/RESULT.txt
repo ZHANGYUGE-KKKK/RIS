@@ -1,0 +1,52 @@
+ZC706，已确认安装1GB条后的复测结果（2026-10-21）
+
+结论：当前1GB内存条下，PL DDR读写错误仍然存在，可以稳定复现。
+基本器件选型匹配和MIG校准完成，并不能证明实际存储链路正确。
+没有证据把具体根因进一步指定为某一MIG参数、某颗DRAM或某个焊点。
+
+本次实物：用户明确确认MT8JTF12864HZ-1G6G1，1GB、1Rx8、DDR3-1600。
+重新加载现有原BIT和v6诊断ELF。没有使用降频BIT、没有修改DDR频率、
+没有修改AD9361配置。上电PN1248/1248通过、恢复RF50/50通过、时钟20/20通过。
+BIT SHA256=f94e7ffbc1413ebfa571aa86ae14f774a74e3b4dd4108c299dc979daa3a417ca
+XSA SHA256=1a81366a216e6914647ba57707edcb2a47157065d39c204bf8b7a03d9667cb1d
+
+1. 8MiB采集，ID00000007a80dd512：8388608bytes，256/256BD，issues000。
+   CRC重复读取不一致，DMA完成、DMA复位、PL重新准备三个阶段均有错误。
+2. JTAG独立读取冻结数据：
+   0x40000000和0x40400000各4次4KiB读取一致。
+   0x404e4000、0x40580000、0x40bff000各4次读取均出现不同CRC。
+   0x40580000相对第一次，后三次分别有40、51、46字节变化。
+3. 停止DMA并释放采集后，以全零、全一、0x55/0xaa交替、确定性随机图案
+   测试8个地址，每页4KiB、每图案重复读3次，另含0/20/200ms读间隔：
+   CPU运行状态96项比较，60项失败；两个CPU都暂停时96项比较，60项失败。
+   这不是对全片内存错误率的统计，是有针对性的抽样复现。
+   PS DDR对照0x30000000：每种CPU状态12/12通过。
+   PL对照0x40400000、0x70000000：每种CPU状态各12/12通过。
+   PL错误区0x404e4000、0x40580000、0x41184000、0x425c4000、0x4792f000：
+   每种CPU状态、每个地址均12/12失败。
+   两个CPU暂停只使用stop/con，没有运行临时CPU程序或更改CPU寄存器。
+4. 1秒采集，ID0000001812a77771：122880000bytes，3750/3750BD，issues000。
+   部分DDR窗口仍重复读取不一致，多个IQ分量出现非法12位符号扩展。
+5. 现有DDR ILA立即触发快照，共1024个采样点：
+   mmcm_locked始终1，init_calib_complete始终1，ui_clk_sync_rst始终0，
+   proc_sys_reset_0_peripheral_aresetn始终1。
+   这是短时快照，不代表已经测量读写眼图或长期采样余量。
+
+判断：故障可以在无AD9361采集、DMA停止、两个CPU暂停的情况下，
+仅通过JTAG写读PL DDR重现。因此射频输入、FFT、网口、SG链表逻辑
+均不是该独立复现所必需的条件。仍可能涉及PS至PL的AXI访问路径、
+MIG配置/时序/PHY、DDR供电/信号完整性、DIMM或连接器等。
+不能仅凭本次结果断言内存条本体损坏，也不能称MIG完整配置已验证正确。
+
+原始数据与复现脚本：
+serial/live.log：本次上电、8MiB、1秒及串口日志。
+frozen_probes/、frozen_probes.json：独立JTAG重复读取。
+patterns/：4种已知写入图案；patterns_running/、patterns_halted/：192份读回。
+patterns_running.tcl、patterns_halted.tcl：复现脚本，会覆盖指定测试页。
+analyze_patterns.py、patterns_result.json：逐字节比对、地址和字节通道统计。
+mig_state.csv、mig_state_summary.json：ILA原始数据和汇总。
+capture_result.json、verification.json：本次结果摘要。
+CAPACITY_RESEARCH.txt：8GB适配候选及容量限制的资料核查。
+
+结束状态：CPU恢复运行，CuteCom重新独占/dev/ttyUSB0，Vitis保留打开。
+最新1秒采集仍冻结保留，串口d可查看；需要新采集时先r释放，再c或v。

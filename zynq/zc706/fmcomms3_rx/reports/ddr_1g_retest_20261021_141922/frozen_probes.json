@@ -1,0 +1,456 @@
+{
+  "40000000": {
+    "crc32": [
+      "16b4cc39",
+      "16b4cc39",
+      "16b4cc39",
+      "16b4cc39"
+    ],
+    "differences_vs_first": [
+      {
+        "bad_bytes": 0,
+        "bad_by_lane_mod8": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_differences": []
+      },
+      {
+        "bad_bytes": 0,
+        "bad_by_lane_mod8": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_differences": []
+      },
+      {
+        "bad_bytes": 0,
+        "bad_by_lane_mod8": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_differences": []
+      }
+    ]
+  },
+  "40400000": {
+    "crc32": [
+      "4fa9e41f",
+      "4fa9e41f",
+      "4fa9e41f",
+      "4fa9e41f"
+    ],
+    "differences_vs_first": [
+      {
+        "bad_bytes": 0,
+        "bad_by_lane_mod8": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_differences": []
+      },
+      {
+        "bad_bytes": 0,
+        "bad_by_lane_mod8": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_differences": []
+      },
+      {
+        "bad_bytes": 0,
+        "bad_by_lane_mod8": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_differences": []
+      }
+    ]
+  },
+  "404e4000": {
+    "crc32": [
+      "676c5b86",
+      "da155844",
+      "1d48edd7",
+      "76c380ba"
+    ],
+    "differences_vs_first": [
+      {
+        "bad_bytes": 3,
+        "bad_by_lane_mod8": [
+          0,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_differences": [
+          {
+            "address": "404e40f9",
+            "first": 182,
+            "later": 255
+          },
+          {
+            "address": "404e4ba9",
+            "first": 0,
+            "later": 247
+          },
+          {
+            "address": "404e4ca1",
+            "first": 255,
+            "later": 229
+          }
+        ]
+      },
+      {
+        "bad_bytes": 2,
+        "bad_by_lane_mod8": [
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_differences": [
+          {
+            "address": "404e40f9",
+            "first": 182,
+            "later": 255
+          },
+          {
+            "address": "404e4d39",
+            "first": 255,
+            "later": 237
+          }
+        ]
+      },
+      {
+        "bad_bytes": 2,
+        "bad_by_lane_mod8": [
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_differences": [
+          {
+            "address": "404e4099",
+            "first": 255,
+            "later": 83
+          },
+          {
+            "address": "404e40f9",
+            "first": 182,
+            "later": 255
+          }
+        ]
+      }
+    ]
+  },
+  "40580000": {
+    "crc32": [
+      "46def82e",
+      "ca7a76af",
+      "16f46524",
+      "47390461"
+    ],
+    "differences_vs_first": [
+      {
+        "bad_bytes": 40,
+        "bad_by_lane_mod8": [
+          0,
+          40,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_differences": [
+          {
+            "address": "40580021",
+            "first": 90,
+            "later": 0
+          },
+          {
+            "address": "405800e9",
+            "first": 255,
+            "later": 62
+          },
+          {
+            "address": "40580139",
+            "first": 242,
+            "later": 0
+          },
+          {
+            "address": "40580219",
+            "first": 255,
+            "later": 178
+          },
+          {
+            "address": "405802a1",
+            "first": 30,
+            "later": 255
+          }
+        ]
+      },
+      {
+        "bad_bytes": 51,
+        "bad_by_lane_mod8": [
+          0,
+          51,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_differences": [
+          {
+            "address": "40580021",
+            "first": 90,
+            "later": 0
+          },
+          {
+            "address": "40580099",
+            "first": 0,
+            "later": 83
+          },
+          {
+            "address": "405800b1",
+            "first": 0,
+            "later": 253
+          },
+          {
+            "address": "40580139",
+            "first": 242,
+            "later": 0
+          },
+          {
+            "address": "405802b9",
+            "first": 50,
+            "later": 255
+          }
+        ]
+      },
+      {
+        "bad_bytes": 46,
+        "bad_by_lane_mod8": [
+          0,
+          46,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_differences": [
+          {
+            "address": "40580021",
+            "first": 90,
+            "later": 0
+          },
+          {
+            "address": "40580039",
+            "first": 255,
+            "later": 34
+          },
+          {
+            "address": "40580081",
+            "first": 255,
+            "later": 104
+          },
+          {
+            "address": "40580139",
+            "first": 242,
+            "later": 0
+          },
+          {
+            "address": "40580199",
+            "first": 255,
+            "later": 10
+          }
+        ]
+      }
+    ]
+  },
+  "40bff000": {
+    "crc32": [
+      "6858caec",
+      "2309398a",
+      "eac5a320",
+      "6839b57d"
+    ],
+    "differences_vs_first": [
+      {
+        "bad_bytes": 25,
+        "bad_by_lane_mod8": [
+          0,
+          25,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_differences": [
+          {
+            "address": "40bff0b1",
+            "first": 255,
+            "later": 153
+          },
+          {
+            "address": "40bff0e1",
+            "first": 0,
+            "later": 205
+          },
+          {
+            "address": "40bff159",
+            "first": 227,
+            "later": 255
+          },
+          {
+            "address": "40bff171",
+            "first": 255,
+            "later": 12
+          },
+          {
+            "address": "40bff191",
+            "first": 0,
+            "later": 86
+          }
+        ]
+      },
+      {
+        "bad_bytes": 20,
+        "bad_by_lane_mod8": [
+          0,
+          20,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_differences": [
+          {
+            "address": "40bff0e1",
+            "first": 0,
+            "later": 205
+          },
+          {
+            "address": "40bff141",
+            "first": 255,
+            "later": 58
+          },
+          {
+            "address": "40bff159",
+            "first": 227,
+            "later": 255
+          },
+          {
+            "address": "40bff1e1",
+            "first": 0,
+            "later": 238
+          },
+          {
+            "address": "40bff219",
+            "first": 91,
+            "later": 255
+          }
+        ]
+      },
+      {
+        "bad_bytes": 29,
+        "bad_by_lane_mod8": [
+          0,
+          29,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_differences": [
+          {
+            "address": "40bff0a9",
+            "first": 0,
+            "later": 193
+          },
+          {
+            "address": "40bff0d9",
+            "first": 125,
+            "later": 255
+          },
+          {
+            "address": "40bff0e1",
+            "first": 0,
+            "later": 205
+          },
+          {
+            "address": "40bff141",
+            "first": 255,
+            "later": 58
+          },
+          {
+            "address": "40bff159",
+            "first": 227,
+            "later": 255
+          }
+        ]
+      }
+    ]
+  }
+}

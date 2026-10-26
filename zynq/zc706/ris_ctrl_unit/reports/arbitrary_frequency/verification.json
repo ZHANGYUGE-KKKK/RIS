@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-26T15:45:38.776651+08:00",
+  "checks": {
+    "rtl_unisim_50_chips": true,
+    "legacy_axi": true,
+    "python_64_tests": true,
+    "protocol_c": true,
+    "timing": true,
+    "drc_no_violations": true,
+    "bit_export_matches_gui": true,
+    "downloaded_configuration_payload_matches_export": true,
+    "elf_export_matches_gui": true,
+    "software_matches_gui_build": true,
+    "mapping_unchanged": true,
+    "patterns_unchanged": true,
+    "native_gui_custom_units_and_restore": true,
+    "board_custom_frequency": true
+  },
+  "range_hz": [
+    1,
+    5000000
+  ],
+  "units": [
+    "Hz",
+    "k",
+    "M",
+    "G"
+  ],
+  "frequency_rule": "150000000 / half_ticks Hz; half_ticks = round_half_up(150000000 / requested_hz)",
+  "duty_cycle": "50%",
+  "wns_ns": 0.158,
+  "whs_ns": 0.077,
+  "board_serial": "210299995170",
+  "board_address": "192.168.1.11:7060",
+  "download": "Vitis GUI Debugger_ris_fast_network-Default; BIT+PS7 init+ELF+continue",
+  "final_frequency_hz": 1000000,
+  "physical_voltage_measured": false
+}

@@ -1,0 +1,58 @@
+RIS ZC706 first-board acceptance
+Date: 2026-10-22T17:11:58+08:00
+Result: PASS for the 16-frame first-board configuration, with the scope below.
+
+Hardware and artifacts
+  ZC706 XC7Z045, Digilent JTAG-HS3 serial 210299995170.
+  User confirmed this target is the RIS board and authorized download.
+  Project: vivado_board/ris_ctrl_unit.xpr; canonical RTL: rtl/.
+  50 parallel 595 lanes, 10 SHCP/STCP clock pairs, global MR/OE.
+  AXI4 base 0x41200000, 100 MHz FCLK0.
+  FRAME_SLOTS=16 (1 KiB logical cache); all 50 chips/400 outputs retained.
+  export/: matching BIT, XSA, ELF, PS initialization and SHA256 manifest.
+  build/board16_package/export/: the same accepted package.
+  Routed checkpoint: build/board16/routed.dcp.
+  Source hashes and configuration: source_manifest.json.
+
+Implementation
+  reports/board16/timing.rpt: all constraints met.
+  Overall WNS +0.660 ns, TNS 0; setup +0.790 ns; hold +0.093 ns.
+  No unconstrained internal endpoints or missing I/O delay constraints.
+  reports/board16/route_status.rpt: 22838/22838 routable nets fully routed;
+    routing errors 0.
+  reports/board16/drc.rpt: 0 violations.
+  72 RIS outputs checked for assigned PACKAGE_PIN and LVCMOS25.
+  Hierarchical utilization: 10938 LUTs, 14382 FFs, 8 RAMB18.
+  Synchronous mirrored BRAM and registered write controls retained.
+
+RTL simulation
+  reports/board_v1_rtl.log: 16-frame RIS_AXI_TEST_PASS.
+  reports/board_v1_rtl_256.log: 256-frame RIS_AXI_TEST_PASS.
+  Covers AXI transactions/backpressure, 50 modeled chips, group preservation,
+  HOLD/SEQUENCE/STREAM, cancellation/reset, cache protection, errors,
+  1 MHz whole-frame cadence, and the 28-cycle prefetch floor at 256 slots.
+  Simulation cadence is distinct from the conservative board application.
+
+Board execution
+  reports/application_board16_build.log: application built from the accepted XSA.
+  program.log: PS reset/init, bitstream programmed and ARM application started.
+  hardware_test.log: RIS_BOARD_SMOKE_PASS.
+    First/final BRAM words, 20 alternating full-board updates,
+    all 50 command mirrors, exactly one completion per update, OE switching.
+  uart_test.log and uart.log: RIS_UART_TEST_PASS on real /dev/ttyUSB0.
+    115200 8N1, commands 0/1/b/s/d/e; at least two one-second toggles;
+    static command stops toggling; status and OE operations preserve frame count.
+  USB UART was borrowed for testing; CuteCom connection and Auto Reconnect
+    were restored after testing.
+  final_status.log: pattern=0 status=000000c2 errors=00000000 frames=28.
+  Final state: all-LOW command latched, HOLD/IDLE, OE enabled.
+
+Limits
+  Q7S is not wired. Command mirrors are not physical Q readback.
+  No FPC continuity or 400-pin voltage measurement was performed, as requested.
+  Actual RF on/off polarity and external 595 pin levels remain unmeasured.
+  This is a volatile JTAG download, not a persistent boot image.
+  The default 256-frame design passed synthesis and RTL simulation, but its
+    routing/timing has NOT been accepted. Full256 trial routes were stopped
+    after the first-board acceptance; placed checkpoints and logs retained.
+  The metadata_candidate optimization was NOT promoted into canonical RTL.

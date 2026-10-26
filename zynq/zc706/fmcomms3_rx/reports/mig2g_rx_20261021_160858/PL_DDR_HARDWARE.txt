@@ -1,0 +1,43 @@
+ZC706 PL DDR 当前开发配置（2026-10-21 更新）
+
+当前默认：Micron MT16JSF25664HZ-1G4F1，2 GiB，2Rx8，DDR3-1333，64位，1.5V。
+用户已换条，独立 ddr2g_test 的完整2 GiB五种图案测试全部通过：
+ZERO/ONES/AA55/ADDRESS_XOR/INVERSE_ADDRESS_XOR，错误字数及AXI错误均为0。
+五轮耗时7992/7981/7893/7900/7994ms。此为用户提供的实测串口记录。
+
+本接收工程使用相同的物理组织和时序：
+MIG库器件 MT16JTF25664HZ-1G4（对应旧JSF条的同组织/速度配置）；
+每颗1Gb x8，2 Rank，每Rank1 GiB；Row14 / Column10 / Bank3。
+DQ64 / DQS8 / DM8；CS/CKE/ODT各2；CK差分时钟2对。
+tCK1500ps，DDR CK666.667MHz，CL9 / CWL7，UI166.667MHz，PHY4:1。
+AXI数据512位、地址31位；ID宽度和窄突发能力由连接的AXI互连适配。
+板载200MHz先经Clocking Wizard得到166.667MHz供MIG系统时钟；
+MIG参考输入仍为板载200MHz，其数据延时参考400MHz由MIG内部生成。
+AD9361 ref_clk200已从MIG UI移到板载200MHz，确保采样延时参考频率不变。
+MIG reset同时等待板级reset释放和外部Clocking Wizard锁定。
+RF脚本、LO、采样率、MGC及AD9361时序寄存器不因本次DDR适配而改变。
+
+第二Rank新增引脚：CS1 H8，CKE1 C7，ODT1 C9，CK1_P D9，CK1_N D8。
+完整引脚均来自已通过独立测试的MIG配置。
+
+本轮为定位IQ保存错误，保留原软件/PS/DMA映射窗口：
+0x40000000..0x7fffffff，共1 GiB可访问窗口；
+0x40000000..0x403fffff保留给BD；IQ数据自0x40400000开始，单次最大1020 MiB。
+物理2 GiB不等于PS已连续映射2 GiB，本版没有增加上半容量的窗口切换接口。
+DMA保持32 KiB/BD，4096组IQ/TLAST，8字节/组[I1,Q1,I2,Q2]，Fs15.36MSPS。
+本轮先对比8 MiB及1秒（122880000字节）采集，再评估后续容量扩展。
+
+本轮原RX工程已完成板测（reports/mig2g_rx_20261021_160858/RESULT.txt）：
+固定图案选定页96/96一致；PN1248/1248、RF CLOCK20/20通过。
+8 MiB的256个BD、1秒的3750个BD均正常完成，四路全文件格式错误均为0。
+8 MiB两份文件、1秒三份文件分别完全一致，JTAG抽查42/42和51/51一致。
+1秒第二次下载遇到一次TCP超时，续传成功；额外独立完整下载也通过。
+本轮没有复现原DDR读回异常；正常RF数据仍不能严格证明逐样本连续性。
+
+旧1 GiB条：MT8JTF12864HZ-1G6G1，1Rx8，DDR3-1600，CK800MHz。
+旧配置及BIT/XSA/ELF已备份在本轮报告目录before/，没有删除。
+旧条复测在无RF、无DMA、CPU暂停时仍有固定图案读回错误；
+不能仅凭2GiB条的另一配置通过，就断言1GiB条本体损坏。
+
+原始对照报告：reports/ddr_1g_retest_20261021_141922/RESULT.txt。
+本轮报告路径见 reports/mig2g_active.txt；以其中最终RESULT.txt记录板测结论。

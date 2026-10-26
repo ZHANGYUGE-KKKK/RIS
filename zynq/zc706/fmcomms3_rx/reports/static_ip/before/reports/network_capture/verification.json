@@ -1,0 +1,22 @@
+{
+  "cross_compile": "PASS; official lwip211 1.2 and standalone 7.3 BSP",
+  "application_warnings": 0,
+  "host_tests": "PASS: ASan/UBSan capture/MMU tests and 9 localhost TCP tests against real C command dispatcher",
+  "rx_tone_regression": "PASS",
+  "unchanged_rf_configuration": true,
+  "unchanged_hardware": true,
+  "unchanged_ad9361_register_write_calls": true,
+  "max_capture_bytes": 1069547520,
+  "max_tuples": 133693440,
+  "max_packets": 32640,
+  "duration_us": 8704000,
+  "default_ip": "192.168.10.10",
+  "ports": {
+    "console": 5000,
+    "control_data": 5001
+  },
+  "elf_sha256": "755e65d514212ed5b43d0ecffa5258b46f938ef4f1592ea8ef7d60c408f07427",
+  "onboard_network_validation": "NOT RUN; prepared for manual download",
+  "onboard_large_capture_validation": "NOT RUN",
+  "matlab_runtime_validation": "NOT RUN; raw layout checked in TCP tests"
+}

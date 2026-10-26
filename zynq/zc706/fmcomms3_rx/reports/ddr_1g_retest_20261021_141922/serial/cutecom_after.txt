@@ -1,0 +1,631 @@
+Start PHY autonegotiation 
+Waiting for PHY to complete autonegotiation.
+autonegotiation complete 
+link speed for phy address 7: 1000
+
+RX network v3: 192.168.1.10/255.255.255.0 console=5000 control=5001; UART mirrored
+
+CONFIG2P4 board test: user GUI script, no reference-profile overwrite
+CONFIG2P4 SPI/reset result=0 PRODUCT_ID=0A RESETB=0/1
+
+CONFIG2P4: GUI 2.1.4 LTE10, REF=40 MHz, RX/TX LO=2400 MHz
+SOURCE SHA256: 435fb5daa36453aaaa842b8cefa60a3e8110c80d6e772f70b78c9d6f9c4a8592
+BOARD ADAPT: crystal/DCXO 8/4096, 009:17->07; SPI remains 651 kHz
+Original interface preserved: 010=C8 006=0F 03D/03E=00/00
+RF SCRIPT RESET_FPGA: capture held in reset by main
+RF SCRIPT ADI FPGA BlockWrite 2,6 adapted: retain PS SPI clock
+RF SCRIPT calibration PASS: reg=05E mask=80 line=40
+RF SCRIPT SPIRead 05E=80 (source line 42)
+RF SCRIPT calibration PASS: reg=244 mask=80 line=1679
+RF SCRIPT calibration PASS: reg=284 mask=80 line=1682
+RF SCRIPT SPIRead 247=02 (source line 1732)
+RF SCRIPT SPIRead 287=02 (source line 1733)
+RF SCRIPT calibration PASS: reg=016 mask=80 line=2538
+RF SCRIPT calibration PASS: reg=016 mask=40 line=2551
+RF SCRIPT SPIRead 1EB=00 (source line 2558)
+RF SCRIPT SPIRead 1EC=37 (source line 2559)
+RF SCRIPT SPIRead 1E6=02 (source line 2560)
+RF SCRIPT SPIRead 1EB=00 (source line 2581)
+RF SCRIPT SPIRead 1EC=37 (source line 2582)
+RF SCRIPT SPIRead 1E6=02 (source line 2583)
+RF SCRIPT calibration PASS: reg=016 mask=01 line=2632
+RF SCRIPT calibration PASS: reg=016 mask=02 line=2641
+RF SCRIPT SPIRead 0A3=00 (source line 2646)
+RF SCRIPT calibration PASS: reg=016 mask=10 line=2660
+RF SCRIPT clock readback: BBPLL=983040000 ADC=245760000 DAC=245760000 RX Fs=15360000 TX Fs=15360000 Hz
+RF SCRIPT LO readback: RX=2400000000 TX=2400000000 Hz; RF ports RX1A/RX2A, TX1A/TX2A
+AD CONFIG registers: 05E=81 247=02 287=02 016=00 017=1A
+AD CONFIG interface: 010=C8 011=00 012=10
+FMCOMMS3 clock: 009=07, XO_BYPASS=0 (expected 0 for onboard crystal)
+AD CONFIG channels/delay: 002=DE 003=DE 006=0F 03D=00 03E=00
+CONFIG2P4 RX ready: Fs~15.36 MSPS, TX BIST=00; TX attenuation=20 dB; ARM=0
+CONFIG2P4 PASS: operations=2568/2568 writes=2550 reads=229 elapsed=440 ms
+RX BASELINE: observe original RF and FPGA taps for >=5 seconds; ARM=0
+[RX monitor] PN=0 ADI_CLKMON=0x00009D4B (61442565 Hz @100MHz AXI)
+RX BASELINE PASS: windows=50/50 elapsed_us=5016282 sample_hz=15360783..15360802 clock_hz=61443162..61443187 frame_hz=15360783..15360802
+RX BASELINE faults=0 unlocked_cycles=0 delay_bad=0 no_progress=0 rate_bad=0 ratio_worst=4 frame_ratio_worst=1 PN_bad_windows=0
+
+RX FPGA PN SCAN: ARM=0; SPI006=0F SPI010=C8 remain unchanged; temporary BIST only
+RX FPGA frame=0 data_pass=FFFFFFFF
+RX FPGA frame=1 data_pass=FFFFFFFF
+RX FPGA frame=2 data_pass=FFFFFFFF
+RX FPGA frame=3 data_pass=FFFFFFFF
+RX FPGA frame=4 data_pass=FFFFFFFF
+RX FPGA frame=5 data_pass=FFFFFFFF
+RX FPGA frame=6 data_pass=FFFFFFFF
+RX FPGA frame=7 data_pass=FFFFFFFF
+RX FPGA frame=8 data_pass=FFFFFFFF
+RX FPGA frame=9 data_pass=FFFFFFFF
+RX FPGA frame=10 data_pass=FFFFFFFF
+RX FPGA frame=11 data_pass=FFFFFFFF
+RX FPGA frame=12 data_pass=FFFFFFFF
+RX FPGA frame=13 data_pass=FFFFFFFF
+RX FPGA frame=14 data_pass=FFFFFFFF
+RX FPGA frame=15 data_pass=FFFFFFFF
+RX FPGA frame=16 data_pass=FFFFFFFF
+RX FPGA frame=17 data_pass=FFFFFFFF
+RX FPGA frame=18 data_pass=FFFFFFFF
+RX FPGA frame=19 data_pass=FFFFFFFF
+RX FPGA frame=20 data_pass=FFFFFFFF
+RX FPGA frame=21 data_pass=FFFFFFFF
+RX FPGA frame=22 data_pass=FFFFFFFF
+RX FPGA frame=23 data_pass=FFFFFFFF
+RX FPGA frame=24 data_pass=FFFFFFFF
+RX FPGA frame=25 data_pass=FFFFFFFF
+RX FPGA frame=26 data_pass=FFFFFFFF
+RX FPGA frame=27 data_pass=FFFFFFFF
+RX FPGA frame=28 data_pass=FFFFFFFF
+RX FPGA frame=29 data_pass=FFFFFFFF
+RX FPGA frame=30 data_pass=FFFFFFFF
+RX FPGA frame=31 data_pass=FFFFFFFF
+RX FPGA lane=0 pass=FFFFFFFF selected=15
+RX FPGA lane=1 pass=FFFFFFFF selected=15
+RX FPGA lane=2 pass=FFFFFFFF selected=15
+RX FPGA lane=3 pass=FFFFFFFF selected=15
+RX FPGA lane=4 pass=FFFFFFFF selected=15
+RX FPGA lane=5 pass=FFFFFFFF selected=15
+RX FPGA lane=6 pass=FFFFFFFF selected=15
+[RX monitor] PN=1 ADI_CLKMON=0x00009D4B (61442565 Hz @100MHz AXI)
+RX PN STABILITY PASS: windows=50/50 elapsed_us=5016332 sample_hz=15360782..15360806 clock_hz=61443148..61443206 frame_hz=15360782..15360806
+RX PN STABILITY faults=0 unlocked_cycles=0 delay_bad=0 no_progress=0 rate_bad=0 ratio_worst=4 frame_ratio_worst=1 PN_bad_windows=0
+RX FPGA PN TEST PASS: result=0 pass=1248/1248 RF_mismatch=00000000 restore=0; ARM=0
+RX RESTORED RF: original BIST controls restored; observe >=5 seconds; ARM=0
+[RX monitor] PN=0 ADI_CLKMON=0x00009D4B (61442565 Hz @100MHz AXI)
+RX RESTORED RF PASS: windows=50/50 elapsed_us=5016269 sample_hz=15360779..15360799 clock_hz=61443146..61443171 frame_hz=15360781..15360799
+RX RESTORED RF faults=0 unlocked_cycles=0 delay_bad=0 no_progress=0 rate_bad=0 ratio_worst=4 frame_ratio_worst=1 PN_bad_windows=0
+RF CLOCK TEST PASS: 20/20 checks over 2 s; FMCOMMS3 XTAL=40 MHz BBPLL=81 RXPLL=02 TXPLL=02
+RX interface: READY=1 ADI_STATUS=1 errors=0x00; ARM=0
+RX ADI STATUS PASS: 20/20 checks, combined status=0x03; use PN for data integrity
+CONFIG2P4 bounded RX diagnostic complete; interface checks=20/20
+CONFIG2P4 ACTIVE: RX/TX=2400 MHz, Fs~15.36 MSPS, TX BIST OFF (external RX)
+CONFIG2P4 RX external test: 3671E PORT1 -> RX1A; disconnect any TX-to-RX RF loopback
+CONFIG2P4 RF capture: PN=PASS GPIO=03 ARM=0; no RF/DMA data accepted without PN verification
+CONFIG2P4 original BIST controls restored exactly; protected RF timing/configuration verified unchanged
+
+RX EXTERNAL TEST READY: connect 3671E PORT1 -> RX1A; RX1 is the tested channel
+RX diagnostic version=4: UART/TCP console; g=read gain, s=current-RF snapshot
+Profile=CONFIG2P4; RX/TX LO=2400 MHz; TX BIST OFF (external RX).
+RF configuration remains unchanged during the external test.
+Use -80 dBm source power initially; commands 0=RF OFF, 1=2401 MHz ON, 2=2402 MHz ON, q=quit.
+
+STEP 0: Set source 2401 MHz; chosen power (start -80 dBm), RF OUTPUT OFF. Keep cable connected.
+Press 0 when ready, or q to stop: [g=read gain, s=capture current RF without a test verdict]
+g
+RX GAIN manual: 0FA=E0 RX1=MGC RX2=MGC full_table=1 max_index=76 request=76/76 active=76/76
+RX PATH manual: 001=00 003=DE 004=03 014=23 state017=1A 0FB=08 AGCstates=00/00
+RX OVR manual RX1: sampled_or=07 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX OVR manual RX2: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+Still waiting for STEP 0; g/s available, q stops: s
+RX GAIN before: 0FA=E0 RX1=MGC RX2=MGC full_table=1 max_index=76 request=76/76 active=76/76
+RX PATH before: 001=00 003=DE 004=03 014=23 state017=1A 0FB=08 AGCstates=00/00
+RX OVR before RX1: sampled_or=07 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX OVR before RX2: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX SNAPSHOT DMA: BEGIN, 4 packets / 16384 IQ tuples
+RX SNAPSHOT DMA: complete samples=16384 bytes=131072 packets=4; FIFOs reset, ARM=0
+RX GAIN after: 0FA=E0 RX1=MGC RX2=MGC full_table=1 max_index=76 request=76/76 active=76/76
+RX PATH after: 001=00 003=DE 004=03 014=23 state017=1A 0FB=08 AGCstates=00/00
+RX OVR after RX1: sampled_or=07 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX OVR after RX2: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX SNAPSHOT RX1: peak_hz=-272848 purity=0/1000 rms_counts=1852 (no RF verdict)
+RX SNAPSHOT RX1: I=-1929..1930 Q=-1926..1924 malformed=0 clipped=0/16384
+RX BAND RX1: near1M_hz=-1064886 share=0/1000 near2M_hz=1977952 share=0/1000 (diagnostic peaks only)
+RX SNAPSHOT RX2: peak_hz=-3840045 purity=7/1000 rms_counts=42 (no RF verdict)
+RX SNAPSHOT RX2: I=-103..115 Q=-98..97 malformed=0 clipped=0/16384
+RX SNAPSHOT #1 COMPLETE; full OFF/ON/frequency tracking test still required
+Still waiting for STEP 0; g/s available, q stops: s
+RX GAIN before: 0FA=E0 RX1=MGC RX2=MGC full_table=1 max_index=76 request=76/76 active=76/76
+RX PATH before: 001=00 003=DE 004=03 014=23 state017=1A 0FB=08 AGCstates=00/00
+RX OVR before RX1: sampled_or=07 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX OVR before RX2: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX SNAPSHOT DMA: BEGIN, 4 packets / 16384 IQ tuples
+RX SNAPSHOT DMA: complete samples=16384 bytes=131072 packets=4; FIFOs reset, ARM=0
+RX GAIN after: 0FA=E0 RX1=MGC RX2=MGC full_table=1 max_index=76 request=76/76 active=76/76
+RX PATH after: 001=00 003=DE 004=03 014=23 state017=1A 0FB=08 AGCstates=00/00
+RX OVR after RX1: sampled_or=07 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX OVR after RX2: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX SNAPSHOT RX1: peak_hz=-272734 purity=0/1000 rms_counts=1599 (no RF verdict)
+RX SNAPSHOT RX1: I=-1594..1610 Q=-1811..1796 malformed=0 clipped=0/16384
+RX BAND RX1: near1M_hz=-963079 share=0/1000 near2M_hz=2087882 share=0/1000 (diagnostic peaks only)
+RX SNAPSHOT RX2: peak_hz=-3840025 purity=10/1000 rms_counts=40 (no RF verdict)
+RX SNAPSHOT RX2: I=-90..94 Q=-105..104 malformed=0 clipped=0/16384
+RX SNAPSHOT #2 COMPLETE; full OFF/ON/frequency tracking test still required
+Still waiting for STEP 0; g/s available, q stops: s
+RX GAIN before: 0FA=E0 RX1=MGC RX2=MGC full_table=1 max_index=76 request=76/76 active=76/76
+RX PATH before: 001=00 003=DE 004=03 014=23 state017=1A 0FB=08 AGCstates=00/00
+RX OVR before RX1: sampled_or=07 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX OVR before RX2: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX SNAPSHOT DMA: BEGIN, 4 packets / 16384 IQ tuples
+RX SNAPSHOT DMA: complete samples=16384 bytes=131072 packets=4; FIFOs reset, ARM=0
+RX GAIN after: 0FA=E0 RX1=MGC RX2=MGC full_table=1 max_index=76 request=76/76 active=76/76
+RX PATH after: 001=00 003=DE 004=03 014=23 state017=1A 0FB=08 AGCstates=00/00
+RX OVR after RX1: sampled_or=07 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX OVR after RX2: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX SNAPSHOT RX1: peak_hz=255842 purity=0/1000 rms_counts=1698 (no RF verdict)
+RX SNAPSHOT RX1: I=-1972..1969 Q=-1789..1791 malformed=0 clipped=0/16384
+RX BAND RX1: near1M_hz=905041 share=0/1000 near2M_hz=-2005320 share=0/1000 (diagnostic peaks only)
+RX SNAPSHOT RX2: peak_hz=-3840011 purity=6/1000 rms_counts=38 (no RF verdict)
+RX SNAPSHOT RX2: I=-94..111 Q=-95..93 malformed=0 clipped=0/16384
+RX SNAPSHOT #3 COMPLETE; full OFF/ON/frequency tracking test still required
+Still waiting for STEP 0; g/s available, q stops: g
+RX GAIN manual: 0FA=E0 RX1=MGC RX2=MGC full_table=1 max_index=76 request=76/76 active=76/76
+RX PATH manual: 001=00 003=DE 004=03 014=23 state017=1A 0FB=08 AGCstates=00/00
+RX OVR manual RX1: sampled_or=07 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX OVR manual RX2: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+Still waiting for STEP 0; g/s available, q stops: s
+RX GAIN before: 0FA=E0 RX1=MGC RX2=MGC full_table=1 max_index=76 request=76/76 active=76/76
+RX PATH before: 001=00 003=DE 004=03 014=23 state017=1A 0FB=08 AGCstates=00/00
+RX OVR before RX1: sampled_or=07 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX OVR before RX2: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX SNAPSHOT DMA: BEGIN, 4 packets / 16384 IQ tuples
+RX EXT DMA FAILED: -9 (IQ packet length/order/SOF/EOF mismatch) DMA=00011008 BD=8C000000 RX=07
+RX SNAPSHOT #4 FAILED; full OFF/ON/frequency tracking test still required
+
+RX EXTERNAL TEST FAILED: windows=0/3 flags=080; ARM=0, capture reset verified
+Flags: 01=format 02=clipped 04=weak 08=purity 10=frequency 20=no RF-OFF contrast 40=no frequency tracking
+Flags: 080=DMA/reset failure 100=setup/RF readback failure
+RX2 is reported for reference only; PASS applies to RX1A, not RX2 or RF power calibration.
+RX network service remains active; g=gain s=snapshot t=three-step test, q=return here
+RX GAIN before: 0FA=E0 RX1=MGC RX2=MGC full_table=1 max_index=76 request=76/76 active=76/76
+RX PATH before: 001=00 003=DE 004=03 014=23 state017=1A 0FB=08 AGCstates=00/00
+RX OVR before RX1: sampled_or=07 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX OVR before RX2: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX SNAPSHOT DMA: BEGIN, 4 packets / 16384 IQ tuples
+RX EXT DMA FAILED: -9 (IQ packet length/order/SOF/EOF mismatch) DMA=00011008 BD=8C000000 RX=07
+RX SNAPSHOT #5 FAILED; full OFF/ON/frequency tracking test still required
+Start PHY autonegotiation 
+Waiting for PHY to complete autonegotiation.
+autonegotiation complete 
+link speed for phy address 7: 1000
+
+RX network v3: 192.168.1.10/255.255.255.0 console=5000 control=5001; UART mirrored
+
+CONFIG2P4 board test: user GUI script, no reference-profile overwrite
+CONFIG2P4 SPI/reset result=0 PRODUCT_ID=0A RESETB=0/1
+
+CONFIG2P4: GUI 2.1.4 LTE10, REF=40 MHz, RX/TX LO=2400 MHz
+SOURCE SHA256: 435fb5daa36453aaaa842b8cefa60a3e8110c80d6e772f70b78c9d6f9c4a8592
+BOARD ADAPT: crystal/DCXO 8/4096, 009:17->07; SPI remains 651 kHz
+Original interface preserved: 010=C8 006=0F 03D/03E=00/00
+RF SCRIPT RESET_FPGA: capture held in reset by main
+RF SCRIPT ADI FPGA BlockWrite 2,6 adapted: retain PS SPI clock
+RF SCRIPT calibration PASS: reg=05E mask=80 line=40
+RF SCRIPT SPIRead 05E=80 (source line 42)
+RF SCRIPT calibration PASS: reg=244 mask=80 line=1679
+RF SCRIPT calibration PASS: reg=284 mask=80 line=1682
+RF SCRIPT SPIRead 247=02 (source line 1732)
+RF SCRIPT SPIRead 287=02 (source line 1733)
+RF SCRIPT calibration PASS: reg=016 mask=80 line=2538
+RF SCRIPT calibration PASS: reg=016 mask=40 line=2551
+RF SCRIPT SPIRead 1EB=00 (source line 2558)
+RF SCRIPT SPIRead 1EC=37 (source line 2559)
+RF SCRIPT SPIRead 1E6=02 (source line 2560)
+RF SCRIPT SPIRead 1EB=00 (source line 2581)
+RF SCRIPT SPIRead 1EC=37 (source line 2582)
+RF SCRIPT SPIRead 1E6=02 (source line 2583)
+RF SCRIPT calibration PASS: reg=016 mask=01 line=2632
+RF SCRIPT calibration PASS: reg=016 mask=02 line=2641
+RF SCRIPT SPIRead 0A3=00 (source line 2646)
+RF SCRIPT calibration PASS: reg=016 mask=10 line=2660
+RF SCRIPT clock readback: BBPLL=983040000 ADC=245760000 DAC=245760000 RX Fs=15360000 TX Fs=15360000 Hz
+RF SCRIPT LO readback: RX=2400000000 TX=2400000000 Hz; RF ports RX1A/RX2A, TX1A/TX2A
+AD CONFIG registers: 05E=81 247=02 287=02 016=00 017=1A
+AD CONFIG interface: 010=C8 011=00 012=10
+FMCOMMS3 clock: 009=07, XO_BYPASS=0 (expected 0 for onboard crystal)
+AD CONFIG channels/delay: 002=DE 003=DE 006=0F 03D=00 03E=00
+CONFIG2P4 RX ready: Fs~15.36 MSPS, TX BIST=00; TX attenuation=20 dB; ARM=0
+CONFIG2P4 PASS: operations=2568/2568 writes=2550 reads=229 elapsed=440 ms
+RX BASELINE: observe original RF and FPGA taps for >=5 seconds; ARM=0
+[RX monitor] PN=0 ADI_CLKMON=0x00009D4B (61442565 Hz @100MHz AXI)
+RX BASELINE PASS: windows=50/50 elapsed_us=5016280 sample_hz=15360776..15360795 clock_hz=61443135..61443162 frame_hz=15360776..15360794
+RX BASELINE faults=0 unlocked_cycles=0 delay_bad=0 no_progress=0 rate_bad=0 ratio_worst=4 frame_ratio_worst=1 PN_bad_windows=0
+
+RX FPGA PN SCAN: ARM=0; SPI006=0F SPI010=C8 remain unchanged; temporary BIST only
+RX FPGA frame=0 data_pass=FFFFFFFF
+RX FPGA frame=1 data_pass=FFFFFFFF
+RX FPGA frame=2 data_pass=FFFFFFFF
+RX FPGA frame=3 data_pass=FFFFFFFF
+RX FPGA frame=4 data_pass=FFFFFFFF
+RX FPGA frame=5 data_pass=FFFFFFFF
+RX FPGA frame=6 data_pass=FFFFFFFF
+RX FPGA frame=7 data_pass=FFFFFFFF
+RX FPGA frame=8 data_pass=FFFFFFFF
+RX FPGA frame=9 data_pass=FFFFFFFF
+RX FPGA frame=10 data_pass=FFFFFFFF
+RX FPGA frame=11 data_pass=FFFFFFFF
+RX FPGA frame=12 data_pass=FFFFFFFF
+RX FPGA frame=13 data_pass=FFFFFFFF
+RX FPGA frame=14 data_pass=FFFFFFFF
+RX FPGA frame=15 data_pass=FFFFFFFF
+RX FPGA frame=16 data_pass=FFFFFFFF
+RX FPGA frame=17 data_pass=FFFFFFFF
+RX FPGA frame=18 data_pass=FFFFFFFF
+RX FPGA frame=19 data_pass=FFFFFFFF
+RX FPGA frame=20 data_pass=FFFFFFFF
+RX FPGA frame=21 data_pass=FFFFFFFF
+RX FPGA frame=22 data_pass=FFFFFFFF
+RX FPGA frame=23 data_pass=FFFFFFFF
+RX FPGA frame=24 data_pass=FFFFFFFF
+RX FPGA frame=25 data_pass=FFFFFFFF
+RX FPGA frame=26 data_pass=FFFFFFFF
+RX FPGA frame=27 data_pass=FFFFFFFF
+RX FPGA frame=28 data_pass=FFFFFFFF
+RX FPGA frame=29 data_pass=FFFFFFFF
+RX FPGA frame=30 data_pass=FFFFFFFF
+RX FPGA frame=31 data_pass=FFFFFFFF
+RX FPGA lane=0 pass=FFFFFFFF selected=15
+RX FPGA lane=1 pass=FFFFFFFF selected=15
+RX FPGA lane=2 pass=FFFFFFFF selected=15
+RX FPGA lane=3 pass=FFFFFFFF selected=15
+RX FPGA lane=4 pass=FFFFFFFF selected=15
+RX FPGA lane=5 pass=FFFFFFFF selected=15
+RX FPGA lane=6 pass=FFFFFFFF selected=15
+[RX monitor] PN=1 ADI_CLKMON=0x00009D4B (61442565 Hz @100MHz AXI)
+RX PN STABILITY PASS: windows=50/50 elapsed_us=5016337 sample_hz=15360778..15360794 clock_hz=61443132..61443174 frame_hz=15360778..15360798
+RX PN STABILITY faults=0 unlocked_cycles=0 delay_bad=0 no_progress=0 rate_bad=0 ratio_worst=3 frame_ratio_worst=1 PN_bad_windows=0
+RX FPGA PN TEST PASS: result=0 pass=1248/1248 RF_mismatch=00000000 restore=0; ARM=0
+RX RESTORED RF: original BIST controls restored; observe >=5 seconds; ARM=0
+[RX monitor] PN=0 ADI_CLKMON=0x00009D4C (61444091 Hz @100MHz AXI)
+RX RESTORED RF PASS: windows=50/50 elapsed_us=5016263 sample_hz=15360779..15360794 clock_hz=61443131..61443165 frame_hz=15360779..15360794
+RX RESTORED RF faults=0 unlocked_cycles=0 delay_bad=0 no_progress=0 rate_bad=0 ratio_worst=4 frame_ratio_worst=1 PN_bad_windows=0
+RF CLOCK TEST PASS: 20/20 checks over 2 s; FMCOMMS3 XTAL=40 MHz BBPLL=81 RXPLL=02 TXPLL=02
+RX interface: READY=1 ADI_STATUS=1 errors=0x00; ARM=0
+RX ADI STATUS PASS: 20/20 checks, combined status=0x03; use PN for data integrity
+CONFIG2P4 bounded RX diagnostic complete; interface checks=20/20
+CONFIG2P4 ACTIVE: RX/TX=2400 MHz, Fs~15.36 MSPS, TX BIST OFF (external RX)
+CONFIG2P4 RX external test: 3671E PORT1 -> RX1A; disconnect any TX-to-RX RF loopback
+CONFIG2P4 RF capture: PN=PASS GPIO=03 ARM=0; no RF/DMA data accepted without PN verification
+CONFIG2P4 original BIST controls restored exactly; protected RF timing/configuration verified unchanged
+
+RX EXTERNAL TEST READY: connect 3671E PORT1 -> RX1A; RX1 is the tested channel
+RX diagnostic version=4: UART/TCP console; g=read gain, s=current-RF snapshot
+Profile=CONFIG2P4; RX/TX LO=2400 MHz; TX BIST OFF (external RX).
+RF configuration remains unchanged during the external test.
+Use -80 dBm source power initially; commands 0=RF OFF, 1=2401 MHz ON, 2=2402 MHz ON, q=quit.
+
+STEP 0: Set source 2401 MHz; chosen power (start -80 dBm), RF OUTPUT OFF. Keep cable connected.
+Press 0 when ready, or q to stop: [g=read gain, s=capture current RF without a test verdict]
+g
+RX GAIN manual: 0FA=E0 RX1=MGC RX2=MGC full_table=1 max_index=76 request=76/76 active=76/76
+RX PATH manual: 001=00 003=DE 004=03 014=23 state017=1A 0FB=08 AGCstates=00/00
+RX OVR manual RX1: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX OVR manual RX2: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+Still waiting for STEP 0; g/s available, q stops: s
+RX GAIN before: 0FA=E0 RX1=MGC RX2=MGC full_table=1 max_index=76 request=76/76 active=76/76
+RX PATH before: 001=00 003=DE 004=03 014=23 state017=1A 0FB=08 AGCstates=00/00
+RX OVR before RX1: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX OVR before RX2: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX SNAPSHOT DMA: BEGIN, 4 packets / 16384 IQ tuples
+RX EXT DMA FAILED: -7 (DMA or descriptor hardware error) DMA=00000000 BD=00000000 RX=03
+RX SNAPSHOT #1 FAILED; full OFF/ON/frequency tracking test still required
+
+RX EXTERNAL TEST FAILED: windows=0/3 flags=080; ARM=0, capture reset verified
+Flags: 01=format 02=clipped 04=weak 08=purity 10=frequency 20=no RF-OFF contrast 40=no frequency tracking
+Flags: 080=DMA/reset failure 100=setup/RF readback failure
+RX2 is reported for reference only; PASS applies to RX1A, not RX2 or RF power calibration.
+RX network service remains active; g=gain s=snapshot t=three-step test, q=return here
+RX GAIN before: 0FA=E0 RX1=MGC RX2=MGC full_table=1 max_index=76 request=76/76 active=76/76
+RX PATH before: 001=00 003=DE 004=03 014=23 state017=1A 0FB=08 AGCstates=00/00
+RX OVR before RX1: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX OVR before RX2: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX SNAPSHOT DMA: BEGIN, 4 packets / 16384 IQ tuples
+RX EXT DMA FAILED: -7 (DMA or descriptor hardware error) DMA=00000000 BD=00000000 RX=03
+RX SNAPSHOT #2 FAILED; full OFF/ON/frequency tracking test still required
+RX GAIN before: 0FA=E0 RX1=MGC RX2=MGC full_table=1 max_index=76 request=76/76 active=76/76
+RX PATH before: 001=00 003=DE 004=03 014=23 state017=1A 0FB=08 AGCstates=00/00
+RX OVR before RX1: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX OVR before RX2: sampled_or=27 large_LMT=0 small_LMT=0 large_ADC=1 small_ADC=1 digital_sat=1
+RX SNAPSHOT DMA: BEGIN, 4 packets / 16384 IQ tuples
+RX EXT DMA FAILED: -7 (DMA or descriptor hardware error) DMA=00000000 BD=00000000 RX=03
+RX SNAPSHOT #3 FAILED; full OFF/ON/frequency tracking test still required
+Start PHY autonegotiation 
+Waiting for PHY to complete autonegotiation.
+autonegotiation complete 
+link speed for phy address 7: 1000
+
+RX network v3: 192.168.1.10/255.255.255.0 console=5000 control=5001; UART mirrored
+
+CONFIG2P4 board test: user GUI script, no reference-profile overwrite
+CONFIG2P4 SPI/reset result=0 PRODUCT_ID=0A RESETB=0/1
+
+CONFIG2P4: GUI 2.1.4 LTE10, REF=40 MHz, RX/TX LO=2400 MHz
+SOURCE SHA256: 435fb5daa36453aaaa842b8cefa60a3e8110c80d6e772f70b78c9d6f9c4a8592
+BOARD ADAPT: crystal/DCXO 8/4096, 009:17->07; SPI remains 651 kHz
+Original interface preserved: 010=C8 006=0F 03D/03E=00/00
+RF SCRIPT RESET_FPGA: capture held in reset by main
+RF SCRIPT ADI FPGA BlockWrite 2,6 adapted: retain PS SPI clock
+RF SCRIPT calibration PASS: reg=05E mask=80 line=40
+RF SCRIPT SPIRead 05E=80 (source line 42)
+RF SCRIPT calibration PASS: reg=244 mask=80 line=1679
+RF SCRIPT calibration PASS: reg=284 mask=80 line=1682
+RF SCRIPT SPIRead 247=02 (source line 1732)
+RF SCRIPT SPIRead 287=02 (source line 1733)
+RF SCRIPT calibration PASS: reg=016 mask=80 line=2538
+RF SCRIPT calibration PASS: reg=016 mask=40 line=2551
+RF SCRIPT SPIRead 1EB=00 (source line 2558)
+RF SCRIPT SPIRead 1EC=38 (source line 2559)
+RF SCRIPT SPIRead 1E6=02 (source line 2560)
+RF SCRIPT SPIRead 1EB=00 (source line 2581)
+RF SCRIPT SPIRead 1EC=38 (source line 2582)
+RF SCRIPT SPIRead 1E6=02 (source line 2583)
+RF SCRIPT calibration PASS: reg=016 mask=01 line=2632
+RF SCRIPT calibration PASS: reg=016 mask=02 line=2641
+RF SCRIPT SPIRead 0A3=00 (source line 2646)
+RF SCRIPT calibration PASS: reg=016 mask=10 line=2660
+RF SCRIPT clock readback: BBPLL=983040000 ADC=245760000 DAC=245760000 RX Fs=15360000 TX Fs=15360000 Hz
+RF SCRIPT LO readback: RX=2400000000 TX=2400000000 Hz; RF ports RX1A/RX2A, TX1A/TX2A
+AD CONFIG registers: 05E=81 247=02 287=02 016=00 017=1A
+AD CONFIG interface: 010=C8 011=00 012=10
+FMCOMMS3 clock: 009=07, XO_BYPASS=0 (expected 0 for onboard crystal)
+AD CONFIG channels/delay: 002=DE 003=DE 006=0F 03D=00 03E=00
+CONFIG2P4 RX ready: Fs~15.36 MSPS, TX BIST=00; TX attenuation=20 dB; ARM=0
+CONFIG2P4 PASS: operations=2568/2568 writes=2550 reads=229 elapsed=440 ms
+RX BASELINE: observe original RF and FPGA taps for >=5 seconds; ARM=0
+[RX monitor] PN=0 ADI_CLKMON=0x00009D4B (61442565 Hz @100MHz AXI)
+RX BASELINE PASS: windows=50/50 elapsed_us=5016280 sample_hz=15360778..15360795 clock_hz=61443140..61443162 frame_hz=15360779..15360795
+RX BASELINE faults=0 unlocked_cycles=0 delay_bad=0 no_progress=0 rate_bad=0 ratio_worst=4 frame_ratio_worst=1 PN_bad_windows=0
+
+RX FPGA PN SCAN: ARM=0; SPI006=0F SPI010=C8 remain unchanged; temporary BIST only
+RX FPGA frame=0 data_pass=FFFFFFFF
+RX FPGA frame=1 data_pass=FFFFFFFF
+RX FPGA frame=2 data_pass=FFFFFFFF
+RX FPGA frame=3 data_pass=FFFFFFFF
+RX FPGA frame=4 data_pass=FFFFFFFF
+RX FPGA frame=5 data_pass=FFFFFFFF
+RX FPGA frame=6 data_pass=FFFFFFFF
+RX FPGA frame=7 data_pass=FFFFFFFF
+RX FPGA frame=8 data_pass=FFFFFFFF
+RX FPGA frame=9 data_pass=FFFFFFFF
+RX FPGA frame=10 data_pass=FFFFFFFF
+RX FPGA frame=11 data_pass=FFFFFFFF
+RX FPGA frame=12 data_pass=FFFFFFFF
+RX FPGA frame=13 data_pass=FFFFFFFF
+RX FPGA frame=14 data_pass=FFFFFFFF
+RX FPGA frame=15 data_pass=FFFFFFFF
+RX FPGA frame=16 data_pass=FFFFFFFF
+RX FPGA frame=17 data_pass=FFFFFFFF
+RX FPGA frame=18 data_pass=FFFFFFFF
+RX FPGA frame=19 data_pass=FFFFFFFF
+RX FPGA frame=20 data_pass=FFFFFFFF
+RX FPGA frame=21 data_pass=FFFFFFFF
+RX FPGA frame=22 data_pass=FFFFFFFF
+RX FPGA frame=23 data_pass=FFFFFFFF
+RX FPGA frame=24 data_pass=FFFFFFFF
+RX FPGA frame=25 data_pass=FFFFFFFF
+RX FPGA frame=26 data_pass=FFFFFFFF
+RX FPGA frame=27 data_pass=FFFFFFFF
+RX FPGA frame=28 data_pass=FFFFFFFF
+RX FPGA frame=29 data_pass=FFFFFFFF
+RX FPGA frame=30 data_pass=FFFFFFFF
+RX FPGA frame=31 data_pass=FFFFFFFF
+RX FPGA lane=0 pass=FFFFFFFF selected=15
+RX FPGA lane=1 pass=FFFFFFFF selected=15
+RX FPGA lane=2 pass=FFFFFFFF selected=15
+RX FPGA lane=3 pass=FFFFFFFF selected=15
+RX FPGA lane=4 pass=FFFFFFFF selected=15
+RX FPGA lane=5 pass=FFFFFFFF selected=15
+RX FPGA lane=6 pass=FFFFFFFF selected=15
+[RX monitor] PN=1 ADI_CLKMON=0x00009D4C (61444091 Hz @100MHz AXI)
+RX PN STABILITY PASS: windows=50/50 elapsed_us=5016334 sample_hz=15360779..15360799 clock_hz=61443140..61443179 frame_hz=15360778..15360798
+RX PN STABILITY faults=0 unlocked_cycles=0 delay_bad=0 no_progress=0 rate_bad=0 ratio_worst=3 frame_ratio_worst=1 PN_bad_windows=0
+RX FPGA PN TEST PASS: result=0 pass=1248/1248 RF_mismatch=00000000 restore=0; ARM=0
+RX RESTORED RF: original BIST controls restored; observe >=5 seconds; ARM=0
+[RX monitor] PN=0 ADI_CLKMON=0x00009D4B (61442565 Hz @100MHz AXI)
+RX RESTORED RF PASS: windows=50/50 elapsed_us=5016268 sample_hz=15360779..15360794 clock_hz=61443138..61443160 frame_hz=15360779..15360795
+RX RESTORED RF faults=0 unlocked_cycles=0 delay_bad=0 no_progress=0 rate_bad=0 ratio_worst=3 frame_ratio_worst=1 PN_bad_windows=0
+RF CLOCK TEST PASS: 20/20 checks over 2 s; FMCOMMS3 XTAL=40 MHz BBPLL=81 RXPLL=02 TXPLL=02
+RX interface: READY=1 ADI_STATUS=1 errors=0x00; ARM=0
+RX ADI STATUS PASS: 20/20 checks, combined status=0x03; use PN for data integrity
+CONFIG2P4 bounded RX diagnostic complete; interface checks=20/20
+CONFIG2P4 ACTIVE: RX/TX=2400 MHz, Fs~15.36 MSPS, TX BIST OFF (external RX)
+CONFIG2P4 RX external test: 3671E PORT1 -> RX1A; disconnect any TX-to-RX RF loopback
+CONFIG2P4 RF capture: PN=PASS GPIO=03 ARM=0; no RF/DMA data accepted without PN verification
+CONFIG2P4 original BIST controls restored exactly; protected RF timing/configuration verified unchanged
+
+RX EXTERNAL TEST READY: connect 3671E PORT1 -> RX1A; RX1 is the tested channel
+RX diagnostic version=4: UART/TCP console; g=read gain, s=current-RF snapshot
+Profile=CONFIG2P4; RX/TX LO=2400 MHz; TX BIST OFF (external RX).
+RF configuration remains unchanged during the external test.
+Use -80 dBm source power initially; commands 0=RF OFF, 1=2401 MHz ON, 2=2402 MHz ON, q=quit.
+
+STEP 0: Set source 2401 MHz; chosen power (start -80 dBm), RF OUTPUT OFF. Keep cable connected.
+Press 0 when ready, or q to stop: [g=read gain, s=capture current RF without a test verdict]
+Start PHY autonegotiation 
+Waiting for PHY to complete autonegotiation.
+autonegotiation complete 
+link speed for phy address 7: 1000
+
+RX network v3: 192.168.1.10/255.255.255.0 console=5000 control=5001; UART mirrored
+
+CONFIG2P4 board test: user GUI script, no reference-profile overwrite
+CONFIG2P4 SPI/reset result=0 PRODUCT_ID=0A RESETB=0/1
+
+CONFIG2P4: GUI 2.1.4 LTE10, REF=40 MHz, RX/TX LO=2400 MHz
+SOURCE SHA256: 435fb5daa36453aaaa842b8cefa60a3e8110c80d6e772f70b78c9d6f9c4a8592
+BOARD ADAPT: crystal/DCXO 8/4096, 009:17->07; SPI remains 651 kHz
+Original interface preserved: 010=C8 006=0F 03D/03E=00/00
+RF SCRIPT RESET_FPGA: capture held in reset by main
+RF SCRIPT ADI FPGA BlockWrite 2,6 adapted: retain PS SPI clock
+RF SCRIPT calibration PASS: reg=05E mask=80 line=40
+RF SCRIPT SPIRead 05E=80 (source line 42)
+RF SCRIPT calibration PASS: reg=244 mask=80 line=1679
+RF SCRIPT calibration PASS: reg=284 mask=80 line=1682
+RF SCRIPT SPIRead 247=02 (source line 1732)
+RF SCRIPT SPIRead 287=02 (source line 1733)
+RF SCRIPT calibration PASS: reg=016 mask=80 line=2538
+RF SCRIPT calibration PASS: reg=016 mask=40 line=2551
+RF SCRIPT SPIRead 1EB=00 (source line 2558)
+RF SCRIPT SPIRead 1EC=38 (source line 2559)
+RF SCRIPT SPIRead 1E6=02 (source line 2560)
+RF SCRIPT SPIRead 1EB=00 (source line 2581)
+RF SCRIPT SPIRead 1EC=38 (source line 2582)
+RF SCRIPT SPIRead 1E6=02 (source line 2583)
+RF SCRIPT calibration PASS: reg=016 mask=01 line=2632
+RF SCRIPT calibration PASS: reg=016 mask=02 line=2641
+RF SCRIPT SPIRead 0A3=00 (source line 2646)
+RF SCRIPT calibration PASS: reg=016 mask=10 line=2660
+RF SCRIPT clock readback: BBPLL=983040000 ADC=245760000 DAC=245760000 RX Fs=15360000 TX Fs=15360000 Hz
+RF SCRIPT LO readback: RX=2400000000 TX=2400000000 Hz; RF ports RX1A/RX2A, TX1A/TX2A
+AD CONFIG registers: 05E=81 247=02 287=02 016=00 017=1A
+AD CONFIG interface: 010=C8 011=00 012=10
+FMCOMMS3 clock: 009=07, XO_BYPASS=0 (expected 0 for onboard crystal)
+AD CONFIG channels/delay: 002=DE 003=DE 006=0F 03D=00 03E=00
+CONFIG2P4 RX ready: Fs~15.36 MSPS, TX BIST=00; TX attenuation=20 dB; ARM=0
+CONFIG2P4 PASS: operations=2568/2568 writes=2550 reads=230 elapsed=441 ms
+RX BASELINE: observe original RF and FPGA taps for >=5 seconds; ARM=0
+[RX monitor] PN=0 ADI_CLKMON=0x00009D4B (61442565 Hz @100MHz AXI)
+RX BASELINE PASS: windows=50/50 elapsed_us=5016278 sample_hz=15360777..15360794 clock_hz=61443139..61443160 frame_hz=15360779..15360795
+RX BASELINE faults=0 unlocked_cycles=0 delay_bad=0 no_progress=0 rate_bad=0 ratio_worst=3 frame_ratio_worst=1 PN_bad_windows=0
+
+RX FPGA PN SCAN: ARM=0; SPI006=0F SPI010=C8 remain unchanged; temporary BIST only
+RX FPGA frame=0 data_pass=FFFFFFFF
+RX FPGA frame=1 data_pass=FFFFFFFF
+RX FPGA frame=2 data_pass=FFFFFFFF
+RX FPGA frame=3 data_pass=FFFFFFFF
+RX FPGA frame=4 data_pass=FFFFFFFF
+RX FPGA frame=5 data_pass=FFFFFFFF
+RX FPGA frame=6 data_pass=FFFFFFFF
+RX FPGA frame=7 data_pass=FFFFFFFF
+RX FPGA frame=8 data_pass=FFFFFFFF
+RX FPGA frame=9 data_pass=FFFFFFFF
+RX FPGA frame=10 data_pass=FFFFFFFF
+RX FPGA frame=11 data_pass=FFFFFFFF
+RX FPGA frame=12 data_pass=FFFFFFFF
+RX FPGA frame=13 data_pass=FFFFFFFF
+RX FPGA frame=14 data_pass=FFFFFFFF
+RX FPGA frame=15 data_pass=FFFFFFFF
+RX FPGA frame=16 data_pass=FFFFFFFF
+RX FPGA frame=17 data_pass=FFFFFFFF
+RX FPGA frame=18 data_pass=FFFFFFFF
+RX FPGA frame=19 data_pass=FFFFFFFF
+RX FPGA frame=20 data_pass=FFFFFFFF
+RX FPGA frame=21 data_pass=FFFFFFFF
+RX FPGA frame=22 data_pass=FFFFFFFF
+RX FPGA frame=23 data_pass=FFFFFFFF
+RX FPGA frame=24 data_pass=FFFFFFFF
+RX FPGA frame=25 data_pass=FFFFFFFF
+RX FPGA frame=26 data_pass=FFFFFFFF
+RX FPGA frame=27 data_pass=FFFFFFFF
+RX FPGA frame=28 data_pass=FFFFFFFF
+RX FPGA frame=29 data_pass=FFFFFFFF
+RX FPGA frame=30 data_pass=FFFFFFFF
+RX FPGA frame=31 data_pass=FFFFFFFF
+RX FPGA lane=0 pass=FFFFFFFF selected=15
+RX FPGA lane=1 pass=FFFFFFFF selected=15
+RX FPGA lane=2 pass=FFFFFFFF selected=15
+RX FPGA lane=3 pass=FFFFFFFF selected=15
+RX FPGA lane=4 pass=FFFFFFFF selected=15
+RX FPGA lane=5 pass=FFFFFFFF selected=15
+RX FPGA lane=6 pass=FFFFFFFF selected=15
+[RX monitor] PN=1 ADI_CLKMON=0x00009D4B (61442565 Hz @100MHz AXI)
+RX PN STABILITY PASS: windows=50/50 elapsed_us=5016333 sample_hz=15360779..15360796 clock_hz=61443138..61443168 frame_hz=15360778..15360799
+RX PN STABILITY faults=0 unlocked_cycles=0 delay_bad=0 no_progress=0 rate_bad=0 ratio_worst=4 frame_ratio_worst=1 PN_bad_windows=0
+RX FPGA PN TEST PASS: result=0 pass=1248/1248 RF_mismatch=00000000 restore=0; ARM=0
+RX RESTORED RF: original BIST controls restored; observe >=5 seconds; ARM=0
+[RX monitor] PN=0 ADI_CLKMON=0x00009D4C (61444091 Hz @100MHz AXI)
+RX RESTORED RF PASS: windows=50/50 elapsed_us=5016265 sample_hz=15360778..15360796 clock_hz=61443139..61443166 frame_hz=15360779..15360797
+RX RESTORED RF faults=0 unlocked_cycles=0 delay_bad=0 no_progress=0 rate_bad=0 ratio_worst=4 frame_ratio_worst=1 PN_bad_windows=0
+RF CLOCK TEST PASS: 20/20 checks over 2 s; FMCOMMS3 XTAL=40 MHz BBPLL=81 RXPLL=02 TXPLL=02
+RX interface: READY=1 ADI_STATUS=1 errors=0x00; ARM=0
+RX ADI STATUS PASS: 20/20 checks, combined status=0x03; use PN for data integrity
+CONFIG2P4 bounded RX diagnostic complete; interface checks=20/20
+CONFIG2P4 ACTIVE: RX/TX=2400 MHz, Fs~15.36 MSPS, TX BIST OFF (external RX)
+CONFIG2P4 RX external test: 3671E PORT1 -> RX1A; disconnect any TX-to-RX RF loopback
+CONFIG2P4 RF capture: PN=PASS GPIO=03 ARM=0; no RF/DMA data accepted without PN verification
+CONFIG2P4 original BIST controls restored exactly; protected RF timing/configuration verified unchanged
+
+RX EXTERNAL TEST READY: connect 3671E PORT1 -> RX1A; RX1 is the tested channel
+RX diagnostic version=4: UART/TCP console; g=read gain, s=current-RF snapshot
+Profile=CONFIG2P4; RX/TX LO=2400 MHz; TX BIST OFF (external RX).
+RF configuration remains unchanged during the external test.
+Use -80 dBm source power initially; commands 0=RF OFF, 1=2401 MHz ON, 2=2402 MHz ON, q=quit.
+
+STEP 0: Set source 2401 MHz; chosen power (start -80 dBm), RF OUTPUT OFF. Keep cable connected.
+Press 0 when ready, or q to stop: [g=read gain, s=capture current RF without a test verdict]
+RXDBG WINDOW id=0000001812a77771 state=ready result=0 requested=122880000 received=122880000 packets=3750/3750 reset_verified=1
+RXDBG DMA 0000001812a77771: version=1 stage=4 result=0 issues=000 index=3749 BD=4003A940 checked=3750/3750/3750
+RXDBG DMA regs: CR=00010003 SR=0001100A CUR=4003A940 TAIL=4003A940 max_length=8388607
+RXDBG BD: raw_status=8C008000 actual=32768 control=00008000 ID=3749 BUF=47928000 expected=47928000 NEXT=40000000 expected=40000000 repeat_diff=0000
+RXDBG CAPTURE id=0000001812a77771 version=1 phases=7 probes=15 sampled_bytes=61440 total_bytes=122880000 (sampled only)
+RXDBG SUMMARY changed_dma=6E68 changed_pl=6E68 unstable=6E68 memcpy_diff=7E68
+RXDBG PROBE 0 offset=00000000 address=40400000
+RXDBG phase=0 CRC=059EAB0D/059EAB0D/059EAB0D bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=1 CRC=059EAB0D/059EAB0D/059EAB0D bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=2 CRC=059EAB0D/059EAB0D/059EAB0D bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG PROBE 1 offset=00080000 address=40480000
+RXDBG phase=0 CRC=2BCCBDC9/2BCCBDC9/2BCCBDC9 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=1 CRC=2BCCBDC9/2BCCBDC9/2BCCBDC9 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=2 CRC=2BCCBDC9/2BCCBDC9/2BCCBDC9 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG PROBE 2 offset=000A5000 address=404A5000
+RXDBG phase=0 CRC=C0E796C1/C0E796C1/C0E796C1 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=1 CRC=C0E796C1/C0E796C1/C0E796C1 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=2 CRC=C0E796C1/C0E796C1/C0E796C1 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG PROBE 3 offset=000E4000 address=404E4000
+RXDBG phase=0 CRC=8D8C39FB/03BFD21B/C5BA95D8 bad_I1Q1I2Q2=4/0/0/0 first_offset=000E4038 raw=A20C
+RXDBG phase=1 CRC=BF48169F/8AB51A96/386882F8 bad_I1Q1I2Q2=1/0/0/0 first_offset=000E4A38 raw=630B
+RXDBG phase=2 CRC=05B4CC9D/CDA50F66/CDA50F66 bad_I1Q1I2Q2=1/0/0/0 first_offset=000E4318 raw=E1FD
+RXDBG PROBE 4 offset=00100000 address=40500000
+RXDBG phase=0 CRC=6644C9C2/6644C9C2/6644C9C2 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=1 CRC=6644C9C2/6644C9C2/6644C9C2 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=2 CRC=6644C9C2/6644C9C2/6644C9C2 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG PROBE 5 offset=00164000 address=40564000
+RXDBG phase=0 CRC=E351AF4F/E351AF4F/21EC2F8B bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=1 CRC=92356FD6/E351AF4F/E351AF4F bad_I1Q1I2Q2=1/0/0/0 first_offset=00164FB8 raw=F30D
+RXDBG phase=2 CRC=E351AF4F/E351AF4F/E351AF4F bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG PROBE 6 offset=00180000 address=40580000
+RXDBG phase=0 CRC=9DF773A9/3219B7E9/68996648 bad_I1Q1I2Q2=44/0/0/0 first_offset=00180048 raw=8DEA
+RXDBG phase=1 CRC=0CFFB7F5/A198F154/46DBA840 bad_I1Q1I2Q2=63/0/0/0 first_offset=001800A8 raw=AA7A
+RXDBG phase=2 CRC=3C33F45B/E036C2B9/0521E180 bad_I1Q1I2Q2=48/0/0/0 first_offset=00180048 raw=8DEA
+RXDBG PROBE 7 offset=00200000 address=40600000
+RXDBG phase=0 CRC=46D13821/46D13821/46D13821 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=1 CRC=46D13821/46D13821/46D13821 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=2 CRC=46D13821/46D13821/46D13821 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG PROBE 8 offset=00300000 address=40700000
+RXDBG phase=0 CRC=443045D8/443045D8/443045D8 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=1 CRC=443045D8/443045D8/443045D8 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=2 CRC=443045D8/443045D8/443045D8 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG PROBE 9 offset=00D84000 address=41184000
+RXDBG phase=0 CRC=B2779C4E/4C7415A8/F2E9A536 bad_I1Q1I2Q2=0/8/0/0 first_offset=00D84002 raw=8BFA
+RXDBG phase=1 CRC=FA53D35E/EBBA941C/FF81A212 bad_I1Q1I2Q2=0/8/0/0 first_offset=00D84002 raw=8BFA
+RXDBG phase=2 CRC=E00F9103/FF95B9EB/38339A76 bad_I1Q1I2Q2=0/8/0/0 first_offset=00D84002 raw=8BFA
+RXDBG PROBE 10 offset=021C4000 address=425C4000
+RXDBG phase=0 CRC=B86C8C7B/BB471EB9/7201C1DE bad_I1Q1I2Q2=0/0/6/0 first_offset=021C413C raw=531F
+RXDBG phase=1 CRC=FACE9EC1/BBDE8F66/C6D79D47 bad_I1Q1I2Q2=0/1/4/0 first_offset=021C440C raw=E503
+RXDBG phase=2 CRC=A770EE79/0F2A640B/2EF5CD55 bad_I1Q1I2Q2=0/0/4/1 first_offset=021C43CC raw=D01F
+RXDBG PROBE 11 offset=01D4C000 address=4214C000
+RXDBG phase=0 CRC=FA246D13/A0C5D02C/A0C5D02C bad_I1Q1I2Q2=0/0/0/2 first_offset=01D4C72E raw=5B07
+RXDBG phase=1 CRC=A0C5D02C/A0C5D02C/A0C5D02C bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=2 CRC=94D6C90D/A0C5D02C/A0C5D02C bad_I1Q1I2Q2=0/0/0/1 first_offset=01D4C38E raw=3112
+RXDBG PROBE 12 offset=03A98000 address=43E98000
+RXDBG phase=0 CRC=B4C9F5CC/B4C9F5CC/B4C9F5CC bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=1 CRC=B4C9F5CC/B4C9F5CC/B4C9F5CC bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=2 CRC=B4C9F5CC/B4C9F5CC/4A5F3B2F bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG PROBE 13 offset=057E4000 address=45BE4000
+RXDBG phase=0 CRC=92677C31/94E2F4C5/26F3BE89 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase=1 CRC=54CD4E5B/F275335A/9888922D bad_I1Q1I2Q2=0/1/0/0 first_offset=057E46EA raw=5CED
+RXDBG phase=2 CRC=A2D12F31/F5DEA0A0/24D9C55C bad_I1Q1I2Q2=0/1/1/0 first_offset=057E455A raw=AAC6
+RXDBG PROBE 14 offset=0752F000 address=4792F000
+RXDBG phase=0 CRC=74F21BB0/2C7808A8/055369ED bad_I1Q1I2Q2=0/0/0/1 first_offset=0752F22E raw=A902
+RXDBG phase=1 CRC=2D3D57EB/629A6894/AD31D32D bad_I1Q1I2Q2=0/1/0/1 first_offset=0752F4FA raw=1BE4
+RXDBG phase=2 CRC=AC708631/BCA593C2/6C10EB77 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000
+RXDBG phase 0=DMA_done 1=DMA_reset 2=PL_rearm; CRC=A/B/memcpy; zero masks do not certify the whole buffer
+RXDBG READ requests=0 bad_I1Q1I2Q2=0/0/0/0 first_offset=FFFFFFFF raw=0000 diagnostic_us=61075

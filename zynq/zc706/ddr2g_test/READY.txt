@@ -1,0 +1,17 @@
+2026-10-21：独立2GB测试工程已完成离线构建；15:51后已按用户要求通过JTAG下载并运行，内存自检等待串口操作。
+
+目标：ZC706 + Micron MT16JSF25664HZ-1G4F1，2GiB双Rank、DDR3-1333。
+下载文件：export/ddr2g_test.bit、ddr2g_test.xsa、ddr2g_test.elf、ps7_init.tcl。
+独立Vitis工作区：vitis_workspace；独立Vivado工程：vivado/ddr2g_test.xpr。
+下载入口：Vitis 2020.2 的 xsct 执行 scripts/program.tcl run。
+
+已完成：12项BIST仿真、全容量地址映射核对、第二Rank引脚核对、PS DDR程序段核对。
+布线后：WNS=0.263ns，WHS=0.053ns，建立/保持/脉宽时序均通过，DRC错误0。
+两条复位后常量状态标记的CDC路径有明确豁免；剩余CDC严重问题0。
+原接收工程4份受保护BIT/XSA/ELF/MIG配置SHA256均未改变。
+交付校验：reports/verification.json；完整说明：README.txt。
+
+串口115200 8N1，建议依次发送：s、0、1、f、a；每项完成后再发下一条。
+s=状态；0/1=两个地址半区各8MiB五种图案；f=完整2GiB地址图案；a=完整2GiB五种图案。
+上述离线结果不代表实物内存已通过；请根据MIG状态和各项串口自检结果判定。
+下载记录：reports/board_download_20261021.json；下载日志：reports/program_board_20261021.log。

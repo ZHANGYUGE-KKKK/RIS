@@ -1,0 +1,873 @@
+{
+  "readbacks": 96,
+  "passed": 96,
+  "failed": 0,
+  "checks_pass": true,
+  "scope": "8 pages in both ranks, lower/upper boundary and DDR last page, write all banks before alternating-bank reads",
+  "rows": [
+    {
+      "dma_address": "00000000",
+      "bank": 0,
+      "pattern": "address",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "2427becf766d5105e1c6c263fff307798dc6011d12e46edb2484f0e67a50ae35"
+    },
+    {
+      "dma_address": "00000000",
+      "bank": 0,
+      "pattern": "address",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "2427becf766d5105e1c6c263fff307798dc6011d12e46edb2484f0e67a50ae35"
+    },
+    {
+      "dma_address": "00000000",
+      "bank": 0,
+      "pattern": "address",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "2427becf766d5105e1c6c263fff307798dc6011d12e46edb2484f0e67a50ae35"
+    },
+    {
+      "dma_address": "00000000",
+      "bank": 0,
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f"
+    },
+    {
+      "dma_address": "00000000",
+      "bank": 0,
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f"
+    },
+    {
+      "dma_address": "00000000",
+      "bank": 0,
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f"
+    },
+    {
+      "dma_address": "00000000",
+      "bank": 0,
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "00000000",
+      "bank": 0,
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "00000000",
+      "bank": 0,
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "00000000",
+      "bank": 0,
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "00000000",
+      "bank": 0,
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "00000000",
+      "bank": 0,
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "00400000",
+      "bank": 0,
+      "pattern": "address",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ff9197b92382c6ecbd4dc331c0ab7cba9e403b05a074c44f5f9530aa60330805"
+    },
+    {
+      "dma_address": "00400000",
+      "bank": 0,
+      "pattern": "address",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ff9197b92382c6ecbd4dc331c0ab7cba9e403b05a074c44f5f9530aa60330805"
+    },
+    {
+      "dma_address": "00400000",
+      "bank": 0,
+      "pattern": "address",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ff9197b92382c6ecbd4dc331c0ab7cba9e403b05a074c44f5f9530aa60330805"
+    },
+    {
+      "dma_address": "00400000",
+      "bank": 0,
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "79fd71e26acc23891dcff5932fa6392e14338108dbc7bfc80d87570cd346ac3a"
+    },
+    {
+      "dma_address": "00400000",
+      "bank": 0,
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "79fd71e26acc23891dcff5932fa6392e14338108dbc7bfc80d87570cd346ac3a"
+    },
+    {
+      "dma_address": "00400000",
+      "bank": 0,
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "79fd71e26acc23891dcff5932fa6392e14338108dbc7bfc80d87570cd346ac3a"
+    },
+    {
+      "dma_address": "00400000",
+      "bank": 0,
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "00400000",
+      "bank": 0,
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "00400000",
+      "bank": 0,
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "00400000",
+      "bank": 0,
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "00400000",
+      "bank": 0,
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "00400000",
+      "bank": 0,
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "04000000",
+      "bank": 0,
+      "pattern": "address",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "383ec06badb2b1272e4621c59410d516a25e325ff15bdcd5b8ca578e8ad649a6"
+    },
+    {
+      "dma_address": "04000000",
+      "bank": 0,
+      "pattern": "address",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "383ec06badb2b1272e4621c59410d516a25e325ff15bdcd5b8ca578e8ad649a6"
+    },
+    {
+      "dma_address": "04000000",
+      "bank": 0,
+      "pattern": "address",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "383ec06badb2b1272e4621c59410d516a25e325ff15bdcd5b8ca578e8ad649a6"
+    },
+    {
+      "dma_address": "04000000",
+      "bank": 0,
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ac6756bf7f7eb0e88862e5f574ce791779863b4dc9ce7ae599a921115fa0d2ac"
+    },
+    {
+      "dma_address": "04000000",
+      "bank": 0,
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ac6756bf7f7eb0e88862e5f574ce791779863b4dc9ce7ae599a921115fa0d2ac"
+    },
+    {
+      "dma_address": "04000000",
+      "bank": 0,
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ac6756bf7f7eb0e88862e5f574ce791779863b4dc9ce7ae599a921115fa0d2ac"
+    },
+    {
+      "dma_address": "04000000",
+      "bank": 0,
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "04000000",
+      "bank": 0,
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "04000000",
+      "bank": 0,
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "04000000",
+      "bank": 0,
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "04000000",
+      "bank": 0,
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "04000000",
+      "bank": 0,
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "3ffff000",
+      "bank": 0,
+      "pattern": "address",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f7123b0de0cba52ef1209428dcef2d6988307eb3953655002c7705cf2f58d037"
+    },
+    {
+      "dma_address": "3ffff000",
+      "bank": 0,
+      "pattern": "address",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f7123b0de0cba52ef1209428dcef2d6988307eb3953655002c7705cf2f58d037"
+    },
+    {
+      "dma_address": "3ffff000",
+      "bank": 0,
+      "pattern": "address",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f7123b0de0cba52ef1209428dcef2d6988307eb3953655002c7705cf2f58d037"
+    },
+    {
+      "dma_address": "3ffff000",
+      "bank": 0,
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "2a5e4a509e7929afe1576e31098040878f3afb749ca60cf74ab8f7681bc70179"
+    },
+    {
+      "dma_address": "3ffff000",
+      "bank": 0,
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "2a5e4a509e7929afe1576e31098040878f3afb749ca60cf74ab8f7681bc70179"
+    },
+    {
+      "dma_address": "3ffff000",
+      "bank": 0,
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "2a5e4a509e7929afe1576e31098040878f3afb749ca60cf74ab8f7681bc70179"
+    },
+    {
+      "dma_address": "3ffff000",
+      "bank": 0,
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "3ffff000",
+      "bank": 0,
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "3ffff000",
+      "bank": 0,
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "3ffff000",
+      "bank": 0,
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "3ffff000",
+      "bank": 0,
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "3ffff000",
+      "bank": 0,
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "40000000",
+      "bank": 1,
+      "pattern": "address",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f56d4c6a1ff53b7792be3c3fee18653c7d3893fe88cafb137888e3981ebadd64"
+    },
+    {
+      "dma_address": "40000000",
+      "bank": 1,
+      "pattern": "address",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f56d4c6a1ff53b7792be3c3fee18653c7d3893fe88cafb137888e3981ebadd64"
+    },
+    {
+      "dma_address": "40000000",
+      "bank": 1,
+      "pattern": "address",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f56d4c6a1ff53b7792be3c3fee18653c7d3893fe88cafb137888e3981ebadd64"
+    },
+    {
+      "dma_address": "40000000",
+      "bank": 1,
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "017f1f66e7b180cb3d4d21302b63b8651560d132d206530a3fa31a7429845541"
+    },
+    {
+      "dma_address": "40000000",
+      "bank": 1,
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "017f1f66e7b180cb3d4d21302b63b8651560d132d206530a3fa31a7429845541"
+    },
+    {
+      "dma_address": "40000000",
+      "bank": 1,
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "017f1f66e7b180cb3d4d21302b63b8651560d132d206530a3fa31a7429845541"
+    },
+    {
+      "dma_address": "40000000",
+      "bank": 1,
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "40000000",
+      "bank": 1,
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "40000000",
+      "bank": 1,
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "40000000",
+      "bank": 1,
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "40000000",
+      "bank": 1,
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "40000000",
+      "bank": 1,
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "40400000",
+      "bank": 1,
+      "pattern": "address",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f4dba78adbf7e899e60d047f3b5f9e58946b99ff2750173365c4b579b070abb4"
+    },
+    {
+      "dma_address": "40400000",
+      "bank": 1,
+      "pattern": "address",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f4dba78adbf7e899e60d047f3b5f9e58946b99ff2750173365c4b579b070abb4"
+    },
+    {
+      "dma_address": "40400000",
+      "bank": 1,
+      "pattern": "address",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f4dba78adbf7e899e60d047f3b5f9e58946b99ff2750173365c4b579b070abb4"
+    },
+    {
+      "dma_address": "40400000",
+      "bank": 1,
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "6a8bb9f6a280890ff1f4c8a9b25217f4dbcdc0de2f278e0a51926e97a61850a7"
+    },
+    {
+      "dma_address": "40400000",
+      "bank": 1,
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "6a8bb9f6a280890ff1f4c8a9b25217f4dbcdc0de2f278e0a51926e97a61850a7"
+    },
+    {
+      "dma_address": "40400000",
+      "bank": 1,
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "6a8bb9f6a280890ff1f4c8a9b25217f4dbcdc0de2f278e0a51926e97a61850a7"
+    },
+    {
+      "dma_address": "40400000",
+      "bank": 1,
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "40400000",
+      "bank": 1,
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "40400000",
+      "bank": 1,
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "40400000",
+      "bank": 1,
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "40400000",
+      "bank": 1,
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "40400000",
+      "bank": 1,
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "44000000",
+      "bank": 1,
+      "pattern": "address",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "99848c0657db801548125a64962db8fa5c16f9b9991aa6eecf21982d46a5ef7c"
+    },
+    {
+      "dma_address": "44000000",
+      "bank": 1,
+      "pattern": "address",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "99848c0657db801548125a64962db8fa5c16f9b9991aa6eecf21982d46a5ef7c"
+    },
+    {
+      "dma_address": "44000000",
+      "bank": 1,
+      "pattern": "address",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "99848c0657db801548125a64962db8fa5c16f9b9991aa6eecf21982d46a5ef7c"
+    },
+    {
+      "dma_address": "44000000",
+      "bank": 1,
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "bf150cfe145b3ec7fc3017db8b51e69546f9b14e9725d5bfe3073db7fabd4753"
+    },
+    {
+      "dma_address": "44000000",
+      "bank": 1,
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "bf150cfe145b3ec7fc3017db8b51e69546f9b14e9725d5bfe3073db7fabd4753"
+    },
+    {
+      "dma_address": "44000000",
+      "bank": 1,
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "bf150cfe145b3ec7fc3017db8b51e69546f9b14e9725d5bfe3073db7fabd4753"
+    },
+    {
+      "dma_address": "44000000",
+      "bank": 1,
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "44000000",
+      "bank": 1,
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "44000000",
+      "bank": 1,
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "44000000",
+      "bank": 1,
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "44000000",
+      "bank": 1,
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "44000000",
+      "bank": 1,
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "7ffff000",
+      "bank": 1,
+      "pattern": "address",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "5bd4ce062ae1575df4cf65b2e66fd0a046e2c922443133024560a34cdc578dbc"
+    },
+    {
+      "dma_address": "7ffff000",
+      "bank": 1,
+      "pattern": "address",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "5bd4ce062ae1575df4cf65b2e66fd0a046e2c922443133024560a34cdc578dbc"
+    },
+    {
+      "dma_address": "7ffff000",
+      "bank": 1,
+      "pattern": "address",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "5bd4ce062ae1575df4cf65b2e66fd0a046e2c922443133024560a34cdc578dbc"
+    },
+    {
+      "dma_address": "7ffff000",
+      "bank": 1,
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "7391bcc23a1504c5405fc012a4dd8e6b4bf72bc2bb68a3ccc44c05b3316dd02f"
+    },
+    {
+      "dma_address": "7ffff000",
+      "bank": 1,
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "7391bcc23a1504c5405fc012a4dd8e6b4bf72bc2bb68a3ccc44c05b3316dd02f"
+    },
+    {
+      "dma_address": "7ffff000",
+      "bank": 1,
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "7391bcc23a1504c5405fc012a4dd8e6b4bf72bc2bb68a3ccc44c05b3316dd02f"
+    },
+    {
+      "dma_address": "7ffff000",
+      "bank": 1,
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "7ffff000",
+      "bank": 1,
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "7ffff000",
+      "bank": 1,
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6"
+    },
+    {
+      "dma_address": "7ffff000",
+      "bank": 1,
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "7ffff000",
+      "bank": 1,
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    },
+    {
+      "dma_address": "7ffff000",
+      "bank": 1,
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "pass": true,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "capture_id": "0000001583b5d842",
+  "sampled_only": true,
+  "pages": 14,
+  "readbacks": 42,
+  "checks_pass": true,
+  "rows": [
+    {
+      "address": "40400000",
+      "offset": 0,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "22bd00072e18b040e78596b8958935fdf2b2e550f92edb029dbc8b5e9882b166"
+    },
+    {
+      "address": "40407000",
+      "offset": 28672,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "21f1099c1b9bb052797deec933e5941dfd3cd660c75cb65dbd976649ae6b84ec"
+    },
+    {
+      "address": "40408000",
+      "offset": 32768,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "c20f91a9702384ba885322303a33d7976226775752badd810dd5fd8e18ae46ce"
+    },
+    {
+      "address": "40480000",
+      "offset": 524288,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "c7f2770dc3eb74345fe3aa01a858337601d272c0a5746e75d5d562effc42d0ba"
+    },
+    {
+      "address": "404a5000",
+      "offset": 675840,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "0a7369141bf49228e5d79101ce20b0befc62dfe824c3f81813a90014d6619efa"
+    },
+    {
+      "address": "404e4000",
+      "offset": 933888,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "0ac5b09946d624fc38b626976c9d0101bf1f81a40412b235b7188fe8bc383280"
+    },
+    {
+      "address": "40500000",
+      "offset": 1048576,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "8c65d220696e66bf574832cd95fe0023bbf2563981810d1583ec43cbb3e160dc"
+    },
+    {
+      "address": "40564000",
+      "offset": 1458176,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "f8bf6984133f48c3664a44e6acee51dbfb38f2194401b8bda783d5fdc45b49ab"
+    },
+    {
+      "address": "40580000",
+      "offset": 1572864,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "51b2bdb09e98affa9d6e585cf9c5555a14b5f83b77360f16fab2d87b386b9c94"
+    },
+    {
+      "address": "40600000",
+      "offset": 2097152,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "13b493953b111681c02470362429c7c8956c4afbba97f43b7f0d8f21234ca883"
+    },
+    {
+      "address": "40700000",
+      "offset": 3145728,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "6c7bb790ef5f7633d5ede595199dd0f9ceea50e729d52249699319f2c9ef1e5e"
+    },
+    {
+      "address": "40800000",
+      "offset": 4194304,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "a9989a518ec371bd0d2959e984e590ae8b540c1442161b8e5105101908b787a2"
+    },
+    {
+      "address": "40a00000",
+      "offset": 6291456,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "fc1552b74bc53b66899042e6f576d943cd78a4c10a2741d8f73d0b8b2eecb961"
+    },
+    {
+      "address": "40bff000",
+      "offset": 8384512,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "c866414570babc1d6628c28472b74a710b52dcbe9c6ab416b6cc40a28d79ba80"
+    }
+  ]
+}

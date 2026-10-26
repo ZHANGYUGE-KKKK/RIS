@@ -1,0 +1,10 @@
+{
+  "pid": 3259397,
+  "bound_FPCs": 10,
+  "mapped_cells": 400,
+  "selected_FPC": "1",
+  "selected_CH": "17",
+  "labels_are_channel_numbers": true,
+  "recovery_unchanged": true,
+  "board_commands_sent": 0
+}

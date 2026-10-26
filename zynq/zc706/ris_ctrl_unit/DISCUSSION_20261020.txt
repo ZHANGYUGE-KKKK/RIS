@@ -1,0 +1,290 @@
+RIS 控制链路设计讨论归档
+日期：2026-10-20（Asia/Shanghai）
+工作区：/home/yyz/work/RIS
+用途：暂停 RIS 讨论，之后快速恢复上下文；不是已实现功能说明或最终设计规格。
+
+一、快速恢复：先读这十条
+
+1. 用户最新决定使用两块独立 ZC706，不再把 RX 与 RIS 放在同一块板上。
+   RX 工程：/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx。
+   RIS 工程目录：/home/yyz/work/RIS/zynq/zc706/ris_ctrl_unit。
+   归档前 RIS 目录为空；现在只有归档文件，没有硬件或软件工程。
+2. RIS 控制子板插 RIS 板的 FMC LPC；FMCOMMS3 位于 RX 板的 FMC HPC。
+3. 最终子板共50片 Nexperia 74LVC8T595PWJ，共400路锁存输出。
+4. 50路 DATA 独立；每5片共享 SHCP 和 STCP，形成10组；OE、MR全板共享。
+   因此是72个FPGA输出，而不是50套完全独立的全部控制线。
+5. 用户希望一个芯片对应一个8位物理驱动RTL，例化50个，包在总驱动之下。
+   可采用此分层，但共享时钟/控制信号必须由统一调度逻辑驱动。
+6. 已接受的传输目标：千兆网口持续输入1 MHz整帧；更高速率使用XDMA。
+7. 高速业务假设已经由用户确认：上位机持续输入，每帧都可能不同。
+   不能擅自改成仅循环播放少量预存图案来满足持续输入要求。
+8. 最新讨论的建议链路为：网口→PS/lwIP→PS DDR→HP读DMA→AXIS FIFO
+   →完整帧缓存→定时状态机/50个串行驱动→FMC LPC→子板。
+   后续 XDMA H2C 通过另一个 HP 口写入同一图案缓存。
+9. 上述 PS DDR 方案、512 MiB容量、64字节记录格式均为建议，尚未最终确定。
+   双板拆分后，RIS板PL DDR也可用于图案；不再需要给IQ留空间。
+10. 用户要求“只构思，不写代码”。本次请求仅为把讨论保存为文件。
+    不得把归档当作实现、构建、修改9361配置或下载板卡的授权。
+
+二、已确认的用户意图与任务边界
+
+  初版操作场景：先手动切换一帧，稳定后采集IQ。
+  后续增加高速模式，最初提出5 MHz整帧更新，也评估过3 MHz。
+  最终暂定：千兆网口先实现1 MHz；超过此目标使用XDMA传输。
+  “1 MHz”指每秒更新100万幅完整400位图案，不是SHCP频率。
+  手动模式与高速模式需要分别安排等待时间，不能把1 ms稳定等待套用到每个高速帧。
+
+  RX和RIS现分开部署：
+    RX：既有fmcomms3_rx，保留AD9361接收、PL DDR采集、网口导出、Python GUI/FFT。
+    RIS：独立ris_ctrl_unit，负责接收图案、缓存、按节拍输出。
+  RX板的采集复位不会再通过同一FPGA复位网络影响RIS板。
+  两板的时序同步仍需要另外设计，网口分别发启动命令不保证同时开始。
+
+三、实物、原理图与引脚资料
+
+  最终子板原理图：
+    ../SCH_Schematic1_2026-10-20.pdf
+  ZC706载板原理图：
+    ../ZC706_Rev2_0.pdf
+  已有原理图审阅记录：
+    ../fmcomms3_rx/reports/lpc_daughterboard_20261020/README.txt
+  全72路引脚表：
+    ../fmcomms3_rx/reports/lpc_daughterboard_20261020/signal_pin_mapping.csv
+  10组芯片、时钟、FPC对应表：
+    ../fmcomms3_rx/reports/lpc_daughterboard_20261020/group_mapping.csv
+
+  注意：旧审阅记录中“FMCOMMS3继续在同一块板的HPC”“保留共板IQ容量”等描述，
+  是双板决定之前的背景；部署关系以本归档第一、二节为准。
+  fmc_drive_board/内较早的18片芯片版本不能替代最终50片原理图。
+
+  子板结构：
+    U4..U53，共50片；DATA_U01对应U4，DATA_U50对应U53。
+    每组5片，共40个Q输出；第g组对应FPCg，共10个FPC。
+    第1组：U4..U8，DATA_U01..U05，RIS_Q001..Q040，FPC1。
+    第10组：U49..U53，DATA_U46..U50，RIS_Q361..Q400，FPC10。
+    每片Q7S未回连，没有400路物理状态回读接口。
+
+  全板FPGA信号：
+    50路DATA + 10路SHIFT_CLK + 10路LATCH_CLK + MR_N + OE_SAFE_N = 72路。
+    每5片共享一组SHCP/STCP，不能由5个独立模块分别驱动同一根线。
+    全部68个LA触点及4个CLK_M2C触点被用作单端控制信号。
+    DATA_U13：G02 / CLK1_M2C_P / FPGA AC28。
+    DATA_U14：G03 / CLK1_M2C_N / FPGA AD28。
+    DATA_U15：H04 / CLK0_M2C_P / FPGA AG17。
+    DATA_U16：H05 / CLK0_M2C_N / FPGA AG16。
+    MR_N：H31 / LA28_P / FPGA AD25。
+    OE_SAFE_N：H32 / LA28_N / FPGA AE26。
+    映射跨HR Bank10/12，已有LVCMOS25约束建议，但尚未创建新工程72路XDC。
+
+  电源与操作语义：
+    595的VCCA为本地2.5 V，控制输入参考VCCA；VCCB为本地3.3 V，Q输出参考VCCB。
+    SHCP上升沿移入DS；STCP上升沿更新输出锁存器。
+    OE低有效；OE高时输出高阻，不代表输出逻辑0。
+    MR低仅清移位寄存器，不能直接清已锁存Q输出；还需要STCP。
+    建议初始化：OE禁能→MR清零/释放→移入已知初值→STCP→OE使能。
+    正常换帧可保持旧Q，移完下一帧8位后统一锁存，无需每帧MR或OE翻转。
+    如一个字节bit0对应Q0，则串行顺序为bit7先发、bit0最后发。
+    全板50路DATA并行，每帧只需8次移位，不是沿一根链移400次。
+    OE/MR连接50个输入，SHCP/STCP每路连接5个输入，边沿负载不同，需实测。
+
+  已关闭问题：
+    U31 Q6→R277→RIS_Q223→FPC6第27脚，用户已确认PCB连通。
+    不再询问或把PDF缺网标作为设计障碍。
+  未确认的空间含义：
+    RIS_Q编号与实际单元行列、高低电平对应功能未给出，不可假定为20×20排列。
+
+四、驱动RTL的建议分层（尚未实现）
+
+  1. 单芯片8位驱动，共50个：
+     缓存待发字节、按统一shift事件输出DS，接受load/start等控制。
+     使用时钟使能/事件推进，不产生50个各自独立的时钟域。
+  2. 组级组织，共10组：
+     每5个数据驱动共享SHCP/STCP，明确每根共享物理线只有一个驱动来源。
+     若只改变其中一片，组内其他4片仍应移入其旧字节，保持输出不变。
+  3. 总控制层：
+     AXI4-Lite寄存器、模式状态机、帧提交、全局/分组更新、OE/MR管理。
+     首版整帧同时更新；是否支持独立组更新可作为后续功能。
+  4. 帧缓存：
+     写入中、准备发送、已锁存的软件镜像应分离，避免写到一半就输出。
+     “已锁存镜像”只代表FPGA发出了锁存操作，不等于物理Q输出回读。
+
+  暂议位序：
+    第0字节bit0..bit7对应RIS_Q001..Q008，最后一字节对应RIS_Q393..Q400。
+    这是软件格式建议，实施前需与引脚映射和实物编号一起固定。
+
+五、数据带宽与时序预算
+
+  有效图案：400位=50字节。
+  建议记录：64字节=50字节图案+14字节保留；该格式尚未最终确认。
+  如采用64字节，建议网口、DDR、XDMA共用该格式，避免PS逐帧展开50→64字节。
+  块头另外携带版本、首帧序号、帧数、长度和校验信息，避免每帧一次命令/中断。
+
+  切帧率      帧周期       紧凑50B数据率    64B记录数据率
+  1 MHz       1000 ns      50 MB/s         64 MB/s
+  3 MHz       333.333 ns   150 MB/s        192 MB/s
+  5 MHz       200 ns       250 MB/s        320 MB/s
+
+  千兆线速125 MB/s仅为未扣协议开销的上限。
+  50字节格式理论绝对上限250万帧/s，64字节格式约195.3万帧/s，实际更低。
+  因此3 MHz和5 MHz任意全新整帧无法由现有千兆网口持续提供。
+  1 MHz/64 MB/s是设计目标，现有RIS持续上传与播放尚未实现或实测。
+
+  缓存至少涉及一次写和一次读：
+    1 MHz/64B：64+64=128 MB/s。
+    3 MHz/64B：192+192=384 MB/s。
+    5 MHz/64B：320+320=640 MB/s。
+  上述未计网络接收、CPU拷贝、Cache维护、描述符等额外访问。
+
+  SHCP频率下限只按8位吞吐计算：
+    1 MHz切帧至少8 MHz；3 MHz至少24 MHz；5 MHz至少40 MHz。
+    必须另留DS建立/保持、SHCP→STCP及锁存保护时间，不能按下限直接承诺实现。
+    3 MHz时，40 MHz移8周期约200 ns，50 MHz约160 ns，均只是预算。
+    5 MHz若SHCP恰为40 MHz，8周期已占满200 ns，需要更高SHCP或重新做时序预算。
+  现有RX工程FCLK0为100 MHz；100 MHz不能整数分频得到等间隔3 MHz。
+  讨论过120 MHz播放时钟：40周期/帧为3 MHz，24周期/帧为5 MHz。
+  具体播放时钟、SHCP和跨时钟方案均未定案，也未做新板时序收敛或实测。
+
+六、DDR容量、缓存位置与两块板拆分后的变化
+
+  ZC706硬件：
+    PS DDR：1 GiB，32位数据总线。
+    PL DDR：1 GiB，64位SODIMM，经MIG控制。
+    两侧总计2 GiB，但控制器和访问路径不同，不是可无条件整块使用的图案池。
+
+  现有RX工程的地址分配（参考事实，不是新RIS工程已实现的分配）：
+    PS DDR：物理0x00000000..0x3FFFFFFF，程序链接区从0x00100000开始。
+    PL DDR：0x40000000..0x7FFFFFFF。
+    RX描述符/预留：0x40000000..0x403FFFFF，4 MiB。
+    IQ区：0x40400000..0x7FFFFFFF，1020 MiB。
+    IQ格式I1/Q1/I2/Q2，四个小端int16，共8字节/双通道IQ元组。
+    15.36 MSPS对应122.88 MB/s，1020 MiB对应8.704秒IQ。
+
+  原共板方案建议：
+    PS高512 MiB（0x20000000..0x3FFFFFFF）用作图案池，低地址留给程序/网络。
+    PL DDR继续保留1020 MiB IQ。
+  用户随后决定双板部署，因此：
+    RIS板不再需要保留PL DDR给IQ，也不受RX采集复位影响。
+    最新列出的链路仍暂沿用PS DDR图案池；512 MiB并非最终确定容量。
+    可选择PS DDR、PL DDR或分层缓存，需要下一次讨论明确。
+    若改用PL DDR，网口数据从PS暂存区到PL DDR的批量搬运路径需补充，
+    后续XDMA可通过AXI-MM直接写MIG；不能把现有PS GPIO/MMIO逐字写入当作高速方案。
+    软件的缓存地址/大小应参数化，播放驱动不应写死“PS DDR”或某一固定容量。
+
+  64字节记录的缓存时长（纯记录区，不计外部描述符）：
+    512 MiB = 8,388,608帧：1 MHz 8.388608秒；3 MHz 2.796203秒；5 MHz 1.677722秒。
+    1 GiB = 16,777,216帧：1 MHz 16.777216秒；3 MHz 5.592405秒；5 MHz 3.355443秒。
+    1 GiB数据全占仅是容量换算，PS仍需给程序和网络等留空间。
+    若PS图案区896 MiB、其他用途留128 MiB，1 MHz/64B约14.680064秒。
+    若紧凑50B存储，512 MiB可存10,737,418帧，1 MHz约10.737418秒。
+  环形流式播放时长：
+    缓存时长代表输入停止后的余量，不是持续运行的上限。
+    平均有效输入速度达到消耗速度并留有余量、短暂停顿不超过缓存覆盖范围时，
+    可以持续补充并播放；缓存无法弥补长期平均输入不足。
+
+七、PS-PL与XDMA的建议接口（尚未实现）
+
+  暂议PS DDR版拓扑：
+    上位机→千兆网→PS GEM/lwIP→PS DDR图案环形池。
+    PL独立MM2S DMA→S_AXI_HP0读取PS DDR→AXI4-Stream FIFO→帧缓存→595驱动。
+    PS M_AXI_GP1→AXI4-Lite，控制模式、基址、长度、节拍、启停、状态等。
+    未来上位机→PCIe→XDMA H2C（AXI-MM）→S_AXI_HP1→同一个图案池。
+
+  PS DDR不要求CPU逐帧搬到PL：HP允许PL主设备直接访问PS DDR。
+  HP只通向PS DDR/OCM，不能经HP访问PL MIG；访问PL DDR需单独AXI路由。
+  HP0/HP1编号是分工建议，多个HP口最终仍共享PS DDR控制器。
+  可考虑128位AXI4-Stream作为公共播放数据接口，适配不同存储/输入端。
+  ZC706 PCIe为Gen2 x4；XDMA的7系列Gen2数据通路限64/128位，不要照搬256位配置。
+  XDMA提供Windows驱动参考实现；实际Windows版本、驱动安装/签名及吞吐仍需验证。
+  GUI/Python可以作为控制层，高速搬运后端的实现方式待定，不承诺Python逐帧处理速率。
+
+  现有RX工程状态，仅作新工程参考：
+    四个HP口当前未启用。
+    现有AXI DMA仅S2MM采集，c_include_mm2s=0；不存在可直接使用的RIS播放DMA。
+    现有网口主要提供控制/日志和IQ下载，接收端按文本命令解析。
+    因此仍需实现独立的二进制图案上传通道/解析器，不能直接发送二进制给文本命令口。
+    既有RX静态IP 192.168.1.10，日志5000、控制5001。
+    RIS独立板可考虑192.168.1.11；这是建议，并未写入新固件。
+
+八、缓存所有权、时序与错误处理建议
+
+  数据按块流转：空闲→写入中→校验通过并提交→DMA读取/播放→释放。
+  播放器仅消费已经提交的完整块；不能读取还在接收的块或覆盖未消费数据。
+  网口和XDMA使用同一数据记录格式、块提交和流控规则，单次运行只允许一个写入方。
+  传输完成、允许播放与实际已输出的帧数应分别计数，避免把DMA预取当作输出完成。
+  块中应包含首帧序号/帧数/版本/长度/校验，便于断线重连和定位错误。
+  PS写完Cacheable数据后，按块完成Cache刷新/内存屏障再发布给DMA。
+  XDMA写入与PS访问必须约定所有权和Cache无效化，HP不会自动保证CPU缓存一致。
+  图案区要由链接脚本或专门分配器隔离，不能仅约定一个可能被程序覆盖的地址。
+
+  建议模式：
+    手动单帧；预加载有限序列；明确指定的循环播放；上位机持续流式播放。
+  持续流模式欠载：保持最后有效图案、停止播放并记录错误和帧号。
+  不能无提示地延长周期、重复旧图案，或把未授权的循环模式当作持续新图案模式。
+  可考虑预收16 MiB后启动，1 MHz/64B对应262.144 ms；阈值应可配置。
+  DDR大缓存吸收主机/网络抖动；PL FIFO吸收DDR短时访问停顿。
+  FIFO大小尚未确定，讨论过64 KiB；不能把此值当作已综合资源或已验证余量。
+  中断/通知按块合并，避免每帧一次中断、一次命令或一次DMA描述符。
+
+九、RX复位讨论：仅保留背景，不再作为RIS板约束
+
+  当前RX RTL为单次ARM锁存：arm_latched_axis、active_rx只能由复位清除。
+  DMA有限窗口完成后，接收端仍可能写FIFO，因此下次采集前需要清理。
+  现有驱动采集后设置needs_pl_reset，直接删除复位会使下一次采集被拒绝；
+  若强行绕过检查，可能读到旧FIFO数据、遇到溢出/包边界等状态残留。
+  网口采集在finish()中收尾：正常完成、超时、错误或有效ABORT都会尝试rearm。
+  正常时复位发生在指定长度采完后、READY和BIN下载之前，不是每个DMA包都复位。
+  串口s快照和0/1/2外部测试同样每窗口结束后rearm。
+  rearm先停止并确认DMA，再拉动FCLK_RESET0_N，重新初始化并恢复FPGA采样延时。
+  这个复位涉及当前共用域中的RX、FIFO、DMA、部分AXI互联和RIS AXI GPIO，
+  不重配置FPGA、不清除已写DDR数据、不等于拉动AD9361 RESETB。
+  共板时曾建议隔离采集复位域；双板决定后不必仅为RIS连续播放去改RX复位。
+
+  源码索引（相对于fmcomms3_rx）：
+    PZ_UART.srcs/sources_1/new/ad9361_rx_axis.v，约212行：单次ARM锁存。
+    vitis_code/key_ctrlll/src/drivers/dma_9361.c，约269行：needs_pl_reset。
+    vitis_code/key_ctrlll/src/drivers/capture_store.c，约19行：finish()。
+    vitis_code/key_ctrlll/src/helloworld.c，约71行：rf_capture_reset()。
+    vitis_code/key_ctrlll/src/helloworld.c，约1076行：rx_external_rearm()。
+
+十、额外已讨论事项与边界
+
+  SPI1：此前审阅RX工程，AD9361使用SPI0，SPI1未接外部业务。
+  SPI1输入与复位模块使用同一个常量源不代表SPI1驱动了复位。
+  旧cdcm6208.c仍可能引用SPI1 BSP宏，关闭SPI1后需排除无用驱动或处理编译依赖。
+  此处仅记录结论，不表示已经关闭SPI1或修改了工程。
+
+  当前RX配置背景：config915、15.36 MSPS、双通道LVDS DDR，RX LO为915 MHz。
+  用户此前要求不要擅自修改9361配置，临时PN测试需恢复。
+  最新用户计划转入2.4 GHz接收测试，具体测试频点/LO变更以接下来的指令为准。
+  不把历史915 MHz配置约束理解为用户永久禁止后续明确授权的2.4 GHz测试。
+  本次归档没有修改任何RTL、XDC、驱动、9361配置，也没有构建或下载板卡。
+
+十一、下次继续讨论时应优先确定
+
+  1. RIS独立板的图案主存：PS DDR、PL DDR，还是两级缓存；容量与地址分区。
+  2. 最终帧格式：紧凑50B或建议的64B记录；位序、版本、块头和提交规则。
+  3. 控制模式与寄存器接口：手动/序列/循环/持续流，启停和欠载行为。
+  4. 播放时钟、SHCP/STCP时序，以及50个单芯片模块和10组共享信号的边界。
+  5. 两板同步：是否需要共同启动触发、帧标记、时间戳或共用参考时钟。
+     单次触发可以对齐起点，但不能自动消除长期独立时钟漂移。
+  6. 首版验证范围：全0/全1/走1、组与位序映射、长时间1 MHz供数、欠载恢复。
+     更高切帧率还要验证实物边沿/锁存时序与RIS实际响应速度。
+
+  快速续聊提示语：
+    “继续RIS控制链路讨论，先读zynq/zc706/ris_ctrl_unit/README.txt和
+     DISCUSSION_20261020.txt；保持只构思不写代码，先细化DDR与DMA方案。”
+
+十二、已核对的官方资料入口
+
+  Nexperia 74LVC8T595数据手册：
+    https://assets.nexperia.com/documents/data-sheet/74LVC8T595.pdf
+  ZC706用户手册UG954：
+    https://docs.amd.com/api/khub/documents/m4fPXowvxKd5JZRfe046WQ/content
+  Zynq HP接口UG585：
+    https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/PL-DMA-via-AXI-High-Performance-HP-Interface
+  AXI DMA PG021：
+    https://docs.amd.com/r/en-US/pg021_axi_dma/Core-Overview
+  XDMA PG195：
+    https://www.xilinx.com/support/documents/ip_documentation/xdma/v4_1/pg195-pcie-dma.pdf
+  AXI接口选择说明：
+    https://www.amd.com/en/products/adaptive-socs-and-fpgas/intellectual-property/axi.html

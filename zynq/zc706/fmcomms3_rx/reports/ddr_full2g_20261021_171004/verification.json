@@ -1,0 +1,38 @@
+{
+  "completed_local_time": "2026-10-21T17:51:40.745168+08:00",
+  "capacity": {
+    "physical_bytes": 2147483648,
+    "descriptor_reserved_bytes": 4194304,
+    "max_iq_bytes": 2143289344,
+    "tuple_count": 267911168,
+    "sample_rate_hz": 15360000,
+    "duration_seconds": 17.442133333333334
+  },
+  "uart_jtag_only_after_user_instruction": true,
+  "checks": {
+    "rank_pages": true,
+    "eight_mib": true,
+    "full_file": true,
+    "jtag_pages": true,
+    "artifacts": true,
+    "sources": true,
+    "full_capture": true,
+    "full_bd_chain_3_phases": true,
+    "startup_pn_clock_frame": true,
+    "timing": true,
+    "local_firmware_protocol_gui_tests": true
+  },
+  "continuous_sample_sequence_proven": false,
+  "whole_ddr_jtag_readback": false,
+  "full_capacity_capture_preserved": true,
+  "cpu_bank_restored": 0,
+  "cutecom_restored": true,
+  "files": {
+    "full_iq": "captures/rx_full2g_full_read1.bin",
+    "full_file_result": "full_file_result.json",
+    "jtag_result": "frozen_full_result.json",
+    "uart": "serial/live.log",
+    "summary": "RESULT.txt"
+  },
+  "checks_pass": true
+}

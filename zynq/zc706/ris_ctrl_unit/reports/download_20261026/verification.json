@@ -1,0 +1,27 @@
+{
+  "time": "2026-10-26T14:07:34.113887+08:00",
+  "method": "Vitis GUI Debugger_ris_network-Default; program FPGA, initialize PS, download ELF and Resume from main",
+  "jtag_cable": "210299995170",
+  "endpoint": "192.168.1.11:7060",
+  "workspace": "vitis_network",
+  "application": "ris_network",
+  "bitstream_download_success": true,
+  "elf_download_success": true,
+  "cpu0": "Running after Resume",
+  "output_command_mirror": "all400 LOW; OE enabled; static",
+  "status": "0x000000C2",
+  "errors": "0x00000000",
+  "frames": 1,
+  "gui_connected": true,
+  "mapping_preserved": "10 ports / 400 channels",
+  "pattern_playlist_started": false,
+  "gui_page": "patterns",
+  "ping_received": 2,
+  "ping_lost": 0,
+  "hashes": {
+    "export_network/ris_ctrl_unit.bit": "e77e8963f555991fcb317a72557ad2cf4e973d5b26f4986c0eb6dd54a7dab81d",
+    "export_network/ris_all_io.elf": "326d6f25377c9470af8cf0663893af6748c9f082612602f3fc9750a180d84a3a",
+    "vitis_network/ris_network/Debug/ris_network.elf": "326d6f25377c9470af8cf0663893af6748c9f082612602f3fc9750a180d84a3a",
+    "vitis_network/ris_network/_ide/bitstream/ris_ctrl_unit.bit": "e77e8963f555991fcb317a72557ad2cf4e973d5b26f4986c0eb6dd54a7dab81d"
+  }
+}

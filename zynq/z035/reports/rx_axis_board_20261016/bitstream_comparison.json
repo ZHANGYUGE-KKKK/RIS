@@ -1,0 +1,13 @@
+{
+  "standalone_sha256": "6ceb294accee2da7b7a450a0dde67a1baa84e9b02f6f32340820c4a05af8caef",
+  "xsa_bit_sha256": "f589670ea1b5656d9d44f17854c3ceca053a18b6fca33e8b0d0cc0260e3d331b",
+  "configuration_sha256": "940a6d5491b844605ac35c1688f6f387a9f27563211fd238eebd2a111a420380",
+  "configuration_bytes": 13321404,
+  "payload_equal": true,
+  "hwh_matches_snapshot": true,
+  "hwh_sha256": "ce1fe2b36ed2c2aa42459d389e9ec3c98c100aa8d03ea73f576b07679459424a",
+  "standalone_date": "2026/10/16",
+  "standalone_time": "18:05:54",
+  "xsa_date": "2026/10/16",
+  "xsa_time": "18:06:08"
+}

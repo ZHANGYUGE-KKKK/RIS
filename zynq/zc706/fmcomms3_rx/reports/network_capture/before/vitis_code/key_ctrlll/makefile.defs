@@ -1,0 +1,9 @@
+# Also support command-line make while the Vitis IDE owns the workspace.
+# Eclipse will discover the new source after Refresh; avoid duplicate objects
+# if it has already regenerated src/drivers/subdir.mk.
+ifeq ($(filter ../src/drivers/rx_tone.c,$(C_SRCS)),)
+C_SRCS += ../src/drivers/rx_tone.c
+OBJS += ./src/drivers/rx_tone.o
+C_DEPS += ./src/drivers/rx_tone.d
+endif
+-include src/drivers/rx_tone.d

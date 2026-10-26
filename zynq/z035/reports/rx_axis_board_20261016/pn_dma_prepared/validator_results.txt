@@ -1,0 +1,8 @@
+PASS clean4096tuples result=0 sign=0 iq=0/0 pn=0/0
+PASS I1bitcorruption result=-4 sign=0 iq=1/0 pn=1/0
+PASS Q2bitcorruption result=-4 sign=0 iq=0/1 pn=0/0
+PASS duplicatedtuple result=-4 sign=0 iq=0/0 pn=1/1
+PASS droppedtuple result=-4 sign=0 iq=0/0 pn=3995/3995
+PASS IQswap result=-4 sign=0 iq=0/0 pn=4095/0
+PASS badsignextension result=-4 sign=1 iq=0/0 pn=0/0
+PASS constantzero result=-4 sign=0 iq=0/0 pn=1/1

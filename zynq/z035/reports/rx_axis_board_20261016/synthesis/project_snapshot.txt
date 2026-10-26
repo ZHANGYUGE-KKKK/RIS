@@ -1,0 +1,2 @@
+SOURCE=/home/yyz/work/RIS/zynq/z035
+SNAPSHOT=/tmp/ad9361_rx_validation_68_1792144654

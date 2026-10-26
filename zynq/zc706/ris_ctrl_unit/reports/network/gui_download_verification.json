@@ -1,0 +1,25 @@
+{
+  "time": "2026-10-23T13:32:27.202557+08:00",
+  "method": "Vivado Hardware Manager Program Device and Vitis GUI Launch on Hardware",
+  "jtag_cable": "210299995170",
+  "fpga": "xc7z045",
+  "vivado_project": "vivado_board/ris_ctrl_unit.xpr",
+  "vitis_workspace": "vitis_network",
+  "application": "ris_network",
+  "gui_connected": true,
+  "endpoint": "192.168.1.11:7060",
+  "pc_address": "192.168.1.20/24",
+  "output": "all400 LOW, OE enabled, static",
+  "status": "0x000000C2",
+  "errors": "0x00000000",
+  "completed_frames_at_check": 1,
+  "ping_packets": 2,
+  "ping_lost": 0,
+  "hashes": {
+    "export_network/ris_ctrl_unit.bit": "e77e8963f555991fcb317a72557ad2cf4e973d5b26f4986c0eb6dd54a7dab81d",
+    "export_network/ris_all_io.elf": "326d6f25377c9470af8cf0663893af6748c9f082612602f3fc9750a180d84a3a",
+    "vitis_network/ris_network/Debug/ris_network.elf": "326d6f25377c9470af8cf0663893af6748c9f082612602f3fc9750a180d84a3a",
+    "vitis_network/ris_network/_ide/bitstream/ris_ctrl_unit.bit": "e77e8963f555991fcb317a72557ad2cf4e973d5b26f4986c0eb6dd54a7dab81d",
+    "vitis_network/ris_network/_ide/launch/Debugger_ris_network-Default.launch": "826d0eb584186315f9cbe85a636189ccb115b8de21aa0a293e4602ea6a16069c"
+  }
+}

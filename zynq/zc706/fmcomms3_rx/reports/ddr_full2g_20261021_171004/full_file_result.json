@@ -1,0 +1,40 @@
+{
+  "capture_id": "0000000eca6b4471",
+  "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/reports/ddr_full2g_20261021_171004/captures/rx_full2g_full_read1.bin",
+  "bytes": 2143289344,
+  "tuples": 267911168,
+  "sha256": "6c5bdf120d9ae620f380b301e11e3d975b6f75202be45d52270f4250820c5b53",
+  "sha256_matches_saved_metadata": true,
+  "chunk_bytes": 262144,
+  "checked_chunks": 8176,
+  "crc_failure_chunks": [],
+  "bad_I1_Q1_I2_Q2": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "first_bad": null,
+  "min": [
+    -2048,
+    -2048,
+    -1771,
+    -1750
+  ],
+  "max": [
+    2047,
+    2047,
+    1791,
+    1795
+  ],
+  "rail_counts_I1_Q1_I2_Q2": [
+    713735,
+    706930,
+    0,
+    0
+  ],
+  "rf_registers_unchanged": true,
+  "continuous_sample_sequence_proven": false,
+  "scope": "All saved bytes: format, chunk CRC32, SHA256. Unknown RF IQ cannot certify sample continuity.",
+  "checks_pass": true
+}

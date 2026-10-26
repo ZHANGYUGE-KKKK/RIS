@@ -1,0 +1,302 @@
+[
+  {
+    "address": "30000000",
+    "trial": 0,
+    "bad_bytes": 0,
+    "bad_by_lane_mod8": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "30000000",
+    "trial": 1,
+    "bad_bytes": 0,
+    "bad_by_lane_mod8": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "30000000",
+    "trial": 2,
+    "bad_bytes": 0,
+    "bad_by_lane_mod8": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "30000000",
+    "trial": 3,
+    "bad_bytes": 0,
+    "bad_by_lane_mod8": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "40400000",
+    "trial": 0,
+    "bad_bytes": 0,
+    "bad_by_lane_mod8": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "40400000",
+    "trial": 1,
+    "bad_bytes": 0,
+    "bad_by_lane_mod8": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "40400000",
+    "trial": 2,
+    "bad_bytes": 0,
+    "bad_by_lane_mod8": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "40400000",
+    "trial": 3,
+    "bad_bytes": 0,
+    "bad_by_lane_mod8": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "40580000",
+    "trial": 0,
+    "bad_bytes": 72,
+    "bad_by_lane_mod8": [
+      0,
+      72,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "40580000",
+    "trial": 1,
+    "bad_bytes": 88,
+    "bad_by_lane_mod8": [
+      0,
+      88,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "40580000",
+    "trial": 2,
+    "bad_bytes": 83,
+    "bad_by_lane_mod8": [
+      0,
+      83,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "40580000",
+    "trial": 3,
+    "bad_bytes": 95,
+    "bad_by_lane_mod8": [
+      0,
+      95,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "41184000",
+    "trial": 0,
+    "bad_bytes": 132,
+    "bad_by_lane_mod8": [
+      130,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "41184000",
+    "trial": 1,
+    "bad_bytes": 145,
+    "bad_by_lane_mod8": [
+      142,
+      0,
+      0,
+      3,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "41184000",
+    "trial": 2,
+    "bad_bytes": 142,
+    "bad_by_lane_mod8": [
+      139,
+      0,
+      0,
+      3,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "41184000",
+    "trial": 3,
+    "bad_bytes": 133,
+    "bad_by_lane_mod8": [
+      131,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "425c4000",
+    "trial": 0,
+    "bad_bytes": 23,
+    "bad_by_lane_mod8": [
+      0,
+      0,
+      0,
+      1,
+      11,
+      11,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "425c4000",
+    "trial": 1,
+    "bad_bytes": 20,
+    "bad_by_lane_mod8": [
+      0,
+      0,
+      0,
+      1,
+      8,
+      11,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "425c4000",
+    "trial": 2,
+    "bad_bytes": 28,
+    "bad_by_lane_mod8": [
+      0,
+      0,
+      0,
+      0,
+      14,
+      14,
+      0,
+      0
+    ]
+  },
+  {
+    "address": "425c4000",
+    "trial": 3,
+    "bad_bytes": 23,
+    "bad_by_lane_mod8": [
+      0,
+      0,
+      0,
+      0,
+      13,
+      10,
+      0,
+      0
+    ]
+  }
+]

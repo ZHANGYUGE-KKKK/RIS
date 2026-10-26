@@ -1,0 +1,62 @@
+[
+  {
+    "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/captures/rx_20261021_2g_8MiB.bin",
+    "channel": 1,
+    "fft_points": 65536,
+    "averages": 16,
+    "analyzed_tuples": 1048576,
+    "total_tuples": 1048576,
+    "sample_rate_hz": 15360000.0,
+    "lo_hz": 2400000000.0,
+    "rms_counts": 78.03672096710491,
+    "peak_hz": 1902421.875,
+    "peak_dbfs": -52.81902512839585,
+    "clipped_in_analysis_window": 0,
+    "format_error": false
+  },
+  {
+    "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/captures/rx_20261021_2g_8MiB.bin",
+    "channel": 2,
+    "fft_points": 65536,
+    "averages": 16,
+    "analyzed_tuples": 1048576,
+    "total_tuples": 1048576,
+    "sample_rate_hz": 15360000.0,
+    "lo_hz": 2400000000.0,
+    "rms_counts": 34.748906770154456,
+    "peak_hz": -3840000.0,
+    "peak_dbfs": -55.619359793336834,
+    "clipped_in_analysis_window": 0,
+    "format_error": false
+  },
+  {
+    "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/captures/rx_20261021_2g_1s.bin",
+    "channel": 1,
+    "fft_points": 65536,
+    "averages": 16,
+    "analyzed_tuples": 1048576,
+    "total_tuples": 15360000,
+    "sample_rate_hz": 15360000.0,
+    "lo_hz": 2400000000.0,
+    "rms_counts": 94.45925719846056,
+    "peak_hz": 3912890.625,
+    "peak_dbfs": -52.16661070983016,
+    "clipped_in_analysis_window": 0,
+    "format_error": false
+  },
+  {
+    "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/captures/rx_20261021_2g_1s.bin",
+    "channel": 2,
+    "fft_points": 65536,
+    "averages": 16,
+    "analyzed_tuples": 1048576,
+    "total_tuples": 15360000,
+    "sample_rate_hz": 15360000.0,
+    "lo_hz": 2400000000.0,
+    "rms_counts": 50.04055083039517,
+    "peak_hz": -3840000.0,
+    "peak_dbfs": -55.82806584852682,
+    "clipped_in_analysis_window": 0,
+    "format_error": false
+  }
+]

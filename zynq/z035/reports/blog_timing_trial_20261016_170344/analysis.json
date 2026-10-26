@@ -1,0 +1,50 @@
+{
+  "article_url": "https://blog.csdn.net/weixin_42550052/article/details/160432413",
+  "unique_trial_combinations": 96,
+  "baseline_prbs_checks": 3,
+  "prbs_checks_total": 99,
+  "prbs_passes": 0,
+  "prbs_return_codes": {
+    "-4": 99
+  },
+  "all_four_channels_pn_out_of_sync": true,
+  "post_restore_rf_rows": 1,
+  "rows_total": 100,
+  "all_observed_012_values": [
+    16
+  ],
+  "all_observed_05e_values": [
+    128
+  ],
+  "spi_snapshot_addresses": "0x000..0x05f and 0x3f4..0x3f6 (99 registers)",
+  "spi_snapshot_identical_before_after": true,
+  "all_seven_fpga_taps_before": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "all_seven_fpga_taps_after": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "restore_result": 0,
+  "final_arm": 0,
+  "final_gpio_status": 3,
+  "gpio_status_observed": [
+    1,
+    3
+  ],
+  "project_artifact_hash_checks": 16,
+  "all_project_artifact_hashes_match_previous_records": true,
+  "scope": "Original FPGA image and ARM firmware; temporary DDR diagnostic calls existing SPI, IDELAY and PN functions; no new ILA or DMA capture",
+  "limit": "No passing PRBS point in these combinations; this does not exclude other timing, electrical, format or checker problems. Internal edge estimates are not pin-frequency measurements."
+}

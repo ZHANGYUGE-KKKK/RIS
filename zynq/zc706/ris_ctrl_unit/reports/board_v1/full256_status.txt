@@ -1,0 +1,3 @@
+full256_baseline: stopped after board16 hardware/UART acceptance; full256 routing NOT accepted
+full256_metadata: stopped after board16 hardware/UART acceptance; full256 routing NOT accepted
+full256_spread: stopped after board16 hardware/UART acceptance; full256 routing NOT accepted

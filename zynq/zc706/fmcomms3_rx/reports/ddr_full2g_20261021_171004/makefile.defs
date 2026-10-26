@@ -1,0 +1,22 @@
+# Also support command-line make while the Vitis IDE owns the workspace.
+# Eclipse will discover the new source after Refresh; avoid duplicate objects
+# if it has already regenerated src/drivers/subdir.mk.
+ifeq ($(filter ../src/drivers/rx_tone.c,$(C_SRCS)),)
+C_SRCS += ../src/drivers/rx_tone.c
+OBJS += ./src/drivers/rx_tone.o
+C_DEPS += ./src/drivers/rx_tone.d
+endif
+-include src/drivers/rx_tone.d
+
+RX_NET_SOURCES := capture_format capture_debug dma_diag capture_store rx_network rx_control mig_ddr
+$(foreach name,$(RX_NET_SOURCES),$(if $(filter ../src/drivers/$(name).c,$(C_SRCS)),,$(eval C_SRCS += ../src/drivers/$(name).c)$(eval OBJS += ./src/drivers/$(name).o)$(eval C_DEPS += ./src/drivers/$(name).d)))
+# The generated makefile includes C_DEPS before loading this file. Include the
+# supplemental drivers' dependencies here so header edits rebuild their objects.
+ifneq ($(MAKECMDGOALS),clean)
+-include $(addprefix src/drivers/,$(addsuffix .d,$(RX_NET_SOURCES)))
+endif
+LIBS := -Wl,--start-group,-lxil,-llwip4,-lgcc,-lc,--end-group
+
+# Network/CRC/banked-DDR copy loops need optimization; RF bring-up flags stay unchanged.
+$(addprefix src/drivers/,$(addsuffix .o,$(RX_NET_SOURCES))): src/drivers/%.o: ../src/drivers/%.c
+	arm-none-eabi-gcc -Wall -Wextra -O2 -g3 -c -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/reports/ddr_full2g_20261021_171004/network_bsp/ps7_cortexa9_0/include -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"

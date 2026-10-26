@@ -1,0 +1,8 @@
+PASS rewrite PACKET_SAMPLES=17 CLOCK_INVERT=0 beats=687 packets=40 stalls=1337
+PASS rewrite PACKET_SAMPLES=17 CLOCK_INVERT=1 beats=687 packets=40 stalls=1337
+PASS rewrite PACKET_SAMPLES=1 CLOCK_INVERT=0 beats=687 packets=687 stalls=1337
+PASS rewrite PACKET_SAMPLES=4096 CLOCK_INVERT=0 beats=21167 packets=5 stalls=1337
+Simulator: Vivado 2020.2; real UNISIM and XPM models.
+Pin source: 61.44 MHz DATA_CLK, 4.5 ns data/frame delay, six inverted data lanes.
+All four configurations passed without simulator errors.
+FIFO_DEPTH=64 in simulation; production PACKET_SAMPLES=4096 tested across five TLAST wraps.

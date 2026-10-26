@@ -1,0 +1,40 @@
+{
+  "time": "2026-10-23T16:05:14.572481+08:00",
+  "tests": 56,
+  "new_tests": 20,
+  "features": [
+    "20x20 spatial patterns",
+    "single-cell/drag editing",
+    "row/column 0/1",
+    "undo",
+    "persistent named library",
+    "playlist reorder/repeats/per-item dwell",
+    "once/loop/pingpong/random",
+    "manual previous/next/apply",
+    "ACK-paced scheduling",
+    "stop on manual takeover/disconnect/mapping change/failed ACK"
+  ],
+  "storage": "host/patterns/library.json",
+  "frame_transport": "existing FRAME command and shared TCP worker",
+  "dwell_ms": [
+    100,
+    3600000
+  ],
+  "timing": "host software; dwell starts after ACK",
+  "requires_complete_mapping": true,
+  "rtl_or_firmware_changes": false,
+  "hardware_output_commands_sent": true,
+  "desktop_refresh": "Completed at 2026-10-23T16:18:20.354914+08:00; mapping and selection preserved; BLINK 2000 acknowledged and frame count advancing.",
+  "screenshots": [
+    "editor_preview.png",
+    "playlist_preview.png",
+    "small_preview.png"
+  ],
+  "hardware_commands_on_refresh": [
+    "STATUS (connect and periodic polls)",
+    "BLINK 2000 (user-authorized restoration)"
+  ],
+  "hardware_custom_pattern_playback": "Not started; offline tests use mocked firmware.",
+  "live_gui_pid": 3480956,
+  "live_gui_screenshot": "live_gui.png"
+}

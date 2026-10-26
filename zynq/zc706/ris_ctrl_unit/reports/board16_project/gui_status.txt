@@ -1,0 +1,1 @@
+PASS: synth_1/impl_1 complete and current; timing met; DRC clean; reports generated

@@ -1,0 +1,108 @@
+{
+  "scope": "FPGA internal counter only; physical Q/RIS outputs unmeasured",
+  "frequencies": [
+    {
+      "command": "FAST 1",
+      "half_ticks": 150,
+      "actual_hz": 1000000.0,
+      "elapsed_s": 0.5003546069783624,
+      "counter_edges": 1000485,
+      "estimated_hz": 999775.9449462463,
+      "stop_latency_s": 0.0003332149935886264
+    },
+    {
+      "command": "FAST 3",
+      "half_ticks": 50,
+      "actual_hz": 3000000.0,
+      "elapsed_s": 0.5003474045079201,
+      "counter_edges": 3001409,
+      "estimated_hz": 2999325.0419194386,
+      "stop_latency_s": 0.0003314509813208133
+    },
+    {
+      "command": "FAST 5",
+      "half_ticks": 30,
+      "actual_hz": 5000000.0,
+      "elapsed_s": 0.500366488005966,
+      "counter_edges": 5002487,
+      "estimated_hz": 4998822.982665812,
+      "stop_latency_s": 0.0003380550188012421
+    },
+    {
+      "command": "FASTHZ 2400000",
+      "half_ticks": 63,
+      "actual_hz": 2380952.380952381,
+      "elapsed_s": 0.5003425859904382,
+      "counter_edges": 2382036,
+      "estimated_hz": 2380405.01318183,
+      "stop_latency_s": 0.0003332149935886264
+    },
+    {
+      "command": "FASTHZ 125000",
+      "half_ticks": 1200,
+      "actual_hz": 125000.0,
+      "elapsed_s": 0.5003731315082405,
+      "counter_edges": 125062,
+      "estimated_hz": 124968.74045078538,
+      "stop_latency_s": 0.0003699509834405035
+    },
+    {
+      "command": "FASTTICKS 120000000",
+      "half_ticks": 120000000,
+      "actual_hz": 1.25,
+      "elapsed_s": 1.2003391490143258,
+      "counter_edges": 3,
+      "estimated_hz": 1.249646819594066,
+      "stop_latency_s": 0.0003305989957880229
+    },
+    {
+      "command": "FASTHZ 1",
+      "half_ticks": 150000000,
+      "actual_hz": 1.0,
+      "elapsed_s": 1.200353330001235,
+      "counter_edges": 2,
+      "estimated_hz": 0.8330880375022337,
+      "stop_latency_s": 0.00032163099967874587
+    }
+  ],
+  "initial": {
+    "device": "RIS706",
+    "version": 1,
+    "id": 1,
+    "ok": true,
+    "rc": 0,
+    "status": 194,
+    "errors": 0,
+    "frames": 1,
+    "oe": true,
+    "blink_ms": 0,
+    "slots": 16,
+    "fast_supported": true,
+    "fast_mhz": 0,
+    "fast_variable": true,
+    "fast_ticks": 0,
+    "fast_edges": 0,
+    "image": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "invalid_commands_preserve_frequency": true,
+  "manual_takeover_preserves_other_bits": true,
+  "final": {
+    "device": "RIS706",
+    "version": 1,
+    "id": 46,
+    "ok": true,
+    "rc": 0,
+    "status": 194,
+    "errors": 0,
+    "frames": 19,
+    "oe": true,
+    "blink_ms": 0,
+    "slots": 16,
+    "fast_supported": true,
+    "fast_mhz": 0,
+    "fast_variable": true,
+    "fast_ticks": 0,
+    "fast_edges": 9172,
+    "image": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  }
+}

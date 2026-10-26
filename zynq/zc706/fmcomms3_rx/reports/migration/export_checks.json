@@ -1,0 +1,38 @@
+{
+  "system": {
+    "ARCH": "zynq",
+    "BOARD": "xilinx.com:zc706:part0:1.4",
+    "DEVICE": "7z045",
+    "NAME": "design_1",
+    "PACKAGE": "ffg900",
+    "SPEEDGRADE": "-2"
+  },
+  "address_ranges": {
+    "mig_7series_0": [
+      "0x40000000",
+      "0x7FFFFFFF"
+    ],
+    "axi_gpio_ris_ctl": [
+      "0x80010000",
+      "0x8001007F"
+    ],
+    "axi_gpio_9361": [
+      "0x80020000",
+      "0x8002007F"
+    ],
+    "axi_dma_0": [
+      "0x81000000",
+      "0x8100FFFF"
+    ],
+    "ad9361_rx_axis_0": [
+      "0x82000000",
+      "0x8200FFFF"
+    ]
+  },
+  "bitstream_device_header": "00090ff00ff00ff00ff000000161002b7a633730365f746f703b5573657249443d305846464646464646463b56657273696f6e3d323032302e320062000c377a3034356666673930300063000b323032362f31302f31390064000931343a30383a3131006500cb44bcffffffffffffffffffffffffffffff",
+  "STDOUT_BASEADDRESS": "0xE0001000",
+  "XPAR_PS7_DDR_0_S_AXI_HIGHADDR": "0x3FFFFFFF",
+  "XPAR_MIG_7SERIES_0_BASEADDR": "0x40000000",
+  "XPAR_MIG_7SERIES_0_HIGHADDR": "0x7FFFFFFF",
+  "XPAR_MIG_7SERIES_0_DDR3_DQ_WIDTH": "64U"
+}

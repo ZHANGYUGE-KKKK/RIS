@@ -1,0 +1,22 @@
+RIS control unit verification
+Date: 2026-10-21 15:16:28 CST
+Tool: Vivado/XSim 2020.2
+Part: xc7z045ffg900-2
+
+PASS: Project created, ris_system BD validated, IP outputs generated.
+PASS: PS reference preset copied byte-for-byte from fmcomms3_rx.
+PASS: 72 unique package pins, all RIS ports assigned LVCMOS25.
+PASS: XSim HALF=1 and HALF=5, all 256 bytes with a 50-chip behavioral model.
+PASS: Timing phases, busy rejection, START edge/hold, data snapshot, OE gating.
+PASS: Soft reset during shift/latch, reset release with START high, external reset.
+PASS: Complete PS + AXI GPIO + RIS RTL synthesis, no black boxes.
+PASS: Synthesis DRC: 0 violations; synthesis log: 0 critical warnings, 0 errors.
+PASS: Internal register-to-register timing paths remain present.
+INFO: Unplaced setup estimate: WNS=5.603 ns, failing endpoints=0, total endpoints=1868.
+INFO: Unplaced hold estimate: WHS=-0.006 ns, failing endpoints=106.
+      This estimate is not hold closure; placement/routing must resolve/check it.
+
+Scope: Placement/routing and physical-board operation have not been validated.
+No bitstream generated or board programmed. No Vitis application added.
+The bring-up design varies U4 only; other 49 chip bytes are shifted/latch to zero.
+Historical planning: DISCUSSION_20261020.txt. Current interface: README.txt.

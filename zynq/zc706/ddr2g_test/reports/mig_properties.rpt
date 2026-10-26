@@ -1,0 +1,15 @@
+Property                      Type     Read-only  Value
+ALLOWED_SIM_MODELS            string*  true       rtl
+CLASS                         string   true       bd_cell
+CONFIG.BOARD_MIG_PARAM        string   false      Custom
+CONFIG.Component_Name         string   false      ddr_test_mig_0
+CONFIG.MIG_DONT_TOUCH_PARAM   string   false      Custom
+CONFIG.RESET_BOARD_INTERFACE  string   false      Custom
+CONFIG.XML_INPUT_FILE         string   false      ../../../../../../../constraints/ddr2g_mig.prj
+LOCATION                      string   false      
+NAME                          string   false      mig
+PATH                          string   true       /mig
+SCREENSIZE                    string   false      
+SELECTED_SIM_MODEL            string   false      rtl
+TYPE                          string   true       ip
+VLNV                          string   true       xilinx.com:ip:mig_7series:4.2

@@ -1,0 +1,99 @@
+2026-10-21：原 FMCOMMS3 RX 工程适配 2 GiB DIMM 并重新抓取 IQ
+
+结论
+本轮没有复现此前的 IQ 符号扩展错误、冻结 DDR 数据变化及重复读回不一致。
+8 MiB 和 1 秒采集的 BD、全文件格式、下载 CRC/SHA256、JTAG 抽查均通过。
+正常 RF IQ 没有已知逐样本序列，因此本报告不声称已经严格证明逐样本绝对连续。
+
+工程及产物
+工程：/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx
+Vivado：vivado/PZ_UART.xpr
+Vitis workspace：vitis_code；平台 key_ctrl，应用 key_ctrlll。
+BIT/XSA/LTX/ELF 已重新生成、更新原平台并通过 JTAG 下载运行。
+导出物：export/zc706_top.bit、zc706_top.xsa、zc706_top.ltx、key_ctrlll.elf。
+key_ctrlll_2p4.elf / key_ctrlll_dma_debug.elf 同步为当前 ELF；没有保留旧 ELF 冒充新版本。
+完整散列见 export/manifest.json 和本目录 verification.json。
+时序收敛：WNS=0.355 ns，WHS=0.041 ns，WPWS=0.062 ns。
+引脚检查通过；新 Rank 的 CS1/CKE1/ODT1/CK1 均已连接并完成约束。
+
+DDR 适配
+实物 MT16JSF25664HZ-1G4F1，2 GiB、2Rx8、x64、1.5 V、DDR3-1333。
+MIG 库配置 MT16JTF25664HZ-1G4；Row14/Column10/Bank3、2 Rank。
+tCK=1500 ps，DDR CK=666.667 MHz，UI=166.667 MHz，CL9/CWL7。
+物理组织/时序/引脚与独立 ddr2g_test 的已测配置一致。
+板载 200 MHz 经独立时钟模块生成 MIG 所需 166.667 MHz 系统输入。
+AD9361 延时参考保留真实 200 MHz，已改接板载时钟，未跟随 MIG UI 改频。
+MIG 状态进入 200 MHz ILA 前加 XPM 同步；没有用时序例外掩盖跨时钟路径。
+
+为进行同条件故障对比，本版仍使用原 1 GiB PS/DMA 窗口：
+0x40000000..0x7fffffff，IQ 起址 0x40400000，最大单次有效 IQ 1020 MiB。
+2 GiB 物理配置已生效，但没有在本接收工程增加第二个容量窗口。
+独立测试工程的全 2 GiB 五图案 PASS 是此前用户提供的结果；
+本轮 RX 工程测试范围以以下页面与采集记录为准。
+
+射频保护及启动校验
+CONFIG2P4 原配置文件、RX/TX LO=2400 MHz、Fs=15.36 MSPS、MGC=76/76 未改。
+源文件散列对比通过；采集前后受保护寄存器一致。
+初始化 2568/2568，PN 1248/1248，RF mismatch=0，BIST restore=0。
+基线、PN、恢复 RF 各 50/50 稳定窗口通过，CLK/FRAME 无解锁或速率错误。
+RF CLOCK 20/20、ADI STATUS 20/20 通过。
+临时 PN 测试源已恢复，最后保存的是正常 RF IQ。
+
+固定图案复查
+8 个 4 KiB 页面，含 1 个 PS DDR 对照、5 个原先异常的 PL DDR 页面。
+4 种图案，每次写后读 3 次：96/96 一致，0 失败。
+详细地址、散列及结果：patterns_result.json。
+这是选定页面的复查，不是本 RX 工程中的全 2 GiB 地址遍历。
+
+IQ 抓取与保存
+每个 BD 32 KiB，4096 组 IQ/TLAST；每组 8 字节，小端 int16：I1 Q1 I2 Q2。
+
+8 MiB：8388608 字节，1048576 组 IQ，256/256 BD，实际采集约 68.277 ms。
+四路分量符号扩展错误 0/0/0/0；BD 检查错误 0；无重复 32 KiB 数据块。
+两次完整下载均通过块 CRC，文件 SHA256 完全相同：
+a7cd0eacdebb10aeac0cf33d9cd6b8c7302a13b2b547f34e041ee6f18f676342
+JTAG 对冻结 IQ 的 14 页读 3 次：42/42 与 TCP 文件一致。
+
+1 秒：122880000 字节，15360000 组 IQ，3750/3750 BD，实际采集约 999.961 ms。
+四路分量符号扩展错误 0/0/0/0；BD 检查错误 0；无重复 32 KiB 数据块。
+三份最终文件均通过块 CRC 与落盘 SHA256，内容完全相同：
+bfa66defc6e0805f3a2c6f604bf4440965c29afd6c34f867b086b0c1aca78f2c
+第二份在已提交 55574528 字节之后发生一次 TCP 超时，原捕获保持冻结；
+使用现有断点续传成功完成。第一份及另外一次独立的第三份完整下载均正常。
+超时根因未确认，没有因续传成功而把这次异常抹去。
+JTAG 对冻结 IQ 的 17 页读 3 次：51/51 与 TCP 文件一致。
+三份文件中 RX1 均有相同的 684 组样本触及量化上下限，RX2 为 0；
+这些样本仍是合法 12 位符号扩展，不能把幅度触顶等同于 BIN 格式错误。
+
+两次采集的 DMA完成/DMA复位/PL重置接收窗口三个阶段，抽样 CRC 都保持一致，
+changed_dma、changed_pl、unstable、memcpy_diff 均为 0。
+最后累计网络 READ 请求 1408 次，bad_I1Q1I2Q2=0/0/0/0。
+
+可直接打开的文件（均附同名 .bin.json）
+captures/rx_20261021_2g_8MiB.bin
+captures/rx_20261021_2g_1s.bin
+现有 FFT 程序已对两文件、两通道各读取 65536 点 × 16 段，无格式异常。
+报告内 captures/ 另保留全部重复下载副本，供逐字节对比。
+
+留给用户的状态
+板上保留 1 秒 capture_id=0000001e77d6f6e4，state=ready，未释放/重采。
+ARM=0，停止后复位验证通过。CuteCom 已重新独占 /dev/ttyUSB0，115200 8N1。
+已通过网口发送 d，使同一份诊断结果也输出到 CuteCom。
+网口 192.168.1.10；上位机 enp1s0=192.168.1.20/24，未替换 Wi-Fi 默认路由。
+版本标识为 RX diagnostic version=7。
+
+判断边界与下一步
+当前证据支持“这套 2 GiB DIMM + 对应 MIG 配置在本轮抓取与保存中表现正常”。
+尚不能区分旧 1 GiB 问题究竟来自条本体、控制器配置或物理访问路径。
+若要严格判断跨 BD 是否丢点/重排，应再把已知序列贯穿整个采集和保存链路进行校验；
+启动时短窗 PN、BD 数量、12 位格式合法和冻结文件一致，不能独立完成这一证明。
+不需要因此放宽现有错误检测或移除原始诊断。
+
+证据入口
+verification.json：机器可读汇总及产物哈希。
+evidence.sha256.json：本次主要证据的校验值。
+serial/live.log：本轮上电、PN、DMA、DDR、增益读回串口日志。
+8m_result.json / 1s_result.json：全文件统计与重复读回结果。
+frozen_8m_result.json / frozen_1s_result.json：独立 JTAG 对比。
+source_checks.json / application_changes.json：改动范围核实。
+before/：原 1 GiB 配置、软件、产物与平台备份。

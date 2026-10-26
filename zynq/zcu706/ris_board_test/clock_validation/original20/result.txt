@@ -1,2 +1,0 @@
-FAIL: ERROR: [Common 17-39] 'write_bitstream' failed due to earlier errors.
-

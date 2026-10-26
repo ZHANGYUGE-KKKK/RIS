@@ -1,0 +1,1 @@
+PASS: 16 frame slots, 50 chips, routed timing, DRC, 72 pins, BIT/XSA

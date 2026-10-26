@@ -1,0 +1,24 @@
+{
+  "tk_version": 8.6,
+  "syntax_check": "PASS",
+  "network_regression_tests": 10,
+  "gui_and_length_tests": 7,
+  "gui_test_display": "Xvfb; real Tk widgets; localhost TCP connected to production C dispatcher",
+  "native_capture_and_mmu_checks": "ASan/UBSan PASS",
+  "gui_preview": "reports/tk_gui/preview.png",
+  "firmware_unchanged": true,
+  "firmware_sha256": "755e65d514212ed5b43d0ecffa5258b46f938ef4f1592ea8ef7d60c408f07427",
+  "rf_and_hardware_unchanged": true,
+  "real_board_validation": "NOT RUN",
+  "files": {
+    "host/rx706.py": "1c3f328c611b621b02ad437c678f4f7c130b4604ff4ec5f6ba1cace1e7b1da52",
+    "host/rx706_gui.py": "e9c19eb72abf7c852bf496a329e54166cd3e0c1ecc111411a301123a2aecef44",
+    "TK_GUI_GUIDE.txt": "290d4177013bf78c6457c32904c852e691fe2faee541a4e7c8b208e4693234ef",
+    "NETWORK_CAPTURE_GUIDE.txt": "e14e380e4fb4552cc8417cddcd86b13b5cbeb09b668bd4f17e3f24de92f13f9e",
+    "run_rx_gui.sh": "91b049506b7313950e88080235a6795ad7c5a4263aa8e72b7f3df04baacd230c",
+    "tests/test_rx706_gui.py": "89cc54157bca13e34b7fd2273a35cd7e20b6bd5f3706bbcfa1e5981217243c64",
+    "tests/test_rx706.py": "315080dfa3a7f1e86f1818d3263c3e7b80030ea6c31e8fafe0e89008443dd28a",
+    "tests/test_network_core.c": "500a4bdd9c90cd44e1184d10c54cfb2831fce10a74d8b45ed7ba7e06b99a0adc",
+    "tests/run_network_capture.sh": "b0fc1ed9d4012b18833c02e981e81f91c2d29f42463522b6e5e101f6bd8e618e"
+  }
+}

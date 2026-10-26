@@ -1,0 +1,60 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+----------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
+| Date         : Mon Oct 26 15:33:28 2026
+| Host         : yyz-SER8 running 64-bit Ubuntu 24.04.1 LTS
+| Command      : report_clocks -file /home/yyz/work/RIS/zynq/zc706/ris_ctrl_unit/reports/fast_toggle/clocks.rpt
+| Design       : ris_ctrl_unit_top
+| Device       : 7z045-ffg900
+| Speed File   : -2  PRODUCTION 1.12 2019-11-22
+----------------------------------------------------------------------------------------------------------------
+
+Clock Report
+
+
+Attributes
+  P: Propagated
+  G: Generated
+  A: Auto-derived
+  R: Renamed
+  V: Virtual
+  I: Inverted
+  S: Pin phase-shifted with Latency mode
+
+Clock       Period(ns)  Waveform(ns)   Attributes  Sources
+clk_fpga_0  10.000      {0.000 5.000}  P           {u_system/ris_system_i/ps7/inst/PS7_i/FCLKCLK[0]}
+fb          10.000      {0.000 5.000}  P,G,A       {u_system/ris_system_i/controller/inst/fast_io.u_fast/u_mmcm/CLKFBOUT}
+raw_fast    3.333       {0.000 1.667}  P,G,A       {u_system/ris_system_i/controller/inst/fast_io.u_fast/u_mmcm/CLKOUT0}
+
+
+====================================================
+Generated Clocks
+====================================================
+
+Generated Clock     : fb
+Master Source       : u_system/ris_system_i/controller/inst/fast_io.u_fast/u_mmcm/CLKIN1
+Master Clock        : clk_fpga_0
+Multiply By         : 1
+Generated Sources   : {u_system/ris_system_i/controller/inst/fast_io.u_fast/u_mmcm/CLKFBOUT}
+
+Generated Clock     : raw_fast
+Master Source       : u_system/ris_system_i/controller/inst/fast_io.u_fast/u_mmcm/CLKIN1
+Master Clock        : clk_fpga_0
+Multiply By         : 3
+Generated Sources   : {u_system/ris_system_i/controller/inst/fast_io.u_fast/u_mmcm/CLKOUT0}
+
+
+
+====================================================
+User Uncertainty
+====================================================
+
+
+
+====================================================
+User Jitter
+====================================================
+
+Clock       Jitter(ns)
+clk_fpga_0  0.300
+

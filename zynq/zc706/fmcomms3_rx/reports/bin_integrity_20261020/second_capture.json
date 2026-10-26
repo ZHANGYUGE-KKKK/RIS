@@ -1,0 +1,92 @@
+{
+  "file": "captures/rx_20261020_161630_852.bin",
+  "source_user_report": {
+    "frequency_hz": 2400000000,
+    "power_dbm": -10
+  },
+  "bytes": 8388608,
+  "tuples": 1048576,
+  "sha256": "48dae04a5d13594677fe0ff76ae55e9d610f7d359aee1268a7456ca6414dbaac",
+  "sha_matches": true,
+  "all_chunk_crcs_match": true,
+  "checked_chunks": 32,
+  "malformed_components": {
+    "I1": 24101,
+    "Q1": 0,
+    "I2": 0,
+    "Q2": 12
+  },
+  "malformed_tuples": 24113,
+  "malformed_percent": 2.2995948791503906,
+  "first_malformed_tuple": 116798,
+  "first_malformed_ms": 7.604036458333334,
+  "first_malformed_offset": 934384,
+  "first_malformed_pl_address": "0x404e41f0",
+  "first_malformed_value": 29500,
+  "first16_packet_clipped": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    85,
+    632,
+    119,
+    0,
+    0,
+    0
+  ],
+  "windows": [
+    {
+      "start": 0,
+      "nfft": 2048,
+      "averages": 16,
+      "samples": 32768,
+      "peak_hz": -82500.0,
+      "peak_dbfs": -0.5490503414050988,
+      "rms_counts": 1935.195370114841,
+      "clipped": 0
+    },
+    {
+      "start": 32768,
+      "nfft": 2048,
+      "averages": 16,
+      "samples": 32768,
+      "peak_hz": -82500.0,
+      "peak_dbfs": -0.5737381794025189,
+      "rms_counts": 1936.7582803502162,
+      "clipped": 836
+    },
+    {
+      "start": 0,
+      "nfft": 4096,
+      "averages": 16,
+      "samples": 65536,
+      "peak_hz": -82500.0,
+      "peak_dbfs": -0.7319954735227385,
+      "rms_counts": 1935.9769829493123,
+      "clipped": 836
+    },
+    {
+      "start": 0,
+      "nfft": 65536,
+      "averages": 1,
+      "samples": 65536,
+      "peak_hz": -83203.125,
+      "peak_dbfs": -0.7598965897511052,
+      "rms_counts": 1935.9769829493123,
+      "clipped": 836
+    },
+    {
+      "start": 0,
+      "nfft": 2048,
+      "averages": 64,
+      "error": "RX1 I1 采样点 116798（从 0 计），文件偏移 934384（0xE41F0）：数值 29500（0x733C）不是有效的 12 位符号扩展。已停止分析；请检查采集及存储/读出数据的完整性。"
+    }
+  ]
+}

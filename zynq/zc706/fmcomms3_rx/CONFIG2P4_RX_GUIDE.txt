@@ -1,0 +1,55 @@
+ZC706 / FMCOMMS3 2.4 GHz 接收测试固件
+日期：2026-10-20
+
+当前构建默认选择 CONFIG2P4；原 CONFIG915 源表和初始化入口保留。
+用户导出脚本：config/config2p4，保持原始文件不变。
+脚本由 scripts/generate_ad9361_script.py 转为 config2p4_data.h。
+build_rx_network.sh 会先同步生成表，再编译并更新 export/key_ctrlll.elf。
+
+运行参数
+  RX/TX LO：2400 MHz；RX端口：RX1A/RX2A。
+  采样率：15.36 MSPS；双通道LVDS DDR；预期DATA_CLK：61.44 MHz。
+  IQ格式：小端int16，顺序I1/Q1/I2/Q2，每个双通道元组8字节。
+  增益沿用新脚本：MGC，索引76；未自动切换AGC或修改增益。
+  TX衰减仍为20 dB；常态关闭BIST，没有主动产生TX测试音。
+  上电PN检查仅临时注入RX PN，结束恢复BIST=00/00/00及原射频设置。
+
+板级适配
+  保留现有FMCOMMS3晶体/DCXO初始化和009:17→07适配。
+  保留0A3的掩码写，以及校准后进入FDD的收尾。
+  SPI仍使用现有PS SPI0；不执行ADI参考FPGA的20 MHz SPI设置。
+  未更改PL、XDC、XSA，也未更改采集复位机制。
+
+人工上板
+  使用现有匹配的export/zc706_top.bit和新export/key_ctrlll.elf。
+  本次发布另存export/key_ctrlll_2p4.elf，内容与当前默认ELF一致。
+  串口115200 8N1，或继续用现有TCP日志/控制和Tk GUI。
+  板卡IP仍为192.168.1.10；日志5000，控制/下载5001。
+  等待CONFIG2P4初始化、PN扫描、恢复RF后的时钟/FRAME检查结束。
+  应看到CONFIG2P4 ACTIVE: RX/TX=2400 MHz和TX BIST OFF。
+  PN失败或恢复检查失败时不要把后续IQ当作已验证有效数据。
+
+单频快速检查
+  矢网端口1只接RX1A，固定2402 MHz，建议先从-80 dBm开始。
+  在提示等待按键时发送s，可直接抓当前RF快照，不必切换916/917 MHz。
+  RF关、RF开各抓一次；RF开后应在约2 MHz基带附近出现新信号。
+  观察clipped应为0；有削顶先降低输入功率。
+  频谱方向以实测IQ符号为准，独立参考时钟允许一定频偏。
+
+完整三步检查
+  STEP 0：2401 MHz，RF关闭，发送0。
+  STEP 1：2401 MHz，相同功率，RF打开，发送1。
+  STEP 2：2402 MHz，相同功率，RF打开，发送2。
+  检查格式、削顶、纯度、开关对比和约1 MHz频移。
+  也可通过原Tk GUI采集/下载bin；JSON中的LO已更新为2400000000，
+  离线FFT和MATLAB继续使用原IQ格式，射频坐标应以对应JSON为准。
+
+切回915 MHz
+  在vitis_code/key_ctrlll/src/ad_config/rf_profile.h中把默认RX_RF_PROFILE改为
+  RX_RF_PROFILE_915，重新运行 ./build_rx_network.sh。
+  915路径保留原脚本、原TX BIST行为以及916/917 MHz测试提示。
+  本次修改前的ELF备份在reports/config2p4_20261020/before/export/key_ctrlll.elf。
+
+验证范围
+  本次完成软件构建及离线检查；没有连接、复位或下载板卡。
+  PLL锁定、PN扫描、实际时钟/FRAME稳定和外部RF接收由用户上板验证。

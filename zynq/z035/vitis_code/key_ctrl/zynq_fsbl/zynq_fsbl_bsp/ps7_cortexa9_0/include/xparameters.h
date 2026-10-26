@@ -263,6 +263,11 @@
 #define XPAR_PS7_SLCR_0_S_AXI_HIGHADDR 0xF8000FFF
 
 
+/* Definitions for peripheral AD9361_RX_AXIS_0 */
+#define XPAR_AD9361_RX_AXIS_0_BASEADDR 0x82000000
+#define XPAR_AD9361_RX_AXIS_0_HIGHADDR 0x8200FFFF
+
+
 /******************************************************************/
 
 /* Definitions for driver GPIO */

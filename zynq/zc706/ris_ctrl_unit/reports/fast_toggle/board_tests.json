@@ -1,0 +1,62 @@
+{
+  "measurement": "internal FPGA edge counter; physical output unmeasured",
+  "presets": [
+    {
+      "preset_mhz": 1,
+      "elapsed_s": 0.5003789114998654,
+      "edges": 1000402,
+      "internal_estimate_hz": 999644.4464469295,
+      "stop_hold_passed": true
+    },
+    {
+      "preset_mhz": 3,
+      "elapsed_s": 0.5003490535309538,
+      "edges": 3001134,
+      "internal_estimate_hz": 2999040.348753589,
+      "stop_hold_passed": true
+    },
+    {
+      "preset_mhz": 5,
+      "elapsed_s": 0.5003948869998567,
+      "edges": 5002569,
+      "internal_estimate_hz": 4998621.218926876,
+      "stop_hold_passed": true
+    }
+  ],
+  "initial": {
+    "device": "RIS706",
+    "version": 1,
+    "id": 1,
+    "ok": true,
+    "rc": 0,
+    "status": 194,
+    "errors": 0,
+    "frames": 1,
+    "oe": true,
+    "blink_ms": 0,
+    "slots": 16,
+    "fast_supported": true,
+    "fast_mhz": 0,
+    "fast_edges": 0,
+    "image": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "invalid_preset_preserves_mode": true,
+  "manual_takeover_preserves_other_bits": true,
+  "final": {
+    "device": "RIS706",
+    "version": 1,
+    "id": 20,
+    "ok": true,
+    "rc": 0,
+    "status": 194,
+    "errors": 0,
+    "frames": 11,
+    "oe": true,
+    "blink_ms": 0,
+    "slots": 16,
+    "fast_supported": true,
+    "fast_mhz": 0,
+    "fast_edges": 5561,
+    "image": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  }
+}

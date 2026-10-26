@@ -1,0 +1,230 @@
+{
+  "capture_id": "0000001e77d6f6e4",
+  "sampled_only": true,
+  "pages": 17,
+  "readbacks": 51,
+  "checks_pass": true,
+  "rows": [
+    {
+      "address": "40400000",
+      "offset": 0,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "47e728a2e5ca7b6f6ecfbc5c6756c7e27952d2b505a937949ab0f6f2d4c2181f"
+    },
+    {
+      "address": "40407000",
+      "offset": 28672,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "b82ea3a592d21f08e9ecf4b9876a826655380e07deaccee48b32ee4a4c91dad0"
+    },
+    {
+      "address": "40408000",
+      "offset": 32768,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "58e7144d0d5bbea3cc9839eb5c32b0d2179224499ea5a1c1855b376321168b8d"
+    },
+    {
+      "address": "40480000",
+      "offset": 524288,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "f30dd5649837a0c9e7e220852374db7a84fba60f01d4bcfa19c3a502866c7219"
+    },
+    {
+      "address": "404a5000",
+      "offset": 675840,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "2c7428a411b5847ca2c778d7c243019242a24adef5f54bead218eca914980db7"
+    },
+    {
+      "address": "404e4000",
+      "offset": 933888,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "e7a50cb1ce9774f0a373d7e7c95ef01c95c12aff4d88b2bf5a2c108515e8e13f"
+    },
+    {
+      "address": "40500000",
+      "offset": 1048576,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "a85d73c79d8140bf4fa90a41a33f9868bb6b97e75e5bc48ee0586e59c78ef1fc"
+    },
+    {
+      "address": "40564000",
+      "offset": 1458176,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "401770e6acd3b61234daac929a24f0c1cae7ce8940ceb4f0086745ac90dfad47"
+    },
+    {
+      "address": "40580000",
+      "offset": 1572864,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "eefb139d9f62555eb917cad69a4eef2ecc988bc86d91fa6070416f9644b9af95"
+    },
+    {
+      "address": "40600000",
+      "offset": 2097152,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "06bf2c495e715bb89322bdbfb588613f29080e73c19925712f03a5814b2a4fdf"
+    },
+    {
+      "address": "40700000",
+      "offset": 3145728,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "b01598f11b3d090b615da8d53445b61374c2f5d22e5b5a1f1d26fbbbe15c78a5"
+    },
+    {
+      "address": "41184000",
+      "offset": 14172160,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "4d2dd5f44c6b9215b09b5ff45088a9badaf9b4aa0011b9462f3a3ae53ad4e344"
+    },
+    {
+      "address": "4214c000",
+      "offset": 30720000,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "839bb392870e4ac00a6bfda7427521f7a5199e9a983864bda93f6dea81ac9c0a"
+    },
+    {
+      "address": "425c4000",
+      "offset": 35405824,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "54a7577881ee1f2c200268cf19ecaf86fe02f54cc6969dea5d5ff0723bce572b"
+    },
+    {
+      "address": "43e98000",
+      "offset": 61440000,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "bfab8d3d9046b587f47f9e2eb632480b19b740b8236660132f0220014420bae2"
+    },
+    {
+      "address": "45be4000",
+      "offset": 92160000,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "78a6c9624aa7d650ef399d3066e9bd354453408fc81bfe91d93972c3ea23819b"
+    },
+    {
+      "address": "4792f000",
+      "offset": 122875904,
+      "reads": 3,
+      "bytes_per_read": 4096,
+      "match_tcp": [
+        true,
+        true,
+        true
+      ],
+      "readbacks_identical": true,
+      "sha256": "0afbf27e853eb267c4ce1f443e0c860fe089c89f38f1264c2e87a9bc1115a1ba"
+    }
+  ]
+}

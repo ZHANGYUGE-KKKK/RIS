@@ -1,0 +1,46 @@
+DESIGN checkpoint_pz7035_top_routed PART xc7z035ffg900-2
+PORT rx_clk_n PIN=T27 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=T27 PIN_FUNC=IO_L14N_T2_SRCC_13 BANK=13
+PORT rx_clk_p PIN=R27 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=R27 PIN_FUNC=IO_L14P_T2_SRCC_13 BANK=13
+PORT rx_data_n[0] PIN=R21 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=R21 PIN_FUNC=IO_L19N_T3_VREF_13 BANK=13
+PORT rx_data_n[1] PIN=P28 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=P28 PIN_FUNC=IO_L3N_T0_DQS_13 BANK=13
+PORT rx_data_n[2] PIN=T25 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=T25 PIN_FUNC=IO_L17N_T2_13 BANK=13
+PORT rx_data_n[3] PIN=V22 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=V22 PIN_FUNC=IO_L22N_T3_13 BANK=13
+PORT rx_data_n[4] PIN=U30 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=U30 PIN_FUNC=IO_L2N_T0_13 BANK=13
+PORT rx_data_n[5] PIN=P29 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=P29 PIN_FUNC=IO_L4N_T0_13 BANK=13
+PORT rx_data_p[0] PIN=P21 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=P21 PIN_FUNC=IO_L19P_T3_13 BANK=13
+PORT rx_data_p[1] PIN=N28 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=N28 PIN_FUNC=IO_L3P_T0_DQS_13 BANK=13
+PORT rx_data_p[2] PIN=T24 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=T24 PIN_FUNC=IO_L17P_T2_13 BANK=13
+PORT rx_data_p[3] PIN=U22 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=U22 PIN_FUNC=IO_L22P_T3_13 BANK=13
+PORT rx_data_p[4] PIN=T30 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=T30 PIN_FUNC=IO_L2P_T0_13 BANK=13
+PORT rx_data_p[5] PIN=N29 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=N29 PIN_FUNC=IO_L4P_T0_13 BANK=13
+PORT rx_frame_n PIN=R26 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=R26 PIN_FUNC=IO_L13N_T2_MRCC_13 BANK=13
+PORT rx_frame_p PIN=R25 IOSTANDARD=LVDS_25 DIFF_TERM=0 PAD=R25 PIN_FUNC=IO_L13P_T2_MRCC_13 BANK=13
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[0].i_rx_data/i_rx_data_ibuf TYPE=IBUFDS LOC=IOB_X0Y212 IOSTANDARD=LVDS_25 DIFF_TERM=0 IBUF_LOW_PWR=1 GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[0].i_rx_data/i_rx_data_iddr TYPE=IDDR LOC=ILOGIC_X0Y212 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[0].i_rx_data/i_rx_data_idelay TYPE=IDELAYE2 LOC=IDELAY_X0Y212 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=AD9361_RX_DELAY
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[1].i_rx_data/i_rx_data_ibuf TYPE=IBUFDS LOC=IOB_X0Y244 IOSTANDARD=LVDS_25 DIFF_TERM=0 IBUF_LOW_PWR=1 GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[1].i_rx_data/i_rx_data_iddr TYPE=IDDR LOC=ILOGIC_X0Y244 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[1].i_rx_data/i_rx_data_idelay TYPE=IDELAYE2 LOC=IDELAY_X0Y244 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=AD9361_RX_DELAY
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[2].i_rx_data/i_rx_data_ibuf TYPE=IBUFDS LOC=IOB_X0Y216 IOSTANDARD=LVDS_25 DIFF_TERM=0 IBUF_LOW_PWR=1 GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[2].i_rx_data/i_rx_data_iddr TYPE=IDDR LOC=ILOGIC_X0Y216 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[2].i_rx_data/i_rx_data_idelay TYPE=IDELAYE2 LOC=IDELAY_X0Y216 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=AD9361_RX_DELAY
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[3].i_rx_data/i_rx_data_ibuf TYPE=IBUFDS LOC=IOB_X0Y206 IOSTANDARD=LVDS_25 DIFF_TERM=0 IBUF_LOW_PWR=1 GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[3].i_rx_data/i_rx_data_iddr TYPE=IDDR LOC=ILOGIC_X0Y206 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[3].i_rx_data/i_rx_data_idelay TYPE=IDELAYE2 LOC=IDELAY_X0Y206 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=AD9361_RX_DELAY
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[4].i_rx_data/i_rx_data_ibuf TYPE=IBUFDS LOC=IOB_X0Y246 IOSTANDARD=LVDS_25 DIFF_TERM=0 IBUF_LOW_PWR=1 GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[4].i_rx_data/i_rx_data_iddr TYPE=IDDR LOC=ILOGIC_X0Y246 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[4].i_rx_data/i_rx_data_idelay TYPE=IDELAYE2 LOC=IDELAY_X0Y246 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=AD9361_RX_DELAY
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[5].i_rx_data/i_rx_data_ibuf TYPE=IBUFDS LOC=IOB_X0Y242 IOSTANDARD=LVDS_25 DIFF_TERM=0 IBUF_LOW_PWR=1 GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[5].i_rx_data/i_rx_data_iddr TYPE=IDDR LOC=ILOGIC_X0Y242 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[5].i_rx_data/i_rx_data_idelay TYPE=IDELAYE2 LOC=IDELAY_X0Y242 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=AD9361_RX_DELAY
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_clk_gbuf TYPE=BUFG LOC=BUFGCTRL_X0Y19 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_rx_clk_ibuf TYPE=IBUFDS LOC=IOB_X0Y222 IOSTANDARD=LVDS_25 DIFF_TERM=0 IBUF_LOW_PWR=1 GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_rx_frame/i_delay_ctrl TYPE=IDELAYCTRL LOC=IDELAYCTRL_X0Y4 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=AD9361_RX_DELAY
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_rx_frame/i_rx_data_ibuf TYPE=IBUFDS LOC=IOB_X0Y224 IOSTANDARD=LVDS_25 DIFF_TERM=0 IBUF_LOW_PWR=1 GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_rx_frame/i_rx_data_iddr TYPE=IDDR LOC=ILOGIC_X0Y224 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=
+CELL u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_rx_frame/i_rx_data_idelay TYPE=IDELAYE2 LOC=IDELAY_X0Y224 IOSTANDARD=<not exposed> DIFF_TERM=<not exposed> IBUF_LOW_PWR=<not exposed> GROUP=AD9361_RX_DELAY
+CLOCK rfmc_rx PERIOD=4.069 WAVEFORM=0.000 2.034
+CLOCK_NET u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk DEDICATED_ROUTE=
+  DRIVER u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/clk
+CLOCK_NET u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/clk_ibuf_s DEDICATED_ROUTE=
+  DRIVER u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_rx_clk_ibuf/O

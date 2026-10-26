@@ -1,0 +1,11 @@
+{
+  "pid": 3253448,
+  "bound_FPCs": 10,
+  "mapped_units": 400,
+  "measured_units": 0,
+  "visible_routes": 10,
+  "faded_routes": 9,
+  "selected_FPC": "2",
+  "source_backup": "/home/yyz/work/RIS/zynq/zc706/ris_ctrl_unit/reports/mapping/session_before_faded_routes_20261023_122638.json",
+  "board_commands_sent": 0
+}

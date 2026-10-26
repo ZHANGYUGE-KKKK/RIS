@@ -1,0 +1,31 @@
+{
+  "frontend_simulation.log": [
+    "AD9361_RX_STAGE1_PASS R1=0 HALF_NS=8.1380 ORACLE=4379 TUPLES=1024",
+    "AD9361_RX_STAGE1_PASS R1=1 HALF_NS=8.1380 ORACLE=2265 TUPLES=1024",
+    "AD9361_RX_STAGE1_PASS R1=0 HALF_NS=2.0345 ORACLE=4709 TUPLES=1024",
+    "AD9361_RX_STAGE1_PASS R1=1 HALF_NS=4.0690 ORACLE=2375 TUPLES=1024"
+  ],
+  "axis_regression.log": [
+    "AD9361_OFFICIAL_RX_TEST_PASS PACKET=1 HALF_NS=2.0345 ORACLE=65715 TRACE=26693",
+    "AD9361_OFFICIAL_RX_TEST_PASS PACKET=7 HALF_NS=2.0345 ORACLE=65715 TRACE=26693",
+    "AD9361_OFFICIAL_RX_TEST_PASS PACKET=4096 HALF_NS=2.0345 ORACLE=80980 TRACE=32777",
+    "AD9361_OFFICIAL_RX_TEST_PASS PACKET=7 HALF_NS=8.1380 ORACLE=17524 TRACE=12164"
+  ],
+  "synthesis": [
+    "AD9361_RX_STAGE1_SYNTH_PASS",
+    "AD9361_RX_STAGE1_AXIS_SYNTH_PASS"
+  ],
+  "upstream_commit": "4b12bb58a17edb4c67f63eb367b42d3d3a4e5c91",
+  "upstream_files_verified": 45,
+  "board_programmed": false,
+  "verification_scope": "RTL simulation and standalone synthesis; no routed timing or board PN acceptance",
+  "source_sha256": {
+    "zynq/z035/PZ_UART.srcs/sources_1/new/ad9361_rx_lvds_if.v": "d66ac964e1e0e106145119cf9272f93cfb61d59a3ebff3ba209f703bc08f8158",
+    "zynq/z035/PZ_UART.srcs/sources_1/new/ad9361_rx_axis.v": "58b45b451ec0d2ae65f3758856cbf0c090840e22b2b3adc1f9b9defa142ab09e",
+    "zynq/z035/tests/tb_ad9361_rx_lvds_if.sv": "e5721981102054464601b618ff6de730d9edbcd1bef63ee94c453a11d3e2d448",
+    "zynq/z035/tests/tb_ad9361_rx_axis.sv": "68fbc52ff43db3327f4e5dc4dbb717b46c1329da48304f10adf6d2d9068682d1",
+    "zynq/z035/tests/run_ad9361_rx_lvds_if.sh": "fc37756db54392d06c450f3fe2eb13c997de9d4da96be4609d0211cb92ac7f58",
+    "zynq/z035/tests/run_ad9361_rx_axis.sh": "1e869830b11e75a5af24a9509d99b41d4e1cd49aa451eef98323f9c6f8d8a0ff",
+    "zynq/z035/scripts/verify_ad9361_rx_stage1.tcl": "0c1642abf52a7784c26ee5ab56cb3b419b07e4b92e6184f89a5585e840891303"
+  }
+}

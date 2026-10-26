@@ -1,0 +1,60 @@
+[
+  {
+    "id": "00000007a80dd512",
+    "state": "ready",
+    "result": 0,
+    "requested": 8388608,
+    "received": 8388608,
+    "packets_completed": 256,
+    "packets_requested": 256,
+    "reset_verified": 1,
+    "dma": {
+      "version": 1,
+      "stage": 4,
+      "result": 0,
+      "issues_hex": "000",
+      "last_index": 255,
+      "last_bd": "40003FC0",
+      "checked": [
+        256,
+        256,
+        256
+      ]
+    },
+    "probe_masks_hex": {
+      "changed_dma": "0868",
+      "changed_pl": "0848",
+      "unstable": "0868",
+      "memcpy_diff": "0868"
+    }
+  },
+  {
+    "id": "0000001812a77771",
+    "state": "ready",
+    "result": 0,
+    "requested": 122880000,
+    "received": 122880000,
+    "packets_completed": 3750,
+    "packets_requested": 3750,
+    "reset_verified": 1,
+    "dma": {
+      "version": 1,
+      "stage": 4,
+      "result": 0,
+      "issues_hex": "000",
+      "last_index": 3749,
+      "last_bd": "4003A940",
+      "checked": [
+        3750,
+        3750,
+        3750
+      ]
+    },
+    "probe_masks_hex": {
+      "changed_dma": "6E68",
+      "changed_pl": "6E68",
+      "unstable": "6E68",
+      "memcpy_diff": "7E68"
+    }
+  }
+]

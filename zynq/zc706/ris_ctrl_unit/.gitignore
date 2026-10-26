@@ -1,0 +1,36 @@
+/vivado/
+/build/
+/reports/*.rpt
+/reports/*_bd.tcl
+
+/vivado_axi/
+/vitis_code/
+/vitis_network/
+/vivado_board/
+__pycache__/
+/host/mappings/session_recovery.json
+/host/mappings/.ris-map-*.tmp
+/vivado*.log
+/vivado*.jou
+/tight_setup_hold_pins.txt
+
+# Local rollback snapshots, process state and desktop debugging captures.
+/reports/**/before/
+/reports/**/diagnostics/
+/reports/**/*.pid
+/reports/arbitrary_frequency/*.png
+!/reports/arbitrary_frequency/gui_ready.png
+/vitis_fast/.analytics
+
+# Keep accepted board download packages despite the repository-wide binary rules.
+!/export/*.bit
+!/export/*.elf
+!/export_network/*.bit
+!/export_network/*.elf
+!/export_network_fast/*.bit
+!/export_network_fast/*.elf
+
+# The debugger launch configuration is part of the reproducible GUI workflow.
+!/vitis_fast/ris_fast_network/_ide/
+/vitis_fast/ris_fast_network/_ide/*
+!/vitis_fast/ris_fast_network/_ide/launch/

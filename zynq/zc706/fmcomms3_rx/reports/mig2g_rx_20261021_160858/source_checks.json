@@ -1,0 +1,23 @@
+{
+  "physical_mig_matches_tested_2g": true,
+  "pins_match_tested_2g": true,
+  "ps_dma_aperture_unchanged": true,
+  "axi_connections_unchanged": true,
+  "dma_and_receiver_parameters_unchanged": true,
+  "rf_files_unchanged": 21,
+  "tested_application_files": 53,
+  "interface_adaptation": {
+    "C0_S_AXI_ID_WIDTH": {
+      "bist": "1",
+      "receiver": "2"
+    },
+    "ModuleName": {
+      "bist": "ddr_test_mig_7series_0_0",
+      "receiver": "design_1_mig_7series_0_0"
+    },
+    "C0_S_AXI_SUPPORTS_NARROW_BURST": {
+      "bist": "1",
+      "receiver": "0"
+    }
+  }
+}

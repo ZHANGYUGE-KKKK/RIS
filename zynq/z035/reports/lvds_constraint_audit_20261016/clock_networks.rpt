@@ -1,0 +1,29 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
+| Date         : Fri Oct 16 16:54:14 2026
+| Host         : yyz-SER8 running 64-bit Ubuntu 24.04.1 LTS
+| Command      : report_clock_networks -file /home/yyz/work/RIS/zynq/z035/reports/lvds_constraint_audit_20261016/clock_networks.rpt
+| Design       : pz7035_top
+| Device       : 7z035-ffg900
+| Speed File   : -2  PRODUCTION 1.12 2019-11-22
+------------------------------------------------------------------------------------------------------------------------------------
+
+Clock Networks Report
+
+
+Constrained Clocks
+-------------------
+
+Clock clk_fpga_0 (100MHz)(endpoints: 11740 clock, 0 nonclock)
+PS7/FCLKCLK[0] (u_design_1_wrapper/design_1_i/processing_system7_0/inst/PS7_i)
+
+Clock sys_clk_p (200MHz)(endpoints: 20232 clock, 234 nonclock)
+Port sys_clk_clk_p[0]
+
+Clock rfmc_rx (245.761MHz)(endpoints: 1263 clock, 0 nonclock)
+Port rx_clk_p
+
+Clock dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_inst/SERIES7_BSCAN.bscan_inst/TCK (30.303MHz)(endpoints: 486 clock, 0 nonclock)
+BSCANE2/TCK (dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_inst/SERIES7_BSCAN.bscan_inst)
+

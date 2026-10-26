@@ -1,0 +1,997 @@
+Archive member included to satisfy reference by file (symbol)
+
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(asm_vectors.o)
+                              (_vector_table)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(boot.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(asm_vectors.o) (_boot)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(translation_table.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(boot.o) (MMUTable)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(vectors.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(asm_vectors.o) (FIQInterrupt)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(boot.o) (_start)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o)
+                              /tmp/ccphCYR7.o (Xil_DCacheEnable)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(asm_vectors.o) (UndefinedExceptionAddr)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o)
+                              /tmp/ccphCYR7.o (xil_printf)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_sleepcommon.o)
+                              /tmp/ccphCYR7.o (usleep)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xtime_l.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o) (XTime_SetTime)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o)
+                              /tmp/ccphCYR7.o (XUartPs_SetBaudRate)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_hw.o)
+                              /tmp/ccphCYR7.o (XUartPs_RecvByte)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_sinit.o)
+                              /tmp/ccphCYR7.o (XUartPs_LookupConfig)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(cpu_init.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o) (__cpu_init)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(outbyte.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o) (outbyte)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(sleep.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_sleepcommon.o) (sleep_A9)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(usleep.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_sleepcommon.o) (usleep_A9)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_assert.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o) (Xil_Assert)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xplatform_info.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o) (XGetPlatform_Info)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_g.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_sinit.o) (XUartPs_ConfigTable)
+/home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_udivsi3.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o) (__aeabi_uidiv)
+/home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_divsi3.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o) (__aeabi_idiv)
+/home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_dvmd_tls.o)
+                              /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_udivsi3.o) (__aeabi_idiv0)
+/home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_aeabi_uldivmod.o)
+                              /tmp/ccphCYR7.o (__aeabi_uldivmod)
+/home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_udivmoddi4.o)
+                              /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_aeabi_uldivmod.o) (__udivmoddi4)
+/home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-ctype_.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o) (_ctype_)
+/home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-exit.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o) (exit)
+/home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-fini.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o) (__libc_fini_array)
+/home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-impure.o)
+                              /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-exit.o) (_global_impure_ptr)
+/home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-init.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o) (__libc_init_array)
+/home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-strlen.o)
+                              /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o) (strlen)
+/home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-__call_atexit.o)
+                              /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-exit.o) (__call_exitprocs)
+/home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(_exit.o)
+                              /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-exit.o) (_exit)
+
+Allocating common symbols
+Common symbol       size              file
+
+UndefinedExceptionAddr
+                    0x4               /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+PrefetchAbortAddr   0x4               /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+DataAbortAddr       0x4               /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+Xil_AssertStatus    0x4               /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_assert.o)
+
+Discarded input sections
+
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+ .group         0x0000000000000000        0xc /tmp/ccphCYR7.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ps7_ddr_0        0x0000000000100000 0x000000003ff00000
+ps7_ram_0        0x0000000000000000 0x0000000000030000
+ps7_ram_1        0x00000000ffff0000 0x000000000000fe00
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crti.o
+LOAD /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtbegin.o
+                0x0000000000004fff                _STACK_SIZE = DEFINED (_STACK_SIZE)?_STACK_SIZE:0x4fff
+                0x0000000000003000                _HEAP_SIZE = DEFINED (_HEAP_SIZE)?_HEAP_SIZE:0x3000
+                0x0000000000000400                _ABORT_STACK_SIZE = DEFINED (_ABORT_STACK_SIZE)?_ABORT_STACK_SIZE:0x400
+                0x0000000000000800                _SUPERVISOR_STACK_SIZE = DEFINED (_SUPERVISOR_STACK_SIZE)?_SUPERVISOR_STACK_SIZE:0x800
+                0x0000000000000400                _IRQ_STACK_SIZE = DEFINED (_IRQ_STACK_SIZE)?_IRQ_STACK_SIZE:0x400
+                0x0000000000000400                _FIQ_STACK_SIZE = DEFINED (_FIQ_STACK_SIZE)?_FIQ_STACK_SIZE:0x400
+                0x0000000000000400                _UNDEF_STACK_SIZE = DEFINED (_UNDEF_STACK_SIZE)?_UNDEF_STACK_SIZE:0x400
+
+.text           0x0000000000100000     0x2dfc
+ *(.vectors)
+ .vectors       0x0000000000100000      0x12c /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(asm_vectors.o)
+                0x0000000000100000                _vector_table
+ *(.boot)
+ .boot          0x000000000010012c      0x3b0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(boot.o)
+                0x000000000010012c                _boot
+                0x000000000010012c                _prestart
+ *(.text)
+ .text          0x00000000001004dc        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crti.o
+ .text          0x00000000001004dc       0xa8 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtbegin.o
+ *fill*         0x0000000000100584        0x4 
+ .text          0x0000000000100588      0x49c /tmp/ccphCYR7.o
+ .text          0x0000000000100a24        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(asm_vectors.o)
+ .text          0x0000000000100a24        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(boot.o)
+ .text          0x0000000000100a24        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(translation_table.o)
+ .text          0x0000000000100a24       0x78 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(vectors.o)
+                0x0000000000100a24                FIQInterrupt
+                0x0000000000100a38                IRQInterrupt
+                0x0000000000100a4c                UndefinedException
+                0x0000000000100a60                SWInterrupt
+                0x0000000000100a74                DataAbortInterrupt
+                0x0000000000100a88                PrefetchAbortInterrupt
+ .text          0x0000000000100a9c       0x78 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o)
+                0x0000000000100ab0                _start
+ .text          0x0000000000100b14      0x98c /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o)
+                0x0000000000100b68                Xil_DCacheInvalidateLine
+                0x0000000000100ba0                Xil_DCacheInvalidateRange
+                0x0000000000100c88                Xil_DCacheFlushLine
+                0x0000000000100cd4                Xil_DCacheFlushRange
+                0x0000000000100d28                Xil_DCacheStoreLine
+                0x0000000000100d60                Xil_ICacheDisable
+                0x0000000000100d98                Xil_ICacheInvalidateLine
+                0x0000000000100dd0                Xil_ICacheInvalidateRange
+                0x0000000000100e28                Xil_L1DCacheInvalidate
+                0x0000000000100edc                Xil_L1DCacheEnable
+                0x0000000000100efc                Xil_L1DCacheInvalidateLine
+                0x0000000000100f14                Xil_L1DCacheInvalidateRange
+                0x0000000000100f5c                Xil_L1DCacheFlush
+                0x0000000000100fe8                Xil_L1DCacheDisable
+                0x0000000000101000                Xil_DCacheFlush
+                0x000000000010105c                Xil_DCacheDisable
+                0x000000000010108c                Xil_L1DCacheFlushLine
+                0x00000000001010a4                Xil_L1DCacheFlushRange
+                0x00000000001010ec                Xil_L1DCacheStoreLine
+                0x0000000000101104                Xil_L1ICacheEnable
+                0x0000000000101120                Xil_L1ICacheDisable
+                0x000000000010113c                Xil_L1ICacheInvalidate
+                0x0000000000101154                Xil_L1ICacheInvalidateLine
+                0x000000000010116c                Xil_L1ICacheInvalidateRange
+                0x00000000001011b4                Xil_L2CacheDisable
+                0x00000000001011cc                Xil_L2CacheInvalidate
+                0x0000000000101238                Xil_DCacheInvalidate
+                0x0000000000101258                Xil_ICacheInvalidate
+                0x00000000001012e0                Xil_L2CacheEnable
+                0x00000000001012f8                Xil_DCacheEnable
+                0x000000000010131c                Xil_ICacheEnable
+                0x000000000010134c                Xil_L2CacheInvalidateLine
+                0x0000000000101360                Xil_L2CacheInvalidateRange
+                0x00000000001013c8                Xil_L2CacheFlush
+                0x000000000010140c                Xil_L2CacheFlushLine
+                0x0000000000101424                Xil_L2CacheFlushRange
+                0x000000000010148c                Xil_L2CacheStoreLine
+ .text          0x00000000001014a0       0x70 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+                0x00000000001014a4                Xil_DataAbortHandler
+                0x00000000001014a8                Xil_PrefetchAbortHandler
+                0x00000000001014ac                Xil_UndefinedExceptionHandler
+                0x00000000001014b0                Xil_ExceptionInit
+                0x00000000001014b4                Xil_ExceptionRegisterHandler
+                0x00000000001014cc                Xil_GetExceptionRegisterHandler
+                0x00000000001014ec                Xil_ExceptionRemoveHandler
+ .text          0x0000000000101510      0x64c /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o)
+                0x00000000001016a8                xil_printf
+ .text          0x0000000000101b5c        0x8 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_sleepcommon.o)
+                0x0000000000101b5c                sleep
+                0x0000000000101b60                usleep
+ .text          0x0000000000101b64       0x4c /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xtime_l.o)
+                0x0000000000101b64                XTime_SetTime
+                0x0000000000101b88                XTime_GetTime
+ .text          0x0000000000101bb0      0x5bc /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o)
+                0x0000000000101bd8                XUartPs_SendBuffer
+                0x0000000000101c64                XUartPs_Send
+                0x0000000000101d1c                XUartPs_ReceiveBuffer
+                0x0000000000101dcc                XUartPs_Recv
+                0x0000000000101e9c                XUartPs_SetBaudRate
+                0x0000000000102054                XUartPs_CfgInitialize
+ .text          0x000000000010216c       0x88 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_hw.o)
+                0x000000000010216c                XUartPs_SendByte
+                0x0000000000102184                XUartPs_RecvByte
+                0x00000000001021a0                XUartPs_ResetHw
+ .text          0x00000000001021f4       0x1c /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_sinit.o)
+                0x00000000001021f4                XUartPs_LookupConfig
+ .text          0x0000000000102210       0x3c /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(cpu_init.o)
+                0x0000000000102210                __cpu_init
+ .text          0x000000000010224c       0x10 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(outbyte.o)
+                0x000000000010224c                outbyte
+ .text          0x000000000010225c       0x48 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(sleep.o)
+                0x000000000010225c                sleep_A9
+ .text          0x00000000001022a4       0x44 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(usleep.o)
+                0x00000000001022a4                usleep_A9
+ .text          0x00000000001022e8       0x70 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_assert.o)
+                0x00000000001022e8                Xil_Assert
+                0x0000000000102344                Xil_AssertSetCallback
+                0x0000000000102354                XNullHandler
+ .text          0x0000000000102358        0x8 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xplatform_info.o)
+                0x0000000000102358                XGetPlatform_Info
+ .text          0x0000000000102360        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_g.o)
+ .text          0x0000000000102360      0x278 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_udivsi3.o)
+                0x0000000000102360                __udivsi3
+                0x0000000000102360                __aeabi_uidiv
+                0x00000000001025bc                __aeabi_uidivmod
+ .text          0x00000000001025d8      0x2b0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_divsi3.o)
+                0x00000000001025d8                __aeabi_idiv
+                0x00000000001025d8                __divsi3
+                0x000000000010286c                __aeabi_idivmod
+ .text          0x0000000000102888        0x4 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_dvmd_tls.o)
+                0x0000000000102888                __aeabi_ldiv0
+                0x0000000000102888                __aeabi_idiv0
+ .text          0x000000000010288c       0x30 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_aeabi_uldivmod.o)
+                0x000000000010288c                __aeabi_uldivmod
+ .text          0x00000000001028bc      0x11c /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_udivmoddi4.o)
+                0x00000000001028bc                __udivmoddi4
+ .text          0x00000000001029d8        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-ctype_.o)
+ .text          0x00000000001029d8       0x20 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-exit.o)
+                0x00000000001029d8                exit
+ .text          0x00000000001029f8       0x2c /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-fini.o)
+                0x00000000001029f8                __libc_fini_array
+ .text          0x0000000000102a24        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-impure.o)
+ .text          0x0000000000102a24       0x50 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-init.o)
+                0x0000000000102a24                __libc_init_array
+ *fill*         0x0000000000102a74        0xc 
+ .text          0x0000000000102a80       0xdc /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-strlen.o)
+                0x0000000000102a80                strlen
+ .text          0x0000000000102b5c       0xac /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-__call_atexit.o)
+                0x0000000000102b5c                __call_exitprocs
+ .text          0x0000000000102c08        0x4 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(_exit.o)
+                0x0000000000102c08                _exit
+ .text          0x0000000000102c0c        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtend.o
+ .text          0x0000000000102c0c        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtn.o
+ *(.text.*)
+ .text.startup  0x0000000000102c0c      0x1f0 /tmp/ccphCYR7.o
+                0x0000000000102c0c                main
+ *(.gnu.linkonce.t.*)
+ *(.plt)
+ *(.gnu_warning)
+ *(.gcc_execpt_table)
+ *(.glue_7)
+ .glue_7        0x0000000000102dfc        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x0000000000102dfc        0x0 linker stubs
+ *(.vfp11_veneer)
+ .vfp11_veneer  0x0000000000102dfc        0x0 linker stubs
+ *(.ARM.extab)
+ .ARM.extab     0x0000000000102dfc        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_udivmoddi4.o)
+ *(.gnu.linkonce.armextab.*)
+
+.v4_bx          0x0000000000102dfc        0x0
+ .v4_bx         0x0000000000102dfc        0x0 linker stubs
+
+.iplt           0x0000000000102dfc        0x0
+ .iplt          0x0000000000102dfc        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtbegin.o
+
+.init           0x0000000000102dfc        0xc
+ *(.init)
+ .init          0x0000000000102dfc        0x4 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crti.o
+                0x0000000000102dfc                _init
+ .init          0x0000000000102e00        0x8 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtn.o
+
+.fini           0x0000000000102e08        0xc
+ *(.fini)
+ .fini          0x0000000000102e08        0x4 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crti.o
+                0x0000000000102e08                _fini
+ .fini          0x0000000000102e0c        0x8 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtn.o
+
+.rodata         0x0000000000102e14      0x6e4
+                0x0000000000102e14                __rodata_start = .
+ *(.rodata)
+ .rodata        0x0000000000102e14       0x14 /tmp/ccphCYR7.o
+ .rodata        0x0000000000102e28      0x101 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-ctype_.o)
+                0x0000000000102e28                _ctype_
+ *fill*         0x0000000000102f29        0x3 
+ .rodata        0x0000000000102f2c        0x4 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-impure.o)
+                0x0000000000102f2c                _global_impure_ptr
+ *(.rodata.*)
+ .rodata.str1.4
+                0x0000000000102f30      0x5a8 /tmp/ccphCYR7.o
+                                        0x5b4 (size before relaxing)
+ .rodata.str1.4
+                0x00000000001034d8       0x11 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o)
+ *fill*         0x00000000001034e9        0x3 
+ .rodata.str1.4
+                0x00000000001034ec        0xc /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o)
+                                          0xa (size before relaxing)
+ *(.gnu.linkonce.r.*)
+                0x00000000001034f8                __rodata_end = .
+
+.rodata1        0x00000000001034f8        0x0
+                0x00000000001034f8                __rodata1_start = .
+ *(.rodata1)
+ *(.rodata1.*)
+                0x00000000001034f8                __rodata1_end = .
+
+.sdata2         0x00000000001034f8        0x0
+                0x00000000001034f8                __sdata2_start = .
+ *(.sdata2)
+ *(.sdata2.*)
+ *(.gnu.linkonce.s2.*)
+                0x00000000001034f8                __sdata2_end = .
+
+.sbss2          0x00000000001034f8        0x0
+                0x00000000001034f8                __sbss2_start = .
+ *(.sbss2)
+ *(.sbss2.*)
+ *(.gnu.linkonce.sb2.*)
+                0x00000000001034f8                __sbss2_end = .
+
+.data           0x00000000001034f8      0x480
+                0x00000000001034f8                __data_start = .
+ *(.data)
+ .data          0x00000000001034f8        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crti.o
+ .data          0x00000000001034f8        0x4 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtbegin.o
+                0x00000000001034f8                __dso_handle
+ .data          0x00000000001034fc        0x0 /tmp/ccphCYR7.o
+ .data          0x00000000001034fc        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(asm_vectors.o)
+ .data          0x00000000001034fc        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(boot.o)
+ .data          0x00000000001034fc        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(translation_table.o)
+ .data          0x00000000001034fc        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(vectors.o)
+ .data          0x00000000001034fc        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o)
+ .data          0x00000000001034fc        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o)
+ .data          0x00000000001034fc       0x38 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+                0x00000000001034fc                XExc_VectorTable
+ .data          0x0000000000103534        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o)
+ .data          0x0000000000103534        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_sleepcommon.o)
+ .data          0x0000000000103534        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xtime_l.o)
+ .data          0x0000000000103534        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o)
+ .data          0x0000000000103534        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_hw.o)
+ .data          0x0000000000103534        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_sinit.o)
+ .data          0x0000000000103534        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(cpu_init.o)
+ .data          0x0000000000103534        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(outbyte.o)
+ .data          0x0000000000103534        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(sleep.o)
+ .data          0x0000000000103534        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(usleep.o)
+ .data          0x0000000000103534        0x4 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_assert.o)
+                0x0000000000103534                Xil_AssertWait
+ .data          0x0000000000103538        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xplatform_info.o)
+ .data          0x0000000000103538       0x10 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_g.o)
+                0x0000000000103538                XUartPs_ConfigTable
+ .data          0x0000000000103548        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_udivsi3.o)
+ .data          0x0000000000103548        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_divsi3.o)
+ .data          0x0000000000103548        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_dvmd_tls.o)
+ .data          0x0000000000103548        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_aeabi_uldivmod.o)
+ .data          0x0000000000103548        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_udivmoddi4.o)
+ .data          0x0000000000103548        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-ctype_.o)
+ .data          0x0000000000103548        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-exit.o)
+ .data          0x0000000000103548        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-fini.o)
+ .data          0x0000000000103548      0x430 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-impure.o)
+                0x0000000000103548                _impure_ptr
+ .data          0x0000000000103978        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-init.o)
+ .data          0x0000000000103978        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-strlen.o)
+ .data          0x0000000000103978        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-__call_atexit.o)
+ .data          0x0000000000103978        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(_exit.o)
+ .data          0x0000000000103978        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtend.o
+ .data          0x0000000000103978        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtn.o
+ *(.data.*)
+ *(.gnu.linkonce.d.*)
+ *(.jcr)
+ *(.got)
+ *(.got.plt)
+                0x0000000000103978                __data_end = .
+
+.tm_clone_table
+                0x0000000000103978        0x0
+ .tm_clone_table
+                0x0000000000103978        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtbegin.o
+ .tm_clone_table
+                0x0000000000103978        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtend.o
+
+.igot.plt       0x0000000000103978        0x0
+ .igot.plt      0x0000000000103978        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtbegin.o
+
+.got2           0x0000000000103978        0x0
+ .got2          0x0000000000103978        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o)
+
+.data1          0x0000000000103978        0x0
+                0x0000000000103978                __data1_start = .
+ *(.data1)
+ *(.data1.*)
+                0x0000000000103978                __data1_end = .
+
+.got
+ *(.got)
+
+.note.gnu.build-id
+                0x0000000000103978       0x24
+ *(.note.gnu.build-id)
+ .note.gnu.build-id
+                0x0000000000103978       0x24 linker stubs
+
+.ctors          0x000000000010399c        0x0
+                0x000000000010399c                __CTOR_LIST__ = .
+                0x000000000010399c                ___CTORS_LIST___ = .
+ *crtbegin.o(.ctors)
+ *(EXCLUDE_FILE(*crtend.o) .ctors)
+ *(SORT_BY_NAME(.ctors.*))
+ *(.ctors)
+                0x000000000010399c                __CTOR_END__ = .
+                0x000000000010399c                ___CTORS_END___ = .
+
+.dtors          0x000000000010399c        0x0
+                0x000000000010399c                __DTOR_LIST__ = .
+                0x000000000010399c                ___DTORS_LIST___ = .
+ *crtbegin.o(.dtors)
+ *(EXCLUDE_FILE(*crtend.o) .dtors)
+ *(SORT_BY_NAME(.dtors.*))
+ *(.dtors)
+                0x000000000010399c                __DTOR_END__ = .
+                0x000000000010399c                ___DTORS_END___ = .
+
+.fixup          0x000000000010399c        0x0
+                0x000000000010399c                __fixup_start = .
+ *(.fixup)
+                0x000000000010399c                __fixup_end = .
+
+.eh_frame       0x000000000010399c        0x4
+ *(.eh_frame)
+ .eh_frame      0x000000000010399c        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtbegin.o
+ .eh_frame      0x000000000010399c        0x4 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtend.o
+
+.eh_framehdr    0x00000000001039a0        0x0
+                0x00000000001039a0                __eh_framehdr_start = .
+ *(.eh_framehdr)
+                0x00000000001039a0                __eh_framehdr_end = .
+
+.gcc_except_table
+ *(.gcc_except_table)
+
+.mmu_tbl        0x0000000000104000     0x4000
+                0x0000000000104000                __mmu_tbl_start = .
+ *(.mmu_tbl)
+ .mmu_tbl       0x0000000000104000     0x4000 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(translation_table.o)
+                0x0000000000104000                MMUTable
+                0x0000000000108000                __mmu_tbl_end = .
+
+.ARM.exidx      0x0000000000108000        0x8
+                0x0000000000108000                __exidx_start = .
+ *(.ARM.exidx*)
+ .ARM.exidx     0x0000000000108000        0x8 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_udivmoddi4.o)
+ *(.gnu.linkonce.armexidix.*.*)
+                0x0000000000108008                __exidx_end = .
+
+.rel.dyn        0x0000000000108008        0x0
+ .rel.iplt      0x0000000000108008        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtbegin.o
+
+.preinit_array  0x0000000000108008        0x0
+                0x0000000000108008                __preinit_array_start = .
+ *(SORT_BY_NAME(.preinit_array.*))
+ *(.preinit_array)
+                0x0000000000108008                __preinit_array_end = .
+
+.init_array     0x0000000000108008        0x4
+                0x0000000000108008                __init_array_start = .
+ *(SORT_BY_NAME(.init_array.*))
+ *(.init_array)
+ .init_array    0x0000000000108008        0x4 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtbegin.o
+                0x000000000010800c                __init_array_end = .
+
+.fini_array     0x000000000010800c        0x4
+                0x000000000010800c                __fini_array_start = .
+ *(SORT_BY_NAME(.fini_array.*))
+ *(.fini_array)
+ .fini_array    0x000000000010800c        0x4 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtbegin.o
+                0x0000000000108010                __fini_array_end = .
+
+.ARM.attributes
+                0x0000000000108010       0x33
+                0x0000000000108010                __ARM.attributes_start = .
+ *(.ARM.attributes)
+ .ARM.attributes
+                0x0000000000108010       0x1f /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crti.o
+ .ARM.attributes
+                0x000000000010802f       0x33 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtbegin.o
+ .ARM.attributes
+                0x0000000000108062       0x37 /tmp/ccphCYR7.o
+ .ARM.attributes
+                0x0000000000108099       0x23 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(asm_vectors.o)
+ .ARM.attributes
+                0x00000000001080bc       0x23 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(boot.o)
+ .ARM.attributes
+                0x00000000001080df       0x23 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(translation_table.o)
+ .ARM.attributes
+                0x0000000000108102       0x37 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(vectors.o)
+ .ARM.attributes
+                0x0000000000108139       0x23 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o)
+ .ARM.attributes
+                0x000000000010815c       0x37 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o)
+ .ARM.attributes
+                0x0000000000108193       0x37 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+ .ARM.attributes
+                0x00000000001081ca       0x37 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o)
+ .ARM.attributes
+                0x0000000000108201       0x37 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_sleepcommon.o)
+ .ARM.attributes
+                0x0000000000108238       0x37 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xtime_l.o)
+ .ARM.attributes
+                0x000000000010826f       0x37 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o)
+ .ARM.attributes
+                0x00000000001082a6       0x37 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_hw.o)
+ .ARM.attributes
+                0x00000000001082dd       0x37 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_sinit.o)
+ .ARM.attributes
+                0x0000000000108314       0x23 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(cpu_init.o)
+ .ARM.attributes
+                0x0000000000108337       0x37 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(outbyte.o)
+ .ARM.attributes
+                0x000000000010836e       0x37 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(sleep.o)
+ .ARM.attributes
+                0x00000000001083a5       0x37 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(usleep.o)
+ .ARM.attributes
+                0x00000000001083dc       0x37 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_assert.o)
+ .ARM.attributes
+                0x0000000000108413       0x37 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xplatform_info.o)
+ .ARM.attributes
+                0x000000000010844a       0x3d /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_g.o)
+ .ARM.attributes
+                0x0000000000108487       0x1f /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_udivsi3.o)
+ .ARM.attributes
+                0x00000000001084a6       0x1f /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_divsi3.o)
+ .ARM.attributes
+                0x00000000001084c5       0x1f /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_dvmd_tls.o)
+ .ARM.attributes
+                0x00000000001084e4       0x1f /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_aeabi_uldivmod.o)
+ .ARM.attributes
+                0x0000000000108503       0x33 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_udivmoddi4.o)
+ .ARM.attributes
+                0x0000000000108536       0x31 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-ctype_.o)
+ .ARM.attributes
+                0x0000000000108567       0x33 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-exit.o)
+ .ARM.attributes
+                0x000000000010859a       0x33 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-fini.o)
+ .ARM.attributes
+                0x00000000001085cd       0x31 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-impure.o)
+ .ARM.attributes
+                0x00000000001085fe       0x33 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-init.o)
+ .ARM.attributes
+                0x0000000000108631       0x19 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-strlen.o)
+ .ARM.attributes
+                0x000000000010864a       0x33 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-__call_atexit.o)
+ .ARM.attributes
+                0x000000000010867d       0x37 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(_exit.o)
+ .ARM.attributes
+                0x00000000001086b4       0x31 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtend.o
+ .ARM.attributes
+                0x00000000001086e5       0x1f /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtn.o
+                0x0000000000108704                __ARM.attributes_end = .
+
+.sdata          0x0000000000108010        0x0
+                0x0000000000108010                __sdata_start = .
+ *(.sdata)
+ *(.sdata.*)
+ *(.gnu.linkonce.s.*)
+                0x0000000000108010                __sdata_end = .
+
+.sbss           0x0000000000108010        0x0
+                0x0000000000108010                __sbss_start = .
+ *(.sbss)
+ *(.sbss.*)
+ *(.gnu.linkonce.sb.*)
+                0x0000000000108010                __sbss_end = .
+
+.tdata          0x0000000000108010        0x0
+                0x0000000000108010                __tdata_start = .
+ *(.tdata)
+ *(.tdata.*)
+ *(.gnu.linkonce.td.*)
+                0x0000000000108010                __tdata_end = .
+
+.tbss           0x0000000000108010        0x0
+                0x0000000000108010                __tbss_start = .
+ *(.tbss)
+ *(.tbss.*)
+ *(.gnu.linkonce.tb.*)
+                0x0000000000108010                __tbss_end = .
+
+.bss            0x0000000000108010       0x78
+                0x0000000000108010                __bss_start = .
+ *(.bss)
+ .bss           0x0000000000108010        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crti.o
+ .bss           0x0000000000108010       0x1c /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtbegin.o
+ .bss           0x000000000010802c       0x48 /tmp/ccphCYR7.o
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(asm_vectors.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(boot.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(translation_table.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(vectors.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_sleepcommon.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xtime_l.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_hw.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_sinit.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(cpu_init.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(outbyte.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(sleep.o)
+ .bss           0x0000000000108074        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(usleep.o)
+ .bss           0x0000000000108074        0x4 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_assert.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xplatform_info.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_g.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_udivsi3.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_divsi3.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_dvmd_tls.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_aeabi_uldivmod.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a(_udivmoddi4.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-ctype_.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-exit.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-fini.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-impure.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-init.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-strlen.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a(lib_a-__call_atexit.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(_exit.o)
+ .bss           0x0000000000108078        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtend.o
+ .bss           0x0000000000108078        0x0 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtn.o
+ *(.bss.*)
+ *(.gnu.linkonce.b.*)
+ *(COMMON)
+ COMMON         0x0000000000108078        0xc /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+                0x0000000000108078                UndefinedExceptionAddr
+                0x000000000010807c                PrefetchAbortAddr
+                0x0000000000108080                DataAbortAddr
+ COMMON         0x0000000000108084        0x4 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_assert.o)
+                0x0000000000108084                Xil_AssertStatus
+                0x0000000000108088                __bss_end = .
+                0x0000000000108010                _SDA_BASE_ = (__sdata_start + ((__sbss_end - __sdata_start) / 0x2))
+                0x00000000001034f8                _SDA2_BASE_ = (__sdata2_start + ((__sbss2_end - __sdata2_start) / 0x2))
+
+.heap           0x0000000000108088     0x3008
+                0x0000000000108090                . = ALIGN (0x10)
+ *fill*         0x0000000000108088        0x8 
+                0x0000000000108090                _heap = .
+                0x0000000000108090                HeapBase = .
+                0x0000000000108090                _heap_start = .
+                0x000000000010b090                . = (. + _HEAP_SIZE)
+ *fill*         0x0000000000108090     0x3000 
+                0x000000000010b090                _heap_end = .
+                0x000000000010b090                HeapLimit = .
+
+.stack          0x000000000010b090     0x6800
+                0x000000000010b090                . = ALIGN (0x10)
+                0x000000000010b090                _stack_end = .
+                0x000000000011008f                . = (. + _STACK_SIZE)
+ *fill*         0x000000000010b090     0x4fff 
+                0x0000000000110090                . = ALIGN (0x10)
+ *fill*         0x000000000011008f        0x1 
+                0x0000000000110090                _stack = .
+                0x0000000000110090                __stack = _stack
+                0x0000000000110090                . = ALIGN (0x10)
+                0x0000000000110090                _irq_stack_end = .
+                0x0000000000110490                . = (. + _IRQ_STACK_SIZE)
+ *fill*         0x0000000000110090      0x400 
+                0x0000000000110490                . = ALIGN (0x10)
+                0x0000000000110490                __irq_stack = .
+                0x0000000000110490                _supervisor_stack_end = .
+                0x0000000000110c90                . = (. + _SUPERVISOR_STACK_SIZE)
+ *fill*         0x0000000000110490      0x800 
+                0x0000000000110c90                . = ALIGN (0x10)
+                0x0000000000110c90                __supervisor_stack = .
+                0x0000000000110c90                _abort_stack_end = .
+                0x0000000000111090                . = (. + _ABORT_STACK_SIZE)
+ *fill*         0x0000000000110c90      0x400 
+                0x0000000000111090                . = ALIGN (0x10)
+                0x0000000000111090                __abort_stack = .
+                0x0000000000111090                _fiq_stack_end = .
+                0x0000000000111490                . = (. + _FIQ_STACK_SIZE)
+ *fill*         0x0000000000111090      0x400 
+                0x0000000000111490                . = ALIGN (0x10)
+                0x0000000000111490                __fiq_stack = .
+                0x0000000000111490                _undef_stack_end = .
+                0x0000000000111890                . = (. + _UNDEF_STACK_SIZE)
+ *fill*         0x0000000000111490      0x400 
+                0x0000000000111890                . = ALIGN (0x10)
+                0x0000000000111890                __undef_stack = .
+                0x0000000000111890                _end = .
+LOAD /tmp/ccphCYR7.o
+START GROUP
+LOAD /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a
+LOAD /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a
+LOAD /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a
+END GROUP
+START GROUP
+LOAD /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libgcc.a
+LOAD /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libg.a
+LOAD /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/libc.a
+END GROUP
+LOAD /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtend.o
+LOAD /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtn.o
+OUTPUT(/home/yyz/work/RIS/zynq/zc706/ddr2g_test/export/ddr2g_test.elf elf32-littlearm)
+
+.comment        0x0000000000000000       0x11
+ .comment       0x0000000000000000       0x11 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtbegin.o
+                                         0x12 (size before relaxing)
+ .comment       0x0000000000000011       0x12 /tmp/ccphCYR7.o
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(vectors.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_sleepcommon.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xtime_l.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_hw.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_sinit.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(outbyte.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(sleep.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(usleep.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_assert.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xplatform_info.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_g.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(_exit.o)
+ .comment       0x0000000000000011       0x12 /home/yyz/vivado2020.2/main/Vitis/2020.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin/../aarch32-xilinx-eabi/usr/lib/thumb/v7-a+fp/hard/crtend.o
+
+.debug_info     0x0000000000000000     0xd655
+ .debug_info    0x0000000000000000     0x153e /tmp/ccphCYR7.o
+ .debug_info    0x000000000000153e       0x26 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(asm_vectors.o)
+ .debug_info    0x0000000000001564       0x26 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(boot.o)
+ .debug_info    0x000000000000158a      0x1ac /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(vectors.o)
+ .debug_info    0x0000000000001736       0x26 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o)
+ .debug_info    0x000000000000175c     0x30ed /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o)
+ .debug_info    0x0000000000004849      0x357 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+ .debug_info    0x0000000000004ba0      0xff4 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o)
+ .debug_info    0x0000000000005b94      0xa16 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_sleepcommon.o)
+ .debug_info    0x00000000000065aa      0xc1f /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xtime_l.o)
+ .debug_info    0x00000000000071c9     0x1709 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o)
+ .debug_info    0x00000000000088d2      0xe36 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_hw.o)
+ .debug_info    0x0000000000009708      0xa65 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_sinit.o)
+ .debug_info    0x000000000000a16d       0x26 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(cpu_init.o)
+ .debug_info    0x000000000000a193      0x9c5 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(outbyte.o)
+ .debug_info    0x000000000000ab58      0xa38 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(sleep.o)
+ .debug_info    0x000000000000b590      0xa38 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(usleep.o)
+ .debug_info    0x000000000000bfc8      0x1dc /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_assert.o)
+ .debug_info    0x000000000000c1a4      0x99c /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xplatform_info.o)
+ .debug_info    0x000000000000cb40      0xa14 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_g.o)
+ .debug_info    0x000000000000d554      0x101 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(_exit.o)
+
+.debug_abbrev   0x0000000000000000     0x29ba
+ .debug_abbrev  0x0000000000000000      0x3b2 /tmp/ccphCYR7.o
+ .debug_abbrev  0x00000000000003b2       0x14 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(asm_vectors.o)
+ .debug_abbrev  0x00000000000003c6       0x14 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(boot.o)
+ .debug_abbrev  0x00000000000003da       0xc0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(vectors.o)
+ .debug_abbrev  0x000000000000049a       0x14 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o)
+ .debug_abbrev  0x00000000000004ae      0x4cb /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o)
+ .debug_abbrev  0x0000000000000979      0x1d3 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+ .debug_abbrev  0x0000000000000b4c      0x448 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o)
+ .debug_abbrev  0x0000000000000f94      0x226 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_sleepcommon.o)
+ .debug_abbrev  0x00000000000011ba      0x2cc /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xtime_l.o)
+ .debug_abbrev  0x0000000000001486      0x406 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o)
+ .debug_abbrev  0x000000000000188c      0x2f1 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_hw.o)
+ .debug_abbrev  0x0000000000001b7d      0x20c /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_sinit.o)
+ .debug_abbrev  0x0000000000001d89       0x14 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(cpu_init.o)
+ .debug_abbrev  0x0000000000001d9d      0x21a /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(outbyte.o)
+ .debug_abbrev  0x0000000000001fb7      0x257 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(sleep.o)
+ .debug_abbrev  0x000000000000220e      0x257 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(usleep.o)
+ .debug_abbrev  0x0000000000002465      0x112 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_assert.o)
+ .debug_abbrev  0x0000000000002577      0x1e5 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xplatform_info.o)
+ .debug_abbrev  0x000000000000275c      0x1d8 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_g.o)
+ .debug_abbrev  0x0000000000002934       0x86 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(_exit.o)
+
+.debug_loc      0x0000000000000000     0x46c8
+ .debug_loc     0x0000000000000000      0x661 /tmp/ccphCYR7.o
+ .debug_loc     0x0000000000000661     0x2370 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o)
+ .debug_loc     0x00000000000029d1       0x99 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+ .debug_loc     0x0000000000002a6a      0x789 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o)
+ .debug_loc     0x00000000000031f3       0x4a /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_sleepcommon.o)
+ .debug_loc     0x000000000000323d      0x19e /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xtime_l.o)
+ .debug_loc     0x00000000000033db      0xe32 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o)
+ .debug_loc     0x000000000000420d      0x380 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_hw.o)
+ .debug_loc     0x000000000000458d       0x25 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_sinit.o)
+ .debug_loc     0x00000000000045b2       0x25 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(outbyte.o)
+ .debug_loc     0x00000000000045d7       0x3c /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(sleep.o)
+ .debug_loc     0x0000000000004613       0x3c /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(usleep.o)
+ .debug_loc     0x000000000000464f       0x64 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_assert.o)
+ .debug_loc     0x00000000000046b3       0x15 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(_exit.o)
+
+.debug_aranges  0x0000000000000000      0x2a0
+ .debug_aranges
+                0x0000000000000000       0x28 /tmp/ccphCYR7.o
+ .debug_aranges
+                0x0000000000000028       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(asm_vectors.o)
+ .debug_aranges
+                0x0000000000000048       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(boot.o)
+ .debug_aranges
+                0x0000000000000068       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(vectors.o)
+ .debug_aranges
+                0x0000000000000088       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o)
+ .debug_aranges
+                0x00000000000000a8       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o)
+ .debug_aranges
+                0x00000000000000c8       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+ .debug_aranges
+                0x00000000000000e8       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o)
+ .debug_aranges
+                0x0000000000000108       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_sleepcommon.o)
+ .debug_aranges
+                0x0000000000000128       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xtime_l.o)
+ .debug_aranges
+                0x0000000000000148       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o)
+ .debug_aranges
+                0x0000000000000168       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_hw.o)
+ .debug_aranges
+                0x0000000000000188       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_sinit.o)
+ .debug_aranges
+                0x00000000000001a8       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(cpu_init.o)
+ .debug_aranges
+                0x00000000000001c8       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(outbyte.o)
+ .debug_aranges
+                0x00000000000001e8       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(sleep.o)
+ .debug_aranges
+                0x0000000000000208       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(usleep.o)
+ .debug_aranges
+                0x0000000000000228       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_assert.o)
+ .debug_aranges
+                0x0000000000000248       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xplatform_info.o)
+ .debug_aranges
+                0x0000000000000268       0x18 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_g.o)
+ .debug_aranges
+                0x0000000000000280       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(_exit.o)
+
+.debug_ranges   0x0000000000000000      0xc08
+ .debug_ranges  0x0000000000000000      0x290 /tmp/ccphCYR7.o
+ .debug_ranges  0x0000000000000290      0x5a8 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o)
+ .debug_ranges  0x0000000000000838       0xb0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o)
+ .debug_ranges  0x00000000000008e8       0x48 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xtime_l.o)
+ .debug_ranges  0x0000000000000930      0x1e8 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o)
+ .debug_ranges  0x0000000000000b18       0xf0 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_hw.o)
+
+.debug_macro    0x0000000000000000     0x3522
+ .debug_macro   0x0000000000000000      0x23d /tmp/ccphCYR7.o
+ .debug_macro   0x000000000000023d      0xa96 /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000000cd3       0x1c /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000000cef      0x57c /tmp/ccphCYR7.o
+ .debug_macro   0x000000000000126b      0x3b7 /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000001622       0x22 /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000001644       0x8e /tmp/ccphCYR7.o
+ .debug_macro   0x00000000000016d2       0x51 /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000001723       0xef /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000001812       0x6a /tmp/ccphCYR7.o
+ .debug_macro   0x000000000000187c      0x1df /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000001a5b      0x189 /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000001be4       0x4a /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000001c2e       0x58 /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000001c86       0x17 /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000001c9d       0x35 /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000001cd2       0x34 /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000001d06      0x339 /tmp/ccphCYR7.o
+ .debug_macro   0x000000000000203f      0x119 /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000002158       0x52 /tmp/ccphCYR7.o
+ .debug_macro   0x00000000000021aa       0x1f /tmp/ccphCYR7.o
+ .debug_macro   0x00000000000021c9       0x43 /tmp/ccphCYR7.o
+ .debug_macro   0x000000000000220c       0x20 /tmp/ccphCYR7.o
+ .debug_macro   0x000000000000222c      0x18e /tmp/ccphCYR7.o
+ .debug_macro   0x00000000000023ba       0x10 /tmp/ccphCYR7.o
+ .debug_macro   0x00000000000023ca       0x35 /tmp/ccphCYR7.o
+ .debug_macro   0x00000000000023ff       0x58 /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000002457       0x16 /tmp/ccphCYR7.o
+ .debug_macro   0x000000000000246d       0x35 /tmp/ccphCYR7.o
+ .debug_macro   0x00000000000024a2      0x40c /tmp/ccphCYR7.o
+ .debug_macro   0x00000000000028ae      0x683 /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000002f31       0x8e /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000002fbf       0x54 /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000003013       0x28 /tmp/ccphCYR7.o
+ .debug_macro   0x000000000000303b      0x330 /tmp/ccphCYR7.o
+ .debug_macro   0x000000000000336b       0x6a /tmp/ccphCYR7.o
+ .debug_macro   0x00000000000033d5      0x115 /tmp/ccphCYR7.o
+ .debug_macro   0x00000000000034ea       0x28 /tmp/ccphCYR7.o
+ .debug_macro   0x0000000000003512       0x10 /tmp/ccphCYR7.o
+
+.debug_line     0x0000000000000000     0x5a40
+ .debug_line    0x0000000000000000      0xa6e /tmp/ccphCYR7.o
+ .debug_line    0x0000000000000a6e       0x8f /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(asm_vectors.o)
+ .debug_line    0x0000000000000afd      0x13e /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(boot.o)
+ .debug_line    0x0000000000000c3b      0x19c /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(vectors.o)
+ .debug_line    0x0000000000000dd7       0x54 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o)
+ .debug_line    0x0000000000000e2b     0x15f8 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o)
+ .debug_line    0x0000000000002423      0x26d /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+ .debug_line    0x0000000000002690      0x7dd /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o)
+ .debug_line    0x0000000000002e6d      0x2bc /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_sleepcommon.o)
+ .debug_line    0x0000000000003129      0x3cb /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xtime_l.o)
+ .debug_line    0x00000000000034f4      0xd35 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o)
+ .debug_line    0x0000000000004229      0x497 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_hw.o)
+ .debug_line    0x00000000000046c0      0x2d2 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_sinit.o)
+ .debug_line    0x0000000000004992       0x48 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(cpu_init.o)
+ .debug_line    0x00000000000049da      0x2c4 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(outbyte.o)
+ .debug_line    0x0000000000004c9e      0x2df /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(sleep.o)
+ .debug_line    0x0000000000004f7d      0x2df /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(usleep.o)
+ .debug_line    0x000000000000525c      0x1b9 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_assert.o)
+ .debug_line    0x0000000000005415      0x2a7 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xplatform_info.o)
+ .debug_line    0x00000000000056bc      0x2a7 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_g.o)
+ .debug_line    0x0000000000005963       0xdd /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(_exit.o)
+
+.debug_str      0x0000000000000000    0x10b72
+ .debug_str     0x0000000000000000    0x10005 /tmp/ccphCYR7.o
+                                      0x102df (size before relaxing)
+ .debug_str     0x0000000000010005       0x79 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(asm_vectors.o)
+ .debug_str     0x000000000001007e        0x7 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(boot.o)
+                                         0x72 (size before relaxing)
+ .debug_str     0x0000000000010085      0x10d /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(vectors.o)
+                                        0x252 (size before relaxing)
+ .debug_str     0x0000000000010192        0xb /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil-crt0.o)
+                                         0x76 (size before relaxing)
+ .debug_str     0x000000000001019d      0x40d /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o)
+                                        0xa12 (size before relaxing)
+ .debug_str     0x00000000000105aa      0x12b /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+                                        0x31c (size before relaxing)
+ .debug_str     0x00000000000106d5      0x106 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o)
+                                        0x6b3 (size before relaxing)
+ .debug_str     0x00000000000107db       0x25 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_sleepcommon.o)
+                                        0x5c6 (size before relaxing)
+ .debug_str     0x0000000000010800       0x2a /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xtime_l.o)
+                                        0x61b (size before relaxing)
+ .debug_str     0x000000000001082a      0x1e4 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o)
+                                        0x897 (size before relaxing)
+ .debug_str     0x0000000000010a0e       0x3b /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_hw.o)
+                                        0x635 (size before relaxing)
+ .debug_str     0x0000000000010a49       0x2b /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_sinit.o)
+                                        0x61e (size before relaxing)
+ .debug_str     0x0000000000010a74        0xb /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(cpu_init.o)
+                                         0x76 (size before relaxing)
+ .debug_str     0x0000000000010a7f        0xa /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(outbyte.o)
+                                        0x5a6 (size before relaxing)
+ .debug_str     0x0000000000010a89        0xa /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(sleep.o)
+                                        0x5ce (size before relaxing)
+ .debug_str     0x0000000000010a93        0x9 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(usleep.o)
+                                        0x5d1 (size before relaxing)
+ .debug_str     0x0000000000010a9c       0x70 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_assert.o)
+                                        0x22a (size before relaxing)
+ .debug_str     0x0000000000010b0c       0x11 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xplatform_info.o)
+                                        0x5a6 (size before relaxing)
+ .debug_str     0x0000000000010b1d        0xc /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_g.o)
+                                        0x5f8 (size before relaxing)
+ .debug_str     0x0000000000010b29       0x49 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(_exit.o)
+                                        0x19f (size before relaxing)
+
+.debug_frame    0x0000000000000000      0x860
+ .debug_frame   0x0000000000000000       0xd8 /tmp/ccphCYR7.o
+ .debug_frame   0x00000000000000d8       0x70 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(vectors.o)
+ .debug_frame   0x0000000000000148      0x300 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_cache.o)
+ .debug_frame   0x0000000000000448       0x90 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_exception.o)
+ .debug_frame   0x00000000000004d8       0xb4 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_printf.o)
+ .debug_frame   0x000000000000058c       0x30 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_sleepcommon.o)
+ .debug_frame   0x00000000000005bc       0x30 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xtime_l.o)
+ .debug_frame   0x00000000000005ec       0xf8 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps.o)
+ .debug_frame   0x00000000000006e4       0x48 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_hw.o)
+ .debug_frame   0x000000000000072c       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xuartps_sinit.o)
+ .debug_frame   0x000000000000074c       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(outbyte.o)
+ .debug_frame   0x000000000000076c       0x34 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(sleep.o)
+ .debug_frame   0x00000000000007a0       0x34 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(usleep.o)
+ .debug_frame   0x00000000000007d4       0x4c /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xil_assert.o)
+ .debug_frame   0x0000000000000820       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(xplatform_info.o)
+ .debug_frame   0x0000000000000840       0x20 /home/yyz/work/RIS/zynq/zc706/ddr2g_test/vitis/bsp/ps7_cortexa9_0/lib/libxil.a(_exit.o)

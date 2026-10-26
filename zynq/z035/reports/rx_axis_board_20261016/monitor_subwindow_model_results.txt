@@ -1,0 +1,6 @@
+[RX monitor] PN=1 ADI_CLKMON=0x00009d49 (61439514 Hz @100MHz AXI)
+PASS clock=61440000 measured=61439993..61440003 elapsed=5005433 us max_subwindow=1007820 ns status=0
+[RX monitor] PN=1 ADI_CLKMON=0x00027525 (245759582 Hz @100MHz AXI)
+PASS clock=245760000 measured=245759993..245760004 elapsed=5005433 us max_subwindow=1007820 ns status=-6
+[RX monitor] PN=1 ADI_CLKMON=0x00050000 (500000000 Hz @100MHz AXI)
+PASS clock=500000000 measured=500000000..500000000 elapsed=5005433 us max_subwindow=1007820 ns status=-6

@@ -1,0 +1,1 @@
+"tb_ad9361_rx_axis_rewrite" "glbl" -L "unisims_ver" -L "unimacro_ver" -L "secureip" --debug "typical" --mt "2" --generic_top "PACKET_SAMPLES=4096" --generic_top "RX_CLOCK_INVERT=0" -s "rx_rewrite_p4096_c0" 

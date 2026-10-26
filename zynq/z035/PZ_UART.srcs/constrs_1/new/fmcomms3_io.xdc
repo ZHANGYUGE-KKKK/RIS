@@ -44,5 +44,6 @@ set_property -dict {PACKAGE_PIN U30 IOSTANDARD LVDS_25 DIFF_TERM false} [get_por
 set_property -dict {PACKAGE_PIN N29 IOSTANDARD LVDS_25 DIFF_TERM false} [get_ports {rx_data_p[5]}]
 set_property -dict {PACKAGE_PIN P29 IOSTANDARD LVDS_25 DIFF_TERM false} [get_ports {rx_data_n[5]}]
 
-# Fs=61.44 MSPS, dual RX LVDS DDR: DATA_CLK=4*Fs=245.76 MHz.
-create_clock -name rfmc_rx -period 4.069 [get_ports rx_clk_p]
+# Active config915: Fs=15.36 MSPS, dual RX LVDS DDR, DATA_CLK=61.44 MHz.
+# SPI timing scan may change phase, never this frequency.
+create_clock -name rfmc_rx -period 16.276042 [get_ports rx_clk_p]

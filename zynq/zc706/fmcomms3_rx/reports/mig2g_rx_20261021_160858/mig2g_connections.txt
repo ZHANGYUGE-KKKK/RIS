@@ -1,0 +1,12 @@
+ad9361_rx_axis_0/ref_clk200 -> /util_ds_buf_0_IBUF_OUT
+mig_7series_0/sys_clk_i -> /mig2g_clock_clk_out1
+mig_7series_0/clk_ref_i -> /util_ds_buf_0_IBUF_OUT
+mig_7series_0/ui_clk -> /mig_7series_0_ui_clk
+/axi_dma_0/Data_SG -> /axi_dma_0/Data_SG/SEG_mig_7series_0_memaddr
+/axi_dma_0/Data_S2MM -> /axi_dma_0/Data_S2MM/SEG_mig_7series_0_memaddr
+/processing_system7_0/Data -> /processing_system7_0/Data/SEG_ad9361_rx_axis_0_reg0 /processing_system7_0/Data/SEG_axi_dma_0_Reg /processing_system7_0/Data/SEG_axi_gpio_9361_Reg /processing_system7_0/Data/SEG_axi_gpio_ris_ctl_Reg /processing_system7_0/Data/SEG_mig_7series_0_memaddr
+/axi_dma_0/S_AXI_LITE -> /axi_dma_0/S_AXI_LITE/Reg
+/mig_7series_0/memmap -> /mig_7series_0/memmap/memaddr
+/axi_gpio_ris_ctl/S_AXI -> /axi_gpio_ris_ctl/S_AXI/Reg
+/axi_gpio_9361/S_AXI -> /axi_gpio_9361/S_AXI/Reg
+/ad9361_rx_axis_0/S_AXI -> /ad9361_rx_axis_0/S_AXI/reg0

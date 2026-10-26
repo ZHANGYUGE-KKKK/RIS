@@ -1,0 +1,110 @@
+NAME
+    platform config - Configure the active platform.
+
+SYNOPSIS
+    platform config [options]
+        Configure the properties of active platform.
+
+OPTIONS
+    -desc <description>
+        Add a Brief description about the platform.
+
+    -updatehw <hw-spec>
+        Update the platform to use a new hardware specification file specified
+        by <hw-spec>.
+
+    -samples <samples-dir>
+        Make the application template specified in <samples-dir>, part of
+        the platform. This option can only be used for acceleratable application.
+        "repo -apps <platform-name>" can be used to list the application
+        templates available for the given platform-name.
+
+    -prebuilt-data <directory-name>
+        For expandable platforms, pre-generated hardware data specified
+        in directory-name will be used for building user applications that
+        do not contain accelerators. This will reduce the build time.
+
+    -make-local
+        Make the referenced SW components local to the platform.
+
+    -fsbl-target <processor-type>
+        Processor-type for which the existing fsbl has to be re-generated.
+        This option is valid only for ZU+.
+
+    -create-boot-bsp
+        Generate boot components for the platform.
+
+    -remove-boot-bsp
+        Remove all the boot components generated during platform creation.
+
+    -fsbl-elf <fsbl.elf>
+        Prebuilt fsbl.elf to be used as boot component when "remove-boot-bsp"
+        option is specified.
+
+    -pmufw-elf <pmufw.elf>
+        Prebuilt pmufw.elf to be used as boot component when "remove-boot-bsp"
+        option is specified.
+
+    -extra-compiler-flags <param> <value>
+        Set extra compiler flag for the parameter with provided value.
+        Only fsbl and pmufw are the supported parameters.
+	If value is not paseed existing value will return.
+
+    -extra-linker-flags <param>  <value>
+        Set extra linker flag for the parameter with provided value.
+        Only fsbl and pmufw are the supported parameters.
+	If value is not paseed existing value will return.
+	
+    -reset-user-defined-flags <param>
+	Resets the extra compiler and linker flags.
+	Only fsbl and pmufw are the supported parameters.
+
+    -report <param>
+        Return the list of extra compiler and linker flags set
+        to the given parameter. Only fsbl and pmufw are the
+        supported parameters.
+
+
+EXAMPLE
+    platform active zc702
+    platform config -desc "ZC702 with memory test application"
+                    -samples /home/user/newDir
+        Make zc702 as active platform, configure the description of the platform
+        and make samples in /home/user/newDir part of the platform.
+
+    platform config -updatehw /home/user/newdesign.xsa
+        Updates the platform project with the new xsa.
+
+    platform config -fsbl-target psu_cortexr5_0
+        Changes the fsbl target to psu_cortexr5_0.
+	
+    platform config -extra-compiler-flags fsbl
+	Get the extra compiler flags. These are the flags added extra to the flags derived from
+	libaries, processor and os.
+
+    platform config -extra-compiler-flags fsbl "-DFSBL_DEBUG_INFO [platform config
+    -extra-compiler-flags fsbl]"
+        Prepend -DFSBL_DEBUG_INFO to the compiler options, while building the fsbl
+        application.
+
+    platform config -report fsbl
+        Return  table of extra compiler and extra linker flags that are set
+        for fsbl.
+    
+    Platform config -create-boot-bsp
+        Create the boot components for the platform.
+	
+    Platform config -create-boot-bsp -arch 32-bit
+        Create the boot components for the platform, creating fsbl in 32-bit.
+	This is valid only for zynqmp based platforms.
+
+    Platform config -remove-boot-bsp
+        Remove all the boot components generated during platform creation.
+
+
+RETURNS
+    Empty string, if the platform is configured successfully.
+    Error string, if no platform is active or if the platform cannot be
+    configured.
+
+

@@ -1,32 +1,25 @@
 # Run after display_hw_ila_data for ila_ad9361_rx, in the Vivado GUI.
-# Rebuild the current hardware waveform view instead of reusing legacy names.
+# The rewritten receiver ILA samples the live AXIS interface at 100 MHz.
+# AXIS_IQ lanes: [15:0]=I1, [31:16]=Q1, [47:32]=I2, [63:48]=Q2,
+# each signed 12-bit sample sign-extended to 16 bits.
+# FLAGS bits: 0 ARM command, 1 TVALID, 2 TREADY, 3 TLAST,
+# 4 receiver ready, 5 FRAME locked, 6 capture active, 7 overflow,
+# 8 FRAME error, 9 delay error. Data transfers only with bits 1 and 2 high.
+# Counters are independent Gray-synchronized diagnostics, not sample tags.
+# RAW_RX bit48 qualifies a coherent RX-domain record in bits47:0:
+# [47:32] DATA_CLK counter bits15:0, [31:26] counter bits21:16, [25] delay ready,
+# [24] FRAME fault, [23] tuple valid, [22] FRAME locked, [21:14] FRAME
+# history, [13:7] early DDR data/frame, [6:0] late DDR data/frame.
+# RAW_RX remains observable with ARM=0 for physical-interface diagnostics.
 set adi_view_cfg [current_wave_config]
 set adi_view_prefix u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst
 catch {remove_wave -of $adi_view_cfg *}
 foreach {adi_view_label adi_view_signal adi_view_radix} {
-    RECORD_VALID prefifo_valid_ref bin
-    IQ_VALID prefifo_official_valid_ref bin
-    RX1_I rx1_i_ref dec
-    RX1_Q rx1_q_ref dec
-    RX2_I rx2_i_ref dec
-    RX2_Q rx2_q_ref dec
-    FRAME_DDR prefifo_raw_frame_ref bin
-    FRAME_PREVIOUS prefifo_raw_frame_previous_ref bin
-    ADI_STATUS prefifo_official_status_ref bin
-    CORE_RESET prefifo_official_rst_ref bin
-    RX_RISE prefifo_raw_data_rise_ref hex
-    RX_FALL prefifo_raw_data_fall_ref hex
-    RX_COUNTER prefifo_rx_edge_counter_ref hex
-    RECORD_INDEX prefifo_index_ref unsigned
-    RECORD_BANK prefifo_batch_ref unsigned
-    RX_EDGES_PER_MS rx_edges_per_ms_ref unsigned
-    AXIS_IQ prefifo_sample_data_ref hex
-    AXIS_VALID prefifo_sample_valid_ref bin
-    FIFO_READY prefifo_fifo_source_ready_ref bin
-    ARM prefifo_armed_rx_ref bin
-    OVERFLOW prefifo_overflow_rx_ref bin
-    FRAME_ERROR prefifo_frame_error_rx_ref bin
-    DELAY_ERROR prefifo_delay_error_rx_ref bin
+    AXIS_IQ debug_axis_data hex
+    FLAGS debug_axis_flags bin
+    DECODED_TUPLES debug_sample_count unsigned
+    DATA_CLK_CYCLES debug_clock_count unsigned
+    RAW_RX debug_raw_rx hex
 } {
     add_wave -into $adi_view_cfg -radix $adi_view_radix -name $adi_view_label $adi_view_prefix/$adi_view_signal
 }

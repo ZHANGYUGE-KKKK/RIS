@@ -1,0 +1,89 @@
+{
+  "time": "2026-10-26T15:14:25.413117+08:00",
+  "frequency_definition": "complete all0 -> all1 -> all0 cycle; 50 percent duty",
+  "presets_mhz": [
+    1,
+    3,
+    5
+  ],
+  "half_period_ns": [
+    500,
+    166.6666666667,
+    100
+  ],
+  "engine_clock_mhz": 300,
+  "shift_clock_burst_mhz": 100,
+  "shifts_per_latch": 8,
+  "parallel_chips": 50,
+  "outputs": 400,
+  "uses_output_disable_as_zero": false,
+  "implementation": {
+    "setup_wns_ns": 0.158,
+    "hold_whs_ns": 0.071,
+    "unconstrained_internal_endpoints": 0,
+    "drc_errors": 0,
+    "cdc_unsafe": 0
+  },
+  "verification": {
+    "python_tests": 59,
+    "rtl_fast": "PASS: UNISIM MMCM/ODDR, 400-chip-bit model, 1/3/5 MHz, exact half periods, eight shifts, stop/hold/release, normal arbitrary frames, reset",
+    "rtl_legacy_axi": "PASS",
+    "c_protocol": "PASS",
+    "board_internal_counter": [
+      {
+        "preset_mhz": 1,
+        "elapsed_s": 0.5003789114998654,
+        "edges": 1000402,
+        "internal_estimate_hz": 999644.4464469295,
+        "stop_hold_passed": true
+      },
+      {
+        "preset_mhz": 3,
+        "elapsed_s": 0.5003490535309538,
+        "edges": 3001134,
+        "internal_estimate_hz": 2999040.348753589,
+        "stop_hold_passed": true
+      },
+      {
+        "preset_mhz": 5,
+        "elapsed_s": 0.5003948869998567,
+        "edges": 5002569,
+        "internal_estimate_hz": 4998621.218926876,
+        "stop_hold_passed": true
+      }
+    ],
+    "gui_live_presets": "PASS"
+  },
+  "download": {
+    "method": "Vitis GUI Debugger_ris_fast_network-Default",
+    "jtag_serial": "210299995170",
+    "workspace": "vitis_fast",
+    "application": "ris_fast_network",
+    "package": "export_network_fast"
+  },
+  "endpoint": "192.168.1.11:7060",
+  "pc_address": "192.168.1.20/24 on enp1s0; RIS-ZC706-local restored",
+  "final_state": {
+    "PY_VAR5": "已完成：ALL 0；帧数 20。",
+    "PY_VAR6": "静态保持  |  输出使能  |  完成帧数 20  |  状态 0x000000C2  |  错误 0x00000000",
+    "PY_VAR16": "control",
+    "PY_VAR17": "4",
+    "PY_VAR18": "39",
+    "PY_VAR25": "ris_mapping.json   |   接口 10/10   |   通道 400/400   |   实测确认 0/400",
+    "PY_VAR26": "共享连接：192.168.1.11:7060 · 已连接",
+    "PY_VAR27": "板端已确认：400路全部低",
+    "PY_VAR37": "10测试",
+    "PY_VAR43": "编辑预览 · 200/400 路为1 · 已保存",
+    "PY_VAR45": "未播放 · 停止后保持最后图案",
+    "PY_VAR46": "5 MHz：每100 ns翻转；完整周期200 ns，50%占空比。"
+  },
+  "mapping_and_pattern_library_preserved": true,
+  "physical_output_measurement": "Deferred to user by explicit instruction; no oscilloscope connected. No claim of measured 595 Q or RIS RF settling.",
+  "manufacturer_datasheet_retrieval": "Official Nexperia URLs were attempted but network TLS access failed; external electrical timing remains subject to board measurement.",
+  "hashes": {
+    "ps7_init.tcl": "cfc24c840d6d1892cde5bfe4cf1d6993af2aad262f7449e5cd92d07a016d8ec1",
+    "ris_all_io.elf": "934861d7e9dc2302de5740896bfc68864fb664e0096d250328423457ff0b260c",
+    "ris_ctrl_unit.bit": "37dc3891129746925a7b057a42b7712fb44bf703ff24171979311de1b8e1af41",
+    "ris_ctrl_unit.xsa": "63f00d3add83983f56d429babc65ae7df3d7498ba70c6e126825d09b12fd6fd9"
+  }
+}

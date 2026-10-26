@@ -1,0 +1,26 @@
+{
+  "active_profile": "CONFIG2P4",
+  "rx_tx_lo_hz": 2400000000,
+  "sample_rate_hz": 15360000,
+  "tx_bist": 0,
+  "changed_baseline_files": [
+    "vitis_code/key_ctrlll/src/helloworld.c",
+    "vitis_code/key_ctrlll/src/ad_config/ad_config.c",
+    "vitis_code/key_ctrlll/src/ad_config/ad_config.h",
+    "vitis_code/key_ctrlll/src/drivers/capture_store.c",
+    "export/key_ctrlll.elf"
+  ],
+  "preserved_baseline_files": 1578,
+  "unchanged_pl_xdc_xsa_original_configs": true,
+  "elf_sha256": "f8486b0b8a3d408faf35b09df8694982cffc3373f99f0abe1e2b98d0e037cac6",
+  "board_programmed": false,
+  "board_validation": "pending user test",
+  "offline_checks": {
+    "script_tests": 5,
+    "tcp_tests_each_profile": 12,
+    "tk_gui_tests": 9,
+    "fft_tests": 9,
+    "native_asan_ubsan": true,
+    "legacy_915_arm_syntax": true
+  }
+}

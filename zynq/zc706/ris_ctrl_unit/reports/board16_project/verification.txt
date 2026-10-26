@@ -1,0 +1,13 @@
+RIS 16-frame Vivado Project Mode results
+Date: 2026-10-23 (Asia/Shanghai)
+PASS: synth_1 and impl_1 are complete, 100%, and NEEDS_REFRESH=false.
+Verified by reopening vivado_board/ris_ctrl_unit.xpr read-only and open_run impl_1.
+Native checkpoints:
+  vivado_board/ris_ctrl_unit.runs/synth_1/ris_ctrl_unit_top.dcp
+  vivado_board/ris_ctrl_unit.runs/impl_1/ris_ctrl_unit_top_routed.dcp
+100 MHz timing: WNS +0.660 ns, WHS +0.093 ns, TNS/THS zero.
+All user specified timing constraints are met. Severe DRC violations: zero.
+GUI already displays the implemented device and Timing Summary.
+Hierarchical utilization, DRC, route status, I/O and timing reports generated here.
+Fixed GUI report script: Vivado 2020.2 cannot combine -name and -hierarchical.
+The previously accepted export/export_network packages and running board were not changed.

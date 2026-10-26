@@ -1,0 +1,7 @@
+/*key_ctrl*/
+the_ROM_image:
+{
+  [bootloader]<key_ctrl/boot/fsbl.elf>
+   <bitstream> 
+  <elf,ps7_cortexa9_0>
+}

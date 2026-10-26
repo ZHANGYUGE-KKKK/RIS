@@ -1,0 +1,133 @@
+FPC/RIS wiring and physical pin mapping acceptance
+Date: 2026-10-23T12:21:56+08:00
+Result: PASS for computed wiring, file compatibility and offline Tk/controller integration.
+
+User-confirmed physical installation
+  Front view with BIAS at top; 20 rows x 20 columns.
+  T1..T5: rows1..10; B1..B5: rows11..20; each interface spans four columns.
+  Top adapter headers from left to right: U4,U3,U2,U1.
+  Bottom adapter headers from left to right: U1,U2,U3,U4.
+  Header pin1 is outside, pin10 inward: top row=pin; bottom row=21-pin.
+  Adapter U1 pin1..10 = local RIS_Q040..031; U2=030..021;
+    U3=020..011; U4=010..001.
+  The FPC cable connects matching pin numbers at both ends.
+  Controller schematic: ../SCH_Schematic1_2026-10-20.pdf, pages2/4.
+    74LVC8T595PWJ outputs Q0..Q7 are physical pins2..9.
+    FPC signal pins descending by local channel: CH1=60, CH2=59,...,CH40=2.
+  Adapter header references U1..U4 and controller IC references U4..U53 are
+    different devices and are labelled separately in the GUI.
+
+Implemented
+  Binding an FPC to a RIS port generates its forty cell mappings.
+  Existing bindings can be filled with the wiring button; existing records and
+    verified flags are retained. Any conflicting record cancels the whole fill.
+  New entries are basis=wiring and verified=false. No measurements are inferred.
+  Clicking defaults to selecting/viewing a cell, without issuing board commands.
+  Cell details, channel selector, hover text and the forty-row table expose IC/Q,
+    physical IC pin, FPC connector pin, adapter header/pin and net names.
+  Wiring mappings and measured manual mappings support existing single-BIT control.
+    Unmeasured manual records retain their previous control restriction.
+  Calibration still requires an acknowledged one-output FRAME and operator measurement.
+    Auto-next advances through unmeasured wiring entries as well as missing entries.
+  JSON v2 records the wiring profile and per-entry basis; v1 files load as manual
+    records without changing their locations, count or measurement flags.
+  CSV contains all 400 output channels and complete pin traces, leaving unknown
+    RIS port/row/column fields empty for unbound controller FPCs.
+  Single application window, shared connection, save/recovery/undo remain available.
+
+Validation
+  model_tests.log: 8 passing tests. Includes independent top/bottom corner anchors,
+    all 400 cells exactly once, adapter header/FPC pin boundary checks, IC pins,
+    generation conflicts without mutation, retained measurements, v1 import,
+    v2 profile/coordinate validation, JSON roundtrips and complete pin CSV export.
+  gui_tests.log: 13 passing tests. Includes default click-to-trace, generated cell
+    single-BIT control via a mock client without marking it measured, probe ACK
+    gating, old-binding generation/undo, one window and one shared worker/client.
+  Python bytecode compilation passed.
+  wiring_detail_top.png / wiring_detail_bottom.png show representative complete paths.
+  wiring_live.png shows the updated desktop GUI after preserving existing bindings.
+
+Initial wiring migration (historical)
+  Existing bindings retained: {"1": "T1", "2": "T2", "3": "T3", "4": "B4", "5": "B3", "6": "B1"}.
+  Generated mappings: 240; measured entries: 0.
+  Remaining four controller FPCs have no assigned RIS port; no connection was guessed.
+  Session backup and migration receipt: wiring_migration.json.
+  Current saved snapshot: current_pin_map.json / current_pin_map.csv.
+  wiring_profile.csv describes all 400 RIS cells without guessing controller FPC bindings.
+
+Physical validation boundary
+  This update made no RTL/firmware changes and sent no board commands.
+  The desktop GUI remains disconnected. Controls require a connection before use.
+  All new mappings are derived from the supplied schematic and user-confirmed
+    installation, and remain unmeasured until the operator tests the hardware.
+
+Subsequent visual update: 2026-10-23T12:26:56+08:00
+  All bound routes are always drawn. The selected route is solid and thicker;
+    other routes retain their own colors blended at 40% against the canvas.
+  The former hide/show toggle now increases the emphasis of other routes only.
+  Visual checks covered selection of FPC2 and FPC7 and both emphasis modes.
+  Live session: 10 bindings, 400 mapped units, 0 measured units.
+  Verified 10 visible routes including 9 faded routes; recovery bytes unchanged.
+  Current pin-map JSON/CSV snapshots now include all operator-assigned bindings.
+  GUI is open; no board commands were sent. See faded_connections_verification.json.
+
+Selection correction: 2026-10-23T12:37:58+08:00
+  Cell selection follows the chosen FPC and channel; details and BIT control use the same cell.
+  Exactly one black cell frame is drawn within the current FPC region, inset from its border.
+  The preceding cell gets a faded frame. An unbound FPC has no black cell selection.
+  gui_tests.log: 14 tests pass, including switching from FPC7/CH34 to FPC2/CH1
+    and verifying that the issued mock BIT command targets FPC2, not the old cell.
+  Live session preserved all 400 mappings and recovery bytes; no board commands sent.
+
+Crosshair visual update: 2026-10-23T12:46:11+08:00
+  Selected row and column numbers use bold white text on a dark badge.
+  Three gutter-aligned guide rectangles form a cross, split at the middle gap.
+  Guide outlines avoid cell text; one black cell selection remains in the bound region.
+  Inactive cell text opacity is now65%, borders60%, and connection colors55%.
+  Manual preview checks covered top row8/col15 and bottom row14/col5.
+  Live session restored 400 cells unchanged and issued no board commands.
+
+Control-panel topology and manual cell control: 2026-10-23T12:59:22.157545+08:00
+  Shared TopologyView renderer is used by both embedded pages; a single MappingPage
+    owns the mapping, selected cell and calibration state. The TCP worker is shared.
+  Control-panel clicks only select, regardless of mapping-page record/auto-test flags.
+  Manual row/column locator (1..20), row-major previous/next, BIT high/low preserving
+    other outputs, and one-hot FRAME test clearing other399 outputs are available.
+  Selected-cell trace includes RIS row/column, FPC/CH/FPC pin, 595 U/Q/physical pin,
+    adapter header/pin and mapping basis. No physical readback or automatic measurement.
+  Legacy chip/group byte editor and communication log can be expanded in the same page.
+  manual_control_tests.log: 32 offline tests passed (8 model +14 mapping GUI +10 manual).
+    Manual tests use real Tk widgets and the shared worker with an emulated TCP client.
+    Includes selection with record mode enabled without editing, top/bottom geometry,
+    BIT preservation, one-hot ACK gating, unmapped/unverified rejection, invalid input,
+    replacement/undo synchronization, small-window scrolling, high-Z/disconnect states
+    and rejected-probe status. Python bytecode compilation passed.
+  Normal and1180x810 preview images checked; the desktop GUI is open on control page.
+    Live verification:10 bindings,400 mapped cells,0 measured cells,10 visible routes,
+    one selected cell R10C01; original selected FPC1/CH1 and recovery bytes preserved.
+  No board commands sent during this update; board remains disconnected.
+    Physical voltage and wiring verification is left to the operator with a multimeter.
+  See manual_control_live_verification.json and control_manual_live.png.
+
+Measured row direction correction: 2026-10-23T13:50:21.182460+08:00
+  Operator measured old row01 at physical row10 and old row20 at physical row11.
+  Corrected each half independently: upper row=11-old, lower row=31-old.
+    Columns, FPC port bindings, logical outputs, 595 Q/pin and adapter pin traces retained.
+  New wiring_profile: back_insert_4x10_straight_measured_rows_20261023.
+    Top Pin10..1 maps to rows1..10; bottom Pin1..10 maps to rows11..20.
+  Old version2 generated wiring records are validated under their original rule,
+    then migrated once. The new marker prevents repeated reversal after save/reload.
+    Manual coordinates and measurements stay intact; moved generated records become
+    unmeasured. Conflicting migrations fail without replacing the active model.
+    Migration also cancels any pending automatic-next-channel test.
+  Backups of named JSON and recovery draft: reports/mapping/backups/row_direction_20261023_134811.
+    Both400-entry files updated atomically with all10 operator bindings retained.
+    Current pin-map JSON/CSV and wiring-profile CSV regenerated.
+  row_mapping_tests.log:36 passing tests (10 model,15 mapping GUI,11 manual GUI).
+    Includes all400 rows/columns, independent top/bottom hardware endpoints, BIT/FRAME
+    addressing, old-file validation, one-time migration, manual record preservation,
+    collision rejection and no output writes on migration. Bytecode compilation passed.
+  Updated GUI running and connected; checked all400 cell labels in each page (800).
+    Operator resumed interactive testing after refresh; original selection/log settings
+    were not restored over their subsequent actions. Current board errors are zero.
+    Agent sent no output commands during this change. No RTL/ELF changes or download.

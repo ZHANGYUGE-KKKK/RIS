@@ -1,0 +1,1652 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
+| Date         : Fri Oct 16 18:15:33 2026
+| Host         : yyz-SER8 running 64-bit Ubuntu 24.04.1 LTS
+| Command      : report_timing -from [get_clocks rfmc_rx] -to [get_clocks rfmc_rx] -max_paths 30 -path_type full_clock_expanded -file /home/yyz/work/RIS/zynq/z035/reports/rx_axis_board_20261016/clock_whatif_245m/rx_timing_original.rpt
+| Design       : pz7035_top
+| Device       : 7z035-ffg900
+| Speed File   : -2  PRODUCTION 1.12 2019-11-22
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             3.367ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].u_ddr/R
+                            (rising edge-triggered cell IDDR clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            8.138ns  (rfmc_rx fall@8.138ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        4.200ns  (logic 0.223ns (5.309%)  route 3.977ns (94.691%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.071ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.968ns = ( 12.106 - 8.138 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         3.977     8.447    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_reset
+    ILOGIC_X0Y246        IDDR                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].u_ddr/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx fall edge)    8.138     8.138 f  
+    R27                                               0.000     8.138 f  rx_clk_p (IN)
+                         net (fo=0)                   0.000     8.138    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     8.855 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    10.605    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    10.688 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.418    12.106    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    ILOGIC_X0Y246        IDDR                                         f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].u_ddr/C
+                         clock pessimism              0.350    12.456    
+                         clock uncertainty           -0.035    12.420    
+    ILOGIC_X0Y246        IDDR (Setup_iddr_C_R)       -0.606    11.814    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].u_ddr
+  -------------------------------------------------------------------
+                         required time                         11.814    
+                         arrival time                          -8.447    
+  -------------------------------------------------------------------
+                         slack                                  3.367    
+
+Slack (MET) :             3.536ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].u_ddr/R
+                            (rising edge-triggered cell IDDR clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            8.138ns  (rfmc_rx fall@8.138ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        4.030ns  (logic 0.223ns (5.534%)  route 3.807ns (94.466%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.069ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.966ns = ( 12.104 - 8.138 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         3.807     8.277    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_reset
+    ILOGIC_X0Y244        IDDR                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].u_ddr/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx fall edge)    8.138     8.138 f  
+    R27                                               0.000     8.138 f  rx_clk_p (IN)
+                         net (fo=0)                   0.000     8.138    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     8.855 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    10.605    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    10.688 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.416    12.104    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    ILOGIC_X0Y244        IDDR                                         f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].u_ddr/C
+                         clock pessimism              0.350    12.454    
+                         clock uncertainty           -0.035    12.418    
+    ILOGIC_X0Y244        IDDR (Setup_iddr_C_R)       -0.606    11.812    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].u_ddr
+  -------------------------------------------------------------------
+                         required time                         11.812    
+                         arrival time                          -8.277    
+  -------------------------------------------------------------------
+                         slack                                  3.536    
+
+Slack (MET) :             3.710ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].u_ddr/R
+                            (rising edge-triggered cell IDDR clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            8.138ns  (rfmc_rx fall@8.138ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        3.855ns  (logic 0.223ns (5.784%)  route 3.632ns (94.216%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.069ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.966ns = ( 12.104 - 8.138 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         3.632     8.102    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_reset
+    ILOGIC_X0Y242        IDDR                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].u_ddr/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx fall edge)    8.138     8.138 f  
+    R27                                               0.000     8.138 f  rx_clk_p (IN)
+                         net (fo=0)                   0.000     8.138    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     8.855 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    10.605    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    10.688 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.416    12.104    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    ILOGIC_X0Y242        IDDR                                         f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].u_ddr/C
+                         clock pessimism              0.350    12.454    
+                         clock uncertainty           -0.035    12.418    
+    ILOGIC_X0Y242        IDDR (Setup_iddr_C_R)       -0.606    11.812    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].u_ddr
+  -------------------------------------------------------------------
+                         required time                         11.812    
+                         arrival time                          -8.102    
+  -------------------------------------------------------------------
+                         slack                                  3.710    
+
+Slack (MET) :             4.136ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].u_ddr/R
+                            (rising edge-triggered cell IDDR clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            8.138ns  (rfmc_rx fall@8.138ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        3.419ns  (logic 0.223ns (6.522%)  route 3.196ns (93.478%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.059ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.956ns = ( 12.094 - 8.138 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         3.196     7.666    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_reset
+    ILOGIC_X0Y224        IDDR                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].u_ddr/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx fall edge)    8.138     8.138 f  
+    R27                                               0.000     8.138 f  rx_clk_p (IN)
+                         net (fo=0)                   0.000     8.138    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     8.855 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    10.605    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    10.688 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.406    12.094    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    ILOGIC_X0Y224        IDDR                                         f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].u_ddr/C
+                         clock pessimism              0.350    12.444    
+                         clock uncertainty           -0.035    12.408    
+    ILOGIC_X0Y224        IDDR (Setup_iddr_C_R)       -0.606    11.802    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].u_ddr
+  -------------------------------------------------------------------
+                         required time                         11.802    
+                         arrival time                          -7.666    
+  -------------------------------------------------------------------
+                         slack                                  4.136    
+
+Slack (MET) :             4.384ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].u_ddr/R
+                            (rising edge-triggered cell IDDR clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            8.138ns  (rfmc_rx fall@8.138ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        3.180ns  (logic 0.223ns (7.012%)  route 2.957ns (92.988%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.067ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.964ns = ( 12.102 - 8.138 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.957     7.427    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_reset
+    ILOGIC_X0Y216        IDDR                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].u_ddr/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx fall edge)    8.138     8.138 f  
+    R27                                               0.000     8.138 f  rx_clk_p (IN)
+                         net (fo=0)                   0.000     8.138    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     8.855 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    10.605    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    10.688 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.414    12.102    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    ILOGIC_X0Y216        IDDR                                         f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].u_ddr/C
+                         clock pessimism              0.350    12.452    
+                         clock uncertainty           -0.035    12.416    
+    ILOGIC_X0Y216        IDDR (Setup_iddr_C_R)       -0.606    11.810    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].u_ddr
+  -------------------------------------------------------------------
+                         required time                         11.810    
+                         arrival time                          -7.427    
+  -------------------------------------------------------------------
+                         slack                                  4.384    
+
+Slack (MET) :             4.654ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].u_ddr/R
+                            (rising edge-triggered cell IDDR clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            8.138ns  (rfmc_rx fall@8.138ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        2.912ns  (logic 0.223ns (7.659%)  route 2.689ns (92.341%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.069ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.966ns = ( 12.104 - 8.138 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.689     7.159    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_reset
+    ILOGIC_X0Y212        IDDR                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].u_ddr/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx fall edge)    8.138     8.138 f  
+    R27                                               0.000     8.138 f  rx_clk_p (IN)
+                         net (fo=0)                   0.000     8.138    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     8.855 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    10.605    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    10.688 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.416    12.104    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    ILOGIC_X0Y212        IDDR                                         f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].u_ddr/C
+                         clock pessimism              0.350    12.454    
+                         clock uncertainty           -0.035    12.418    
+    ILOGIC_X0Y212        IDDR (Setup_iddr_C_R)       -0.606    11.812    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].u_ddr
+  -------------------------------------------------------------------
+                         required time                         11.812    
+                         arrival time                          -7.159    
+  -------------------------------------------------------------------
+                         slack                                  4.654    
+
+Slack (MET) :             4.798ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].u_ddr/R
+                            (rising edge-triggered cell IDDR clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            8.138ns  (rfmc_rx fall@8.138ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        2.768ns  (logic 0.223ns (8.058%)  route 2.545ns (91.942%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.069ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.966ns = ( 12.104 - 8.138 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.545     7.014    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_reset
+    ILOGIC_X0Y206        IDDR                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].u_ddr/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx fall edge)    8.138     8.138 f  
+    R27                                               0.000     8.138 f  rx_clk_p (IN)
+                         net (fo=0)                   0.000     8.138    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     8.855 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    10.605    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    10.688 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.416    12.104    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    ILOGIC_X0Y206        IDDR                                         f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].u_ddr/C
+                         clock pessimism              0.350    12.454    
+                         clock uncertainty           -0.035    12.418    
+    ILOGIC_X0Y206        IDDR (Setup_iddr_C_R)       -0.606    11.812    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].u_ddr
+  -------------------------------------------------------------------
+                         required time                         11.812    
+                         arrival time                          -7.014    
+  -------------------------------------------------------------------
+                         slack                                  4.798    
+
+Slack (MET) :             11.567ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[0]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        4.226ns  (logic 0.270ns (6.390%)  route 3.956ns (93.610%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.053ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.844ns = ( 20.120 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.634     8.472    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X9Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[0]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.294    20.120    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X9Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[0]/C
+                         clock pessimism              0.350    20.470    
+                         clock uncertainty           -0.035    20.434    
+    SLICE_X9Y214         FDRE (Setup_fdre_C_R)       -0.395    20.039    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[0]
+  -------------------------------------------------------------------
+                         required time                         20.039    
+                         arrival time                          -8.472    
+  -------------------------------------------------------------------
+                         slack                                 11.567    
+
+Slack (MET) :             11.567ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[2]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        4.226ns  (logic 0.270ns (6.390%)  route 3.956ns (93.610%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.053ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.844ns = ( 20.120 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.634     8.472    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X9Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[2]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.294    20.120    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X9Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[2]/C
+                         clock pessimism              0.350    20.470    
+                         clock uncertainty           -0.035    20.434    
+    SLICE_X9Y214         FDRE (Setup_fdre_C_R)       -0.395    20.039    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[2]
+  -------------------------------------------------------------------
+                         required time                         20.039    
+                         arrival time                          -8.472    
+  -------------------------------------------------------------------
+                         slack                                 11.567    
+
+Slack (MET) :             11.567ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[4]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        4.226ns  (logic 0.270ns (6.390%)  route 3.956ns (93.610%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.053ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.844ns = ( 20.120 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.634     8.472    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X9Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[4]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.294    20.120    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X9Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[4]/C
+                         clock pessimism              0.350    20.470    
+                         clock uncertainty           -0.035    20.434    
+    SLICE_X9Y214         FDRE (Setup_fdre_C_R)       -0.395    20.039    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[4]
+  -------------------------------------------------------------------
+                         required time                         20.039    
+                         arrival time                          -8.472    
+  -------------------------------------------------------------------
+                         slack                                 11.567    
+
+Slack (MET) :             11.567ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[6]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        4.226ns  (logic 0.270ns (6.390%)  route 3.956ns (93.610%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.053ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.844ns = ( 20.120 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.634     8.472    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X9Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[6]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.294    20.120    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X9Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[6]/C
+                         clock pessimism              0.350    20.470    
+                         clock uncertainty           -0.035    20.434    
+    SLICE_X9Y214         FDRE (Setup_fdre_C_R)       -0.395    20.039    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[6]
+  -------------------------------------------------------------------
+                         required time                         20.039    
+                         arrival time                          -8.472    
+  -------------------------------------------------------------------
+                         slack                                 11.567    
+
+Slack (MET) :             11.567ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[7]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        4.226ns  (logic 0.270ns (6.390%)  route 3.956ns (93.610%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.053ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.844ns = ( 20.120 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.634     8.472    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X9Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[7]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.294    20.120    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X9Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[7]/C
+                         clock pessimism              0.350    20.470    
+                         clock uncertainty           -0.035    20.434    
+    SLICE_X9Y214         FDRE (Setup_fdre_C_R)       -0.395    20.039    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[7]
+  -------------------------------------------------------------------
+                         required time                         20.039    
+                         arrival time                          -8.472    
+  -------------------------------------------------------------------
+                         slack                                 11.567    
+
+Slack (MET) :             11.590ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[1]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        4.226ns  (logic 0.270ns (6.390%)  route 3.956ns (93.610%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.053ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.844ns = ( 20.120 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.634     8.472    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X8Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[1]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.294    20.120    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X8Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[1]/C
+                         clock pessimism              0.350    20.470    
+                         clock uncertainty           -0.035    20.434    
+    SLICE_X8Y214         FDRE (Setup_fdre_C_R)       -0.372    20.062    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[1]
+  -------------------------------------------------------------------
+                         required time                         20.062    
+                         arrival time                          -8.472    
+  -------------------------------------------------------------------
+                         slack                                 11.590    
+
+Slack (MET) :             11.590ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[3]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        4.226ns  (logic 0.270ns (6.390%)  route 3.956ns (93.610%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.053ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.844ns = ( 20.120 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.634     8.472    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X8Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[3]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.294    20.120    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X8Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[3]/C
+                         clock pessimism              0.350    20.470    
+                         clock uncertainty           -0.035    20.434    
+    SLICE_X8Y214         FDRE (Setup_fdre_C_R)       -0.372    20.062    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[3]
+  -------------------------------------------------------------------
+                         required time                         20.062    
+                         arrival time                          -8.472    
+  -------------------------------------------------------------------
+                         slack                                 11.590    
+
+Slack (MET) :             11.590ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[5]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        4.226ns  (logic 0.270ns (6.390%)  route 3.956ns (93.610%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.053ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.844ns = ( 20.120 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.634     8.472    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X8Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[5]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.294    20.120    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X8Y214         FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[5]/C
+                         clock pessimism              0.350    20.470    
+                         clock uncertainty           -0.035    20.434    
+    SLICE_X8Y214         FDRE (Setup_fdre_C_R)       -0.372    20.062    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/frame_history_reg[5]
+  -------------------------------------------------------------------
+                         required time                         20.062    
+                         arrival time                          -8.472    
+  -------------------------------------------------------------------
+                         slack                                 11.590    
+
+Slack (MET) :             11.780ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/history_count_reg[0]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        4.036ns  (logic 0.270ns (6.690%)  route 3.766ns (93.310%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.053ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.844ns = ( 20.120 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.444     8.283    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X10Y214        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/history_count_reg[0]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.294    20.120    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X10Y214        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/history_count_reg[0]/C
+                         clock pessimism              0.350    20.470    
+                         clock uncertainty           -0.035    20.434    
+    SLICE_X10Y214        FDRE (Setup_fdre_C_R)       -0.372    20.062    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/history_count_reg[0]
+  -------------------------------------------------------------------
+                         required time                         20.062    
+                         arrival time                          -8.283    
+  -------------------------------------------------------------------
+                         slack                                 11.780    
+
+Slack (MET) :             11.780ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/history_count_reg[1]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        4.036ns  (logic 0.270ns (6.690%)  route 3.766ns (93.310%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.053ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.844ns = ( 20.120 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.444     8.283    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X10Y214        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/history_count_reg[1]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.294    20.120    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X10Y214        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/history_count_reg[1]/C
+                         clock pessimism              0.350    20.470    
+                         clock uncertainty           -0.035    20.434    
+    SLICE_X10Y214        FDRE (Setup_fdre_C_R)       -0.372    20.062    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/history_count_reg[1]
+  -------------------------------------------------------------------
+                         required time                         20.062    
+                         arrival time                          -8.283    
+  -------------------------------------------------------------------
+                         slack                                 11.780    
+
+Slack (MET) :             11.780ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/history_count_reg[2]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        4.036ns  (logic 0.270ns (6.690%)  route 3.766ns (93.310%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.053ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.844ns = ( 20.120 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.444     8.283    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X10Y214        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/history_count_reg[2]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.294    20.120    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X10Y214        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/history_count_reg[2]/C
+                         clock pessimism              0.350    20.470    
+                         clock uncertainty           -0.035    20.434    
+    SLICE_X10Y214        FDRE (Setup_fdre_C_R)       -0.372    20.062    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/history_count_reg[2]
+  -------------------------------------------------------------------
+                         required time                         20.062    
+                         arrival time                          -8.283    
+  -------------------------------------------------------------------
+                         slack                                 11.780    
+
+Slack (MET) :             11.922ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[15]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        3.805ns  (logic 0.270ns (7.096%)  route 3.535ns (92.904%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.119ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.778ns = ( 20.054 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.213     8.052    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X39Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[15]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.228    20.054    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X39Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[15]/C
+                         clock pessimism              0.350    20.404    
+                         clock uncertainty           -0.035    20.368    
+    SLICE_X39Y219        FDRE (Setup_fdre_C_R)       -0.395    19.973    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[15]
+  -------------------------------------------------------------------
+                         required time                         19.973    
+                         arrival time                          -8.052    
+  -------------------------------------------------------------------
+                         slack                                 11.922    
+
+Slack (MET) :             11.922ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[21]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        3.805ns  (logic 0.270ns (7.096%)  route 3.535ns (92.904%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.119ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.778ns = ( 20.054 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.213     8.052    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X39Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[21]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.228    20.054    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X39Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[21]/C
+                         clock pessimism              0.350    20.404    
+                         clock uncertainty           -0.035    20.368    
+    SLICE_X39Y219        FDRE (Setup_fdre_C_R)       -0.395    19.973    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[21]
+  -------------------------------------------------------------------
+                         required time                         19.973    
+                         arrival time                          -8.052    
+  -------------------------------------------------------------------
+                         slack                                 11.922    
+
+Slack (MET) :             11.922ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[32]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        3.805ns  (logic 0.270ns (7.096%)  route 3.535ns (92.904%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.119ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.778ns = ( 20.054 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.213     8.052    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X39Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[32]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.228    20.054    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X39Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[32]/C
+                         clock pessimism              0.350    20.404    
+                         clock uncertainty           -0.035    20.368    
+    SLICE_X39Y219        FDRE (Setup_fdre_C_R)       -0.395    19.973    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[32]
+  -------------------------------------------------------------------
+                         required time                         19.973    
+                         arrival time                          -8.052    
+  -------------------------------------------------------------------
+                         slack                                 11.922    
+
+Slack (MET) :             11.922ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[3]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        3.805ns  (logic 0.270ns (7.096%)  route 3.535ns (92.904%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.119ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.778ns = ( 20.054 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.213     8.052    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X39Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[3]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.228    20.054    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X39Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[3]/C
+                         clock pessimism              0.350    20.404    
+                         clock uncertainty           -0.035    20.368    
+    SLICE_X39Y219        FDRE (Setup_fdre_C_R)       -0.395    19.973    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[3]
+  -------------------------------------------------------------------
+                         required time                         19.973    
+                         arrival time                          -8.052    
+  -------------------------------------------------------------------
+                         slack                                 11.922    
+
+Slack (MET) :             11.922ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[44]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        3.805ns  (logic 0.270ns (7.096%)  route 3.535ns (92.904%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.119ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.778ns = ( 20.054 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.213     8.052    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X39Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[44]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.228    20.054    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X39Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[44]/C
+                         clock pessimism              0.350    20.404    
+                         clock uncertainty           -0.035    20.368    
+    SLICE_X39Y219        FDRE (Setup_fdre_C_R)       -0.395    19.973    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[44]
+  -------------------------------------------------------------------
+                         required time                         19.973    
+                         arrival time                          -8.052    
+  -------------------------------------------------------------------
+                         slack                                 11.922    
+
+Slack (MET) :             11.922ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[9]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        3.805ns  (logic 0.270ns (7.096%)  route 3.535ns (92.904%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.119ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.778ns = ( 20.054 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.213     8.052    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X39Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[9]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.228    20.054    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X39Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[9]/C
+                         clock pessimism              0.350    20.404    
+                         clock uncertainty           -0.035    20.368    
+    SLICE_X39Y219        FDRE (Setup_fdre_C_R)       -0.395    19.973    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_sample_data_reg[9]
+  -------------------------------------------------------------------
+                         required time                         19.973    
+                         arrival time                          -8.052    
+  -------------------------------------------------------------------
+                         slack                                 11.922    
+
+Slack (MET) :             11.945ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[14]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        3.805ns  (logic 0.270ns (7.096%)  route 3.535ns (92.904%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.119ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.778ns = ( 20.054 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.213     8.052    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X38Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[14]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.228    20.054    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X38Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[14]/C
+                         clock pessimism              0.350    20.404    
+                         clock uncertainty           -0.035    20.368    
+    SLICE_X38Y219        FDRE (Setup_fdre_C_R)       -0.372    19.996    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[14]
+  -------------------------------------------------------------------
+                         required time                         19.996    
+                         arrival time                          -8.052    
+  -------------------------------------------------------------------
+                         slack                                 11.945    
+
+Slack (MET) :             11.945ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[15]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        3.805ns  (logic 0.270ns (7.096%)  route 3.535ns (92.904%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.119ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.778ns = ( 20.054 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.213     8.052    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X38Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[15]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.228    20.054    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X38Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[15]/C
+                         clock pessimism              0.350    20.404    
+                         clock uncertainty           -0.035    20.368    
+    SLICE_X38Y219        FDRE (Setup_fdre_C_R)       -0.372    19.996    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[15]
+  -------------------------------------------------------------------
+                         required time                         19.996    
+                         arrival time                          -8.052    
+  -------------------------------------------------------------------
+                         slack                                 11.945    
+
+Slack (MET) :             11.945ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[18]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        3.805ns  (logic 0.270ns (7.096%)  route 3.535ns (92.904%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.119ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.778ns = ( 20.054 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.213     8.052    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X38Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[18]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.228    20.054    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X38Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[18]/C
+                         clock pessimism              0.350    20.404    
+                         clock uncertainty           -0.035    20.368    
+    SLICE_X38Y219        FDRE (Setup_fdre_C_R)       -0.372    19.996    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[18]
+  -------------------------------------------------------------------
+                         required time                         19.996    
+                         arrival time                          -8.052    
+  -------------------------------------------------------------------
+                         slack                                 11.945    
+
+Slack (MET) :             11.945ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[21]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        3.805ns  (logic 0.270ns (7.096%)  route 3.535ns (92.904%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.119ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.778ns = ( 20.054 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.213     8.052    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X38Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[21]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.228    20.054    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X38Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[21]/C
+                         clock pessimism              0.350    20.404    
+                         clock uncertainty           -0.035    20.368    
+    SLICE_X38Y219        FDRE (Setup_fdre_C_R)       -0.372    19.996    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[21]
+  -------------------------------------------------------------------
+                         required time                         19.996    
+                         arrival time                          -8.052    
+  -------------------------------------------------------------------
+                         slack                                 11.945    
+
+Slack (MET) :             11.945ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[27]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        3.805ns  (logic 0.270ns (7.096%)  route 3.535ns (92.904%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.119ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.778ns = ( 20.054 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.213     8.052    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X38Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[27]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.228    20.054    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X38Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[27]/C
+                         clock pessimism              0.350    20.404    
+                         clock uncertainty           -0.035    20.368    
+    SLICE_X38Y219        FDRE (Setup_fdre_C_R)       -0.372    19.996    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[27]
+  -------------------------------------------------------------------
+                         required time                         19.996    
+                         arrival time                          -8.052    
+  -------------------------------------------------------------------
+                         slack                                 11.945    
+
+Slack (MET) :             11.945ns  (required time - arrival time)
+  Source:                 u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+                            (rising edge-triggered cell FDPE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[33]/R
+                            (rising edge-triggered cell FDRE clocked by rfmc_rx  {rise@0.000ns fall@8.138ns period=16.276ns})
+  Path Group:             rfmc_rx
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.276ns  (rfmc_rx rise@16.276ns - rfmc_rx rise@0.000ns)
+  Data Path Delay:        3.805ns  (logic 0.270ns (7.096%)  route 3.535ns (92.904%))
+  Logic Levels:           1  (LUT4=1)
+  Clock Path Skew:        -0.119ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.778ns = ( 20.054 - 16.276 ) 
+    Source Clock Delay      (SCD):    4.247ns
+    Clock Pessimism Removal (CPR):    0.350ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock rfmc_rx rise edge)    0.000     0.000 r  
+    R27                                               0.000     0.000 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.794     0.794 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.890     2.684    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.093     2.777 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.470     4.247    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/dest_clk
+    SLICE_X19Y247        FDPE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X19Y247        FDPE (Prop_fdpe_C_Q)         0.223     4.470 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_reset/arststages_ff_reg[3]/Q
+                         net (fo=352, routed)         2.322     6.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/rx_sample_data_reg[0]
+    SLICE_X36Y226        LUT4 (Prop_lut4_I3_O)        0.047     6.839 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_registers_pn/i_up_adc_common/history_count[2]_i_1/O
+                         net (fo=109, routed)         1.213     8.052    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/decoder_reset
+    SLICE_X38Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[33]/R
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx rise edge)   16.276    16.276 r  
+    R27                                               0.000    16.276 r  rx_clk_p (IN)
+                         net (fo=0)                   0.000    16.276    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717    16.993 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input/O
+                         net (fo=1, routed)           1.750    18.743    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk_pad
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083    18.826 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_rx_clock/O
+                         net (fo=1690, routed)        1.228    20.054    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/rx_clk
+    SLICE_X38Y219        FDRE                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[33]/C
+                         clock pessimism              0.350    20.404    
+                         clock uncertainty           -0.035    20.368    
+    SLICE_X38Y219        FDRE (Setup_fdre_C_R)       -0.372    19.996    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/chunk_history_reg[33]
+  -------------------------------------------------------------------
+                         required time                         19.996    
+                         arrival time                          -8.052    
+  -------------------------------------------------------------------
+                         slack                                 11.945    
+
+
+
+

@@ -1,0 +1,970 @@
+{
+  "comparisons": 96,
+  "passed": 96,
+  "failed": 0,
+  "expected_comparisons": 96,
+  "scope": "8 selected pages, including 1 PS control and 5 previously failing PL pages; 4 patterns, 3 reads each",
+  "rows": [
+    {
+      "address": "30000000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "30000000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "30000000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "30000000",
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "30000000",
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "30000000",
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "30000000",
+      "pattern": "random",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "30000000",
+      "pattern": "random",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "30000000",
+      "pattern": "random",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "30000000",
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "30000000",
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "30000000",
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "40400000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "40400000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "40400000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "40400000",
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "40400000",
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "40400000",
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "40400000",
+      "pattern": "random",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "40400000",
+      "pattern": "random",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "40400000",
+      "pattern": "random",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "40400000",
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "40400000",
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "40400000",
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "404e4000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "404e4000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "404e4000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "404e4000",
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "404e4000",
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "404e4000",
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "404e4000",
+      "pattern": "random",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "404e4000",
+      "pattern": "random",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "404e4000",
+      "pattern": "random",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "404e4000",
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "404e4000",
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "404e4000",
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "40580000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "40580000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "40580000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "40580000",
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "40580000",
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "40580000",
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "40580000",
+      "pattern": "random",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "40580000",
+      "pattern": "random",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "40580000",
+      "pattern": "random",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "40580000",
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "40580000",
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "40580000",
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "41184000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "41184000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "41184000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "41184000",
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "41184000",
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "41184000",
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "41184000",
+      "pattern": "random",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "41184000",
+      "pattern": "random",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "41184000",
+      "pattern": "random",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "41184000",
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "41184000",
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "41184000",
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "425c4000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "425c4000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "425c4000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "425c4000",
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "425c4000",
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "425c4000",
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "425c4000",
+      "pattern": "random",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "425c4000",
+      "pattern": "random",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "425c4000",
+      "pattern": "random",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "425c4000",
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "425c4000",
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "425c4000",
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "4792f000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "4792f000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "4792f000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "4792f000",
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "4792f000",
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "4792f000",
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "4792f000",
+      "pattern": "random",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "4792f000",
+      "pattern": "random",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "4792f000",
+      "pattern": "random",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "4792f000",
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "4792f000",
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "4792f000",
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "70000000",
+      "pattern": "alternating",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "70000000",
+      "pattern": "alternating",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "70000000",
+      "pattern": "alternating",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "8c241b0a408362183f5e2539d631e05a40f0fe261d2183290f78b08a0783ff0f",
+      "pass": true
+    },
+    {
+      "address": "70000000",
+      "pattern": "ones",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "70000000",
+      "pattern": "ones",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "70000000",
+      "pattern": "ones",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "f47a8ec3e9aff2318d896942282ad4fe37d6391c82914f54a5da8a37de1300c6",
+      "pass": true
+    },
+    {
+      "address": "70000000",
+      "pattern": "random",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "70000000",
+      "pattern": "random",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "70000000",
+      "pattern": "random",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "7086a3fbe0540b860ec8984ae3fab146d1bb31e4b1a669af7c025f93014c6656",
+      "pass": true
+    },
+    {
+      "address": "70000000",
+      "pattern": "zero",
+      "trial": 0,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "70000000",
+      "pattern": "zero",
+      "trial": 1,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    },
+    {
+      "address": "70000000",
+      "pattern": "zero",
+      "trial": 2,
+      "bytes": 4096,
+      "bad_bytes": 0,
+      "first_bad": null,
+      "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "pass": true
+    }
+  ],
+  "checks_pass": true
+}

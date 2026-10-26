@@ -1,0 +1,98 @@
+{
+  "file": "captures/rx_20261020_164142_313.bin",
+  "bytes": 122880000,
+  "tuples": 15360000,
+  "capture_id": "0000000c173f11a4",
+  "profile": "CONFIG2P4",
+  "rx_lo_hz": 2400000000,
+  "sha256": "0776af7b4aa6a5f448edc155f0355dcc49648016f51e1085c65cc82a07e5f240",
+  "sha_matches": true,
+  "all_chunk_crcs_match": true,
+  "checked_chunks": 469,
+  "malformed_tuples": 502074,
+  "malformed_percent": 3.2687109375,
+  "components": {
+    "I1": {
+      "malformed": 179754,
+      "first_malformed": {
+        "tuple": 116779,
+        "file_offset": 934232,
+        "pl_address": "0x404e4158",
+        "time_ms": 7.602799479166666,
+        "value": 29684
+      }
+    },
+    "Q1": {
+      "malformed": 133451,
+      "first_malformed": {
+        "tuple": 1771662,
+        "file_offset": 14173298,
+        "pl_address": "0x41184472",
+        "time_ms": 115.342578125,
+        "value": -8208
+      }
+    },
+    "I2": {
+      "malformed": 33108,
+      "first_malformed": {
+        "tuple": 4425765,
+        "file_offset": 35406124,
+        "pl_address": "0x425c412c",
+        "time_ms": 288.1357421875,
+        "value": -20647
+      }
+    },
+    "Q2": {
+      "malformed": 163568,
+      "first_malformed": {
+        "tuple": 191053,
+        "file_offset": 1528430,
+        "pl_address": "0x4057526e",
+        "time_ms": 12.438346354166667,
+        "value": 16614
+      }
+    }
+  },
+  "windows": [
+    {
+      "channel": 1,
+      "start": 0,
+      "nfft": 65536,
+      "averages": 1,
+      "peak_hz": 1810781.25,
+      "peak_dbfs": -50.92616129492733,
+      "rms_counts": 156.78384856514538,
+      "clipped": 0,
+      "samples": 65536
+    },
+    {
+      "channel": 1,
+      "start": 40000,
+      "nfft": 65536,
+      "averages": 1,
+      "peak_hz": 916640.625,
+      "peak_dbfs": -51.98148367105138,
+      "rms_counts": 148.31606633415313,
+      "clipped": 0,
+      "samples": 65536
+    },
+    {
+      "channel": 2,
+      "start": 40000,
+      "nfft": 65536,
+      "averages": 1,
+      "peak_hz": -3840000.0,
+      "peak_dbfs": -55.5627801913976,
+      "rms_counts": 31.59469443097248,
+      "clipped": 0,
+      "samples": 65536
+    }
+  ],
+  "tracking": {
+    "old_peak_hz": -83203.125,
+    "new_peak_hz": 916640.625,
+    "shift_hz": 999843.75,
+    "residual_from_1MHz_hz": -156.25,
+    "fft_bin_width_hz": 234.375
+  }
+}

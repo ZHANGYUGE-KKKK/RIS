@@ -1,0 +1,43 @@
+{
+  "unchanged_source_files": 91,
+  "changed_sources": [],
+  "documented_application_updates": [
+    "vitis_code/key_ctrlll/src/helloworld.c",
+    "vitis_code/key_ctrlll/src/ad_config/ad_config.c",
+    "vitis_code/key_ctrlll/src/ad_config/ad_config.h",
+    "vitis_code/key_ctrlll/src/drivers/rx_9361.c",
+    "vitis_code/key_ctrlll/src/drivers/mig_ddr.c",
+    "vitis_code/key_ctrlll/src/drivers/dma_9361.c",
+    "vitis_code/key_ctrlll/src/drivers/dma_9361.h",
+    "vitis_code/key_ctrlll/src/drivers/rx_9361.h"
+  ],
+  "additional_application_sources": [
+    "vitis_code/key_ctrlll/src/README.txt",
+    "vitis_code/key_ctrlll/src/ad_config/config2p4_data.h",
+    "vitis_code/key_ctrlll/src/ad_config/rf_profile.h",
+    "vitis_code/key_ctrlll/src/drivers/capture_debug.c",
+    "vitis_code/key_ctrlll/src/drivers/capture_debug.h",
+    "vitis_code/key_ctrlll/src/drivers/capture_format.c",
+    "vitis_code/key_ctrlll/src/drivers/capture_format.h",
+    "vitis_code/key_ctrlll/src/drivers/capture_store.c",
+    "vitis_code/key_ctrlll/src/drivers/capture_store.h",
+    "vitis_code/key_ctrlll/src/drivers/dma_diag.c",
+    "vitis_code/key_ctrlll/src/drivers/dma_diag.h",
+    "vitis_code/key_ctrlll/src/drivers/rx_control.c",
+    "vitis_code/key_ctrlll/src/drivers/rx_control.h",
+    "vitis_code/key_ctrlll/src/drivers/rx_network.c",
+    "vitis_code/key_ctrlll/src/drivers/rx_network.h",
+    "vitis_code/key_ctrlll/src/drivers/rx_tone.c",
+    "vitis_code/key_ctrlll/src/drivers/rx_tone.h"
+  ],
+  "same_cells": true,
+  "same_connections": true,
+  "same_axi_connections": true,
+  "same_address_map": true,
+  "same_parameters_ad9361_rx_axis_0": true,
+  "same_parameters_axi_dma_0": true,
+  "same_parameters_axis_data_fifo_0": true,
+  "same_parameters_axi_gpio_9361": true,
+  "same_parameters_axi_gpio_ris_ctl": true,
+  "same_parameters_key_ctrl_55_0": true
+}

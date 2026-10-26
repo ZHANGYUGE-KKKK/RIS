@@ -1,0 +1,75 @@
+{
+  "requested_bytes": 8388608,
+  "label": "8m",
+  "capture_id": "0000000b3f2d97e9",
+  "files": [
+    {
+      "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/reports/ddr_full2g_20261021_171004/captures/rx_full2g_8m_read1.bin",
+      "bytes": 8388608,
+      "tuples": 1048576,
+      "sha256": "86a7c5d5341814d0105e1fa62af451b1811c6eb404079a164ea9932d8203f92a",
+      "bad_I1_Q1_I2_Q2": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "min": [
+        -2048,
+        -2048,
+        -1009,
+        -1038
+      ],
+      "max": [
+        2047,
+        2047,
+        1019,
+        1024
+      ],
+      "file_sha_matches": true,
+      "read_bad": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "/home/yyz/work/RIS/zynq/zc706/fmcomms3_rx/reports/ddr_full2g_20261021_171004/captures/rx_full2g_8m_read2.bin",
+      "bytes": 8388608,
+      "tuples": 1048576,
+      "sha256": "86a7c5d5341814d0105e1fa62af451b1811c6eb404079a164ea9932d8203f92a",
+      "bad_I1_Q1_I2_Q2": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "min": [
+        -2048,
+        -2048,
+        -1009,
+        -1038
+      ],
+      "max": [
+        2047,
+        2047,
+        1019,
+        1024
+      ],
+      "file_sha_matches": true,
+      "read_bad": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "cross_bank_and_last_tuple": [],
+  "readbacks_identical": true,
+  "rf_registers_unchanged": true,
+  "transport_interruptions": [],
+  "continuity_proven": false,
+  "checks_pass": true
+}

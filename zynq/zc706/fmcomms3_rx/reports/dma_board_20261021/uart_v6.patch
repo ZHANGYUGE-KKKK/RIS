@@ -1,0 +1,76 @@
+--- reports/dma_board_20261021/before/vitis_code/key_ctrlll/src/helloworld.c	2026-10-20 17:13:33.690231085 +0800
++++ vitis_code/key_ctrlll/src/helloworld.c	2026-10-21 13:35:22.029698650 +0800
+@@ -1035,6 +1035,33 @@
+     Xil_DCacheFlushRange((INTPTR)&rx_manual_gain_report, sizeof(rx_manual_gain_report));
+ }
+ 
++/* UART-only bulk capture keeps board diagnostics usable without changing
++ * the workstation's network connection. Releasing a frozen buffer is an
++ * explicit command; a new capture never silently overwrites it. */
++static int rx_debug_console(char key)
++{
++    int status;
++    u32 bytes;
++    if (key == 'r' || key == 'R') {
++        status = capture_store_release(capture_store.id);
++        xil_printf("RXDBG UART RELEASE result=%d state=%s\r\n", status, capture_store_state_name());
++        return 1;
++    }
++    if (key != 'c' && key != 'C' && key != 'v' && key != 'V') return 0;
++    bytes = key == 'c' || key == 'C' ? 8U*1024U*1024U : CAPTURE_SAMPLE_RATE*CAPTURE_TUPLE_BYTES;
++    xil_printf("RXDBG UART BEGIN bytes=%u; RF configuration unchanged\r\n", (unsigned)bytes);
++    status = capture_store_begin(bytes);
++    if (status) {
++        xil_printf("RXDBG UART START FAILED result=%d state=%s; r releases a saved capture\r\n",
++            status, capture_store_state_name());
++        return 1;
++    }
++    while (capture_store.state == CAP_STORE_CAPTURING) rx_control_poll();
++    xil_printf("RXDBG UART END id=%s result=%d state=%s\r\n",
++        capture_store.id, capture_store.result, capture_store_state_name());
++    return 1;
++}
++
+ static int rx_external_prompt(char expected, const char *message)
+ {
+     char key;
+@@ -1042,6 +1069,7 @@
+     xil_printf("[g=read gain, s=capture current RF, d=DMA/DDR debug record]\r\n");
+     for (;;) {
+         key = inbyte();
++        if (rx_debug_console(key)) continue;
+         if (key == 'd' || key == 'D') { capture_store_debug_print(); continue; }
+         if (key == 'q' || key == 'Q') { xil_printf("q\r\n"); return -1; }
+         if (key == 'g' || key == 'G' || key == 's' || key == 'S') {
+@@ -1226,7 +1254,7 @@
+     char prompt[192];
+     memset(&rx_external_report, 0, sizeof(rx_external_report));
+     rx_external_report.magic = 0x52584558U; /* RXEX */
+-    rx_external_report.version = 5U;
++    rx_external_report.version = 6U;
+     rx_external_report.result = -1;
+     rx_external_report.capture_clean = 1U;
+     rx_external_report.failure_mask = 0x100U; /* Setup/readback until ready. */
+@@ -1240,7 +1268,7 @@
+         capture_store_init(&receiver, &capture, rx_external_rearm, rx_store_rf_read);
+     rx_external_report.failure_mask = 0U;
+     xil_printf("\r\nRX EXTERNAL TEST READY: connect 3671E PORT1 -> RX1A; RX1 is the tested channel\r\n");
+-    xil_printf("RX diagnostic version=5: raw BD/preflight and sampled DDR checks; g=gain s=snapshot d=DMA/DDR debug\r\n");
++    xil_printf("RX diagnostic version=6: raw BD/DDR checks; c=8MiB v=1second r=release d=debug g=gain s=snapshot\r\n");
+     xil_printf("Profile=" RX_RF_PROFILE_NAME "; RX/TX LO=%u MHz; " RX_RF_TX_DESCRIPTION ".\r\n",
+                (unsigned)RX_RF_LO_MHZ);
+     xil_printf("RF configuration remains unchanged during the external test.\r\n");
+@@ -1342,11 +1370,12 @@
+     else
+         xil_printf("RX EXTERNAL TEST SKIPPED: initialization, PN, restored clock/frame must pass first; ARM=0\r\n");
+     Xil_DCacheFlush(); dsb();
+-    xil_printf("RX network service remains active; g=gain s=snapshot d=DMA/DDR debug t=three-step test, q=return here\r\n");
++    xil_printf("RX network service remains active; c=8MiB v=1second r=release d=debug g=gain s=snapshot t=three-step test\r\n");
+     (void)external_result;
+     for (;;) {
+         char key = inbyte();
+         if (capture_store.state == CAP_STORE_UNAVAILABLE) continue;
++        if (rx_debug_console(key)) continue;
+         if (key == 'd' || key == 'D') capture_store_debug_print();
+         else if (key == 'g' || key == 'G') (void)rx_external_gain_read("manual", &rx_manual_gain_report);
+         else if (key == 's' || key == 'S') (void)rx_external_snapshot();

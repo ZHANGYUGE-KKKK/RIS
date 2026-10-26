@@ -1,0 +1,342 @@
+{
+  "module": "MT8JTF12864HZ-1G6G1",
+  "capacity_bytes": 1073741824,
+  "user_confirmed_module": true,
+  "bit_unchanged": true,
+  "frequency_reduction_performed": false,
+  "rf_configuration_changed": false,
+  "captures": [
+    {
+      "id": "00000007a80dd512",
+      "state": "ready",
+      "result": 0,
+      "requested": 8388608,
+      "received": 8388608,
+      "packets_completed": 256,
+      "packets_requested": 256,
+      "reset_verified": 1,
+      "dma": {
+        "version": 1,
+        "stage": 4,
+        "result": 0,
+        "issues_hex": "000",
+        "last_index": 255,
+        "last_bd": "40003FC0",
+        "checked": [
+          256,
+          256,
+          256
+        ]
+      },
+      "probe_masks_hex": {
+        "changed_dma": "0868",
+        "changed_pl": "0848",
+        "unstable": "0868",
+        "memcpy_diff": "0868"
+      }
+    },
+    {
+      "id": "0000001812a77771",
+      "state": "ready",
+      "result": 0,
+      "requested": 122880000,
+      "received": 122880000,
+      "packets_completed": 3750,
+      "packets_requested": 3750,
+      "reset_verified": 1,
+      "dma": {
+        "version": 1,
+        "stage": 4,
+        "result": 0,
+        "issues_hex": "000",
+        "last_index": 3749,
+        "last_bd": "4003A940",
+        "checked": [
+          3750,
+          3750,
+          3750
+        ]
+      },
+      "probe_masks_hex": {
+        "changed_dma": "6E68",
+        "changed_pl": "6E68",
+        "unstable": "6E68",
+        "memcpy_diff": "7E68"
+      }
+    }
+  ],
+  "patterns": {
+    "running": {
+      "read_count": 96,
+      "failed_read_count": 60,
+      "summary": {
+        "30000000": {
+          "reads": 12,
+          "failed_reads": 0,
+          "total_bad_bytes": 0,
+          "bad_by_lane_mod8": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "40400000": {
+          "reads": 12,
+          "failed_reads": 0,
+          "total_bad_bytes": 0,
+          "bad_by_lane_mod8": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "404e4000": {
+          "reads": 12,
+          "failed_reads": 12,
+          "total_bad_bytes": 32,
+          "bad_by_lane_mod8": [
+            0,
+            32,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "40580000": {
+          "reads": 12,
+          "failed_reads": 12,
+          "total_bad_bytes": 575,
+          "bad_by_lane_mod8": [
+            0,
+            575,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "41184000": {
+          "reads": 12,
+          "failed_reads": 12,
+          "total_bad_bytes": 2391,
+          "bad_by_lane_mod8": [
+            2371,
+            0,
+            0,
+            20,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "425c4000": {
+          "reads": 12,
+          "failed_reads": 12,
+          "total_bad_bytes": 469,
+          "bad_by_lane_mod8": [
+            14,
+            0,
+            0,
+            24,
+            303,
+            127,
+            0,
+            1
+          ]
+        },
+        "4792f000": {
+          "reads": 12,
+          "failed_reads": 12,
+          "total_bad_bytes": 141,
+          "bad_by_lane_mod8": [
+            0,
+            0,
+            0,
+            4,
+            136,
+            0,
+            0,
+            1
+          ]
+        },
+        "70000000": {
+          "reads": 12,
+          "failed_reads": 0,
+          "total_bad_bytes": 0,
+          "bad_by_lane_mod8": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "halted": {
+      "read_count": 96,
+      "failed_read_count": 60,
+      "summary": {
+        "30000000": {
+          "reads": 12,
+          "failed_reads": 0,
+          "total_bad_bytes": 0,
+          "bad_by_lane_mod8": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "40400000": {
+          "reads": 12,
+          "failed_reads": 0,
+          "total_bad_bytes": 0,
+          "bad_by_lane_mod8": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "404e4000": {
+          "reads": 12,
+          "failed_reads": 12,
+          "total_bad_bytes": 39,
+          "bad_by_lane_mod8": [
+            0,
+            39,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "40580000": {
+          "reads": 12,
+          "failed_reads": 12,
+          "total_bad_bytes": 620,
+          "bad_by_lane_mod8": [
+            0,
+            620,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "41184000": {
+          "reads": 12,
+          "failed_reads": 12,
+          "total_bad_bytes": 2612,
+          "bad_by_lane_mod8": [
+            2598,
+            0,
+            0,
+            14,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "425c4000": {
+          "reads": 12,
+          "failed_reads": 12,
+          "total_bad_bytes": 426,
+          "bad_by_lane_mod8": [
+            4,
+            0,
+            0,
+            13,
+            289,
+            118,
+            0,
+            2
+          ]
+        },
+        "4792f000": {
+          "reads": 12,
+          "failed_reads": 12,
+          "total_bad_bytes": 178,
+          "bad_by_lane_mod8": [
+            1,
+            0,
+            0,
+            12,
+            160,
+            0,
+            0,
+            5
+          ]
+        },
+        "70000000": {
+          "reads": 12,
+          "failed_reads": 0,
+          "total_bad_bytes": 0,
+          "bad_by_lane_mod8": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    }
+  },
+  "ila": {
+    "samples": 1024,
+    "signals": {
+      "u_design_1_wrapper/design_1_i/mig_7series_0_ui_clk_sync_rst": [
+        "0"
+      ],
+      "u_design_1_wrapper/design_1_i/proc_sys_reset_0_peripheral_aresetn": [
+        "1"
+      ],
+      "u_design_1_wrapper/design_1_i/mig_7series_0_mmcm_locked": [
+        "1"
+      ],
+      "u_design_1_wrapper/design_1_i/mig_7series_0_init_calib_complete": [
+        "1"
+      ]
+    }
+  },
+  "cutecom_restored": true,
+  "latest_capture_frozen": "0000001812a77771",
+  "conclusion": "Readback instability and known-pattern mismatches reproduced with confirmed1GiB module; SG checks pass; specific physical/configuration cause unresolved."
+}

@@ -1,0 +1,62 @@
+ZC706 PL DDR 实物与开发基准（2026-10-21）
+
+后续默认使用：照片下方的1 GB内存条
+Micron MT8JTF12864HZ-1G6G1
+用户明确指定此条作为当前及后续开发基准。保持现有DDR频率；不做降频测试。
+照片中另一根2 GB条只作备选记录，不自动切换MIG参数。
+
+一、照片下方，当前默认
+完整型号：MT8JTF12864HZ-1G6G1
+标签：1GB 1RX8 PC3-12800S-11-11-B1
+形式：204-pin DDR3 SO-DIMM，非ECC、无缓冲，1.5 V
+容量：1 GiB = 1073741824 bytes
+模组数据位宽：64 bits；1 Rank；每颗器件x8
+颗粒组织：8颗128M×8（每颗1 Gbit）
+每Rank寻址：Row14 / Column10 / Bank3（8个Bank）
+额定数据率：1600 MT/s；对应DDR CK800 MHz，tCK1.25 ns
+额定主要时序：CL-tRCD-tRP = 11-11-11
+
+当前工程已配置的MIG参数（读取现有配置，未修改）：
+文件：constraints/zc706_mig.prj
+MemoryDevice：DDR3_SDRAM/SODIMMs/MT8JTF12864HZ-1G6
+RANKS1，CS_WIDTH1，CKE_WIDTH1（生成的MIG RTL已核对）
+DataWidth64，DQS_WIDTH8，ECC Disabled
+TimePeriod1250 ps；InputClkFreq200 MHz；PHYRatio4:1；UI200 MHz
+AXI数据位宽256 bits，地址位宽30 bits
+RowAddress14，ColAddress10，BankAddress3
+CL11，CWL8
+tRCD13.125 ns，tRP13.125 ns，tRAS35 ns，tRFC110 ns，tREFI7.8 us
+输出驱动RZQ/7，RTT_NOM RZQ/6，动态ODT关闭
+CPU/AXI地址区间0x40000000..0x7fffffff
+BD预留0x40000000..0x403fffff；IQ数据区0x40400000..0x7fffffff（1020 MiB）
+这些是现有控制器配置；型号和额定参数匹配不等于存储完整性已通过验证。
+
+二、照片上方，备选2 GB条
+完整型号：MT16JSF25664HZ-1G4F1
+照片标签：2GB 2RX8 PC3-10600S-7-10-F1
+形式：204-pin DDR3 SO-DIMM，非ECC、无缓冲，1.5 V
+容量：2 GiB = 2147483648 bytes
+模组数据位宽：64 bits；2 Rank；每Rank1 GiB；每颗器件x8
+颗粒组织：16颗128M×8（每颗1 Gbit）
+每Rank寻址：Row14 / Column10 / Bank3（8个Bank）
+额定数据率：1333 MT/s；对应DDR CK约666.7 MHz，tCK1.5 ns
+Micron型号手册对-1G4档列出的主要时序：CL-tRCD-tRP = 9-9-9
+照片副标签中的7-10与主型号手册的CL9描述不一致；此条实际可用时序
+应在未来需要使用时再以SPD和相应器件修订版核对。不能把照片中的7直接
+作为1333 MT/s下的CL配置值。
+当前工程没有配置此条的双Rank控制，800 MHz CK也高于此型号的额定时钟。
+若未来使用此条，应另行核对Rank1的CS/CKE/ODT接线、MIG器件参数、地址映射
+及其与外设地址的重叠；不能只把容量改为2 GB，或把Row改为15就认为支持。
+该条不是MT8JTF25664HZ这一类单Rank2 GB模块。
+
+三、当前排查边界
+不根据这张照片倒推出此前每次采集使用了哪根内存条；旧测试与具体实物
+的对应关系尚未确认。两条规格不同本身不能证明之前数据错误的根因。
+后续所有复现、配置核对与修复验证，默认基于上面的1 GB条。
+本次仅识别并记录实物；没有修改MIG、RF配置或下载BIT/ELF。
+
+资料（Micron原厂编写的数据手册，以下为镜像）：
+1 GB：jtf8c128_256x64hz.pdf，Rev.A 10/10，p1-2
+https://datasheet.octopart.com/MT8JTF12864HZ-1G6G1-Micron-datasheet-180658389.pdf
+2 GB：jsf16c256_512x64hz.pdf，Rev.B 12/09，p1-2
+https://datasheet.octopart.com/MT16JSF25664HZ-1G4F1-Micron-datasheet-11800864.pdf

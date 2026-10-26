@@ -1,0 +1,12 @@
+{
+  "pid": 3264890,
+  "mapped_units": 400,
+  "black_cell_frames": 1,
+  "selected_FPC": "2",
+  "selected_CH": "1",
+  "selected_row": 10,
+  "selected_column": 5,
+  "faded_previous_frames": 1,
+  "recovery_unchanged": true,
+  "board_commands_sent": 0
+}

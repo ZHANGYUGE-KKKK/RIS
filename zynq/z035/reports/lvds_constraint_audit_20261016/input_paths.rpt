@@ -1,0 +1,261 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
+| Date         : Fri Oct 16 16:54:15 2026
+| Host         : yyz-SER8 running 64-bit Ubuntu 24.04.1 LTS
+| Command      : report_timing -from [get_ports {rx_frame_p {rx_data_p[*]}}] -max_paths 8 -path_type full_clock_expanded -file /home/yyz/work/RIS/zynq/z035/reports/lvds_constraint_audit_20261016/input_paths.rpt
+| Design       : pz7035_top
+| Device       : 7z035-ffg900
+| Speed File   : -2  PRODUCTION 1.12 2019-11-22
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack:                    inf
+  Source:                 rx_data_p[4]
+                            (input port)
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[4].i_rx_data/i_rx_data_iddr/D
+                            (rising edge-triggered cell IDDR clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             (none)
+  Path Type:              Setup (Max at Slow Process Corner)
+  Data Path Delay:        1.477ns  (logic 1.477ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUFDS=1 IDELAYE2=1)
+  Clock Path Skew:        3.968ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.968ns = ( 6.002 - 2.034 ) 
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    T30                                               0.000     0.000 r  rx_data_p[4] (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[4].i_rx_data/rx_data_p[0]
+    T30                  IBUFDS (Prop_ibufds_I_O)     0.811     0.811 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[4].i_rx_data/i_rx_data_ibuf/O
+                         net (fo=1, routed)           0.000     0.811    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[4].i_rx_data/rx_data_ibuf_s
+    IDELAY_X0Y246        IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.666     1.477 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[4].i_rx_data/i_rx_data_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     1.477    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[4].i_rx_data/rx_data_idelay_s
+    ILOGIC_X0Y246        IDDR                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[4].i_rx_data/i_rx_data_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx fall edge)    2.034     2.034 f  
+    R27                                               0.000     2.034 f  rx_clk_p (IN)
+                         net (fo=0)                   0.000     2.034    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     2.751 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_rx_clk_ibuf/O
+                         net (fo=1, routed)           1.750     4.501    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/clk_ibuf_s
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     4.584 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_clk_gbuf/O
+                         net (fo=1263, routed)        1.418     6.002    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[4].i_rx_data/clk
+    ILOGIC_X0Y246        IDDR                                         f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[4].i_rx_data/i_rx_data_iddr/C
+
+Slack:                    inf
+  Source:                 rx_data_p[1]
+                            (input port)
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[1].i_rx_data/i_rx_data_iddr/D
+                            (rising edge-triggered cell IDDR clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             (none)
+  Path Type:              Setup (Max at Slow Process Corner)
+  Data Path Delay:        1.473ns  (logic 1.473ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUFDS=1 IDELAYE2=1)
+  Clock Path Skew:        3.966ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.966ns = ( 6.000 - 2.034 ) 
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    N28                                               0.000     0.000 r  rx_data_p[1] (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[1].i_rx_data/rx_data_p[0]
+    N28                  IBUFDS (Prop_ibufds_I_O)     0.807     0.807 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[1].i_rx_data/i_rx_data_ibuf/O
+                         net (fo=1, routed)           0.000     0.807    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[1].i_rx_data/rx_data_ibuf_s
+    IDELAY_X0Y244        IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.666     1.473 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[1].i_rx_data/i_rx_data_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     1.473    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[1].i_rx_data/rx_data_idelay_s
+    ILOGIC_X0Y244        IDDR                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[1].i_rx_data/i_rx_data_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx fall edge)    2.034     2.034 f  
+    R27                                               0.000     2.034 f  rx_clk_p (IN)
+                         net (fo=0)                   0.000     2.034    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     2.751 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_rx_clk_ibuf/O
+                         net (fo=1, routed)           1.750     4.501    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/clk_ibuf_s
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     4.584 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_clk_gbuf/O
+                         net (fo=1263, routed)        1.416     6.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[1].i_rx_data/clk
+    ILOGIC_X0Y244        IDDR                                         f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[1].i_rx_data/i_rx_data_iddr/C
+
+Slack:                    inf
+  Source:                 rx_frame_p
+                            (input port)
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_rx_frame/i_rx_data_iddr/D
+                            (rising edge-triggered cell IDDR clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             (none)
+  Path Type:              Setup (Max at Slow Process Corner)
+  Data Path Delay:        1.469ns  (logic 1.469ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUFDS=1 IDELAYE2=1)
+  Clock Path Skew:        3.956ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.956ns = ( 5.990 - 2.034 ) 
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    R25                                               0.000     0.000 r  rx_frame_p (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_rx_frame/rx_frame_p
+    R25                  IBUFDS (Prop_ibufds_I_O)     0.803     0.803 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_rx_frame/i_rx_data_ibuf/O
+                         net (fo=1, routed)           0.000     0.803    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_rx_frame/rx_data_ibuf_s
+    IDELAY_X0Y224        IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.666     1.469 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_rx_frame/i_rx_data_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     1.469    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_rx_frame/rx_data_idelay_s
+    ILOGIC_X0Y224        IDDR                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_rx_frame/i_rx_data_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx fall edge)    2.034     2.034 f  
+    R27                                               0.000     2.034 f  rx_clk_p (IN)
+                         net (fo=0)                   0.000     2.034    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     2.751 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_rx_clk_ibuf/O
+                         net (fo=1, routed)           1.750     4.501    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/clk_ibuf_s
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     4.584 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_clk_gbuf/O
+                         net (fo=1263, routed)        1.406     5.990    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_rx_frame/clk
+    ILOGIC_X0Y224        IDDR                                         f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_rx_frame/i_rx_data_iddr/C
+
+Slack:                    inf
+  Source:                 rx_data_p[5]
+                            (input port)
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[5].i_rx_data/i_rx_data_iddr/D
+                            (rising edge-triggered cell IDDR clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             (none)
+  Path Type:              Setup (Max at Slow Process Corner)
+  Data Path Delay:        1.463ns  (logic 1.463ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUFDS=1 IDELAYE2=1)
+  Clock Path Skew:        3.966ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.966ns = ( 6.000 - 2.034 ) 
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    N29                                               0.000     0.000 r  rx_data_p[5] (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[5].i_rx_data/rx_data_p[0]
+    N29                  IBUFDS (Prop_ibufds_I_O)     0.797     0.797 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[5].i_rx_data/i_rx_data_ibuf/O
+                         net (fo=1, routed)           0.000     0.797    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[5].i_rx_data/rx_data_ibuf_s
+    IDELAY_X0Y242        IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.666     1.463 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[5].i_rx_data/i_rx_data_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     1.463    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[5].i_rx_data/rx_data_idelay_s
+    ILOGIC_X0Y242        IDDR                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[5].i_rx_data/i_rx_data_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx fall edge)    2.034     2.034 f  
+    R27                                               0.000     2.034 f  rx_clk_p (IN)
+                         net (fo=0)                   0.000     2.034    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     2.751 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_rx_clk_ibuf/O
+                         net (fo=1, routed)           1.750     4.501    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/clk_ibuf_s
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     4.584 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_clk_gbuf/O
+                         net (fo=1263, routed)        1.416     6.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[5].i_rx_data/clk
+    ILOGIC_X0Y242        IDDR                                         f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[5].i_rx_data/i_rx_data_iddr/C
+
+Slack:                    inf
+  Source:                 rx_data_p[2]
+                            (input port)
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[2].i_rx_data/i_rx_data_iddr/D
+                            (rising edge-triggered cell IDDR clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             (none)
+  Path Type:              Setup (Max at Slow Process Corner)
+  Data Path Delay:        1.458ns  (logic 1.458ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUFDS=1 IDELAYE2=1)
+  Clock Path Skew:        3.964ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.964ns = ( 5.998 - 2.034 ) 
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    T24                                               0.000     0.000 r  rx_data_p[2] (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[2].i_rx_data/rx_data_p[0]
+    T24                  IBUFDS (Prop_ibufds_I_O)     0.792     0.792 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[2].i_rx_data/i_rx_data_ibuf/O
+                         net (fo=1, routed)           0.000     0.792    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[2].i_rx_data/rx_data_ibuf_s
+    IDELAY_X0Y216        IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.666     1.458 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[2].i_rx_data/i_rx_data_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     1.458    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[2].i_rx_data/rx_data_idelay_s
+    ILOGIC_X0Y216        IDDR                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[2].i_rx_data/i_rx_data_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx fall edge)    2.034     2.034 f  
+    R27                                               0.000     2.034 f  rx_clk_p (IN)
+                         net (fo=0)                   0.000     2.034    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     2.751 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_rx_clk_ibuf/O
+                         net (fo=1, routed)           1.750     4.501    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/clk_ibuf_s
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     4.584 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_clk_gbuf/O
+                         net (fo=1263, routed)        1.414     5.998    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[2].i_rx_data/clk
+    ILOGIC_X0Y216        IDDR                                         f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[2].i_rx_data/i_rx_data_iddr/C
+
+Slack:                    inf
+  Source:                 rx_data_p[3]
+                            (input port)
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[3].i_rx_data/i_rx_data_iddr/D
+                            (rising edge-triggered cell IDDR clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             (none)
+  Path Type:              Setup (Max at Slow Process Corner)
+  Data Path Delay:        1.457ns  (logic 1.457ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUFDS=1 IDELAYE2=1)
+  Clock Path Skew:        3.966ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.966ns = ( 6.000 - 2.034 ) 
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    U22                                               0.000     0.000 r  rx_data_p[3] (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[3].i_rx_data/rx_data_p[0]
+    U22                  IBUFDS (Prop_ibufds_I_O)     0.791     0.791 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[3].i_rx_data/i_rx_data_ibuf/O
+                         net (fo=1, routed)           0.000     0.791    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[3].i_rx_data/rx_data_ibuf_s
+    IDELAY_X0Y206        IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.666     1.457 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[3].i_rx_data/i_rx_data_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     1.457    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[3].i_rx_data/rx_data_idelay_s
+    ILOGIC_X0Y206        IDDR                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[3].i_rx_data/i_rx_data_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx fall edge)    2.034     2.034 f  
+    R27                                               0.000     2.034 f  rx_clk_p (IN)
+                         net (fo=0)                   0.000     2.034    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     2.751 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_rx_clk_ibuf/O
+                         net (fo=1, routed)           1.750     4.501    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/clk_ibuf_s
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     4.584 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_clk_gbuf/O
+                         net (fo=1263, routed)        1.416     6.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[3].i_rx_data/clk
+    ILOGIC_X0Y206        IDDR                                         f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[3].i_rx_data/i_rx_data_iddr/C
+
+Slack:                    inf
+  Source:                 rx_data_p[0]
+                            (input port)
+  Destination:            u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[0].i_rx_data/i_rx_data_iddr/D
+                            (rising edge-triggered cell IDDR clocked by rfmc_rx  {rise@0.000ns fall@2.034ns period=4.069ns})
+  Path Group:             (none)
+  Path Type:              Setup (Max at Slow Process Corner)
+  Data Path Delay:        1.436ns  (logic 1.436ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUFDS=1 IDELAYE2=1)
+  Clock Path Skew:        3.966ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    3.966ns = ( 6.000 - 2.034 ) 
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P21                                               0.000     0.000 r  rx_data_p[0] (IN)
+                         net (fo=0)                   0.000     0.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[0].i_rx_data/rx_data_p[0]
+    P21                  IBUFDS (Prop_ibufds_I_O)     0.770     0.770 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[0].i_rx_data/i_rx_data_ibuf/O
+                         net (fo=1, routed)           0.000     0.770    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[0].i_rx_data/rx_data_ibuf_s
+    IDELAY_X0Y212        IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.666     1.436 r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[0].i_rx_data/i_rx_data_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     1.436    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[0].i_rx_data/rx_data_idelay_s
+    ILOGIC_X0Y212        IDDR                                         r  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[0].i_rx_data/i_rx_data_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock rfmc_rx fall edge)    2.034     2.034 f  
+    R27                                               0.000     2.034 f  rx_clk_p (IN)
+                         net (fo=0)                   0.000     2.034    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/rx_clk_p
+    R27                  IBUFDS (Prop_ibufds_I_O)     0.717     2.751 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_rx_clk_ibuf/O
+                         net (fo=1, routed)           1.750     4.501    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/clk_ibuf_s
+    BUFGCTRL_X0Y19       BUFG (Prop_bufg_I_O)         0.083     4.584 f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/i_clk/i_clk_gbuf/O
+                         net (fo=1263, routed)        1.416     6.000    u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[0].i_rx_data/clk
+    ILOGIC_X0Y212        IDDR                                         f  u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/i_dev_if/g_rx_data[0].i_rx_data/i_rx_data_iddr/C
+
+
+
+

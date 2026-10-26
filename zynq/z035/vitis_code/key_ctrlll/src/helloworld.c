@@ -102,7 +102,7 @@ volatile struct {
  * Select a stable FRAME-window centre; IQ/PN must still be checked separately.
  * If no candidate passes, restore the original register and report failure.
  */
-#define FMCOMMS3_RX_DELAY_SCAN 1
+#define FMCOMMS3_RX_DELAY_SCAN 0 /* RF timing is immutable in this diagnostic build. */
 #if FMCOMMS3_RX_DELAY_SCAN
 volatile struct {
     u32 magic, done;
@@ -699,8 +699,9 @@ restore:
     return result;
 }
 
-/* Bounded digital-interface validation. PN check requires both live sample
- * counters and all four ADI PN monitors; GPIO status alone is insufficient. */
+/* Bounded FPGA-only timing calibration. The AD9361 RF/timing configuration
+ * is read-only here. Only temporary BIST registers 3F4/3F5/3F6 are written,
+ * and their exact original values are restored and verified on every exit. */
 volatile struct {
     u32 magic, done;
     s32 result, restore_status;
@@ -708,9 +709,33 @@ volatile struct {
     u32 saved_port, saved_delay, saved_bist, saved_mask, saved_observe;
     u32 selected_port, selected_delay, selected_data_taps, selected_frame_taps;
     u32 channel_status[4], sample_delta, edge_delta;
-    u32 spi_pass[2][16];
-    u32 fpga_pass[32];
+    u32 fpga_pass[32], lane_pass[7], selected_lane[7], saved_lane[7];
+    u32 stage, protected_registers[8], protected_before[8], protected_after[8];
+    u32 protected_mismatch_mask, pn_channel_failed_trials[4];
 } official_rx_report;
+volatile rx_9361_monitor_report rx_baseline_report;
+volatile rx_9361_monitor_report rx_pn_stability_report;
+volatile rx_9361_monitor_report rx_restored_report;
+
+static void rx_report_publish(void)
+{
+    dsb();
+    Xil_DCacheFlushRange((INTPTR)&official_rx_report, sizeof(official_rx_report));
+}
+
+static void rx_monitor_print(const char *name, volatile rx_9361_monitor_report *r)
+{
+    xil_printf("RX %s %s: windows=%d/50 elapsed_us=%d sample_hz=%d..%d clock_hz=%d..%d frame_hz=%d..%d\r\n",
+               name, r->result == 0 ? "PASS" : "FAILED", (unsigned)r->completed_windows,
+               (unsigned)r->elapsed_us, (unsigned)r->sample_hz_min, (unsigned)r->sample_hz_max,
+               (unsigned)r->clock_hz_min, (unsigned)r->clock_hz_max,
+               (unsigned)r->frame_hz_min, (unsigned)r->frame_hz_max);
+    xil_printf("RX %s faults=%d unlocked_cycles=%d delay_bad=%d no_progress=%d rate_bad=%d ratio_worst=%d frame_ratio_worst=%d PN_bad_windows=%d\r\n",
+               name, (unsigned)r->frame_fault_total, (unsigned)r->unlocked_cycle_total,
+               (unsigned)r->delay_not_ready_total, (unsigned)r->no_progress_windows,
+               (unsigned)r->rate_error_windows, (unsigned)r->worst_ratio_error,
+               (unsigned)r->worst_frame_sample_error, (unsigned)r->pn_error_windows);
+}
 
 static int official_rx_trial(u32 observe_us)
 {
@@ -718,161 +743,177 @@ static int official_rx_trial(u32 observe_us)
     u32 channel;
     ++official_rx_report.tested_points;
     if (status == RX_9361_OK) ++official_rx_report.pass_count;
-    for (channel = 0U; channel < 4U; ++channel)
+    for (channel = 0U; channel < 4U; ++channel) {
         official_rx_report.channel_status[channel] = rx_frontend.channel_status[channel];
+        if (rx_frontend.channel_status[channel] & RX_9361_PN_MASK)
+            ++official_rx_report.pn_channel_failed_trials[channel];
+    }
     official_rx_report.sample_delta = rx_frontend.sample_delta;
     official_rx_report.edge_delta = rx_frontend.edge_delta;
     return status;
 }
 
+static u32 rx_mask_center(u32 mask, u32 fallback)
+{
+    u32 bit = 0U, start, length, longest = 0U, selected = fallback;
+    while (bit < 32U) {
+        if (!(mask & (1U << bit))) { ++bit; continue; }
+        start = bit;
+        while (bit < 32U && (mask & (1U << bit))) ++bit;
+        length = bit - start;
+        if (length > longest) {
+            longest = length;
+            selected = start + (length - 1U) / 2U;
+        }
+    }
+    return selected;
+}
+
 static int official_rx_pn_selftest(void)
 {
-    u8 saved_port, saved_delay, saved_bist, saved_mask, saved_observe;
-    u8 actual_port, actual_delay, actual_bist, actual_mask, actual_observe;
-    u32 polarity, clock_tap, data_tap, frame_tap, row, bit;
-    u32 selected_port = 0U, selected_delay = 0U, selected_data = 0U, selected_frame = 0U;
-    u32 longest = 0U, start, length, repeat;
-    int status = RX_9361_ERR_PN, restore = 0;
+    static const u16 protected_regs[8] = {
+        0x000U, 0x006U, 0x010U, 0x011U, 0x012U, 0x03CU, 0x03DU, 0x03EU
+    };
+    u8 saved_bist = 0U, saved_mask = 0U, saved_observe = 0U, actual;
+    u32 data_tap, frame_tap, lane, tap, n, selected_data = 0U, selected_frame = 0U;
+    u32 left, right, bottom, top, margin, best_margin = 0U, saved_all = 0U;
+    int status = RX_9361_ERR_CONFIG, restore = 0;
     memset((void *)&official_rx_report, 0, sizeof(official_rx_report));
     official_rx_report.magic = 0x41444952U;
     official_rx_report.result = RX_9361_ERR_CONFIG;
     official_rx_report.core_version = rx_frontend.version;
-    if (!rx_frontend.ready ||
-        ad9361_reg_read(&radio, 0x010U, &saved_port) != AD9361_OK ||
-        ad9361_reg_read(&radio, 0x006U, &saved_delay) != AD9361_OK ||
-        ad9361_reg_read(&radio, 0x3F4U, &saved_bist) != AD9361_OK ||
+    official_rx_report.stage = 1U;
+    if (!rx_frontend.ready) goto done;
+    for (n = 0U; n < 8U; ++n) {
+        official_rx_report.protected_registers[n] = protected_regs[n];
+        if (ad9361_reg_read(&radio, protected_regs[n], &actual) != AD9361_OK) goto done;
+        official_rx_report.protected_before[n] = actual;
+    }
+    official_rx_report.saved_port = official_rx_report.protected_before[2];
+    official_rx_report.saved_delay = official_rx_report.protected_before[1];
+    official_rx_report.selected_port = official_rx_report.saved_port;
+    official_rx_report.selected_delay = official_rx_report.saved_delay;
+    for (lane = 0U; lane < 7U; ++lane) {
+        u32 delay = Xil_In32(RX_9361_BASEADDR + 0x800U + 4U*lane);
+        if (delay > 31U) goto done;
+        official_rx_report.saved_lane[lane] = delay;
+        official_rx_report.selected_lane[lane] = delay;
+    }
+    if (ad9361_reg_read(&radio, 0x3F4U, &saved_bist) != AD9361_OK ||
         ad9361_reg_read(&radio, 0x3F6U, &saved_mask) != AD9361_OK ||
         ad9361_reg_read(&radio, 0x3F5U, &saved_observe) != AD9361_OK)
         goto done;
-    official_rx_report.saved_port = saved_port;
-    official_rx_report.saved_delay = saved_delay;
+    saved_all = 1U;
     official_rx_report.saved_bist = saved_bist;
     official_rx_report.saved_mask = saved_mask;
     official_rx_report.saved_observe = saved_observe;
-    selected_port = saved_port; selected_delay = saved_delay;
-    xil_printf("\r\nADI RX PN TEST: core@0x%08x version=%08x, raw 2R2T, ARM=0\r\n",
-               RX_9361_BASEADDR, (unsigned)rx_frontend.version);
+    xil_printf("\r\nRX FPGA PN SCAN: ARM=0; SPI006=%02x SPI010=%02x remain unchanged; temporary BIST only\r\n",
+               (unsigned)official_rx_report.saved_delay, (unsigned)official_rx_report.saved_port);
     if (ad9361_reg_write(&radio, 0x3F5U, 0U) != AD9361_OK ||
         ad9361_reg_write(&radio, 0x3F6U, 0U) != AD9361_OK ||
-        ad9361_reg_write(&radio, 0x3F4U, 0x09U) != AD9361_OK ||
-        rx_9361_set_uniform_delay(&rx_frontend, 0U, 0U) != RX_9361_OK)
-        goto io_error;
+        ad9361_reg_write(&radio, 0x3F4U, 0x09U) != AD9361_OK)
+        goto restore;
     usleep(1000U);
-    status = official_rx_trial(10000U);
-    if (status == RX_9361_OK) goto verify;
-
-    /* Scan AD9361 clock/data delay and both clock polarities, keeping the
-     * official FPGA delays at zero. Choose the center of a passing row. */
-    for (polarity = 0U; polarity < 2U; ++polarity) {
-        if (ad9361_reg_write(&radio, 0x010U, saved_port ^ polarity) != AD9361_OK)
-            goto io_error;
-        for (clock_tap = 0U; clock_tap < 16U; ++clock_tap) {
-            for (data_tap = 0U; data_tap < 16U; ++data_tap) {
-                if (ad9361_reg_write(&radio, 0x006U, (clock_tap << 4) | data_tap) != AD9361_OK)
-                    goto io_error;
-                if (official_rx_trial(1000U) == RX_9361_OK)
-                    official_rx_report.spi_pass[polarity][clock_tap] |= 1U << data_tap;
-            }
-            xil_printf("ADI RX SPI scan polarity=%d clock=%x pass=%04x\r\n", (unsigned)polarity,
-                       (unsigned)clock_tap, (unsigned)official_rx_report.spi_pass[polarity][clock_tap]);
-        }
-    }
-    for (polarity = 0U; polarity < 2U; ++polarity)
-        for (clock_tap = 0U; clock_tap < 16U; ++clock_tap) {
-            row = official_rx_report.spi_pass[polarity][clock_tap];
-            for (bit = 0U; bit < 16U;) {
-                if (!(row & (1U << bit))) { ++bit; continue; }
-                start = bit;
-                while (bit < 16U && (row & (1U << bit))) ++bit;
-                length = bit - start;
-                if (length > longest) {
-                    longest = length; selected_port = saved_port ^ polarity;
-                    selected_delay = (clock_tap << 4) | (start + (length - 1U) / 2U);
-                }
-            }
-        }
-    if (longest) {
-        if (ad9361_reg_write(&radio, 0x010U, selected_port) != AD9361_OK ||
-            ad9361_reg_write(&radio, 0x006U, selected_delay) != AD9361_OK) goto io_error;
-        goto verify;
-    }
-
-    /* If the device delay scan has no window, scan FPGA DATA/FRAME taps
-     * independently at the original device configuration. */
-    if (ad9361_reg_write(&radio, 0x010U, saved_port) != AD9361_OK ||
-        ad9361_reg_write(&radio, 0x006U, saved_delay) != AD9361_OK) goto io_error;
-    selected_port = saved_port; selected_delay = saved_delay;
+    official_rx_report.stage = 2U;
+    /* Only FPGA IDELAYs move: six equal data taps versus independent FRAME.
+     * Scan the entire grid even if the original zero-tap setting passes. */
     for (frame_tap = 0U; frame_tap < 32U; ++frame_tap) {
         for (data_tap = 0U; data_tap < 32U; ++data_tap) {
-            if (rx_9361_set_uniform_delay(&rx_frontend, data_tap, frame_tap) != RX_9361_OK) goto io_error;
+            if (rx_9361_set_uniform_delay(&rx_frontend, data_tap, frame_tap) != RX_9361_OK)
+                goto restore;
             if (official_rx_trial(1000U) == RX_9361_OK)
                 official_rx_report.fpga_pass[frame_tap] |= 1U << data_tap;
         }
-        xil_printf("ADI RX FPGA scan frame=%d data_pass=%08x\r\n", (unsigned)frame_tap,
+        xil_printf("RX FPGA frame=%d data_pass=%08x\r\n", (unsigned)frame_tap,
                    (unsigned)official_rx_report.fpga_pass[frame_tap]);
+        rx_report_publish();
     }
+    /* Select a point with margin in both independently sampled directions. */
     for (frame_tap = 0U; frame_tap < 32U; ++frame_tap) {
-        row = official_rx_report.fpga_pass[frame_tap];
-        for (bit = 0U; bit < 32U;) {
-            if (!(row & (1U << bit))) { ++bit; continue; }
-            start = bit;
-            while (bit < 32U && (row & (1U << bit))) ++bit;
-            length = bit - start;
-            if (length > longest) {
-                longest = length; selected_frame = frame_tap;
-                selected_data = start + (length - 1U) / 2U;
+        for (data_tap = 0U; data_tap < 32U; ++data_tap) {
+            if (!(official_rx_report.fpga_pass[frame_tap] & (1U << data_tap))) continue;
+            left = right = data_tap; bottom = top = frame_tap;
+            while (left && (official_rx_report.fpga_pass[frame_tap] & (1U << (left-1U)))) --left;
+            while (right < 31U && (official_rx_report.fpga_pass[frame_tap] & (1U << (right+1U)))) ++right;
+            while (bottom && (official_rx_report.fpga_pass[bottom-1U] & (1U << data_tap))) --bottom;
+            while (top < 31U && (official_rx_report.fpga_pass[top+1U] & (1U << data_tap))) ++top;
+            margin = data_tap-left;
+            if (right-data_tap < margin) margin = right-data_tap;
+            if (frame_tap-bottom < margin) margin = frame_tap-bottom;
+            if (top-frame_tap < margin) margin = top-frame_tap;
+            ++margin;
+            if (margin > best_margin) {
+                best_margin = margin; selected_data = data_tap; selected_frame = frame_tap;
             }
         }
     }
-    if (!longest) { status = RX_9361_ERR_PN; goto restore; }
     if (rx_9361_set_uniform_delay(&rx_frontend, selected_data, selected_frame) != RX_9361_OK)
-        goto io_error;
-verify:
-    for (repeat = 0U; repeat < 3U; ++repeat) {
-        status = official_rx_trial(10000U);
-        if (status != RX_9361_OK) break;
-    }
-    goto restore;
-io_error:
-    status = RX_9361_ERR_CONFIG;
-restore:
-    if (status != RX_9361_OK) {
-        selected_port = saved_port; selected_delay = saved_delay;
-        selected_data = 0U; selected_frame = 0U;
-        if (ad9361_reg_write(&radio, 0x010U, saved_port) != AD9361_OK) restore = -1;
-        if (ad9361_reg_write(&radio, 0x006U, saved_delay) != AD9361_OK) restore = -1;
-        if (rx_9361_set_uniform_delay(&rx_frontend, 0U, 0U) != RX_9361_OK) restore = -1;
-    }
-    if (ad9361_reg_write(&radio, 0x3F4U, 0U) != AD9361_OK) restore = -1;
-    if (ad9361_reg_write(&radio, 0x3F5U, saved_observe) != AD9361_OK) restore = -1;
-    if (ad9361_reg_write(&radio, 0x3F6U, saved_mask) != AD9361_OK) restore = -1;
-    if (ad9361_reg_write(&radio, 0x3F4U, saved_bist) != AD9361_OK) restore = -1;
-    if (ad9361_reg_read(&radio, 0x010U, &actual_port) != AD9361_OK ||
-        ad9361_reg_read(&radio, 0x006U, &actual_delay) != AD9361_OK ||
-        ad9361_reg_read(&radio, 0x3F4U, &actual_bist) != AD9361_OK ||
-        ad9361_reg_read(&radio, 0x3F5U, &actual_observe) != AD9361_OK ||
-        ad9361_reg_read(&radio, 0x3F6U, &actual_mask) != AD9361_OK ||
-        actual_port != selected_port || actual_delay != selected_delay ||
-        actual_bist != saved_bist || actual_observe != saved_observe ||
-        actual_mask != saved_mask) restore = -1;
-    official_rx_report.selected_port = selected_port;
-    official_rx_report.selected_delay = selected_delay;
+        goto restore;
     official_rx_report.selected_data_taps = selected_data;
     official_rx_report.selected_frame_taps = selected_frame;
+    for (lane = 0U; lane < 7U; ++lane)
+        official_rx_report.selected_lane[lane] = lane == 6U ? selected_frame : selected_data;
+    official_rx_report.stage = 3U;
+    /* Characterize all seven physical lanes at every legal tap. Other lanes
+     * stay at the current passing point; failing masks remain visible. */
+    for (lane = 0U; lane < 7U; ++lane) {
+        for (tap = 0U; tap < 32U; ++tap) {
+            if (rx_9361_set_delay(&rx_frontend, lane, tap) != RX_9361_OK) goto restore;
+            if (official_rx_trial(1000U) == RX_9361_OK)
+                official_rx_report.lane_pass[lane] |= 1U << tap;
+        }
+        official_rx_report.selected_lane[lane] = rx_mask_center(
+            official_rx_report.lane_pass[lane], official_rx_report.selected_lane[lane]);
+        if (rx_9361_set_delay(&rx_frontend, lane, official_rx_report.selected_lane[lane]) != RX_9361_OK)
+            goto restore;
+        xil_printf("RX FPGA lane=%d pass=%08x selected=%d\r\n", (unsigned)lane,
+                   (unsigned)official_rx_report.lane_pass[lane],
+                   (unsigned)official_rx_report.selected_lane[lane]);
+        rx_report_publish();
+    }
+    official_rx_report.stage = 4U;
+    rx_report_publish();
+    status = rx_9361_monitor(&rx_frontend, 1U, &rx_pn_stability_report);
+    rx_monitor_print("PN STABILITY", &rx_pn_stability_report);
+    if (!best_margin) status = RX_9361_ERR_PN;
+restore:
+    official_rx_report.stage = 5U;
+    if (status != RX_9361_OK) {
+        for (lane = 0U; lane < 7U; ++lane) {
+            if (rx_9361_set_delay(&rx_frontend, lane, official_rx_report.saved_lane[lane]) != RX_9361_OK)
+                restore = -1;
+            official_rx_report.selected_lane[lane] = official_rx_report.saved_lane[lane];
+        }
+    }
+    if (saved_all) {
+        if (ad9361_reg_write(&radio, 0x3F4U, 0U) != AD9361_OK) restore = -1;
+        if (ad9361_reg_write(&radio, 0x3F5U, saved_observe) != AD9361_OK) restore = -1;
+        if (ad9361_reg_write(&radio, 0x3F6U, saved_mask) != AD9361_OK) restore = -1;
+        if (ad9361_reg_write(&radio, 0x3F4U, saved_bist) != AD9361_OK) restore = -1;
+        if (ad9361_reg_read(&radio, 0x3F4U, &actual) != AD9361_OK || actual != saved_bist) restore = -1;
+        if (ad9361_reg_read(&radio, 0x3F5U, &actual) != AD9361_OK || actual != saved_observe) restore = -1;
+        if (ad9361_reg_read(&radio, 0x3F6U, &actual) != AD9361_OK || actual != saved_mask) restore = -1;
+        for (n = 0U; n < 8U; ++n) {
+            if (ad9361_reg_read(&radio, protected_regs[n], &actual) != AD9361_OK) {
+                restore = -1; official_rx_report.protected_mismatch_mask |= 1U << n;
+            } else {
+                official_rx_report.protected_after[n] = actual;
+                if (actual != official_rx_report.protected_before[n]) {
+                    restore = -1; official_rx_report.protected_mismatch_mask |= 1U << n;
+                }
+            }
+        }
+    }
     official_rx_report.restore_status = restore;
     official_rx_report.result = restore ? RX_9361_ERR_CONFIG : status;
 done:
-    official_rx_report.done = 1U; dsb();
-    xil_printf("ADI RX PN TEST %s: result=%d pass=%d/%d port=%02x delay=%02x FPGA=%d/%d samples=%d edges=%d\r\n",
+    official_rx_report.stage = 6U;
+    dsb(); official_rx_report.done = 1U; dsb();
+    rx_report_publish();
+    xil_printf("RX FPGA PN TEST %s: result=%d pass=%d/%d RF_mismatch=%08x restore=%d; ARM=0\r\n",
                official_rx_report.result == 0 ? "PASS" : "FAILED", (int)official_rx_report.result,
                (unsigned)official_rx_report.pass_count, (unsigned)official_rx_report.tested_points,
-               (unsigned)official_rx_report.selected_port, (unsigned)official_rx_report.selected_delay,
-               (unsigned)official_rx_report.selected_data_taps, (unsigned)official_rx_report.selected_frame_taps,
-               (unsigned)official_rx_report.sample_delta, (unsigned)official_rx_report.edge_delta);
-    xil_printf("ADI RX PN channel status: %08x %08x %08x %08x; restore/readback=%d\r\n",
-               (unsigned)official_rx_report.channel_status[0], (unsigned)official_rx_report.channel_status[1],
-               (unsigned)official_rx_report.channel_status[2], (unsigned)official_rx_report.channel_status[3],
-               (int)official_rx_report.restore_status);
+               (unsigned)official_rx_report.protected_mismatch_mask, (int)official_rx_report.restore_status);
     return official_rx_report.result;
 }
 
@@ -880,7 +921,7 @@ done:
  * Restore the saved BIST/loopback controls before returning to RF reception. */
 static int config915_test_main(void)
 {
-    int result, dma_result, pn_result = RX_9361_ERR_CONFIG;
+    int result, pn_result = RX_9361_ERR_CONFIG, restored_result = RX_9361_ERR_CONFIG;
     u32 flags = 0U;
     xil_printf("\r\nCONFIG915 board test: user GUI script, no reference-profile overwrite\r\n");
     if (rf_capture_reset(1U) != 0)
@@ -895,23 +936,33 @@ static int config915_test_main(void)
     (void)gpio_ris_init(&ris);
     (void)gpio_9361_init(&capture);
     if (result == 0) {
+        xil_printf("RX BASELINE: observe original RF and FPGA taps for >=5 seconds; ARM=0\r\n");
+        (void)rx_9361_monitor(&rx_frontend, 0U, &rx_baseline_report);
+        rx_monitor_print("BASELINE", &rx_baseline_report);
         pn_result = official_rx_pn_selftest();
+        usleep(1000U);
+        xil_printf("RX RESTORED RF: original BIST controls restored; observe >=5 seconds; ARM=0\r\n");
+        restored_result = rx_9361_monitor(&rx_frontend, 0U, &rx_restored_report);
+        rx_monitor_print("RESTORED RF", &rx_restored_report);
         (void)rf_clock_selftest();
-        dma_result = dma_9361_init(&receiver, &capture);
-        xil_printf("CONFIG915 DMA init result=%d; ADI interface checks=%d/20\r\n",
-                   dma_result, (unsigned)rf_clock_test_report.frame_checks);
-        if (dma_result == DMA_9361_OK)
-            (void)mig_ddr_selftest();
+        xil_printf("CONFIG915 bounded RX diagnostic complete; interface checks=%d/20\r\n",
+                   (unsigned)rf_clock_test_report.frame_checks);
         (void)gpio_9361_get_status(&capture, &flags);
         xil_printf("CONFIG915 ACTIVE: RX/TX=915 MHz, Fs~15.36 MSPS, TX1 BIST~960 kHz\r\n");
         xil_printf("CONFIG915 TX1A -> external 30 dB attenuator -> RX1A; TX attenuation=20 dB\r\n");
         xil_printf("CONFIG915 RF capture: PN=%s GPIO=%02x ARM=0; no RF/DMA data accepted without PN verification\r\n",
                    pn_result == RX_9361_OK ? "PASS" : "FAILED", flags);
-        xil_printf("CONFIG915 RX BIST remains OFF; TX BIST remains ON for RF loopback test\r\n");
+        if (official_rx_report.done && official_rx_report.restore_status == 0 &&
+            official_rx_report.protected_mismatch_mask == 0 && official_rx_report.tested_points != 0)
+            xil_printf("CONFIG915 original BIST controls restored exactly; protected RF timing/configuration verified unchanged\r\n");
+        else
+            xil_printf("CONFIG915 restore/configuration verification FAILED or incomplete: restore=%d mismatch=%08x\r\n",
+                       (int)official_rx_report.restore_status,
+                       (unsigned)official_rx_report.protected_mismatch_mask);
     }
     Xil_DCacheFlush(); dsb();
     cleanup_platform();
-    return result == 0 && pn_result == RX_9361_OK ? 0 : 1;
+    return result == 0 && pn_result == RX_9361_OK && restored_result == RX_9361_OK ? 0 : 1;
 }
 
 int main()

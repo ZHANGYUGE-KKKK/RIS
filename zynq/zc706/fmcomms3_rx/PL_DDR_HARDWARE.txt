@@ -1,0 +1,46 @@
+ZC706 PL DDR 当前开发配置（2026-10-21 更新）
+
+当前默认：Micron MT16JSF25664HZ-1G4F1，2 GiB，2Rx8，DDR3-1333，64位，1.5V。
+用户已换条，独立 ddr2g_test 的完整2 GiB五种图案测试全部通过：
+ZERO/ONES/AA55/ADDRESS_XOR/INVERSE_ADDRESS_XOR，错误字数及AXI错误均为0。
+五轮耗时7992/7981/7893/7900/7994ms。此为用户提供的实测串口记录。
+
+本接收工程使用相同的物理组织和时序：
+MIG库器件 MT16JTF25664HZ-1G4（对应旧JSF条的同组织/速度配置）；
+每颗1Gb x8，2 Rank，每Rank1 GiB；Row14 / Column10 / Bank3。
+DQ64 / DQS8 / DM8；CS/CKE/ODT各2；CK差分时钟2对。
+tCK1500ps，DDR CK666.667MHz，CL9 / CWL7，UI166.667MHz，PHY4:1。
+AXI数据512位、地址31位；ID宽度和窄突发能力由连接的AXI互连适配。
+板载200MHz先经Clocking Wizard得到166.667MHz供MIG系统时钟；
+MIG参考输入仍为板载200MHz，其数据延时参考400MHz由MIG内部生成。
+AD9361 ref_clk200已从MIG UI移到板载200MHz，确保采样延时参考频率不变。
+MIG reset同时等待板级reset释放和外部Clocking Wizard锁定。
+RF脚本、LO、采样率、MGC及AD9361时序寄存器不因本次DDR适配而改变。
+
+第二Rank新增引脚：CS1 H8，CKE1 C7，ODT1 C9，CK1_P D9，CK1_N D8。
+完整引脚均来自已通过独立测试的MIG配置。
+
+本版已扩展到完整2 GiB采集（RX diagnostic version=8）：
+DMA SG/S2MM总线地址0x00000000..0x7fffffff，BD预留前4 MiB；
+IQ从0x00400000开始，最大2044 MiB（2143289344字节），约17.442133秒。
+65408个BD，每BD32 KiB，4096组IQ/TLAST；每组仍为8字节I1/Q1/I2/Q2。
+
+Zynq GP0的CPU固定窗口仍为0x40000000..0x7fffffff，共1 GiB；
+新增0x83000000的axi_gpio_ddr_bank bit0，选择这个窗口映射DDR的哪半容量。
+DMA不经过切窗，CPU读出由mig_ddr_read()自动跨bank并恢复bank0。
+CPU虚拟地址和DMA总线地址已分离；不得直接在PS中解引用DMA数据地址。
+PS DDR、栈/堆、网口缓存及原GP1控制寄存器地址保持原样。
+使用方法和地址细节见FULL_2G_CAPTURE.txt。
+本轮完整测试入口见reports/full2g_active.txt及其中最终RESULT.txt。
+
+此前1 GiB可见窗口的2 GiB DIMM对照（已完成，保留历史结论）：
+reports/mig2g_rx_20261021_160858/RESULT.txt：
+选定页96/96一致，8 MiB及1秒全文件格式错误0，重复读回一致。
+
+旧1 GiB条：MT8JTF12864HZ-1G6G1，1Rx8，DDR3-1600，CK800MHz。
+旧配置及BIT/XSA/ELF已备份在本轮报告目录before/，没有删除。
+旧条复测在无RF、无DMA、CPU暂停时仍有固定图案读回错误；
+不能仅凭2GiB条的另一配置通过，就断言1GiB条本体损坏。
+
+原始对照报告：reports/ddr_1g_retest_20261021_141922/RESULT.txt。
+最新完整容量报告路径见 reports/full2g_active.txt；以其中最终RESULT.txt记录板测结论。

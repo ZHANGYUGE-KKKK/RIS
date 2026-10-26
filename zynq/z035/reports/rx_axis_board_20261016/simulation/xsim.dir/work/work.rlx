@@ -1,0 +1,27 @@
+0.7
+2020.2
+Nov 18 2020
+09:20:35
+/home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv,1605732256,systemVerilog,,/home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv,,xpm_cdc_array_single;xpm_cdc_async_rst;xpm_cdc_gray;xpm_cdc_handshake;xpm_cdc_low_latency_handshake;xpm_cdc_pulse;xpm_cdc_single;xpm_cdc_sync_rst,,,,,,,,
+/home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv,1605732257,systemVerilog,,/home/yyz/work/RIS/zynq/z035/tests/tb_ad9361_rx_axis_rewrite.sv,,xpm_counter_updn;xpm_fifo_async;xpm_fifo_axi_reg_slice;xpm_fifo_axif;xpm_fifo_axil;xpm_fifo_axis;xpm_fifo_base;xpm_fifo_reg_bit;xpm_fifo_reg_vec;xpm_fifo_rst;xpm_fifo_sync;xpm_reg_pipe_bit,,,,,,,,
+/home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv,1605732258,systemVerilog,,/home/yyz/vivado2020.2/main/Vivado/2020.2/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv,,asym_bwe_bb;xpm_memory_base;xpm_memory_dpdistram;xpm_memory_dprom;xpm_memory_sdpram;xpm_memory_spram;xpm_memory_sprom;xpm_memory_tdpram,,,,,,,,
+/home/yyz/vivado2020.2/main/Vivado/2020.2/data/verilog/src/glbl.v,1605673889,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/up_axi.v,,glbl,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/axi_ad9361/axi_ad9361_rx.v,1792119529,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/axi_ad9361/axi_ad9361_rx_channel.v,,axi_ad9361_rx,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/axi_ad9361/axi_ad9361_rx_channel.v,1792119529,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/axi_ad9361/axi_ad9361_rx_pnmon.v,,axi_ad9361_rx_channel,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/axi_ad9361/axi_ad9361_rx_pnmon.v,1792119529,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/new/ad9361_rx_axis.v,,axi_ad9361_rx_pnmon,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/ad_datafmt.v,1792119526,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/ad_iqcor.v,,ad_datafmt,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/ad_iqcor.v,1792119527,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/ad_pps_receiver.v,,ad_iqcor,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/ad_pnmon.v,1792119526,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/ad_datafmt.v,,ad_pnmon,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/ad_pps_receiver.v,1792119527,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/xilinx/common/ad_mul.v,,ad_pps_receiver,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/ad_rst.v,1792119526,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/ad_pnmon.v,,ad_rst,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/up_adc_channel.v,1792119528,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/up_delay_cntrl.v,,up_adc_channel,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/up_adc_common.v,1792119528,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/up_adc_channel.v,,up_adc_common,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/up_axi.v,1792119527,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/up_adc_common.v,,up_axi,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/up_clock_mon.v,1792119527,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/ad_rst.v,,up_clock_mon,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/up_delay_cntrl.v,1792119528,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/up_xfer_cntrl.v,,up_delay_cntrl,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/up_xfer_cntrl.v,1792119527,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/up_xfer_status.v,,up_xfer_cntrl,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/up_xfer_status.v,1792119527,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/common/up_clock_mon.v,,up_xfer_status,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/xilinx/common/ad_dcfilter.v,1792119526,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/axi_ad9361/axi_ad9361_rx.v,,ad_dcfilter,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/xilinx/common/ad_mul.v,1792119525,verilog,,/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/adi_hdl/library/xilinx/common/ad_dcfilter.v,,ad_mul,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/PZ_UART.srcs/sources_1/new/ad9361_rx_axis.v,1792144629,verilog,,,,ad9361_rx_axis,,,,,,,,
+/home/yyz/work/RIS/zynq/z035/tests/tb_ad9361_rx_axis_rewrite.sv,1792144911,systemVerilog,,,,tb_ad9361_rx_axis_rewrite,,,,,,,,

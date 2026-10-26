@@ -1,0 +1,16 @@
+START Fri Oct 16 17:57:34 CST 2026
+FAIL Fri Oct 16 18:06:11 CST 2026
+Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+RuntimeError: XSA bitstream does not match the exported BIT
+Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+RuntimeError: XSA bitstream does not match the exported BIT
+    while executing
+"exec python3 -c {
+from pathlib import Path
+import hashlib, json, shutil, sys, time, zipfile
+root, report = map(Path, sys.argv[1:])
+with zipfile.ZipFil..."
+PUBLISH_PASS 2026-10-16 18:07:47
+RTL_SHA256=9e18a38d233bf723319d35c09968da39f2be7d5b9f4a50f992844a19c2e5979e

@@ -1,0 +1,7 @@
+RIS ZC706 download verified 2026-10-26T14:07:34.113887+08:00
+Vitis GUI launch: Debugger_ris_network-Default.
+JTAG cable 210299995170. FPGA programmed; PS initialized; ris_network.elf downloaded.
+Resumed Cortex-A9 #0 from main breakpoint; application Running.
+TCP STATUS confirmed 192.168.1.11:7060, all400 LOW mirror, OE enabled, static, frames=1, status=0x000000C2, errors=0x00000000.
+Python GUI reconnected; existing 400-channel mapping retained; pattern playlist stopped.
+No physical output voltage measurements performed.

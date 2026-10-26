@@ -1,0 +1,9 @@
+{
+  "samples": 1024,
+  "ui_reset": 0,
+  "resetn": 1,
+  "mmcm_locked": 1,
+  "calib_complete": 1,
+  "source": "200MHz ILA, synchronized diagnostic flags",
+  "short_snapshot_only": true
+}

@@ -1,0 +1,66 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"0.398946",
+   "Default View_TopLeft":"-125,-73",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:10.0 TLS
+#  -string -flagsOSRD
+preplace port DDR -pg 1 -lvl 8 -x 2620 -y 600 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -lvl 8 -x 2620 -y 840 -defaultsOSRD
+preplace port sys_clk -pg 1 -lvl 0 -x -10 -y 940 -defaultsOSRD
+preplace port DDR3 -pg 1 -lvl 8 -x 2620 -y 870 -defaultsOSRD
+preplace port cpu_reset -pg 1 -lvl 0 -x -10 -y 820 -defaultsOSRD
+preplace inst ps7 -pg 1 -lvl 5 -x 1600 -y 710 -defaultsOSRD
+preplace inst clkbuf -pg 1 -lvl 1 -x 140 -y 940 -defaultsOSRD
+preplace inst mig_clock -pg 1 -lvl 2 -x 480 -y 930 -defaultsOSRD
+preplace inst mig -pg 1 -lvl 4 -x 1220 -y 900 -defaultsOSRD
+preplace inst inv_reset -pg 1 -lvl 2 -x 480 -y 820 -defaultsOSRD
+preplace inst mig_reset_gate -pg 1 -lvl 3 -x 890 -y 830 -defaultsOSRD
+preplace inst reset_cpu -pg 1 -lvl 5 -x 1600 -y 110 -defaultsOSRD
+preplace inst reset_ddr -pg 1 -lvl 2 -x 480 -y 540 -defaultsOSRD
+preplace inst diag -pg 1 -lvl 7 -x 2380 -y 720 -defaultsOSRD
+preplace inst control_bus -pg 1 -lvl 6 -x 1990 -y 310 -defaultsOSRD
+preplace inst control_gpio -pg 1 -lvl 7 -x 2380 -y 190 -defaultsOSRD
+preplace inst error_gpio -pg 1 -lvl 7 -x 2380 -y 510 -defaultsOSRD
+preplace inst value_gpio -pg 1 -lvl 7 -x 2380 -y 350 -defaultsOSRD
+preplace inst bist -pg 1 -lvl 3 -x 890 -y 560 -defaultsOSRD
+preplace netloc clkbuf_IBUF_OUT 1 1 3 290 1000 700J 900 N
+preplace netloc cpu_reset_1 1 0 2 NJ 820 280
+preplace netloc mig_clock_clk_out1 1 2 2 N 920 NJ
+preplace netloc inv_reset_Res 1 2 1 NJ 820
+preplace netloc mig_clock_locked 1 2 1 670 840n
+preplace netloc mig_reset_gate_Res 1 3 1 1070 830n
+preplace netloc ps7_FCLK_CLK0 1 4 3 1400 210 1820 140 2210
+preplace netloc ps7_FCLK_RESET0_N 1 1 5 280 440 NJ 440 NJ 440 1350 440 1800
+preplace netloc mig_mmcm_locked 1 1 4 300 640 680 700 NJ 700 1390
+preplace netloc mig_ui_clk 1 1 4 270 660 670 680 NJ 680 1360
+preplace netloc mig_ui_clk_sync_rst 1 1 4 290 650 690 670 NJ 670 1370
+preplace netloc reset_ddr_peripheral_aresetn 1 2 2 660 750 1080J
+preplace netloc mig_init_calib_complete 1 2 3 710 690 NJ 690 1350
+preplace netloc reset_cpu_peripheral_aresetn 1 5 2 NJ 150 2190
+preplace netloc bist_status 1 3 4 NJ 530 NJ 530 NJ 530 2180
+preplace netloc bist_first_bad_address 1 3 4 NJ 550 NJ 550 NJ 550 2170
+preplace netloc bist_first_expected 1 3 4 NJ 570 NJ 570 NJ 570 2160
+preplace netloc bist_first_actual 1 3 4 NJ 590 NJ 590 NJ 590 2150
+preplace netloc bist_error_words 1 3 4 NJ 610 NJ 610 NJ 610 2140
+preplace netloc reset_cpu_interconnect_aresetn 1 5 1 1840 130n
+preplace netloc control_gpio_gpio_io_o 1 2 6 700 760 NJ 760 1400J 850 NJ 850 NJ 850 2600
+preplace netloc diag_status 1 7 1 2570 220n
+preplace netloc diag_address 1 7 1 2550 500n
+preplace netloc diag_errors 1 7 1 2560 540n
+preplace netloc diag_expected 1 7 1 2590 340n
+preplace netloc diag_actual 1 7 1 2580 380n
+preplace netloc ps7_DDR 1 5 3 1840J 600 NJ 600 NJ
+preplace netloc sys_clk_1 1 0 1 NJ 940
+preplace netloc ps7_FIXED_IO 1 5 3 1810J 840 NJ 840 NJ
+preplace netloc mig_DDR3 1 4 4 1380J 870 NJ 870 NJ 870 NJ
+preplace netloc bist_M_AXI 1 3 1 1090 510n
+preplace netloc ps7_M_AXI_GP0 1 5 1 1830 210n
+preplace netloc control_bus_M00_AXI 1 6 1 2140 170n
+preplace netloc control_bus_M01_AXI 1 6 1 2200 310n
+preplace netloc control_bus_M02_AXI 1 6 1 N 330
+levelinfo -pg 1 -10 140 480 890 1220 1600 1990 2380 2620
+pagesize -pg 1 -db -bbox -sgen -130 0 2730 1010
+"
+}
+

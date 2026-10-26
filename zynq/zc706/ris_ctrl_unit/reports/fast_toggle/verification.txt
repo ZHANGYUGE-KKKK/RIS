@@ -1,0 +1,23 @@
+RIS high-speed uniform toggle verification
+Time: 2026-10-26T15:14:25.413117+08:00
+Definition: 1/3/5 MHz COMPLETE all0->all1->all0 cycles; 50% duty.
+5 MHz: full period 200 ns; 100 ns between successive 0/1 transitions.
+300 MHz engine; each update uses eight 100 MHz SHCP pulses on 50 parallel data lanes.
+OE remains enabled throughout playback; no high-impedance substitution for logic zero.
+
+PASS: 59 Python tests; legacy AXI RTL; new UNISIM MMCM/ODDR/50-chip behavioural model.
+PASS: C protocol tests including invalid preset, STOP hold, BIT takeover, BLINK/OE.
+PASS: routed setup WNS=0.158 ns, hold WHS=0.071 ns; DRC violations=0; CDC unsafe=0.
+PASS: Vitis GUI downloaded BIT and ris_fast_network.elf to cable 210299995170.
+PASS: STATUS fast_supported=true; FAST 1/3/5 accepted with errors=0.
+PASS: internal counter estimates approximately 0.9996/2.9990/4.9986 MHz against PC timing.
+PASS: GUI 1/3/5 MHz buttons verified against board; STOP/hold and manual takeover verified.
+Final: all400 LOW command mirror, OE enabled, static, errors=0; GUI connected.
+Existing 400-channel mapping and saved pattern library preserved byte-for-byte.
+
+Measurement boundary: internal FPGA count does NOT measure external 595 Q or RIS voltage.
+User explicitly requested download first and will perform oscilloscope measurements afterward.
+BIT/XSA and ELF are paired under export_network_fast; old export_network remains available.
+
+Flow notes: in-memory routing cannot export XSA directly; export_fast.tcl reopens routed.dcp.
+The final script uses that checkpoint export flow. No RTL or constraint change followed sign-off.

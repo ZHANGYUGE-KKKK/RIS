@@ -1,0 +1,13 @@
+{
+  "source": "JTAG AP0 read; no assumed integrity",
+  "bytes": 8388608,
+  "sha256": "973787d4faa6344af491b6eea1ed405f60b82e18de762e096c671677f84cd9ce",
+  "bad_tuples": 39317,
+  "bad_by_component": [
+    39314,
+    0,
+    0,
+    3
+  ],
+  "first_bad_tuple": 112945
+}

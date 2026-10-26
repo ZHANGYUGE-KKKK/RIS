@@ -1,0 +1,3 @@
+SOURCE=/home/yyz/work/RIS/zynq/z035
+SNAPSHOT=/tmp/ad9361_rx_integration_clone_20261016
+RTL functional content matches current source; only compatibility-plane comment cleanup differs.

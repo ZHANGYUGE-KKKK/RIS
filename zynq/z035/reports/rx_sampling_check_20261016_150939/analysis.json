@@ -1,0 +1,347 @@
+{
+  "rows": 1584,
+  "pn_tested": 1573,
+  "pn_pass": 0,
+  "restore_result": 0,
+  "timer_counts_per_second": 333333343,
+  "spi": {
+    "002": 222,
+    "003": 222,
+    "006": 15,
+    "009": 7,
+    "00a": 2,
+    "010": 200,
+    "011": 0,
+    "012": 16,
+    "03c": 33,
+    "03d": 0,
+    "03e": 0,
+    "3f4": 83,
+    "3f5": 0,
+    "3f6": 48
+  },
+  "bbpll_hz": 983040000.7659314,
+  "adc_hz": 245760000.19148284,
+  "sample_rate_hz": 15360000.011967678,
+  "expected_minimum_2r2t_data_clock_hz": 61440000.04787071,
+  "groups": {
+    "0": {
+      "points": 10,
+      "pn_pass": 0,
+      "frequency_min_mhz": 173.08704763541635,
+      "frequency_mean_mhz": 173.6859527458966,
+      "frequency_max_mhz": 174.214921249179
+    },
+    "1": {
+      "points": 32,
+      "pn_pass": 0,
+      "frequency_min_mhz": 179.7211849439025,
+      "frequency_mean_mhz": 180.42810657338822,
+      "frequency_max_mhz": 180.84704036942836
+    },
+    "2": {
+      "points": 512,
+      "pn_pass": 0,
+      "frequency_min_mhz": 122.65075046603361,
+      "frequency_mean_mhz": 130.71891378224805,
+      "frequency_max_mhz": 183.15607882231143
+    },
+    "3": {
+      "points": 1024,
+      "pn_pass": 0,
+      "frequency_min_mhz": 166.87803797836315,
+      "frequency_mean_mhz": 180.3447937755476,
+      "frequency_max_mhz": 182.38978378044447
+    },
+    "4": {
+      "points": 2,
+      "pn_pass": 0,
+      "frequency_min_mhz": 180.18157568544862,
+      "frequency_mean_mhz": 180.1942856580614,
+      "frequency_max_mhz": 180.20699563067421
+    },
+    "5": {
+      "points": 2,
+      "pn_pass": 0,
+      "frequency_min_mhz": 123.48148715297363,
+      "frequency_mean_mhz": 135.03395155129917,
+      "frequency_max_mhz": 146.5864159496247
+    },
+    "6": {
+      "points": 1,
+      "pn_pass": 0,
+      "frequency_min_mhz": 180.745601341607,
+      "frequency_mean_mhz": 180.745601341607,
+      "frequency_max_mhz": 180.745601341607
+    },
+    "7": {
+      "points": 1,
+      "pn_pass": 0,
+      "frequency_min_mhz": 173.97618482742692,
+      "frequency_mean_mhz": 173.97618482742692,
+      "frequency_max_mhz": 173.97618482742692
+    }
+  },
+  "ila": {
+    "0": {
+      "captures": 3,
+      "valid_rows": 2521,
+      "status_low": 451,
+      "frame_mixed": 449,
+      "iq_rows": 808,
+      "counter_errors": 1,
+      "batches": 41,
+      "excluded_batches": 1,
+      "previous_frame_checks": 2417,
+      "previous_frame_errors": 0,
+      "valid_pipeline_checks": 2337,
+      "valid_pipeline_errors": 0,
+      "iq_deframe_checks": 2121,
+      "iq_deframe_errors": 4,
+      "sample_pack_checks": 2457,
+      "sample_pack_errors": 2,
+      "frame_histogram": {
+        "0": 1028,
+        "1": 221,
+        "2": 228,
+        "3": 1044
+      },
+      "interior_frame_run_lengths": {
+        "00:4": 88,
+        "00:5": 112,
+        "01:1": 206,
+        "10:1": 213,
+        "11:4": 63,
+        "11:5": 135
+      },
+      "iq_valid_spacing": {
+        "1": 558,
+        "8": 59,
+        "9": 129
+      }
+    },
+    "1": {
+      "captures": 3,
+      "valid_rows": 2527,
+      "status_low": 430,
+      "frame_mixed": 429,
+      "iq_rows": 853,
+      "counter_errors": 3,
+      "batches": 42,
+      "excluded_batches": 2,
+      "previous_frame_checks": 2359,
+      "previous_frame_errors": 0,
+      "valid_pipeline_checks": 2279,
+      "valid_pipeline_errors": 0,
+      "iq_deframe_checks": 2073,
+      "iq_deframe_errors": 0,
+      "sample_pack_checks": 2399,
+      "sample_pack_errors": 0,
+      "frame_histogram": {
+        "0": 1061,
+        "1": 211,
+        "2": 218,
+        "3": 1037
+      },
+      "interior_frame_run_lengths": {
+        "00:4": 14,
+        "00:5": 169,
+        "01:1": 196,
+        "10:1": 200,
+        "11:4": 36,
+        "11:5": 148
+      },
+      "iq_valid_spacing": {
+        "1": 596,
+        "8": 35,
+        "9": 139
+      }
+    },
+    "2": {
+      "captures": 3,
+      "valid_rows": 2622,
+      "status_low": 447,
+      "frame_mixed": 446,
+      "iq_rows": 878,
+      "counter_errors": 0,
+      "batches": 42,
+      "excluded_batches": 0,
+      "previous_frame_checks": 2580,
+      "previous_frame_errors": 0,
+      "valid_pipeline_checks": 2496,
+      "valid_pipeline_errors": 0,
+      "iq_deframe_checks": 2265,
+      "iq_deframe_errors": 0,
+      "sample_pack_checks": 2622,
+      "sample_pack_errors": 0,
+      "frame_histogram": {
+        "0": 1097,
+        "1": 221,
+        "2": 225,
+        "3": 1079
+      },
+      "interior_frame_run_lengths": {
+        "00:4": 17,
+        "00:5": 184,
+        "01:1": 217,
+        "10:1": 216,
+        "11:4": 39,
+        "11:5": 164
+      },
+      "iq_valid_spacing": {
+        "1": 644,
+        "8": 37,
+        "9": 155
+      }
+    },
+    "3": {
+      "captures": 3,
+      "valid_rows": 2596,
+      "status_low": 438,
+      "frame_mixed": 443,
+      "iq_rows": 874,
+      "counter_errors": 5,
+      "batches": 42,
+      "excluded_batches": 1,
+      "previous_frame_checks": 2491,
+      "previous_frame_errors": 0,
+      "valid_pipeline_checks": 2409,
+      "valid_pipeline_errors": 1,
+      "iq_deframe_checks": 2185,
+      "iq_deframe_errors": 2,
+      "sample_pack_checks": 2532,
+      "sample_pack_errors": 0,
+      "frame_histogram": {
+        "0": 1095,
+        "1": 221,
+        "2": 222,
+        "3": 1058
+      },
+      "interior_frame_run_lengths": {
+        "00:4": 14,
+        "00:5": 183,
+        "01:1": 208,
+        "10:1": 208,
+        "11:4": 34,
+        "11:5": 160
+      },
+      "iq_valid_spacing": {
+        "1": 624,
+        "3": 1,
+        "6": 1,
+        "8": 33,
+        "9": 153
+      }
+    },
+    "4": {
+      "captures": 3,
+      "valid_rows": 2302,
+      "status_low": 0,
+      "frame_mixed": 0,
+      "iq_rows": 955,
+      "counter_errors": 16,
+      "batches": 37,
+      "excluded_batches": 8,
+      "previous_frame_checks": 1780,
+      "previous_frame_errors": 0,
+      "valid_pipeline_checks": 1722,
+      "valid_pipeline_errors": 0,
+      "iq_deframe_checks": 1618,
+      "iq_deframe_errors": 7,
+      "sample_pack_checks": 1809,
+      "sample_pack_errors": 0,
+      "frame_histogram": {
+        "0": 1192,
+        "3": 1110
+      },
+      "interior_frame_run_lengths": {
+        "00:4": 32,
+        "00:5": 144,
+        "11:4": 80,
+        "11:5": 97
+      },
+      "iq_valid_spacing": {
+        "1": 546,
+        "6": 76,
+        "7": 98
+      }
+    },
+    "5": {
+      "captures": 3,
+      "valid_rows": 2230,
+      "status_low": 498,
+      "frame_mixed": 505,
+      "iq_rows": 594,
+      "counter_errors": 0,
+      "batches": 36,
+      "excluded_batches": 0,
+      "previous_frame_checks": 2194,
+      "previous_frame_errors": 0,
+      "valid_pipeline_checks": 2122,
+      "valid_pipeline_errors": 1,
+      "iq_deframe_checks": 1938,
+      "iq_deframe_errors": 10,
+      "sample_pack_checks": 2230,
+      "sample_pack_errors": 1,
+      "frame_histogram": {
+        "0": 835,
+        "1": 252,
+        "2": 253,
+        "3": 890
+      },
+      "interior_frame_run_lengths": {
+        "00:2": 1,
+        "00:3": 149,
+        "00:4": 86,
+        "01:1": 239,
+        "10:1": 244,
+        "11:2": 1,
+        "11:3": 105,
+        "11:4": 127
+      },
+      "iq_valid_spacing": {
+        "1": 338,
+        "6": 2,
+        "7": 98,
+        "8": 120
+      }
+    },
+    "6": {
+      "captures": 3,
+      "valid_rows": 2520,
+      "status_low": 450,
+      "frame_mixed": 444,
+      "iq_rows": 805,
+      "counter_errors": 0,
+      "batches": 41,
+      "excluded_batches": 0,
+      "previous_frame_checks": 2479,
+      "previous_frame_errors": 0,
+      "valid_pipeline_checks": 2397,
+      "valid_pipeline_errors": 0,
+      "iq_deframe_checks": 2170,
+      "iq_deframe_errors": 7,
+      "sample_pack_checks": 2520,
+      "sample_pack_errors": 4,
+      "frame_histogram": {
+        "0": 1034,
+        "1": 219,
+        "2": 225,
+        "3": 1042
+      },
+      "interior_frame_run_lengths": {
+        "00:4": 94,
+        "00:5": 109,
+        "01:1": 214,
+        "10:1": 221,
+        "11:4": 65,
+        "11:5": 135
+      },
+      "iq_valid_spacing": {
+        "1": 570,
+        "8": 63,
+        "9": 131
+      }
+    }
+  }
+}

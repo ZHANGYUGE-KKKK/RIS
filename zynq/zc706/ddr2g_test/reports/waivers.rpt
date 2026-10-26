@@ -1,0 +1,44 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
+| Date         : Wed Oct 21 15:37:39 2026
+| Host         : yyz-SER8 running 64-bit Ubuntu 24.04.1 LTS
+| Command      : report_waivers -file /home/yyz/work/RIS/zynq/zc706/ddr2g_test/reports/waivers.rpt
+| Design       : ddr_test_wrapper
+| Device       : 7z045ffg900-2
+| Speed File   : -2  PRODUCTION 1.12 2019-11-22
+---------------------------------------------------------------------------------------------------
+
+Waiver Report
+
+
+-----------------
+Table Of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS (DRC: no waivers)
+3. REPORT DETAILS (METHODOLOGY: no waivers)
+4. REPORT DETAILS (CDC)
+
+
+-----------------
+1. REPORT SUMMARY
+-----------------
+Waiver Type  Total Vios  Remaining Vios  Waived Vios  Used Waivers  Set Waivers
+-----------  ----------  --------------  -----------  ------------  -----------
+DRC          0           0               0            0             0
+METHODOLOGY  0           0               0            0             0
+CDC          188         186             2            2             2
+Note: This report is based on the most recent report_drc/report_methodology/report_cdc runs.
+
+
+--------------------------------
+4. REPORT DETAILS (CDC)
+--------------------------------
+Rule    Severity  Description                                    Total Vios  Remaining Vios  Waived Vios  Used Waivers  Set Waivers
+------  --------  ---------------------------------------------  ----------  --------------  -----------  ------------  -----------
+CDC-11  Critical  Fan-out from launch flop to destination clock  2           0               2            2             2
+
+Note: Any 'Rule' which is flagged by '*' is an aggregating message and its counts are based on the number of objects represented,
+      rather than the number of messages.
+

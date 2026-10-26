@@ -1,0 +1,13 @@
+PIN PASS DDR3_cs_n[1] H8 SSTL15
+PIN PASS DDR3_cke[1] C7 SSTL15
+PIN PASS DDR3_odt[1] C9 SSTL15
+PIN PASS DDR3_ck_p[1] D9 DIFF_SSTL15
+PIN PASS DDR3_ck_n[1] D8 DIFF_SSTL15
+PIN PASS sys_clk_clk_p[0] H9 DIFF_SSTL15
+PIN PASS sys_clk_clk_n[0] G9 DIFF_SSTL15
+PIN PASS cpu_reset A8 LVCMOS15
+IDELAYCTRL ddr_test_i/mig/u_ddr_test_mig_0_mig/u_iodelay_ctrl/idelayctrl_gen_1.u_idelayctrl_300_400 LOC=IDELAYCTRL_X1Y4 GROUP=DDR_TEST_MIG_0_IODELAY_MIG1
+IDELAYCTRL ddr_test_i/mig/u_ddr_test_mig_0_mig/u_iodelay_ctrl/idelayctrl_gen_1.u_idelayctrl_300_400_REPLICATED_0 LOC=IDELAYCTRL_X1Y5 GROUP=
+IDELAYCTRL ddr_test_i/mig/u_ddr_test_mig_0_mig/u_iodelay_ctrl/idelayctrl_gen_1.u_idelayctrl_300_400_REPLICATED_0_1 LOC=IDELAYCTRL_X1Y6 GROUP=
+IDELAYCTRL ddr_test_i/mig/u_ddr_test_mig_0_mig/u_iodelay_ctrl/u_idelayctrl_200 LOC=IDELAYCTRL_X0Y0 GROUP=
+64 MIG data delays retain their 400MHz group; unused 200MHz readiness controller remains connected.

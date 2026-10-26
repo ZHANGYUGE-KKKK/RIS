@@ -1,0 +1,24 @@
+{
+  "elfs": {
+    "export/key_ctrlll.elf": "731685c6def7e2b75ec8874677627c2b59af49f29652fbef40f204f6a99f2bd2",
+    "export/key_ctrlll_2p4.elf": "731685c6def7e2b75ec8874677627c2b59af49f29652fbef40f204f6a99f2bd2",
+    "export/key_ctrlll_dma_debug.elf": "731685c6def7e2b75ec8874677627c2b59af49f29652fbef40f204f6a99f2bd2",
+    "vitis_code/key_ctrlll/Debug/key_ctrlll.elf": "731685c6def7e2b75ec8874677627c2b59af49f29652fbef40f204f6a99f2bd2"
+  },
+  "board_programmed": false,
+  "rf_configuration_changed": false,
+  "rtl_changed": false,
+  "compiled": true,
+  "compiler_warnings": 0,
+  "tests": {
+    "tcp_2p4": 12,
+    "tcp_915": 12,
+    "tk_gui": 9,
+    "spectrum": 10,
+    "configuration": 5,
+    "sanitized_capture_core": "pass",
+    "sanitized_mmu_mapping": "pass"
+  },
+  "hardware_validation": "pending user capture",
+  "probe_scope": "bounded samples; not whole-buffer verification"
+}

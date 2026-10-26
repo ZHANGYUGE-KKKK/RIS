@@ -1,0 +1,21 @@
+{
+  "board_ip": "192.168.1.10",
+  "netmask": "255.255.255.0",
+  "gateway": "0.0.0.0",
+  "dhcp": false,
+  "pc_example": "192.168.1.20/24",
+  "changed_application_sources": [
+    "vitis_code/key_ctrlll/src/drivers/rx_network.h"
+  ],
+  "cross_compile": "PASS; no warnings",
+  "host_python_syntax": "PASS",
+  "network_header_dependencies": "PASS; incremental build recompiled rx_network.c and rx_control.c",
+  "elf_contains_new_ip": true,
+  "elf_no_longer_contains_old_ip_literal": true,
+  "export_matches_debug_elf": true,
+  "unchanged_rf_configuration": true,
+  "unchanged_bit_xsa": true,
+  "elf_sha256": "9f23faa2b3aea84c01fe7cf21e19d8573a9b52d9b837df78f3f8c563ef44fb42",
+  "onboard_validation": "NOT RUN; manual ELF download required",
+  "host_network_configuration": "Not modified"
+}

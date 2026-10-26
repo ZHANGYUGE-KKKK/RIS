@@ -1,0 +1,42 @@
+RIS pattern editing and playback
+Date: 2026-10-23T16:05:14.572481+08:00
+
+Implementation
+  Added a third embedded page; one application window and one TCP worker remain.
+  Spatial20x20 binary pattern library is independent of FPC/chip assignment.
+  Compile/decode uses the current measured-row mapping; complete valid400-cell
+    mapping is required for whole-frame output. Library and mapping JSON have
+    distinct formats and are validated independently. Atomic library replacement.
+  Supports cell/drag, row/column0/1, all0/all1, inverse, undo, named patterns,
+    JSON import/export, playlist reorder/repeat/remove, per-item dwell100..3600000ms,
+    once/loop/pingpong/random and explicit manual item switching.
+  ACK is checked against exact frame image, OE, blink and error state before dwell.
+    Stop invalidates in-flight callbacks and cancels future timers without clearing
+    the last output. Manual output commands take over; disconnects, changed mapping
+    and failed acknowledgments stop playback. Writes are not retried automatically.
+  Selection/edit/save/import do not send commands. Tab switching keeps playback.
+    Close honors unsaved edits and stops scheduling. Timing is PC software timing.
+
+Verification
+  tests.log:56 passing offline tests (existing36 +12 pattern/player +8 Tk/worker).
+  gui_tests.log:8 GUI tests repeated after compact-toolbar layout correction.
+  New tests cover row/column intersections, known physical row endpoints, spatial
+    frame roundtrips, retained patterns across rewiring, malformed files, atomic
+    persistence, playlist order, ACK/dwell, stop races, busy polling, loop/pingpong/
+    random ordering, no automatic resume, manual takeover, mapping/ACK errors,
+    no output on editing/import, single TCP client, close cancellation, small UI.
+  Bytecode compilation and CLI help passed. Manual preview images reviewed at
+    1420x1000 and1180x810; right-side controls remain accessible by scrolling.
+  No real-board output commands were sent during implementation/testing.
+
+Desktop runtime
+  Existing live GUI is still running the operator's2000ms BLINK. It was not
+    restarted or interrupted. Refresh preference was requested separately; source
+    and launch options are ready for the next restart. See desktop_state_before_refresh.json.
+
+Desktop refresh verified 2026-10-23T16:18:20.354914+08:00
+User authorized refresh and restoring BLINK 2000. New GUI PID 3480956.
+All 400 mappings preserved byte-for-byte; FPC4/CH39 selection preserved.
+Tabs: 控制面板, FPC—RIS 映射, 图案与切换. Shared connection to 192.168.1.11:7060 active.
+BLINK 2000 acknowledged; frames 1634 -> 1644; errors 0x00000000.
+Custom pattern playlist remains stopped. No custom FRAME command sent to board.

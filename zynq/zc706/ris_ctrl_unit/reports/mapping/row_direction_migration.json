@@ -1,0 +1,43 @@
+{
+  "time": "2026-10-23T13:48:11.365327+08:00",
+  "backup": "reports/mapping/backups/row_direction_20261023_134811",
+  "profile": "back_insert_4x10_straight_measured_rows_20261023",
+  "rows": "upper 11-old; lower 31-old",
+  "columns_changed": false,
+  "files": [
+    "host/mappings/ris_mapping.json",
+    "host/mappings/session_recovery.json"
+  ],
+  "ports": {
+    "1": "T1",
+    "2": "T3",
+    "3": "B2",
+    "4": "B4",
+    "5": "B1",
+    "6": "B5",
+    "7": "T2",
+    "8": "T4",
+    "9": "B3",
+    "10": "T5"
+  },
+  "mapped": 400,
+  "measured": 0,
+  "original_sha256": {
+    "host/mappings/ris_mapping.json": "1448ec61ff4a56074df5b8613e1f346c2eb348c5570f826cb71f76e7abcead7b",
+    "host/mappings/session_recovery.json": "1448ec61ff4a56074df5b8613e1f346c2eb348c5570f826cb71f76e7abcead7b"
+  },
+  "verified_at": "2026-10-23T13:50:21.182460+08:00",
+  "pid": 3337411,
+  "gui_connected": true,
+  "rendered_cell_labels_checked": 800,
+  "live_selected_source": [
+    3,
+    10
+  ],
+  "live_selected_cell": "R11 C08 · 下端 2 · 列 5–8",
+  "board_state": "静态保持  |  输出使能  |  完成帧数 49  |  状态 0x000000C2  |  错误 0x00000000",
+  "output_state": "板端已确认：4/400路高（非单通道测试）",
+  "operator_continued_testing_after_refresh": true,
+  "agent_output_commands_sent": false,
+  "gui_model_matches_corrected_file": true
+}

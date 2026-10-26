@@ -1,0 +1,5 @@
+IDDR 7 expected=7
+IDELAYE2 7 expected=7
+IDELAYCTRL 1 expected=1
+BUFG 1 expected=1
+LATCHES 0 BLACKBOXES 0

@@ -1,0 +1,110 @@
+ZC706 live debug — 2026-10-21
+
+User direction at end: do NOT perform DDR frequency reduction. Await the
+reference project and compare its configuration before any further HW change.
+
+Hardware: original BIT f94e7ffbc1413ebfa571aa86ae14f774a74e3b4dd4108c299dc979daa3a417ca
+Original XSA 1a81366a216e6914647ba57707edcb2a47157065d39c204bf8b7a03d9667cb1d
+AD9361 remains CONFIG2P4, RX/TX LO 2400 MHz, Fs 15.36 MSPS.
+No reduced-frequency BIT was generated or downloaded. The isolated
+mig400_trial was only a preparation attempt; it failed BD validation.
+Do not run that preparation script or continue that trial without a new
+user instruction.
+
+Software v6: helloworld.c adds UART c=8MiB capture, v=1-second capture,
+r=release frozen buffer; d still prints diagnostics. RF configuration,
+DMA packet length (32768 bytes), and hardware stay unchanged.
+Current ELF, Debug ELF and named export aliases were aligned to v6.
+Build and config tests passed; current source manifest verification passed.
+
+Live evidence:
+1) Original and restored hardware startup PN/clock checks passed before
+   testing. CuteCom initially displayed old firmware v4; v6 was loaded.
+2) 8MiB: 256/256 BDs passed checks, expected NEXT/BUF/LENGTH/ID, issues=000.
+   Capture id 00000004abe63ee9. CPU probes found unstable DDR contents in
+   phases DMA_done, DMA_reset and PL_rearm, even within one phase.
+3) 1 second: 122880000 bytes, 3750/3750 BDs passed, issues=000.
+   Capture id 000000176ad54c88. Multiple sampled windows remained unstable.
+4) Independent JTAG AHB-AP repeat reads of frozen data reproduced changes.
+   Stable controls: BD base 0x40000000 and data base 0x40400000.
+   Bad examples: 0x404e4000 and 0x40580000, byte lane 1 mod8.
+   Larger capture also shows other lanes. See jtag_probes_8m.json and
+   jtag_probes_1s.json, raw files in directories of the same names.
+5) Entire 8MiB was dumped once via JTAG (capture8m_jtag.bin). This is an
+   error-containing diagnostic read, NOT a validated capture/golden file.
+   39317 malformed tuples; bad components I1/Q1/I2/Q2=39314/0/0/3.
+6) DMA stopped and capture released, JTAG writes/reads tested 8 addresses,
+   4 patterns (zero/ones/alternating/random), 3 reads each: 60 of96 read
+   comparisons failed. PS DDR at 0x30000000 passed 12/12. Two PL control
+   pages 0x40400000 and 0x70000000 passed 12/12 each. Five PL pages failed
+   all 12 comparisons each. See memory_patterns.json and raw fixtures.
+7) CPU0 and CPU1 halted together: PS control and PL base control passed;
+   0x40580000, 0x41184000, 0x425c4000 still read incorrectly.
+   CPU1 PC ffffff34 (boot parking). See memory_halted.json/log.
+8) Current MIG DDR pin assignments match Vivado 2020.2 ZC706 1.4 board
+   mig.prj exactly (pin_comparison.json is empty). This does not establish
+   compatibility with a replacement physical module.
+
+Conclusion supported by evidence: stored-data errors can be reproduced
+without AD9361 acquisition, DMA, CPU application execution, Ethernet, or
+FFT parsing. Focus next on the PL DDR storage/access path and actual memory
+module parameters. Do not claim a specific failed chip, byte lane, or
+physical root cause yet. SG checks passing alone do not certify continuity.
+
+Hardware identification:
+User sees 4 soldered Micron D9LGK chips and a separate DDR3 metal shield.
+Those 4 chips are the PS DDR group; actual PL SO-DIMM label not yet read.
+Official UG954 v1.8 p19 specifies Micron MT8JTF12864HZ-1G6G1 at J1,
+1 GB, 64-bit, 1.5 V, up to1600 MT/s. Current MIG selected family matches.
+Official source:
+https://docs.amd.com/api/khub/documents/m4fPXowvxKd5JZRfe046WQ/content
+
+Temporary SPD probe did not produce valid SPD data and must NOT be used
+as model evidence. The helper had an entry/restore issue; the full original
+BIT + normal v6 firmware were subsequently reloaded to restore a defined
+runtime state. Do not reuse spd_probe scripts without correcting and
+validating their entry, completion and CPU/banked register restoration.
+
+Next: receive user's reference project; compare memory part/density,
+row/column/bank geometry, tCK, CL/CWL, tRFC, refresh, ODT/drive, DCI/VREF,
+pin mapping, UI clocks and reset/calibration connections. No further
+frequency test is authorized at this point.
+
+Cleanup verified: original BIT + v6 normal firmware fully reloaded; startup
+PN1248/1248 PASS, restored RF50/50 PASS, clock20/20 PASS, READY1 errors00.
+Exited interactive RF test without acquiring windows; g UART reply verified.
+Temporary UART controller closed; CuteCom port reopened. Vitis left open.
+
+Reference review: /home/yyz/work/GNSS_Receiver_Delivery_v1.0 inspected.
+Actual delivery XSA has no MIG and no64-bit PL DDR ports. AXI DMA SG
+and custom snapshot/acquisition masters all route through64-bit PS HP0
+to PS DDR at100MHz AXI clock. PS DDR is32-bit,533.333MHz,1GiB; its
+103 DDR-specific PS configuration fields match the current PS configuration.
+DMA SG length width23 and memory-side width64 match; GNSS AXIS width32
+versus current64. Full comparison: reference_gnss_comparison.json.
+Reference configuration offers no PL DDR timing or pinout to copy.
+No projects, source configurations, firmware, or board state were changed
+during this reference inspection; only these diagnostic records were added.
+
+Photo identification and user decision: two PL SO-DIMMs identified.
+DEFAULT for further development is1 GiB MT8JTF12864HZ-1G6G1 (1Rx8,
+DDR3-1600,64-bit,1.5V). Alternate is2 GiB MT16JSF25664HZ-1G4F1
+(2Rx8,DDR3-1333,64-bit,1.5V). Each rank of both uses14row/10column/3bank
+bits;2GiB comes from two ranks, not an added row bit. Alternate label
+7-10 versus datasheet CL9 remains an SPD/revision verification point.
+Current MIG matches the1GiB part family/geometry/rate; no config changes.
+See PL_DDR_HARDWARE.txt for full parameters and sources. Previous failing
+tests have not been positively associated with one of these physical DIMMs.
+No reduced-frequency test is authorized.
+
+Confirmed1GiB retest completed: reports/ddr_1g_retest_20261021_141922.
+Original BIT and v6 ELF reloaded; PN1248/1248 and RF clock20/20 passed.
+8MiB256BD and1second3750BD all checks passed, but DDR probes unstable.
+JTAG fixed-pattern checks: CPU running60/96 failed, bothCPUs halted60/96
+failed; PS control0/12 failed each mode. Five PL pages reproduce errors.
+ILA1024samples: calib_complete1, mmcm_locked1, ui_sync_rst0, aresetn1.
+This positively associates the failure with the currently installed1GiB
+module, so the physical DIMM identity of prior tests is no longer needed
+to establish the current failure. Specific root cause remains unresolved.
+CuteCom port restored; Vitis remains open. Latest1second capture left frozen.
+Capacity research and8GiB candidate in that report/CAPACITY_RESEARCH.txt.

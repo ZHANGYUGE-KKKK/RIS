@@ -1,0 +1,1 @@
+CuteCom PID 1642808 owns /dev/ttyUSB0 at 115200 8N1. Serial logger is closed.

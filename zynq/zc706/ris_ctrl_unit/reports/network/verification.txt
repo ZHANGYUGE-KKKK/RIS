@@ -1,0 +1,48 @@
+RIS Tkinter/lwIP network acceptance
+Date: 2026-10-22T17:27:40+08:00
+Result: PASS (real board and visible GUI)
+
+Target and network
+  ZC706 / JTAG-HS3 210299995170, previously confirmed and authorized target.
+  Board 192.168.1.11/24, TCP 7060, MAC 02:0a:35:07:06:02.
+  Host enp1s0 192.168.1.20/24 using existing RIS-ZC706-local profile.
+  Reused the accepted 100 MHz, 50-chip, 16-frame first-board BIT without RTL changes.
+  Separate lwIP 2.1.1 RAW_API platform/application in vitis_network/.
+  export_network/: current network ELF and matching BIT/XSA/PS init/SHA256.
+  export/: previous UART-only acceptance package retained.
+  Current C/H sources match the built application copies (hashes checked).
+
+Passed checks
+  reports/network_build.log: RIS_NETWORK_APPLICATION_BUILD_PASS.
+    No application compilation warnings. BSP has existing GEM driver warnings.
+  program.log: FPGA/PS initialized and network application started.
+  ICMP ping from host to 192.168.1.11 succeeded.
+  hardware_test.log: RIS_NETWORK_TEST_PASS.
+    ALL, edge chips 0/49, 5-chip group, bit edit, full 50-byte frame,
+    unselected chip preservation, invalid inputs with no frame changes,
+    OE high-Z/enable, timed switching/STOP, TCP fragmentation/reconnect.
+  jtag_test.log: RIS_BOARD_SMOKE_PASS, including 20 full-board updates.
+  gui_test.log: RIS_NETWORK_GUI_TEST_PASS using real Tk widgets + real board.
+    All high/low, Q-bit editing/single-chip update, 5-chip group update,
+    OE disable/enable, timed switching and STOP. GUI and JTAG tests run sequentially.
+  final_status.log: pattern=0 status=000000c2 errors=00000000 frames=54.
+  gui.png: GUI test screenshot; gui_live.png: visible connected user window.
+  Host GUI process recorded in gui.pid; TCP connection observed ESTABLISHED.
+  Initial handoff state: all LOW, HOLD/IDLE, OE enabled, no errors.
+
+Use
+  /usr/bin/python3 host/ris_gui.py --connect
+  Board default is 192.168.1.11:7060 (user-specified address).
+  GUI currently open and connected; status polls do not change the outputs.
+  One TCP controller; every command waits for its matching JSON response.
+  No automatic retry of writes after timeout. Reconnect and inspect status.
+  Disconnect stops periodic switching and holds the current pattern;
+    a silent peer is discarded after 10 seconds without a request.
+  UART 115200 8N1 and JTAG mailbox remain available; use one controller at a time.
+
+Measurement boundary
+  GUI colors are command mirrors and OE state, not voltage readings.
+  External Q7S readback/FPC detection was not added.
+  Use a multimeter DC voltage range, black lead to board GND, red lead to Q.
+  Measure with static ALL 0/ALL 1 first; OE disabled is high impedance.
+  User performs the actual voltage measurements; none are claimed here.

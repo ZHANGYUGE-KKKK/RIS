@@ -1,0 +1,8 @@
+ARM GCC -Wall -Wextra -fsyntax-only: PASS (rx_9361.c and helloworld.c).
+17 immutable RF source hashes unchanged.
+Monitor reports: rx_baseline_report, rx_pn_stability_report, rx_restored_report.
+Each report: 50 windows x100ms, CPU64-bit timer, diagnostics capability0x00010001.
+PN report: official_rx_report; stages1=snapshot,2=FPGAgrid,3=individual-lanes,4=long-PN,5=restore,6=done.
+Temporary SPI writes only3F4/3F5/3F6; original values restored and verified.
+FPGA scan: 32x32 data/frame plus7x32 per-lane points; original FPGA taps restored on failure.
+Legacy non-config915 SPI delay scan compile-disabled. No DMA/ARM/MIG memory test in bounded diagnostic main.

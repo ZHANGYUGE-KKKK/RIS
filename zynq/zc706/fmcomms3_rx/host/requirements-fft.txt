@@ -1,0 +1,3 @@
+# Optional; board control and binary downloads still use the standard library.
+numpy>=1.26
+matplotlib>=3.9

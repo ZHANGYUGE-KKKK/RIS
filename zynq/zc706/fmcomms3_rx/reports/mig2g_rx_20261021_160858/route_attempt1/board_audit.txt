@@ -1,0 +1,24 @@
+rx_clk_p AF20 LVDS_25
+rx_clk_n AG20 LVDS_25
+rx_frame_p AG21 LVDS_25
+rx_frame_n AH21 LVDS_25
+SPI_9361_io0_io V28 LVCMOS25
+SPI_9361_io1_io V29 LVCMOS25
+SPI_9361_sck_io T28 LVCMOS25
+SPI_9361_ss_io R28 LVCMOS25
+GPIO_PS_tri_io[0] P30 LVCMOS25
+cpu_reset A8 LVCMOS15
+key_0 K15 LVCMOS15
+DIFF_TERM=TRUE u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[0].g_data.u_input
+DIFF_TERM=TRUE u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[1].g_data.u_input
+DIFF_TERM=TRUE u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[2].g_data.u_input
+DIFF_TERM=TRUE u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[3].g_data.u_input
+DIFF_TERM=TRUE u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[4].g_data.u_input
+DIFF_TERM=TRUE u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[5].g_data.u_input
+DIFF_TERM=TRUE u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/g_input[6].g_frame.u_input
+DIFF_TERM=TRUE u_design_1_wrapper/design_1_i/ad9361_rx_axis_0/inst/u_clock_input
+DDR3_0_dq width=64
+DDR3_0_dm width=8
+DDR3_0_dqs_p width=8
+DDR3_0_addr width=14
+PASS all board port bindings, SODIMM widths and eight receive terminations

@@ -1,0 +1,1 @@
+PASS: ZC706 board/PS/SODIMM/HPC/LPC adaptation and BD validation

@@ -1,0 +1,93 @@
+2026-10-16 本地原理图只读核查
+
+本次逐页渲染并查看 PDF 图像，同时用文本与核心板引脚表交叉核对。
+用户已明确实际子卡为 AD-FMCOMMS3（ADI 原板或引脚兼容板），所以当前
+R27/T27、R25/R26 以及六路 DATA 的映射与该子卡资料匹配；本次排除
+误用 RFMC6000 引脚映射的分支。下表保留两板差异，避免后续混用资料。
+未操作硬件、未修改约束/RTL/SPI 配置。下面是资料能证明的连接关系，不能
+替代实物子卡型号、板卡修订、核心板选焊位置与实际终端电阻的确认。
+据主任务转述，用户目前也不能确定相关实物电压/端接状态；没有把未知
+状态当成已确认的 1.8V 或已确认缺失 100Ω。
+
+一、两种子卡的 RX 映射确实不同
+
+所有 P/N 按正/负顺序排列；FPGA 管脚经同一璞致载板第 18 页核对。
+
+信号      AD-FMCOMMS3 Rev A                 V3BEST FMC9361 V1.0 (RFMC6000资料)
+          FMC P/N -> FPGA P/N               FMC P/N -> FPGA P/N
+DATA_CLK  G6/G7   -> R27/T27                 H4/H5   -> AB27/AC27
+RX_FRAME  D8/D9   -> R25/R26                 C10/C11 -> T30/U30
+RX_DATA0  H7/H8   -> P21/R21                 G12/G13 -> W29/W30
+RX_DATA1  G9/G10  -> N28/P28                 C14/C15 -> V24/V25
+RX_DATA2  H10/H11 -> T24/T25                 H10/H11 -> T24/T25
+RX_DATA3  D11/D12 -> U22/V22                 G9/G10  -> N28/P28
+RX_DATA4  C10/C11 -> T30/U30                 D11/D12 -> U22/V22
+RX_DATA5  H13/H14 -> N29/P29                 H7/H8   -> P21/R21
+
+当前 R27/T27 对应载板 FMC 的 LA00_P_CC/LA00_N_CC (G6/G7)。
+当前 R25/R26 对应载板 FMC 的 LA01_P_CC/LA01_N_CC (D8/D9)。
+AD-FMCOMMS3 第 3 页分别把这两组接至 DATA_CLK_P/N 与 RX_FRAME_P/N。
+V3BEST FMC9361 第 2 页的 G6/G7、D8/D9 只有连接器短引线，未接网标或
+其他电路；其 RX_CLK 实际走 CLK0_M2C_P/N (H4/H5)，FRAME 走 LA06。
+所以不能把 RFMC6000 的配置/原理图与 FMCOMMS3 的管脚约束混为一套。
+如果实物是所示 V3BEST FMC9361，当前时钟/FRAME 约束会落在图中未连接
+的引脚；但用户已经明确实物是 AD-FMCOMMS3 或引脚兼容板，因此这不是
+当前已确认的硬件问题。本核查没有据此修改生产源文件。
+
+二、R27/T27 的连接与外部端接证据
+
+载板第 3 页，核心模块连接器 J4：
+  34 -> R27 / IO_L14P_SRCC_13 -> LA00_P_CC -> 第 18 页 FMC G6
+  36 -> T27 / IO_L14N_SRCC_13 -> LA00_N_CC -> 第 18 页 FMC G7
+核心板引脚和等长表 J4 页也明确给出上述 34/36 -> R27/T27 对应关系。
+表中核心板走线长度分别 1892.547 mil、1891.030 mil。
+
+已查看的载板第 3/18 页中，这条 DATA_CLK 差分路径直接连至连接器，
+未画跨 P/N 的 100Ω 电阻，也未画串联器件。AD-FMCOMMS3 第 2 页 U101
+DATA_CLK_P/N 直接接同名网络；第 3 页直接接 FMC G6/G7 和 TP212/TP213，
+这部分也未画跨 P/N 的 100Ω。
+
+这只能证明已提供的载板与 FMCOMMS3 原理图段未画接收终端，不能证明
+整个接收端没有终端。未找到核心板内部完整原理图或 PCB 网络/装配资料。
+所提供 01.SchDoc、02.SchDoc、LIB.DSN 属于供底板设计使用的核心模块
+符号/封装库，资料目录 readme 也如此说明，不是核心板内部电路原理图。
+核心板引脚/等长表不列出线上器件，因此无法由它排除 FPGA 引脚附近的
+100Ω。没有实物阻值测量或焊接照片证据，也无法确认生产修订/改装。
+外部 100Ω 是否存在、所在位置、是否实装，均仍然未知。
+
+三、Bank13 实际 VCCO 尚未确认
+
+核心板使用手册第 11 页明确：Bank35 固定 1.8V；Bank10/11/12/13 通过
+0Ω 电阻选焊选择 2.5V/3.3V/1.8V，默认是 3.3V。图中给出相应选焊位置。
+载板第 3 页同时写有：FMC-HPC: CHANGE BANK11/12/13 3.3V TO 1.8V。
+这说明 FMC 使用前要求调整核心板 Bank 供电，不能从载板上的 VADJ
+电源标签反推核心板已经完成该调整。
+
+载板第 18 页 VDD_1V8 经 R169/R170 的 0Ω 支路连接 VDD_FMC_ADJ；
+3.3V 支路 R171/R172 标 NC，旁边注明 LA/HA/HB 默认 1.8V。这是载板
+原理图的供电方案；仍不能证明现场核心板 Bank13 的实际选焊/实测 VCCO。
+目前缺少核心板对应 0Ω 选焊的实物确认以及 VCCO 测量。
+没有足够证据建议直接开启 DIFF_TERM=TRUE；本次没有改变 DIFF_TERM。
+
+四、源文件与图像证据
+
+源文件：
+1. /home/yyz/ALLdoc/zynq035/ad-fmcomms3_reva.pdf
+   AD-FMCOMMS3-EBZ, Rev A, drawing 02_037515，第 2/3 页。
+2. /home/yyz/ALLdoc/zynq035/05.开发板原理图/璞致PZ7035-FH PZ7045-FH PZ7100-FH平台开发板原理图.pdf
+   第 3 页 CORE INTERFACE2，第 18 页 FMC(HPC)。
+3. /home/yyz/ALLdoc/zynq035/04.核心板相关资料/3.PZ7035-PZ7045-PZ7100核心板使用手册/璞致PZ7035-7045-7100核心板使用手册.pdf
+   第 11 页 2.10 BANK 接口电平选择；第 14 页 4.3 亦说明默认 3.3V。
+4. /home/yyz/ALLdoc/zynq035/04.核心板相关资料/2.PZ7035-7045-7100核心板管脚和等长/璞致PZ7035-7045-7100核心板管脚和等长.xlsx
+   J4 页第 18/19 行，偶数侧 34/36。
+5. /home/yyz/ALLdoc/RFMC6000/1 原理图/FMC9361_SCH.pdf
+   V3BEST FMC9361, V1.0, 2020-06-11，第 2 页 01 FMC-LPC。
+
+已查看并保存的页面图像（相对本文件）：
+  hardware_schematic_evidence/carrier03.png
+  hardware_schematic_evidence/carrier18.png
+  hardware_schematic_evidence/fmcomms3_sheet2.png
+  hardware_schematic_evidence/fmcomms3_sheet3.png
+  hardware_schematic_evidence/core_manual11.png
+  hardware_schematic_evidence/rfmc6000_sheet2.png
+源文件 SHA256：hardware_schematic_evidence/source_files.json。
