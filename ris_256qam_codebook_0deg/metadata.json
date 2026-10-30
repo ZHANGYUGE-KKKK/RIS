@@ -1,0 +1,84 @@
+{
+  "format": "ris-qam256-pwm-v1",
+  "generator_version": "1.0.0",
+  "config": {
+    "rows": 20,
+    "cols": 20,
+    "row_pitch_mm": 2.54,
+    "col_pitch_mm": 19.14,
+    "carrier_ghz": 5.8,
+    "tx_x_m": 0.0,
+    "tx_y_m": 0.0,
+    "tx_z_m": -0.4,
+    "rx_mode": "near",
+    "rx_range_m": 0.6,
+    "scan_angles_deg": [
+      0.0
+    ],
+    "scan_azimuth_deg": 0.0,
+    "pwm_mhz": 1.0,
+    "slots": 256,
+    "repeats": 3,
+    "harmonic": 1,
+    "gamma0_amplitude": 1.0,
+    "gamma0_phase_deg": 0.0,
+    "gamma1_amplitude": 1.0,
+    "gamma1_phase_deg": 180.0,
+    "amplitude_scale": 1.0,
+    "min_high_ns": 0.0,
+    "min_low_ns": 0.0
+  },
+  "model": "independent identical transmissive cells; rectangular PWM; harmonic projection",
+  "coordinate_convention": "RIS xy plane, TX z<0, RX z>0; x=column, y=row; centered coordinates in metres",
+  "time_convention": "exp(+j*omega*t)",
+  "harmonic_frequency_hz": 5801000000.0,
+  "slot_seconds": 3.906250000000001e-09,
+  "symbol_rate_baud": 333333.3333333333,
+  "gross_bit_rate_bps": 2666666.6666666665,
+  "shape": [
+    1,
+    256,
+    256,
+    400
+  ],
+  "binary_layout": {
+    "axes": [
+      "direction",
+      "symbol",
+      "slot",
+      "packed_unit"
+    ],
+    "frame_bytes": 50,
+    "unit_order": "unit=row*cols+col, zero based",
+    "bit_order": "little: unit i at byte i//8 bit i%8; unused high bits zero",
+    "repeats_stored": 1,
+    "play_each_symbol_period_times": 3,
+    "frame_offset_bytes": "((direction*256+symbol)*slots+slot)*frame_bytes",
+    "state_rule": "1 if (slot-start_slot)%slots < width_slots else 0"
+  },
+  "qam_mapping": "byte IIIIQQQQ; Gray-decode each nibble to n; level=2*n-15; divide by 15*sqrt(2); multiply amplitude_scale",
+  "directions": [
+    {
+      "index": 0,
+      "angle_deg": 0.0,
+      "rx_position_m": [
+        0.0,
+        0.0,
+        0.6
+      ],
+      "evm_raw_percent": 0.31456493102483496,
+      "evm_equalized_percent": 0.3143331805235116,
+      "element_evm_percent": 0.7413048222973647,
+      "fitted_common_gain": [
+        1.0001077691889155,
+        -2.8823423971845124e-05
+      ]
+    }
+  ],
+  "warnings": [
+    "理论结果：未包含噪声、单元耦合、方向图、切换过渡和接收滤波；EVM 仅为时间量化模型值。",
+    "两状态幅相按所有单元相同处理；整板全 0/全 1 的接收幅相不能直接作为逐单元校准。",
+    "各方向是可切换的独立码本，发送同一条数据流；不生成同时多波束。",
+    "最小高/低电平时间未约束。1 MHz PWM 周期能力不等于纳秒级边沿精度。"
+  ]
+}
