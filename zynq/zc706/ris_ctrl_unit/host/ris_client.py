@@ -65,6 +65,16 @@ class RisClient:
                         raise ValueError("方波与慢速模式冲突")
                     if reply["fast_mhz"] and ticks != 150 // reply["fast_mhz"]:
                         raise ValueError("方波频率与分频读数不一致")
+            if "mt_supported" in reply:
+                if type(reply["mt_supported"]) is not bool or type(reply.get("mt_running")) is not bool:
+                    raise ValueError("MT 能力字段格式错误")
+                period, loaded = reply.get("mt_period"), reply.get("mt_loaded")
+                if type(period) is not int or type(loaded) is not int or not 0 <= loaded <= 2048:
+                    raise ValueError("MT 状态字段格式错误")
+                if reply["mt_supported"] and not 60 <= period <= 300_000_000:
+                    raise ValueError("MT 周期超出范围")
+                if reply["mt_running"] and (not reply["mt_supported"] or reply["blink_ms"] or reply.get("fast_ticks", 0)):
+                    raise ValueError("MT 与其他运行模式冲突")
         except (KeyError, TypeError, ValueError) as error:
             raise ProtocolError(f"无法识别板卡响应：{error}") from error
         return reply

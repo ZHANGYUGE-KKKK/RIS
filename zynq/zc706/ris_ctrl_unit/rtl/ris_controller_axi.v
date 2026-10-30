@@ -102,8 +102,8 @@ module ris_controller_axi #(
     wire [49:0] normal_data;
     wire [9:0] normal_shift,normal_latch;
     wire normal_mr_n,normal_oe_n;
-    wire fast_write=FAST_TOGGLE_ENABLE && wr_addr>=16'h00a0 && wr_addr<16'h00d0;
-    wire fast_read=FAST_TOGGLE_ENABLE && rd_addr>=16'h00a0 && rd_addr<16'h00d0;
+    wire fast_write=FAST_TOGGLE_ENABLE && wr_addr>=16'h00a0 && wr_addr<16'h00f0;
+    wire fast_read=FAST_TOGGLE_ENABLE && rd_addr>=16'h00a0 && rd_addr<16'h00f0;
     wire [1:0] fast_wr_resp,fast_rd_resp;
     wire [31:0] fast_rd_data;
     assign wr_ready=fast_write ? 1'b1 : core_wr_ready;

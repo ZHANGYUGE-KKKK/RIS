@@ -89,6 +89,8 @@ int ris_initialize(ris_controller *dev, UINTPTR base)
     dev->base = base;
     dev->last_result = 0u;
     dev->fast_supported = 0;
+    dev->mt_supported = 0;
+    dev->mt_expected = dev->mt_loaded = 0;
     if (ris_read(dev, RIS_REG_ID) != RIS_DEVICE_ID) return RIS_BAD_DEVICE;
     /* Discard old completed records; this program owns the peripheral. */
     for (n = 0u; n < 32u; ++n) {
@@ -107,6 +109,11 @@ int ris_initialize(ris_controller *dev, UINTPTR base)
 #ifdef RIS_FAST_TOGGLE
     if (ris_read(dev, RIS_REG_FAST_ID) != RIS_FAST_DEVICE_ID) return RIS_BAD_DEVICE;
     dev->fast_supported = 1;
+#ifdef RIS_MT_TABLE
+    /* Read only with a matching MT bitstream; legacy AXI returns DECERR here. */
+    if (ris_read(dev, RIS_REG_MT_ID) != RIS_MT_DEVICE_ID) return RIS_BAD_DEVICE;
+    dev->mt_supported = 1;
+#endif
     XTime_GetTime(&start);
     while (!(ris_read(dev, RIS_REG_FAST_STATUS) & RIS_FAST_LOCKED)) {
         if (expired(start)) return RIS_TIMEOUT;
@@ -249,4 +256,67 @@ int ris_fast_start_ticks(ris_controller *dev, u32 half_ticks)
     status = ris_read(dev, RIS_REG_FAST_STATUS);
     return (status & (RIS_FAST_OWNED|RIS_FAST_RUNNING|RIS_FAST_LOCKED)) ==
         (RIS_FAST_OWNED|RIS_FAST_RUNNING|RIS_FAST_LOCKED) && ris_fast_ticks(dev)==half_ticks ? RIS_OK : RIS_HARDWARE_ERROR;
+}
+
+void ris_mt_cancel_upload(ris_controller *dev)
+{
+    dev->mt_expected=dev->mt_loaded=0;
+}
+
+int ris_mt_begin(ris_controller *dev,u32 count,u32 loop_start,u32 period,u32 delay)
+{
+    int rc;
+    if (!dev->mt_supported || !count || count>RIS_MT_CAPACITY || loop_start>=count ||
+        period<60 || period>300000000u || delay>0x7fffffffu) return RIS_NOT_ACCEPTED;
+    rc=ris_fast_stop(dev);
+    if (rc) return rc;
+    ris_mt_cancel_upload(dev);
+    ris_write(dev,RIS_REG_MT_COUNT,0);
+    ris_write(dev,RIS_REG_MT_LOOP_START,loop_start);
+    ris_write(dev,RIS_REG_MT_PERIOD,period);
+    ris_write(dev,RIS_REG_MT_DELAY,delay);
+    barrier();
+    if (ris_read(dev,RIS_REG_MT_COUNT)!=0 || ris_read(dev,RIS_REG_MT_LOOP_START)!=loop_start ||
+        ris_read(dev,RIS_REG_MT_PERIOD)!=period || ris_read(dev,RIS_REG_MT_DELAY)!=delay)
+        return RIS_HARDWARE_ERROR;
+    dev->mt_expected=count;dev->mt_checksum=2166136261u;dev->mt_last_level=0;
+    return RIS_OK;
+}
+
+int ris_mt_segment(ris_controller *dev,u32 index,u32 level,u32 ticks)
+{
+    u32 word;
+    if (!dev->mt_supported || !dev->mt_expected || index!=dev->mt_loaded ||
+        index>=dev->mt_expected || level>1 || ticks<30 || ticks>0x7fffffffu ||
+        (ris_read(dev,RIS_REG_FAST_STATUS)&(RIS_FAST_OWNED|RIS_FAST_PENDING)))
+        return RIS_NOT_ACCEPTED;
+    word=(level<<31)|ticks;
+    ris_write(dev,RIS_REG_MT_ADDRESS,index);
+    ris_write(dev,RIS_REG_MT_DATA,word);
+    barrier();
+    if (ris_read(dev,RIS_REG_MT_DATA)!=word) {
+        ris_mt_cancel_upload(dev);return RIS_HARDWARE_ERROR;
+    }
+    dev->mt_checksum=(dev->mt_checksum^word)*16777619u;
+    dev->mt_last_level=level;++dev->mt_loaded;
+    return RIS_OK;
+}
+
+int ris_mt_start(ris_controller *dev,u32 loop,u32 checksum)
+{
+    int rc;
+    if (!dev->mt_supported || loop>1 || !dev->mt_expected ||
+        dev->mt_loaded!=dev->mt_expected || dev->mt_checksum!=checksum ||
+        (!loop && dev->mt_last_level)) return RIS_NOT_ACCEPTED;
+    rc=ris_set_all(dev,0);
+    if (!rc) rc=ris_output_enable(dev,1);
+    if (rc) return rc;
+    ris_write(dev,RIS_REG_MT_COUNT,dev->mt_expected);
+    barrier();
+    if (ris_read(dev,RIS_REG_MT_COUNT)!=dev->mt_expected) return RIS_HARDWARE_ERROR;
+    rc=fast_control(dev,loop ? 11 : 10);
+    /* A very short one-shot may already be complete by the first status read. */
+    if (!rc && !(ris_read(dev,RIS_REG_MT_STATUS)&2u)) rc=RIS_HARDWARE_ERROR;
+    ris_mt_cancel_upload(dev);
+    return rc;
 }

@@ -1,0 +1,25 @@
+{
+  "verified_at": "2026-10-29T11:28:25.066079+08:00",
+  "board": "ZC706 clone / XC7Z045",
+  "cable_serial": "210299372306",
+  "fpga_idcode": "23731093",
+  "jedec_id": "ef6018",
+  "flash_type": "qspi-x8-dual_parallel",
+  "flash_offset": 0,
+  "image_bytes": 13556752,
+  "boot_sha256": "be69f78bdbdce3f4f3406c180f225e75002d7e77bd99a546dc0179c98d4760f0",
+  "boot_mode_during_programming": "JTAG (0)",
+  "direct_full_byte_compare": "PASS",
+  "independent_program_flash_verify": "PASS",
+  "independent_verified_bytes": 13556752,
+  "independent_comparison_chunks": 414,
+  "permanent_protection_bits_set": false,
+  "cold_boot_test": "NOT_YET_TESTED",
+  "application_network_test": "NOT_TESTED; PC Ethernet currently uses another subnet",
+  "programmer_source_sha256": "8303800960f323931ab21a45dba1c4e7ff08806bc8e0050530821867bf4ad01e",
+  "programmer_elf_sha256": "b1db4d927e7921c191c02b5a4e2f2e131e2da8023f7fb7e88f0c526196f511ef",
+  "evidence_sha256": {
+    "direct_program.log": "ae1e3e34b32be9e107da1edbbc5d4c56e08094207f898c1cecbd6bc7d3005132",
+    "independent_verify.log": "c9d9fa3a598cc2e9022208152ce5e120bdd34d825ad185a7350dc45f9a6999d5"
+  }
+}

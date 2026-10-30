@@ -57,6 +57,16 @@
 #define RIS_FAST_RUNNING             4u
 #define RIS_FAST_LEVEL               8u
 #define RIS_FAST_PENDING             16u
+#define RIS_REG_MT_ID                0x00D0u
+#define RIS_REG_MT_COUNT             0x00D4u
+#define RIS_REG_MT_LOOP_START        0x00D8u
+#define RIS_REG_MT_ADDRESS           0x00DCu
+#define RIS_REG_MT_DATA              0x00E0u
+#define RIS_REG_MT_PERIOD            0x00E4u
+#define RIS_REG_MT_DELAY             0x00E8u
+#define RIS_REG_MT_STATUS            0x00ECu
+#define RIS_MT_DEVICE_ID             0x4D543031u
+#define RIS_MT_CAPACITY              2048u
 #define RIS_REG_STAGE                0x0100u
 #define RIS_REG_IMAGE                0x0140u
 #define RIS_REG_FRAME_RAM            0x1000u

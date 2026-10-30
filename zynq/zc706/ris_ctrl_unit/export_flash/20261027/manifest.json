@@ -1,0 +1,40 @@
+{
+  "source_commit": "e7c8aedbbff9fbc8e1d536e39220da21c7ebb5bf",
+  "board": "ZC706",
+  "flash_type": "qspi-x8-dual_parallel",
+  "program_offset": "0x0",
+  "files": {
+    "BOOT.bif": "fc43a50dc7cf865a543a4bb02107095a7fb70c37a82c2f7505628c7b3fb0eaca",
+    "BOOT.bin": "a3b82b274cc37041d7525e57f36b0a4edce7307fbfafd415a966da1c6234ac7f",
+    "README.md": "5a391d66bb1bdc816176f7a0844f1076cc23fadf7c755f4f37bb67afcd757682",
+    "bootgen_build.log": "31a032d3af1abcaa149a4758cc85a8ad1b5256ba9bb9c6bbc1ee72e5426fa5cb",
+    "bootgen_inspect.log": "45d49b40e3b876dab672c60c71f29d6df8d938bcc158841c6477dfac3e98f1be",
+    "fsbl.elf": "8ebfaa11448c79a621d7b029a8bd758108872ea951814c1aefd3841421875205",
+    "ps7_init.tcl": "df63d0e5eca6c0d65b04b90265da502d9225b67964dc40994cf1f896b2812362",
+    "rebuild_boot.sh": "686af287cc7464027fa83e2906e4be4a0daf6fa4531b661eec73ff10c9f56e45",
+    "reports/cdc.rpt": "c62e32d0bd55c604ec31410cf1d4736676c0fef9984175aa3721e24debc797bd",
+    "reports/drc.rpt": "ace7616a6ba8f14fdf883c3052852a06401c613a906ed196f7931c5e3aff4aea",
+    "reports/hardware_build.log": "e55471a6157606f1700451e9dcb311ec536298245d38d92319a5630381ac8119",
+    "reports/route_status.rpt": "9cbd4679f9b651a7aea68bd0ff70354f791ab0ee401ff43c3bcf4c85c84737a6",
+    "reports/timing.rpt": "50a919853ee4ae8289e3365671ad48e12cfedffbd5bf5706bfb23480481c5c15",
+    "reports/vitis_build.log": "7e72d69f5d69e5d6df0d5c87c81b37afab9a9404c6c197cef5ce5f3b80e068a4",
+    "ris_ctrl_unit.bit": "1ec7c8478dcfcd15aa05f25e2cab4d243c78bfa178a78f9c93e40726cd9b8f76",
+    "ris_ctrl_unit.xsa": "60b722bd54bc6d0b869651d0dfb53b804fad16e60d9da351da73cee7f57fc268",
+    "ris_flash_network.elf": "a88ce29f2987ed32aad5530d499a496bccc57fdfbd663f78e97223378ab6bb06",
+    "validation.json": "6a64148c4a7cf3a4ae58dc10bbe676c3ebc9eb0fe4ebdf7a6b7bd246fb37f481",
+    "FLASH_REPORT.md": "8e1321ed30a3bf3207564641fa7224e02b52edc7d9f47432fdae44fde4e6183a",
+    "direct_flash_corrected.log": "7fdf925e1b2489ad834058f4c905cf0726524bd0e120d8e54050efc9238b3efd",
+    "flash_independent_verify.log": "7cd25884ecf6382f891adc9374bbb20bf54a0311412c6d09bd872122bd553d1f"
+  },
+  "hardware_programming": {
+    "date": "2026-10-27",
+    "board": "ZC706 clone",
+    "cable_serial": "210299372306",
+    "flash_type": "qspi-x8-dual_parallel",
+    "jedec_id": "ef6018",
+    "image_bytes": 13540368,
+    "direct_full_byte_compare": "PASS",
+    "independent_program_flash_verify": "PASS",
+    "cold_boot_test": "NOT_YET_TESTED"
+  }
+}

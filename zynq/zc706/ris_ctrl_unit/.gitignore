@@ -6,6 +6,8 @@
 /vivado_axi/
 /vitis_code/
 /vitis_network/
+/vitis_mt/
+/vivado_mt/
 /vivado_board/
 __pycache__/
 /host/mappings/session_recovery.json
@@ -29,6 +31,11 @@ __pycache__/
 !/export_network/*.elf
 !/export_network_fast/*.bit
 !/export_network_fast/*.elf
+!/export_mt/*.bit
+!/export_mt/*.elf
+!/export_flash/20261029_mt/*.bin
+!/export_flash/20261029_mt/*.bit
+!/export_flash/20261029_mt/*.elf
 
 # The debugger launch configuration is part of the reproducible GUI workflow.
 !/vitis_fast/ris_fast_network/_ide/

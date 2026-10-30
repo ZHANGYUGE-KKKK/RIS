@@ -2,6 +2,10 @@ RIS 控制单元：AXI4 / 50片74LVC8T595
 更新日期：2026-10-23（Asia/Shanghai）
 
 当前入口
+  MT 时域表统一控制版（2026-10-29）：400 路统一、每周期独立 M/T，超出部分在本周期内回绕，默认循环、可单次播放。
+    新工程 vivado_mt / vitis_mt，配套包 export_mt；使用步骤、MATLAB 脚本和限制见 README_MT.md。
+    完整 QSPI 镜像 export_flash/20261029_mt/BOOT.bin 已实板烧写并通过两次全量读回；断电启动尚待验收。
+    最新烧写记录见 export_flash/20261029_mt/FLASH_REPORT.md；下面其他上板验收记录属于旧版。
   高速全0/全1版（2026-10-26）：控制面板支持数值输入及Hz/k/M/G单位，范围1 Hz～5 MHz。
     5 MHz对应每100 ns翻转。300 MHz硬件时基、100 MHz八脉冲移位、50片并行。
     专用工程vivado_fast / vitis_fast；配套包export_network_fast；旧包保留。

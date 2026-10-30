@@ -20,6 +20,8 @@ def active_frequency(reply):
     """New firmware reports exact divider ticks; accept legacy preset replies."""
     if not reply:
         return 0
+    if reply.get("mt_running"):
+        return 300_000_000 / reply["mt_period"]
     if reply.get("fast_variable"):
         ticks = reply.get("fast_ticks", 0)
         return HALF_CLOCK_HZ / ticks if ticks else 0

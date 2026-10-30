@@ -1,0 +1,46 @@
+{
+  "board": "ZC706 / XC7Z045",
+  "architecture": "zynq",
+  "flash_type": "qspi-x8-dual_parallel",
+  "flash_program_offset": "0x0",
+  "flash_capacity_bytes": 33554432,
+  "image_bytes": 13556752,
+  "boot_header_checksum_valid": true,
+  "partition_header_checksums_valid": true,
+  "flash_partitions_nonoverlapping": true,
+  "all_partition_contents_match_inputs": true,
+  "bit_matches_xsa": true,
+  "partitions": [
+    {
+      "name": "fsbl.elf",
+      "flash_offset": "0x1700",
+      "bytes": 65544,
+      "load_address": "0x0",
+      "entry_address": "0x0",
+      "attributes": "0x10",
+      "content_matches_input": true
+    },
+    {
+      "name": "ris_ctrl_unit.bit",
+      "flash_offset": "0x11740",
+      "bytes": 13321408,
+      "load_address": "0x0",
+      "entry_address": "0x0",
+      "attributes": "0x20",
+      "content_matches_input": true
+    },
+    {
+      "name": "ris_all_io.elf",
+      "flash_offset": "0xcc5c00",
+      "bytes": 163856,
+      "load_address": "0x100000",
+      "entry_address": "0x100000",
+      "attributes": "0x10",
+      "content_matches_input": true
+    }
+  ],
+  "flash_programmed": true,
+  "hardware_boot_tested": false,
+  "boot_sha256": "be69f78bdbdce3f4f3406c180f225e75002d7e77bd99a546dc0179c98d4760f0",
+  "hardware_programming_record": "hardware_programming.json"
+}

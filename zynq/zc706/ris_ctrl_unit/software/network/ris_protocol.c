@@ -30,7 +30,7 @@ int ris_protocol_execute(ris_controller *dev,char *line,char *reply,size_t capac
 {
     char *tokens[6],*save,*token;
     unsigned count=0,i;
-    u32 id=0,index=0,bit=0,value=0,status,errors;
+    u32 id=0,index=0,bit=0,value=0,status,errors,extra=0;
     u8 image[50],data=0;
     u64 mask=0,frames;
     int rc=-7,restart=0,valid=1;
@@ -43,7 +43,16 @@ int ris_protocol_execute(ris_controller *dev,char *line,char *reply,size_t capac
     for (i=0;i<50;++i) image[i]=(u8)(ris_read(dev,RIS_REG_IMAGE+(i/4)*4)>>((i%4)*8));
     if (valid) {
         const char *op=tokens[1];
+        if (strcmp(op,"STATUS") && strcmp(op,"MTBEGIN") && strcmp(op,"MTSEG") && strcmp(op,"MTSTART"))
+            ris_mt_cancel_upload(dev);
         if (strcmp(op,"STATUS")==0 && count==2) rc=0;
+        else if (strcmp(op,"MTBEGIN")==0 && count==6 && number(tokens[2],&index) && number(tokens[3],&bit) && number(tokens[4],&value) && number(tokens[5],&extra)) {
+            *blink_ms=0;rc=ris_mt_begin(dev,index,bit,value,extra);
+        } else if (strcmp(op,"MTSEG")==0 && count==5 && number(tokens[2],&index) && number(tokens[3],&bit) && number(tokens[4],&value)) {
+            rc=ris_mt_segment(dev,index,bit,value);
+        } else if (strcmp(op,"MTSTART")==0 && count==4 && number(tokens[2],&value) && number(tokens[3],&extra)) {
+            *blink_ms=0;rc=ris_mt_start(dev,value,extra);
+        }
         else if (strcmp(op,"STOP")==0 && count==2) {*blink_ms=0; rc=ris_fast_stop(dev);}
         else if (strcmp(op,"FAST")==0 && count==3 && number(tokens[2],&value) && (value==1 || value==3 || value==5)) {
             *blink_ms=0; rc=ris_fast_start(dev,value);
@@ -99,12 +108,16 @@ int ris_protocol_execute(ris_controller *dev,char *line,char *reply,size_t capac
     }
     image_hex[100]=0; status=ris_read(dev,RIS_REG_STATUS);
     errors=ris_read(dev,RIS_REG_ERROR_FLAGS); frames=ris_frame_count(dev);
-    snprintf(reply,capacity,"{\"device\":\"RIS706\",\"version\":1,\"id\":%lu,\"ok\":%s,\"rc\":%d,\"status\":%lu,\"errors\":%lu,\"frames\":%llu,\"oe\":%s,\"blink_ms\":%lu,\"slots\":%lu,\"fast_supported\":%s,\"fast_mhz\":%lu,\"fast_variable\":%s,\"fast_ticks\":%lu,\"fast_edges\":%lu,\"image\":\"%s\"}\n",
+    snprintf(reply,capacity,"{\"device\":\"RIS706\",\"version\":1,\"id\":%lu,\"ok\":%s,\"rc\":%d,\"status\":%lu,\"errors\":%lu,\"frames\":%llu,\"oe\":%s,\"blink_ms\":%lu,\"slots\":%lu,\"fast_supported\":%s,\"fast_mhz\":%lu,\"fast_variable\":%s,\"fast_ticks\":%lu,\"fast_edges\":%lu,\"mt_supported\":%s,\"mt_running\":%s,\"mt_period\":%lu,\"mt_loaded\":%lu,\"image\":\"%s\"}\n",
         (unsigned long)id,(!rc && !errors) ? "true" : "false",rc,(unsigned long)status,
         (unsigned long)errors,(unsigned long long)frames,(status&128) ? "true" : "false",
         (unsigned long)*blink_ms,(unsigned long)ris_read(dev,RIS_REG_FRAME_SLOTS),
         dev->fast_supported ? "true" : "false",(unsigned long)ris_fast_mhz(dev),
         dev->fast_supported ? "true" : "false",(unsigned long)ris_fast_ticks(dev),
-        (unsigned long)(dev->fast_supported ? ris_read(dev,RIS_REG_FAST_EDGES) : 0),image_hex);
+        (unsigned long)(dev->fast_supported ? ris_read(dev,RIS_REG_FAST_EDGES) : 0),
+        dev->mt_supported ? "true" : "false",
+        (dev->mt_supported && (ris_read(dev,RIS_REG_MT_STATUS)&1u)) ? "true" : "false",
+        (unsigned long)(dev->mt_supported ? ris_read(dev,RIS_REG_MT_PERIOD) : 0),
+        (unsigned long)dev->mt_loaded,image_hex);
     return restart;
 }

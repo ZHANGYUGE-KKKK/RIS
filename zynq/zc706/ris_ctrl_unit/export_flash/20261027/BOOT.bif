@@ -1,0 +1,6 @@
+the_ROM_image:
+{
+    [bootloader] fsbl.elf
+    ris_ctrl_unit.bit
+    ris_flash_network.elf
+}

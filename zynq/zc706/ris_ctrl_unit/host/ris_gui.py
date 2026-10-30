@@ -18,6 +18,9 @@ class RisGui:
         self.connected = False
         self.busy = False
         self.closed = False
+        self.mt_cancel = threading.Event()
+        self.mt_uploading = False
+        self.mt_controls = None
         self.latest = None
         self.tasks = queue.Queue()
         self.results = queue.Queue()
@@ -109,7 +112,7 @@ class RisGui:
         self._enable()
 
     def _build_fast_controls(self):
-        box = ttk.LabelFrame(self.control_frame, text="全0 / 全1 · FPGA 高速方波", padding=6)
+        box = ttk.LabelFrame(self.control_frame, text="全0 / 全1 · FPGA 方波与 MT 时域表", padding=6)
         box.pack(fill="x", before=self.control_frame.winfo_children()[1], pady=(5, 0))
         row = ttk.Frame(box)
         row.pack(fill="x")
@@ -129,13 +132,26 @@ class RisGui:
         self.fast_start.pack(side="left", padx=8)
         self.fast_buttons.append(self.fast_start)
         self._button(row, "停止方波 / 保持", lambda: self.command("STOP")).pack(side="left", padx=8)
-        ttk.Label(row, text="1 Hz～5 MHz · 50%占空比").pack(side="left", padx=6)
+        ttk.Label(row, text="1 Hz～5 MHz · 频率与 MT 表共同决定输出").pack(side="left", padx=6)
         self.fast_preview = ttk.Label(box, textvariable=self.fast_notice, foreground="#315b80")
         self.fast_preview.pack(anchor="w", pady=(4, 0))
+        from ris_mt_gui import MTControls
+        self.mt_controls = MTControls(self, box)
         for variable in (self.fast_value, self.fast_unit):
             variable.trace_add("write", lambda *_: self.preview_frequency())
 
     def preview_frequency(self):
+        if self.mt_controls and self.mt_controls.rows:
+            try:
+                plan = self.mt_controls.plan()
+                self.fast_notice.set(f"MT：{len(plan.rows)} 个周期，{len(plan.segments)} 个硬件时段；"
+                    f"实际 {frequency_text(plan.actual)}，周期 {plan.period} × 3.333333 ns；"
+                    f"{'循环整表' if plan.loop else '播放一次，整表结束后置低'}。点击启动后上传并播放。")
+                self.fast_preview.configure(foreground="#315b80")
+            except ValueError as error:
+                self.fast_notice.set(str(error))
+                self.fast_preview.configure(foreground="#a23a28")
+            return
         try:
             plan = plan_frequency(self.fast_value.get(), self.fast_unit.get())
         except ValueError as error:
@@ -148,6 +164,26 @@ class RisGui:
         self.fast_preview.configure(foreground="#315b80")
 
     def start_fast(self):
+        if self.mt_controls and self.mt_controls.rows:
+            try:
+                plan = self.mt_controls.plan()
+            except ValueError as error:
+                self.notice.set(str(error))
+                return False
+            if not self.connected or not self.latest or not self.latest.get("mt_supported"):
+                self.notice.set("当前板端不支持 MT 表；请使用配套 MT 版 BIT 和 ELF。")
+                return False
+            if self.busy:
+                return False
+            if self.pattern_page:
+                self.pattern_page.stop("MT 控制已接管")
+            if self.mapping_page and self.mapping_page.follow_timer:
+                self.mapping_page.frame.after_cancel(self.mapping_page.follow_timer)
+                self.mapping_page.follow_timer = None
+            self.mt_cancel.clear()
+            self.mt_uploading = True
+            self.notice.set("正在上传 MT 表；全部校验通过后由 FPGA 开始播放")
+            return self.submit("mt", plan)
         try:
             plan = plan_frequency(self.fast_value.get(), self.fast_unit.get())
         except ValueError as error:
@@ -253,6 +289,8 @@ class RisGui:
             button.configure(state="normal" if enabled else "disabled")
         if hasattr(self, "fast_notice"):
             self.preview_frequency()
+        if self.mt_controls:
+            self.mt_controls.update_state()
         if self.mapping_page and self.mapping_page.alive:
             self.mapping_page.update_state()
 
@@ -395,6 +433,20 @@ class RisGui:
                         client.close()
                     client = RisClient(*payload)
                     reply = client.command("STATUS")
+                elif kind == "mt":
+                    if client is None:
+                        raise ConnectionError("尚未连接板卡")
+                    for index, command in enumerate(payload.commands()):
+                        if self.mt_cancel.is_set():
+                            reply = client.command("STOP")
+                            break
+                        reply = client.command(command)
+                        if not reply["ok"] or reply["errors"]:
+                            raise RuntimeError(f"MT 上传/启动被拒绝：{command.split()[0]}，rc={reply['rc']}")
+                        if command.startswith("MTSEG") and reply.get("mt_loaded") != index:
+                            raise RuntimeError("MT 上传确认计数不一致")
+                        if index % 32 == 0:
+                            self.results.put(("mt_progress", min(index, len(payload.segments)), None, None))
                 elif kind == "disconnect":
                     if client:
                         client.close()
@@ -417,6 +469,11 @@ class RisGui:
         try:
             while True:
                 kind, payload, reply, error = self.results.get_nowait()
+                if kind == "mt_progress":
+                    self.notice.set(f"MT 表上传中：已确认 {payload} 个时段")
+                    continue
+                if kind == "mt":
+                    self.mt_uploading = False
                 callback = self.pending_callback
                 self.pending_callback = None
                 self.busy = False
@@ -435,7 +492,8 @@ class RisGui:
                     self.latest = reply
                     mode = f"定时切换：{reply['blink_ms']} ms" if reply["blink_ms"] else "静态保持"
                     if active_frequency(reply):
-                        mode = f"硬件方波：实际 {frequency_text(active_frequency(reply))} · 全0/全1 · 50%占空比"
+                        mode = (f"MT 统一播放：实际 {frequency_text(active_frequency(reply))}" if reply.get("mt_running") else
+                                f"硬件方波：实际 {frequency_text(active_frequency(reply))} · 全0/全1 · 50%占空比")
                     oe = "输出使能" if reply["oe"] else "输出禁能 / 高阻"
                     self.state.set(f"{mode}  |  {oe}  |  完成帧数 {reply['frames']}  |  状态 0x{reply['status']:08X}  |  错误 0x{reply['errors']:08X}")
                     if active_frequency(reply):
@@ -448,6 +506,14 @@ class RisGui:
                         self.notice.set(f"已连接 {self.host.get()}:{self.port.get()} · {reply['slots']} 帧缓存 · 图案由板端确认")
                         self.append_log(self.notice.get())
                         self.select_chip()
+                    elif kind == "mt":
+                        if self.mt_cancel.is_set():
+                            self.notice.set("MT 上传已取消，保持当前输出")
+                        elif payload.loop:
+                            self.notice.set("MT 表已校验，FPGA 正在循环整表；点击“停止 MT / 保持”结束")
+                        else:
+                            self.notice.set("MT 表已校验并播放一次；短表可能已完成并置低")
+                        self.append_log(self.notice.get())
                     elif kind == "command":
                         self.notice.set(f"已完成：{payload}；帧数 {reply['frames']}。")
                         self.append_log(self.notice.get())
@@ -475,6 +541,7 @@ class RisGui:
             return
         if self.pattern_page:
             self.pattern_page.shutdown()
+        self.mt_cancel.set()
         self.closed = True
         self.root.after_cancel(self.receive_timer)
         self.root.after_cancel(self.poll_timer)

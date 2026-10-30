@@ -3,6 +3,10 @@ set root [file normalize [file join [file dirname [info script]] ..]]
 set project_dir $root/vivado_axi
 set frame_slots 256
 set fast_toggle 0
+set qspi_enable 0
+set report_dir $root/reports
+if {[info exists ::env(RIS_QSPI_ENABLE)]} {set qspi_enable $::env(RIS_QSPI_ENABLE)}
+if {[info exists ::env(RIS_REPORT_DIR)]} {set report_dir $::env(RIS_REPORT_DIR)}
 if {[info exists ::env(RIS_FAST_TOGGLE)]} {set fast_toggle $::env(RIS_FAST_TOGGLE)}
 if {[info exists ::env(RIS_PROJECT_DIR)]} {set project_dir [file normalize $::env(RIS_PROJECT_DIR)]}
 if {[info exists ::env(RIS_FRAME_SLOTS)]} {set frame_slots $::env(RIS_FRAME_SLOTS)}
@@ -11,7 +15,7 @@ set project_file $project_dir/ris_ctrl_unit.xpr
 if {[file exists $project_file]} {
     error "Project already exists: $project_file (open it instead of overwriting it)"
 }
-file mkdir $root/reports
+file mkdir $report_dir
 create_project ris_ctrl_unit $project_dir -part xc7z045ffg900-2
 set_property board_part xilinx.com:zc706:part0:1.4 [current_project]
 set_property target_language Verilog [current_project]
@@ -36,7 +40,7 @@ set_property -dict [list \
     CONFIG.PCW_FPGA_FCLK0_ENABLE 1 CONFIG.PCW_FPGA_FCLK1_ENABLE 0 \
     CONFIG.PCW_FPGA_FCLK2_ENABLE 0 CONFIG.PCW_FPGA_FCLK3_ENABLE 0 \
     CONFIG.PCW_SPI0_PERIPHERAL_ENABLE 0 CONFIG.PCW_SPI1_PERIPHERAL_ENABLE 0 \
-    CONFIG.PCW_GPIO_EMIO_GPIO_ENABLE 0 CONFIG.PCW_QSPI_PERIPHERAL_ENABLE 0 \
+    CONFIG.PCW_GPIO_EMIO_GPIO_ENABLE 0 CONFIG.PCW_QSPI_PERIPHERAL_ENABLE $qspi_enable \
     CONFIG.PCW_SD0_PERIPHERAL_ENABLE 0 CONFIG.PCW_I2C0_PERIPHERAL_ENABLE 0 \
     CONFIG.PCW_USB0_PERIPHERAL_ENABLE 0 CONFIG.PCW_TTC0_PERIPHERAL_ENABLE 0 \
     CONFIG.PCW_I2C_RESET_ENABLE 0 CONFIG.PCW_I2C0_RESET_ENABLE 0 \
@@ -91,8 +95,8 @@ set_property top ris_ctrl_unit_top [current_fileset]
 set_property top tb_ris_controller [get_filesets sim_1]
 set_property xsim.simulate.runtime all [get_filesets sim_1]
 update_compile_order -fileset sources_1
-write_bd_tcl -force $root/reports/ris_axi_system_bd.tcl
-report_ip_status -file $root/reports/ip_status.rpt
+write_bd_tcl -force $report_dir/ris_axi_system_bd.tcl
+report_ip_status -file $report_dir/ip_status.rpt
 close_project
 puts RIS_AXI_PROJECT_PASS
 exit

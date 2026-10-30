@@ -15,6 +15,8 @@ typedef struct {
     u32 next_id;
     u32 last_result;
     int fast_supported;
+    int mt_supported;
+    u32 mt_expected, mt_loaded, mt_checksum, mt_last_level;
 } ris_controller;
 
 enum {
@@ -39,5 +41,9 @@ int ris_fast_start_hz(ris_controller *dev, u32 hz);
 u32 ris_fast_ticks(const ris_controller *dev);
 int ris_fast_stop(ris_controller *dev);
 u32 ris_fast_mhz(const ris_controller *dev);
+int ris_mt_begin(ris_controller *dev, u32 count, u32 loop_start, u32 period, u32 delay);
+int ris_mt_segment(ris_controller *dev, u32 index, u32 level, u32 ticks);
+int ris_mt_start(ris_controller *dev, u32 loop, u32 checksum);
+void ris_mt_cancel_upload(ris_controller *dev);
 
 #endif

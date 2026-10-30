@@ -1,0 +1,47 @@
+{
+  "board": "ZC706",
+  "architecture": "zynq",
+  "tool_version": "2022.2",
+  "flash_type": "qspi-x8-dual_parallel",
+  "flash_program_offset": "0x0",
+  "flash_capacity_bytes": 33554432,
+  "image_bytes": 13540368,
+  "image_MiB": 12.913,
+  "boot_header_checksum_valid": true,
+  "partition_header_checksums_valid": true,
+  "flash_partitions_nonoverlapping": true,
+  "bit_matches_xsa": true,
+  "fsbl_qspi_parallel_enabled": true,
+  "partitions": [
+    {
+      "name": "fsbl.elf",
+      "flash_offset": "0x1700",
+      "bytes": 65544,
+      "load_address": "0x0",
+      "entry_address": "0x0",
+      "attributes": "0x10"
+    },
+    {
+      "name": "ris_ctrl_unit.bit",
+      "flash_offset": "0x11740",
+      "bytes": 13321408,
+      "load_address": "0x0",
+      "entry_address": "0x0",
+      "attributes": "0x20"
+    },
+    {
+      "name": "ris_flash_network.elf",
+      "flash_offset": "0xcc5c00",
+      "bytes": 147472,
+      "load_address": "0x100000",
+      "entry_address": "0x100000",
+      "attributes": "0x10"
+    }
+  ],
+  "wns_ns": 0.158,
+  "whs_ns": 0.062,
+  "wpws_ns": 1.267,
+  "drc_violations": 0,
+  "hardware_boot_tested": false,
+  "flash_programmed": false
+}

@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-10-29T11:28:47.809433+08:00",
+  "accepted_mt_package": {
+    "ps7_init.tcl": "df63d0e5eca6c0d65b04b90265da502d9225b67964dc40994cf1f896b2812362",
+    "ris_all_io.elf": "ec23b88bfcafb2c288243e86eb10ae68898206ff071ca0d47b59c52360d5a1ff",
+    "ris_ctrl_unit.bit": "7d274872a79f79f4c86c17eebd8714df915310d2fc6c57c237741bf34269166b",
+    "ris_ctrl_unit.xsa": "16f5048072d0ff0de60c375cb3a7391613bdf7102688963d53aebe63984420bb"
+  },
+  "fsbl_sha256": "44c84800e825d4f5d72098fe171c6bc45abdee132207cb27a7fb7017256daef2",
+  "fsbl_platform_xsa_sha256": "16f5048072d0ff0de60c375cb3a7391613bdf7102688963d53aebe63984420bb",
+  "fsbl_ps_init_matches_xsa": true,
+  "fsbl_qspi_mode": 2,
+  "qspi_parameters_sha256": "9627ec1d9d7f7ccbb95074656d484e3a369740af131bb382add06e8767566fde",
+  "mt_semantics": "M+T>100 wraps to the beginning of the SAME cycle; each row is independent",
+  "host_compiler_sha256": "b03e9f12f713b90e0cb8af0e93ed26713f9ad5580c2d3c63a38616a6569a182c",
+  "hardware_access_performed": false
+}

@@ -113,7 +113,7 @@ int main(void)
         ris_network_poll();
         session=ris_network_session();
         if (session!=previous_session) {
-            blink=0; (void)ris_fast_stop(&controller); previous_session=session;
+            blink=0; (void)ris_fast_stop(&controller); ris_mt_cancel_upload(&controller); previous_session=session;
         }
         if (ris_network_take(line,&session)) {
             if (ris_protocol_execute(&controller,line,reply,sizeof(reply),&blink))
