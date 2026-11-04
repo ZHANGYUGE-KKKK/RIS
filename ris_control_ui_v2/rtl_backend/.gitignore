@@ -1,0 +1,10 @@
+build/
+vivado_qam/
+vitis_qam/
+export_qam/
+export_flash/
+.Xil/
+*.jou
+*.str
+__pycache__/
+/*_start.log

@@ -1,0 +1,113 @@
+{
+  "format": "ris-qam256-pwm-v1",
+  "sha256_checks": {
+    "metadata.json": true,
+    "README.txt": true,
+    "symbols.csv": true,
+    "elements.csv": true,
+    "pulse_parameters.csv": true,
+    "codebook_frames.bin": true
+  },
+  "all_binary_frames_match_pulse_csv": true,
+  "gray_mapping_verified": true,
+  "geometry_coordinates_verified": true,
+  "directions": [
+    0.0
+  ],
+  "units": 400,
+  "symbols": 256,
+  "slots_per_period": 256,
+  "repeats": 3,
+  "pwm_hz": 1000000.0,
+  "slot_ns": 3.90625,
+  "symbol_rate_baud": 333333.3333333333,
+  "gross_bit_rate_bps": 2666666.6666666665,
+  "binary_bytes": 3276800,
+  "frame_count": 65536,
+  "frame_bytes": 50,
+  "pulse_records": 102400,
+  "unique_spatial_frames": 1119,
+  "uniform_all0_or_all1_frames": 4592,
+  "distinct_unit_pulses_per_symbol_min": 55,
+  "distinct_unit_pulses_per_symbol_max": 79,
+  "quantized_high_slots_min": 5,
+  "quantized_high_ns_min": 19.53125,
+  "low_ns_min_cyclic_period": 500.0,
+  "possible_boundary_fragment_ns_min": 3.90625,
+  "spatial_transitions_per_period_min": 91,
+  "spatial_transitions_per_period_max": 111,
+  "spatial_transitions_per_period_mean": 101.390625,
+  "linear_rle_segments_all_symbols": 26103,
+  "dictionary_frame_bytes": 55950,
+  "dictionary_and_rle_uint16_frame_uint16_slots_bytes_excluding_headers": 160362,
+  "full_array_transition_gap_slots_min": 1,
+  "full_array_transition_gap_ns_min": 3.90625,
+  "full_array_transition_gap_slots_max": 44,
+  "fpc_group_transition_gap_slots_min": 1,
+  "fpc_group_transition_gap_ns_min": 3.90625,
+  "fpc_group_audit_orientation_assumption": "export row0 -> GUI top row; col0 -> GUI left column",
+  "existing_uniform_engine_min_update_ns": 100,
+  "hypothetical_vector_engine_100ns_limit_hz": 39062.5,
+  "hypothetical_vector_engine_exact_slot_ticks_at_limit": 30,
+  "p_r_uint8_table_bytes": 204800,
+  "row0_physical_orientation_confirmed": false,
+  "wiring_permutation_nonidentity_units_if_row0_top": 399,
+  "mapping_examples_row0_top_assumption": [
+    {
+      "unit": 0,
+      "source_byte": 0,
+      "source_bit": 0,
+      "row_if_row0_is_top": 1,
+      "column": 1,
+      "controller_chip_0based": 0,
+      "controller_byte": 0,
+      "controller_bit": 0
+    },
+    {
+      "unit": 1,
+      "source_byte": 0,
+      "source_bit": 1,
+      "row_if_row0_is_top": 1,
+      "column": 2,
+      "controller_chip_0based": 1,
+      "controller_byte": 1,
+      "controller_bit": 2
+    },
+    {
+      "unit": 19,
+      "source_byte": 2,
+      "source_bit": 3,
+      "row_if_row0_is_top": 1,
+      "column": 20,
+      "controller_chip_0based": 48,
+      "controller_byte": 48,
+      "controller_bit": 6
+    },
+    {
+      "unit": 20,
+      "source_byte": 2,
+      "source_bit": 4,
+      "row_if_row0_is_top": 2,
+      "column": 1,
+      "controller_chip_0based": 0,
+      "controller_byte": 0,
+      "controller_bit": 1
+    },
+    {
+      "unit": 399,
+      "source_byte": 49,
+      "source_bit": 7,
+      "row_if_row0_is_top": 20,
+      "column": 20,
+      "controller_chip_0based": 25,
+      "controller_byte": 25,
+      "controller_bit": 0
+    }
+  ],
+  "source_warnings": [
+    "理论结果：未包含噪声、单元耦合、方向图、切换过渡和接收滤波；EVM 仅为时间量化模型值。",
+    "两状态幅相按所有单元相同处理；整板全 0/全 1 的接收幅相不能直接作为逐单元校准。",
+    "各方向是可切换的独立码本，发送同一条数据流；不生成同时多波束。",
+    "最小高/低电平时间未约束。1 MHz PWM 周期能力不等于纳秒级边沿精度。"
+  ]
+}

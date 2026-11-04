@@ -1,0 +1,29 @@
+{
+  "verified_at": "2026-11-02T13:21:05.324611+08:00",
+  "board": "ZC706 clone / XC7Z045",
+  "cable_serial": "210299372306",
+  "fpga_idcode": "23731093",
+  "jedec_id": "ef6018",
+  "flash_type": "qspi-x8-dual_parallel",
+  "flash_offset": 0,
+  "image_bytes": 13556752,
+  "boot_sha256": "fe97b9c17ec1ff33bc1ac491b1b90eb4ada72da8f0176262fbaa8e6b37e5dd07",
+  "boot_mode_during_programming": "JTAG (0)",
+  "direct_full_byte_compare": "PASS",
+  "independent_program_flash_verify": "PASS",
+  "independent_verified_bytes": 13556752,
+  "independent_comparison_chunks": 414,
+  "permanent_protection_bits_set": false,
+  "cold_boot_test": "PASS",
+  "application_listener_initialized": true,
+  "application_network_test": "NOT_TESTED; host interface is not on the RIS subnet",
+  "rf_constellation_test": "NOT_TESTED",
+  "programmer_source_sha256": "8303800960f323931ab21a45dba1c4e7ff08806bc8e0050530821867bf4ad01e",
+  "programmer_elf_sha256": "b5e134b509039caadaad72d191ec58fd028328632d985eecc0216250a1552913",
+  "evidence_sha256": {
+    "direct_program.log": "bab8a73b78dfb70cf182d7be6f241d6830f21adb23e9c30aeb7d718a40a1c44c",
+    "independent_verify.log": "3a3562bf87b6c6a25e7a00a7344141d18befba57b2ff547149b467dd7e00e989",
+    "inspect_ready.log": "08878f80063deec6c9e6699dd1fd9a6ca97e6080d16a677e3e0e2a6a5bbc3898",
+    "cold_boot.log": "daa12c57a6f541efc79f30ef7e5a615bcff8aa41bf4ee0baaebcb14674d729e7"
+  }
+}

@@ -1,0 +1,23 @@
+test_all_orientations_are_bijective_and_known_corners_correct (test_ris_qam256.CodebookTests.test_all_orientations_are_bijective_and_known_corners_correct) ... ok
+test_bad_symbol_gray_mapping_rejected (test_ris_qam256.CodebookTests.test_bad_symbol_gray_mapping_rejected) ... ok
+test_directory_and_rooted_zip_have_same_verified_content (test_ris_qam256.CodebookTests.test_directory_and_rooted_zip_have_same_verified_content) ... ok
+test_duplicate_pulse_record_rejected (test_ris_qam256.CodebookTests.test_duplicate_pulse_record_rejected) ... ok
+test_export_reconstructs_every_symbol_and_all_controller_bits (test_ris_qam256.CodebookTests.test_export_reconstructs_every_symbol_and_all_controller_bits) ... ok
+test_export_rejects_boolean_strings_before_writing (test_ris_qam256.CodebookTests.test_export_rejects_boolean_strings_before_writing) ... ok
+test_export_rotated_low_polarity_and_source_protection (test_ris_qam256.CodebookTests.test_export_rotated_low_polarity_and_source_protection) ... ok
+test_frames_match_independent_modulo_pulses_for_random_coordinates (test_ris_qam256.CodebookTests.test_frames_match_independent_modulo_pulses_for_random_coordinates) ... ok
+test_hash_failure_does_not_accept_modified_binary (test_ris_qam256.CodebookTests.test_hash_failure_does_not_accept_modified_binary) ... ok
+test_indices_are_checked (test_ris_qam256.CodebookTests.test_indices_are_checked) ... ok
+test_invalid_metadata_and_layout_rejected (test_ris_qam256.CodebookTests.test_invalid_metadata_and_layout_rejected) ... ok
+test_inverted_and_rotated_patterns_match_source_cells (test_ris_qam256.CodebookTests.test_inverted_and_rotated_patterns_match_source_cells) ... ok
+test_nonfinite_extra_metadata_rejected (test_ris_qam256.CodebookTests.test_nonfinite_extra_metadata_rejected) ... ok
+test_partial_mapping_export_leaves_existing_file_intact (test_ris_qam256.CodebookTests.test_partial_mapping_export_leaves_existing_file_intact) ... ok
+test_payload_sources_limits_and_strict_hex (test_ris_qam256.CodebookTests.test_payload_sources_limits_and_strict_hex) ... ok
+test_rehashed_binary_must_still_match_pulse_parameters (test_ris_qam256.CodebookTests.test_rehashed_binary_must_still_match_pulse_parameters) ... ok
+test_short_binary_rejected_even_when_checksum_matches (test_ris_qam256.CodebookTests.test_short_binary_rejected_even_when_checksum_matches) ... ok
+test_zip_paths_duplicates_and_size_limit_rejected_without_extraction (test_ris_qam256.CodebookTests.test_zip_paths_duplicates_and_size_limit_rejected_without_extraction) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 1.340s
+
+OK

@@ -25,6 +25,7 @@ class OutputAction:
     summary: str
     callback: object = None
     mapping_document: object = None
+    tag: str = ""
 
 
 def describe_command(command):
@@ -58,6 +59,30 @@ def confirmed_status(connected, reply, action=None, playback=None):
         return "未连接", "工作状态未确认；连接后读取板端状态", "#94a3b8"
     if not reply["ok"] or reply["errors"]:
         return "执行异常", f"rc={reply['rc']} · 错误 0x{reply['errors']:08X}", "#fca5a5"
+    if reply.get("qam_supported"):
+        qs = reply["qam_status"]
+        if reply.get("qam_uploading"):
+            return "256QAM上传中", f"已确认 {reply['qam_received']:,}/{reply['qam_expected']:,} 字节 · 输出保持", "#93c5fd"
+        if qs & 12:
+            return "256QAM预检中", "等待FPGA检查完整符号表", "#93c5fd"
+        if qs & 1:
+            if reply["qam_error"]:
+                return "256QAM执行异常", f"板端错误码 {reply['qam_error']} · 保持最后图案", "#fca5a5"
+            frequency = 300000000 / (reply["qam_slot_ticks"] * reply["qam_period_slots"])
+            prefix_plan = (action.payload if action and action.kind == "qam" and
+                           getattr(action.payload, "preamble", None) and reply["qam_crc"] == action.payload.crc else None)
+            if prefix_plan:
+                detail = (f"PWM {frequency_text(prefix_plan.actual_pwm_hz)} · 前导{len(prefix_plan.preamble.rows)}周期 + "
+                          f"{len(prefix_plan.logical_payload)}符号×K{prefix_plan.logical_repeats} · 包CRC {reply['qam_crc']:08X}")
+            else:
+                detail = f"板端索引周期 {frequency_text(frequency)} · 重复参数K={reply['qam_repeats']} · 包CRC {reply['qam_crc']:08X}"
+            if not reply["oe"]:
+                return "256QAM输出禁能", detail + " · 板端OE=0", "#fbbf24"
+            if qs & 2:
+                if prefix_plan:
+                    return ("前导码 + 256QAM帧循环" if reply["qam_loop"] else "前导码 + 256QAM播放一次"), detail, "#5eead4"
+                return ("256QAM循环播放" if reply["qam_loop"] else "256QAM播放一次"), detail, "#5eead4"
+            return ("前导码 + 256QAM单次完成 · 保持" if prefix_plan else "256QAM单次完成 · 保持"), detail, "#cbd5e1"
     if not reply["oe"]:
         return "输出禁能 · 高阻", "板端已确认 OE=0", "#fbbf24"
     if reply.get("mt_running"):
@@ -84,4 +109,7 @@ def confirmed_status(connected, reply, action=None, playback=None):
     title = "停止 · 全0保持" if count == 0 else ("停止 · 全1保持" if count == 400 else "停止 · 图案保持")
     if action and action.kind == "mt" and not action.payload.loop:
         title = "MT 一次完成 · 全0保持"
+    if action and action.tag == "qam_static" and action.payload == "FRAME " + reply["image"].upper():
+        title = "256QAM静态码片"
+        return title, f"静态保持 · {count}/400路高 · 非QAM播放", "#cbd5e1"
     return title, f"静态命令镜像 · {count}/400 路高 · 输出已使能", "#cbd5e1"

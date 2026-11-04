@@ -1,0 +1,30 @@
+{
+  "recorded_utc": "2026-11-02T07:17:03.158059+00:00",
+  "method": "host_compiled_preamble_and_qam_in_existing_qam1_program",
+  "hardware_access_performed": false,
+  "rtl_or_firmware_modified": false,
+  "flash_programmed_this_change": false,
+  "qam_tests_passed": 35,
+  "codebook_tests_passed": 18,
+  "offline_compiler_tests_passed": 8,
+  "final_gui_test_passed": true,
+  "final_tcp_firmware_model_test_passed": true,
+  "rtl_preamble_test_passed": true,
+  "sources_sha256": {
+    "ris_qam_preamble.py": "2649e3022762dd1e2545fd31f5f0e5810f339fa3663d32552b562fa4580a2cf4",
+    "ris_qam_transport.py": "b7efcadc0f71d3fe79f04325dc31c1c106c6cc65664ee011c73ac16069f0876c",
+    "ris_qam256_gui.py": "25cd9b2458b6bfaca6c62ed79dc2bd72fac0aa9cc58c3aff6c4d4b39610ba38a",
+    "ris_qam256.py": "a571c1d9272a28326c8402658025336c40b2bbf791ab3298c8255b5be19641b8",
+    "ris_actions.py": "0979a575cf357271722db3da821bbf18281c47d5f0b6da1457c5be89fab30918",
+    "rtl_backend/scripts/compile_qam_plan.py": "bff577c477afb955d05a0f63d0ba64a517b4dccc480b1e0926707ee0ae6db99a"
+  },
+  "logs_sha256": {
+    "preamble_gui_chain_tests.log": "63170c16eee1627534bc619aaddf124f03bf57c099814d35c15afffe7fd1b82c",
+    "preamble_model_tests.log": "27f9cfe01b02990c5b78fc4d2d552c7736a07112786a5a76af2405e5e2d6792a",
+    "preamble_gui_final.log": "95bf64325b7eeade275cf454191a80272f0b3f2c4f1ecd224944db77cda802e1",
+    "preamble_full_chain_final.log": "f14b7ccd85c7967a340d7790c64662ec03e2b7391fce08291bf544ca5b7b4265",
+    "preamble_codebook_regression.log": "cabf418e0f36957846b080dbe9863f4447c9b499a1a6e6bf0ad3d07921adc8d5",
+    "rtl_backend/reports/preamble_offline_tests.log": "4455751cc74933d76ed0355331fa5e14b6f4ce7230108a780a6e13391416dad4",
+    "rtl_backend/reports/preamble/rtl_simulation.log": "0279279bc7fe781a573c410c8cd7efed508b9ef645e7c652bfc8590daec05c91"
+  }
+}

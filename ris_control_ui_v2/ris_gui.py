@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """RIS console v2: isolated configuration pages and one explicit output gate."""
 import argparse
+import json
+import os
 from pathlib import Path
 import queue
 import threading
 import time
+import tempfile
 import tkinter as tk
 from tkinter import ttk
 from tkinter.scrolledtext import ScrolledText
@@ -12,6 +15,8 @@ from tkinter.scrolledtext import ScrolledText
 from ris_actions import OutputAction, confirmed_status, describe_command
 from ris_client import DEFAULT_HOST, DEFAULT_PORT, RisClient
 from ris_frequency import frequency_text, plan_frequency
+from ris_qam256 import ORIENTATIONS
+from ris_qam256_gui import QAM_TYPE, UNIFORM_TYPE
 
 FEATURES = {"board": "全板控制", "mt": "MT时域控制", "patterns": "图案切换控制", "settings": "全板设置"}
 
@@ -24,8 +29,16 @@ class RisGui:
         self.latest = self.applied_action = self.inflight_action = self.playback_plan = None
         self._write_authorized = False
         self.tasks, self.results = queue.Queue(), queue.Queue()
+        self.qam_progress = (0, 0)
         self.pending_callback = None
         self.mapping_page = self.manual = self.pattern_page = self.mt_controls = None
+        self.qam_page = None
+        self.mt_type = tk.StringVar(value=UNIFORM_TYPE)
+        self.qam_orientation = tk.StringVar(value="未确认")
+        self.qam_state1 = tk.StringVar(value="未确认")
+        self.qam_confirmed = tk.BooleanVar(value=False)
+        self.qam_data_dir = (Path(mapping_storage).parent if mapping_storage else Path(__file__).resolve().parent) / "qam"
+        self.qam_settings_path = self.qam_data_dir / "settings.json"
         self.current_page = "home"
         self.staged = {}
         self.byte_scope = None
@@ -56,10 +69,14 @@ class RisGui:
         self.frequency_preview = tk.StringVar()
         self.fast_notice = tk.StringVar()
         self.page_hint = tk.StringVar()
+        self._load_qam_settings()
         self._build(pattern_storage, mapping_storage)
         for variable in (self.board_mode, self.period, self.board_frequency, self.board_unit,
                          self.settings_mode, self.mt_action, self.fast_value, self.fast_unit, self.hex_value, self.chip):
             variable.trace_add("write", lambda *_: self.refresh_pending())
+        for variable in (self.qam_orientation, self.qam_state1):
+            variable.trace_add("write", lambda *_: self._qam_setting_edited())
+        self.qam_confirmed.trace_add("write", lambda *_: self._qam_settings_changed())
         threading.Thread(target=self._worker, daemon=True).start()
         self.receive_timer = root.after(50, self._receive)
         self.poll_timer = root.after(1000, self._poll)
@@ -201,7 +218,18 @@ class RisGui:
         ttk.Label(self.control_frame, text="本页仅配置。单元测试、电平和字节按钮选择待下发内容，点击右上角总按钮后生效。", style="Muted.TLabel").pack(side="bottom", anchor="w", pady=(10, 0))
 
     def _build_mt(self):
-        box = ttk.LabelFrame(self.mt_frame, text="MT 时域表 · 400 路统一控制", padding=18)
+        navigation = ttk.Frame(self.mt_frame)
+        navigation.pack(fill="x", pady=(0, 10))
+        ttk.Label(navigation, text="控制类型").pack(side="left")
+        self.mt_type_box = ttk.Combobox(navigation, textvariable=self.mt_type, values=(UNIFORM_TYPE, QAM_TYPE), state="readonly", width=27)
+        self.mt_type_box.pack(side="left", padx=10)
+        self.mt_type_box.bind("<<ComboboxSelected>>", lambda _: self.show_mt_type(self.mt_type.get()))
+        self.mt_content = ttk.Frame(self.mt_frame)
+        self.mt_content.pack(fill="both", expand=True)
+        self.mt_panels = {name: ttk.Frame(self.mt_content) for name in (UNIFORM_TYPE, QAM_TYPE)}
+        uniform = self.mt_panels[UNIFORM_TYPE]
+        uniform.pack(fill="both", expand=True)
+        box = ttk.LabelFrame(uniform, text="MT 时域表 · 400 路统一控制", padding=18)
         box.pack(fill="x")
         row = ttk.Frame(box)
         row.pack(fill="x", pady=(0, 12))
@@ -214,18 +242,30 @@ class RisGui:
         self.mt_controls = MTControls(self, box)
         self.fast_preview = ttk.Label(box, textvariable=self.fast_notice, foreground="#315b80", wraplength=1200)
         self.fast_preview.pack(anchor="w", pady=(16, 0))
-        ttk.Label(self.mt_frame, text="加载表、预览、修改频率和选择播放方式只更新配置。\n下发后先上传并校验整表，再由 FPGA 按原协议播放。", style="Muted.TLabel", justify="left").pack(anchor="w", pady=18)
+        ttk.Label(uniform, text="加载表、预览、修改频率和选择播放方式只更新配置。\n下发后先上传并校验整表，再由 FPGA 按原协议播放。", style="Muted.TLabel", justify="left").pack(anchor="w", pady=18)
+        from ris_qam256_gui import QamPage
+        self.qam_page = QamPage(self, self.mt_panels[QAM_TYPE])
+
+    def show_mt_type(self, name):
+        if name not in self.mt_panels:
+            raise ValueError("未知MT控制类型")
+        for panel in self.mt_panels.values():
+            panel.pack_forget()
+        self.mt_type.set(name)
+        self.mt_panels[name].pack(fill="both", expand=True)
+        self.refresh_pending()
 
     def _build_settings(self):
         navigation = ttk.Frame(self.settings_frame)
         navigation.pack(fill="x", pady=(0, 10))
         ttk.Label(navigation, text="设置选项").pack(side="left")
-        selector = ttk.Combobox(navigation, textvariable=self.settings_view, values=("输出设置", "FPC—RIS 映射", "通信日志"), state="readonly", width=21)
+        names = ("输出设置", "FPC—RIS 映射", "256QAM方向与极性", "通信日志")
+        selector = ttk.Combobox(navigation, textvariable=self.settings_view, values=names, state="readonly", width=23)
         selector.pack(side="left", padx=10)
         selector.bind("<<ComboboxSelected>>", lambda _: self.show_settings(self.settings_view.get()))
         self.settings_content = ttk.Frame(self.settings_frame)
         self.settings_content.pack(fill="both", expand=True)
-        self.settings_frames = {name: ttk.Frame(self.settings_content) for name in ("输出设置", "FPC—RIS 映射", "通信日志")}
+        self.settings_frames = {name: ttk.Frame(self.settings_content) for name in names}
         general = self.settings_frames["输出设置"]
         box = ttk.LabelFrame(general, text="全板输出设置", padding=20)
         box.pack(fill="x")
@@ -237,11 +277,93 @@ class RisGui:
         ttk.Label(mapping, text="管理接口绑定、空间映射、逐点标定和接线测试。", style="Muted.TLabel").pack(anchor="w")
         ttk.Button(mapping, text="打开 FPC—RIS 映射设置", command=self.open_mapping).pack(anchor="w", pady=(12, 0))
         self.mapping_frame = self.settings_frames["FPC—RIS 映射"]
+        self._build_qam_settings(self.settings_frames["256QAM方向与极性"])
         logs = self.settings_frames["通信日志"]
         ttk.Label(logs, textvariable=self.state, wraplength=1300).pack(anchor="w", pady=8)
         self.log = ScrolledText(logs, height=12, wrap="word", state="disabled", font=("monospace", 10))
         self.log.pack(fill="both", expand=True)
         self.settings_frames["输出设置"].pack(fill="both", expand=True)
+
+    def _build_qam_settings(self, parent):
+        form = ttk.LabelFrame(parent, text="码本坐标 → RIS实物与驱动状态", padding=20)
+        form.pack(fill="x")
+        ttk.Label(form, text="码本row0位于负y、col0位于负x。请按实物BIAS标记核对三个角，再选择旋转/镜像关系。", wraplength=1080).grid(row=0, column=0, columnspan=2, sticky="w", pady=(0, 16))
+        ttk.Label(form, text="码本相对实物方向").grid(row=1, column=0, sticky="w", pady=8)
+        ttk.Combobox(form, textvariable=self.qam_orientation, values=("未确认", *ORIENTATIONS.values()), state="readonly", width=35).grid(row=1, column=1, sticky="w", padx=15)
+        ttk.Label(form, text="码本状态1对应").grid(row=2, column=0, sticky="w", pady=8)
+        ttk.Combobox(form, textvariable=self.qam_state1, values=("未确认", "驱动高", "驱动低"), state="readonly", width=35).grid(row=2, column=1, sticky="w", padx=15)
+        ttk.Checkbutton(form, text="已核对实物方向与高低状态对应关系", variable=self.qam_confirmed).grid(row=3, column=0, columnspan=2, sticky="w", pady=12)
+        self.qam_corner_text = tk.StringVar()
+        ttk.Label(form, textvariable=self.qam_corner_text, wraplength=1080, foreground="#315b80").grid(row=4, column=0, columnspan=2, sticky="w", pady=8)
+        ttk.Button(form, text="保存已核对设置", command=self.save_qam_settings).grid(row=5, column=0, sticky="w", pady=12)
+        ttk.Button(form, text="返回256QAM配置", command=self.open_qam).grid(row=5, column=1, sticky="w", padx=15)
+        ttk.Label(parent, text="本页只保存本地转换设置，不下发指令。修改方向或极性后需重新核对；当前运行保持。\n静态码片核线和播放包导出还需完整400路FPC映射。", wraplength=1100, style="Muted.TLabel").pack(anchor="w", pady=16)
+        self._qam_settings_changed()
+
+    def _load_qam_settings(self):
+        if not self.qam_settings_path.exists():
+            return
+        try:
+            data = json.loads(self.qam_settings_path.read_text())
+            if data.get("version") != 1 or data.get("orientation") not in ORIENTATIONS or type(data.get("state1_high")) is not bool or type(data.get("confirmed")) is not bool:
+                raise ValueError("格式或字段有误")
+            self.qam_orientation.set(ORIENTATIONS[data["orientation"]])
+            self.qam_state1.set("驱动高" if data["state1_high"] else "驱动低")
+            self.qam_confirmed.set(data["confirmed"])
+        except (OSError, ValueError, TypeError, AttributeError) as error:
+            self.notice.set(f"256QAM方向设置未恢复，请重新核对：{error}")
+
+    def qam_wiring(self):
+        orientation = next((key for key, text in ORIENTATIONS.items() if text == self.qam_orientation.get()), None)
+        if not orientation or self.qam_state1.get() not in ("驱动高", "驱动低") or not self.qam_confirmed.get():
+            raise ValueError("请先在全板设置中核对256QAM方向与状态极性")
+        return orientation, self.qam_state1.get() == "驱动高"
+
+    def _qam_setting_edited(self):
+        self.qam_confirmed.set(False)
+
+    def _qam_settings_changed(self):
+        if hasattr(self, "qam_corner_text"):
+            from ris_qam256 import transform_cell
+            orientation = next((key for key, text in ORIENTATIONS.items() if text == self.qam_orientation.get()), None)
+            if orientation:
+                labels = []
+                for row, column in ((0, 0), (0, 19), (19, 0)):
+                    r, c = transform_cell(row, column, orientation)
+                    labels.append(f"码本({row},{column}) → RIS R{r + 1:02d}C{c + 1:02d}")
+                self.qam_corner_text.set("；".join(labels) + (" · 已核对" if self.qam_confirmed.get() else " · 尚未核对"))
+            else:
+                self.qam_corner_text.set("方向与状态极性尚未确认，不按默认方向猜测实际接线。")
+        if self.qam_page:
+            self.qam_page.request_refresh()
+        self.refresh_pending()
+
+    def save_qam_settings(self):
+        temporary = None
+        try:
+            orientation, high = self.qam_wiring()
+            self.qam_data_dir.mkdir(parents=True, exist_ok=True)
+            with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=self.qam_data_dir, delete=False) as stream:
+                temporary = Path(stream.name)
+                json.dump({"version": 1, "orientation": orientation, "state1_high": high, "confirmed": True}, stream, ensure_ascii=False, indent=2)
+                stream.write("\n")
+            os.replace(temporary, self.qam_settings_path)
+            self.notice.set("256QAM方向与极性已保存在本副本中；当前输出保持。")
+            return True
+        except (OSError, ValueError) as error:
+            self.notice.set(f"设置未保存：{error}")
+            return False
+        finally:
+            if temporary and temporary.exists():
+                temporary.unlink()
+
+    def open_qam_settings(self):
+        self.show_settings("256QAM方向与极性")
+        self.show_page("settings")
+
+    def open_qam(self):
+        self.show_mt_type(QAM_TYPE)
+        self.show_page("mt")
 
     def show_settings(self, name):
         for frame in self.settings_frames.values():
@@ -293,6 +415,8 @@ class RisGui:
             self.manual.refresh()
         if self.pattern_page:
             self.pattern_page.update_state()
+        if self.qam_page:
+            self.qam_page.update_state()
         self.refresh_pending()
 
     def command(self, command, callback=None, owner=None, summary=None, mapping_document=None, feature=None):
@@ -365,6 +489,8 @@ class RisGui:
                 return self._validate_mapping(action)
             return OutputAction("command", command, describe_command(command))
         if page == "mt":
+            if self.mt_type.get() == QAM_TYPE:
+                return self.qam_page.prepare_action()
             if self.mt_action.get() == "stop":
                 return OutputAction("command", "STOP", "停止 MT / 保持当前输出")
             if not self.mt_controls:
@@ -382,6 +508,8 @@ class RisGui:
             view, mode = self.settings_view.get(), self.settings_mode.get()
             if view == "通信日志":
                 raise ValueError("通信日志仅供查看。")
+            if view == "256QAM方向与极性":
+                raise ValueError("方向与极性仅保存本地配置；请到MT页面选择待应用操作。")
             if view == "FPC—RIS 映射":
                 action = self.staged.get("settings")
                 if action is None:
@@ -402,7 +530,12 @@ class RisGui:
         if not hasattr(self, "apply_button"):
             return
         try:
-            action = self.pattern_page.preview_action() if self.current_page == "patterns" and self.pattern_page else self._prepare_action()
+            if self.current_page == "patterns" and self.pattern_page:
+                action = self.pattern_page.preview_action()
+            elif self.current_page == "mt" and self.mt_type.get() == QAM_TYPE and self.qam_page:
+                action = self.qam_page.preview_action()
+            else:
+                action = self._prepare_action()
             text, available = "待下发：" + action.summary, True
         except ValueError as error:
             action, text, available = None, str(error), False
@@ -434,6 +567,8 @@ class RisGui:
             self.fast_preview.configure(foreground="#a23a28")
 
     def _check_capability(self, action):
+        if action.kind == "qam":
+            action.payload.check_capability(self.latest)
         if action.kind == "mt" and not self.latest.get("mt_supported"):
             raise ValueError("板端不支持 MT 表；请使用配套 MT 版 BIT 和 ELF。")
         if action.kind == "command" and action.payload.startswith("FASTTICKS") and not self.latest.get("fast_variable"):
@@ -469,7 +604,8 @@ class RisGui:
             self.pattern_page.begin_playback(action.payload)
             return True
         self.mt_cancel.clear()
-        self.mt_uploading = action.kind == "mt"
+        self.qam_progress = (0, 0)
+        self.mt_uploading = action.kind in ("mt", "qam")
         self._write_authorized = True
         try:
             return self.submit(action.kind, action.payload, action.callback)
@@ -552,6 +688,8 @@ class RisGui:
             entry.configure(state="disabled" if self.connected or self.busy else "normal")
         if self.mt_controls:
             self.mt_controls.update_state()
+        if self.qam_page:
+            self.qam_page.update_state()
         if self.mapping_page and self.mapping_page.alive:
             self.mapping_page.update_state()
         if self.pattern_page:
@@ -563,7 +701,11 @@ class RisGui:
         player = self.pattern_page.player if self.pattern_page else None
         title, detail, color = confirmed_status(self.connected, self.latest, self.applied_action, player)
         if self.mt_uploading:
-            title, detail, color = "MT 表上传中", "等待整表校验；完成后启动播放", "#fbbf24"
+            if self.inflight_action and self.inflight_action.kind == "qam":
+                done, total = self.qam_progress
+                title, detail, color = "256QAM上传中", (f"已确认 {done:,}/{total:,} 字节" if total else "正在读取板端能力并准备上传"), "#fbbf24"
+            else:
+                title, detail, color = "MT 表上传中", "等待整表校验；完成后启动播放", "#fbbf24"
         self.status_title.set(title)
         self.status_detail.set(detail)
         self.monitor_title.configure(foreground=color)
@@ -582,7 +724,7 @@ class RisGui:
         self.log.configure(state="disabled")
 
     def submit(self, kind, payload=None, callback=None):
-        if kind in ("command", "mt") and not self._write_authorized:
+        if kind in ("command", "mt", "qam") and not self._write_authorized:
             self.notice.set("输出指令必须通过右上角“下发指令”应用。")
             return False
         if self.busy or self.closed:
@@ -627,6 +769,13 @@ class RisGui:
                     if client:
                         client.close()
                     client, reply = None, None
+                elif kind == "qam":
+                    if client is None:
+                        raise ConnectionError("尚未连接板卡")
+                    reply, cancelled = client.upload_qam(payload, self.mt_cancel,
+                        lambda done, total: self.results.put(("qam_progress", (done, total), None, None)))
+                    if cancelled:
+                        kind = "qam_cancelled"
                 elif kind == "mt":
                     if client is None:
                         raise ConnectionError("尚未连接板卡")
@@ -664,20 +813,26 @@ class RisGui:
         try:
             while True:
                 kind, payload, reply, error = self.results.get_nowait()
+                if kind == "qam_progress":
+                    done, total = payload
+                    self.qam_progress = (done, total)
+                    self.refresh_status()
+                    self.notice.set(f"256QAM上传中：已确认 {done:,}/{total:,} 字节（{done/total:.1%}）")
+                    continue
                 if kind == "mt_progress":
                     self.notice.set(f"MT 表上传中：已确认 {payload} 个时段")
                     continue
                 callback, self.pending_callback = self.pending_callback, None
                 self.busy = False
-                if kind in ("mt", "mt_cancelled"):
+                if kind in ("mt", "mt_cancelled", "qam", "qam_cancelled"):
                     self.mt_uploading = False
                 # A cancellation may arrive after MTSTART was sent or its result
                 # was queued. Honor that explicit total-button click with STOP.
-                if kind == "mt" and self.mt_cancel.is_set() and not error and reply:
+                if kind in ("mt", "qam") and self.mt_cancel.is_set() and not error and reply:
                     self.connected, self.latest = True, reply
                     self.confirmed_time = time.strftime("%H:%M:%S")
                     self.applied_action = None
-                    self.inflight_action = OutputAction("command", "STOP", "取消 MT 上传并停止")
+                    self.inflight_action = OutputAction("command", "STOP", "取消上传并保持")
                     self.notice.set("正在完成取消请求，等待 STOP 确认…")
                     self._write_authorized = True
                     try:
@@ -703,10 +858,10 @@ class RisGui:
                         self.applied_action = None
                         self.notice.set(f"已连接 {self.host.get()}:{self.port.get()}；状态来自板端确认。")
                         self.append_log(self.notice.get())
-                    elif kind in ("command", "mt", "mt_cancelled"):
+                    elif kind in ("command", "mt", "mt_cancelled", "qam", "qam_cancelled"):
                         self.applied_action = self.inflight_action
-                        if kind == "mt_cancelled":
-                            self.applied_action = OutputAction("command", "STOP", "取消 MT 上传并停止")
+                        if kind in ("mt_cancelled", "qam_cancelled"):
+                            self.applied_action = OutputAction("command", "STOP", "取消上传并保持")
                         self.notice.set("已确认：" + (self.applied_action.summary if self.applied_action else describe_command(payload)))
                         self.append_log(self.notice.get())
                 self._enable()
@@ -731,6 +886,7 @@ class RisGui:
         if self.mapping_page and self.mapping_page.alive and not self.mapping_page.close():
             return
         self.pattern_page.shutdown()
+        self.qam_page.shutdown()
         self.closed = True
         self.mt_cancel.set()
         self.root.after_cancel(self.receive_timer)
@@ -748,6 +904,8 @@ def main():
     views.add_argument("--mapping", action="store_true", help="打开全板设置中的 FPC—RIS 映射")
     views.add_argument("--patterns", action="store_true", help="打开图案切换配置")
     views.add_argument("--mt", action="store_true", help="打开 MT 时域配置")
+    views.add_argument("--qam", action="store_true", help="打开256QAM配置并载入本项目码本")
+    parser.add_argument("--codebook", help="导入256QAM码本目录或ZIP（不下发）")
     parser.add_argument("--mapping-file", help="导入映射；副本的保存目标位于新目录")
     args = parser.parse_args()
     root = tk.Tk()
@@ -755,12 +913,18 @@ def main():
     saved = Path(args.mapping_file) if args.mapping_file else Path(__file__).resolve().parent / "mappings" / "ris_mapping.json"
     if saved.exists():
         app.mapping_page.load_path(saved)
+    if args.codebook:
+        app.qam_page.load(args.codebook)
     if args.mapping:
         app.open_mapping()
     elif args.patterns:
         app.show_page("patterns")
     elif args.mt:
         app.show_page("mt")
+    elif args.qam or args.codebook:
+        app.open_qam()
+        if not args.codebook and app.qam_page.default_path.exists():
+            app.qam_page.load(app.qam_page.default_path)
     if args.connect:
         root.after(200, app.connect)
     root.mainloop()

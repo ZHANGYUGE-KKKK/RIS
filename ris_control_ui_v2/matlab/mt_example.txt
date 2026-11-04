@@ -1,3 +1,0 @@
-% M=duty percent, T=delay percent. Select frequency in the GUI.
-(50,10);
-(30,0);

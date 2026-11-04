@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-02",
+  "recorded_utc": "2026-11-02T04:38:42.205563+00:00",
+  "hardware_access_performed": false,
+  "full_python_tests_passed": 104,
+  "final_qam_tests_passed": 27,
+  "offline_compiler_tests_passed": 8,
+  "firmware_build_passed": true,
+  "vendor_model_rtl_suites": [
+    "QAM",
+    "MT",
+    "FAST",
+    "595",
+    "AXI FAST=0",
+    "AXI FAST=1"
+  ],
+  "test_logs_sha256": {
+    "full_chain_tests.log": "1f97d43a5eef6a68bf3dfb645e4c903602f2a1788c2810c3a0a365d78c47d1dc",
+    "qam_chain_final_tests.log": "45800c9277fe1a2f7ca79abc715c4b71f8493a31d436684aabadd471563042b2",
+    "rtl_backend/reports/firmware/offline_compiler_tests.log": "4a80cd009c2ecf44fab9c7533a7476b75ec2316987765be57e95c45878bf4a2c",
+    "rtl_backend/reports/firmware/build.log": "cb557f891d2a559f43c52a173a3e930a86e43af3eaac02b4aa19fdc5ffdde2ac",
+    "rtl_backend/reports/simulation/vendor_chain_regression.log": "086d35ea6336435120be8b10a67e304ecdcc8150a0d9eb9eca982dff9c7b8e23"
+  }
+}

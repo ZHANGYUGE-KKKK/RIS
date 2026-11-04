@@ -1,0 +1,18 @@
+test_constellation_and_rotated_array_selection_only_change_preview (test_qam_gui.QamGuiTests.test_constellation_and_rotated_array_selection_only_change_preview) ... ok
+test_export_and_preview_keep_previous_playlist_running (test_qam_gui.QamGuiTests.test_export_and_preview_keep_previous_playlist_running) ... ok
+test_invalid_load_preserves_current_codebook_and_parameters (test_qam_gui.QamGuiTests.test_invalid_load_preserves_current_codebook_and_parameters) ... ok
+test_invalid_selections_do_not_write_and_stop_works_without_codebook (test_qam_gui.QamGuiTests.test_invalid_selections_do_not_write_and_stop_works_without_codebook) ... ok
+test_loading_and_all_preview_edits_never_connect_or_send (test_qam_gui.QamGuiTests.test_loading_and_all_preview_edits_never_connect_or_send) ... ok
+test_mt_subpages_are_exclusive_and_preserve_uniform_parameters (test_qam_gui.QamGuiTests.test_mt_subpages_are_exclusive_and_preserve_uniform_parameters) ... ok
+test_orientation_changes_revoke_confirmation_and_save_only_local_settings (test_qam_gui.QamGuiTests.test_orientation_changes_revoke_confirmation_and_save_only_local_settings) ... ok
+test_payload_export_uses_file_snapshot_and_exact_playback_settings (test_qam_gui.QamGuiTests.test_payload_export_uses_file_snapshot_and_exact_playback_settings) ... ok
+test_playback_is_blocked_even_with_uniform_mt_or_unimplemented_capability (test_qam_gui.QamGuiTests.test_playback_is_blocked_even_with_uniform_mt_or_unimplemented_capability) ... ok
+test_settings_page_cannot_apply_a_hidden_oe_action (test_qam_gui.QamGuiTests.test_settings_page_cannot_apply_a_hidden_oe_action) ... ok
+test_static_needs_confirmed_wiring_and_complete_mapping (test_qam_gui.QamGuiTests.test_static_needs_confirmed_wiring_and_complete_mapping) ... ok
+test_static_only_sends_mapped_frame_after_global_button (test_qam_gui.QamGuiTests.test_static_only_sends_mapped_frame_after_global_button) ... ok
+test_static_rejection_is_reported_without_retry (test_qam_gui.QamGuiTests.test_static_rejection_is_reported_without_retry) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 183.598s
+
+OK
