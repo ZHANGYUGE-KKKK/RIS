@@ -1,0 +1,127 @@
+{
+  "date": "2026-11-05",
+  "source_codebook": "QAM_RULES/64QAM/ris_64qam_64slice_codebook",
+  "source_book_sha256": {
+    "codebook_frames.bin": "ba81b66a052f1849c0b37e18d19c74b416d900b4af86403bbc0ca77db06425ad",
+    "SHA256SUMS.txt": "2494331a91aa8aa44ea549a02288478441e5c3dd9899166b17d6b76d0a5ef834",
+    "pulse_parameters.csv": "9cf53d777ee11148a052768e8b3a415a3f659870d2b27ba12486ac22870f01ee",
+    "symbols.csv": "0f6d2b192b465691c9ceeb6666e7075e795a404bc3300531280f8244cde056c9",
+    "README.txt": "571510720dd943896372e12e740227485c33bdaf588ddff0891d55e82606159e",
+    "metadata.json": "00c0ef5549b1c0ddc2bd8ce49832353b0fd11d4902e195582a3f425068526c2f",
+    "elements.csv": "e399d806931c06377543d05d4e5e16f758edd911da6ce1a65b7e5720b9279dd9"
+  },
+  "qam_order": 64,
+  "slots": 64,
+  "pwm_hz": 160000,
+  "period_ticks": 1875,
+  "axi_hz": 100000000,
+  "engine_hz": 300000000,
+  "shcp_hz": 100000000,
+  "min_event_ticks": 29,
+  "edge_error_bound_ns": 1.6666666666666667,
+  "timing": {
+    "WNS_ns": 0.031,
+    "WHS_ns": 0.077,
+    "TNS_ns": 0,
+    "THS_ns": 0
+  },
+  "tests": {
+    "qam_suite": 43,
+    "final_qam64_core": 6,
+    "final_gui_tcp": 3,
+    "legacy_codebook": 18,
+    "legacy_offline": 8,
+    "frequency": 4
+  },
+  "hardware_access_performed": false,
+  "flash_programmed": false,
+  "rf_tested": false,
+  "previous_backend_changed_sources": [
+    "FPGA/ris_qam_backend/rtl/ris_qam_player.v",
+    "FPGA/ris_qam_backend/include/ris_qam_regs.h",
+    "FPGA/ris_qam_backend/software/ris_qam_regs.h",
+    "FPGA/ris_qam_backend/software/ris_qam_driver.inc",
+    "FPGA/ris_qam_backend/software/ris_controller.c",
+    "FPGA/ris_qam_backend/software/ris_controller.h",
+    "FPGA/ris_qam_backend/software/network/ris_protocol.c"
+  ],
+  "host_and_compiler_sha256": {
+    "RIS_CTRL/ris_control_ui_v2/ris_qam_preamble.py": "1c4a7478ff116bbf576710b7b3db8987fad7a9f01ada7c2e878fb54d5dfed6e1",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam256_gui.py": "0f13962f89994afbdf6a13b2a407c475b7f070b0414929d6a75ad91d0103df42",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam_transport.py": "dd7dda80997279437601cb45e0fb3a5e0e961a1796b960f25e304aa8a471f307",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam256.py": "aea9d91c6ea080d32fbd36c442c001594a585be35911b7623084685f266991ac",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam64_timing.py": "6a68a4e4ce93039c47979ecd10540fd0f9b23b7bdeb4818e76a386e0104a24df",
+    "RIS_CTRL/ris_control_ui_v2/ris_gui.py": "1ca3e8ac688b29c3b06e5a2172397c4cac8ebb679fa5001d027baa84e1a02be8",
+    "RIS_CTRL/ris_control_ui_v2/ris_actions.py": "0e7bbd539a953e8a7cdbfe27c1833052f79a771cc160306ed1f840a5b585a82f",
+    "RIS_CTRL/ris_control_ui_v2/ris_client.py": "4bd585adbcd5d1174c49130bfd167ecdcb8ce1b4cc68acf388eed8008c9f50b5",
+    "FPGA/ris_qam_backend/scripts/compile_qam_plan.py": "ddda0d8a71a63883d71ef8e142344bac11f944d6887c2ad0830d8189332b8655",
+    "FPGA/ris_qam_backend/tests/tb_ris_qam.sv": "c302b015597d056f8dceff960e6f4afc1c9ea791193fa285751feaba4f3ac1e0",
+    "FPGA/ris_qam_backend/tests/make_qam64_fixture.py": "6f41d921a3869e2bd5841867df7d6b5e1da6ec23695aed7ab739c875f991f7cb",
+    "FPGA/ris_qam_backend/tests/check_qam64_offline.py": "c1ef242da4c961af3386ae7c44616ca38ff366017ef52d73ee78b0822fd6e06c"
+  },
+  "logs_sha256": {
+    "RIS_CTRL/ris_control_ui_v2/reports/qam64/all_qam_tests_final.log": "3e467535187ac65c360b7933fa801121112578b9b97d62f00a8485393843ab3e",
+    "RIS_CTRL/ris_control_ui_v2/reports/qam64/core_tests_final.log": "c7e8515d683a9e0a45d47df91dda1d3705e8a55c777e1e2a0a7a56d85813df9f",
+    "RIS_CTRL/ris_control_ui_v2/reports/qam64/final_qam64_tests.log": "a85e26f67715b6f68a3aafd4ac40100d8af2892178b64feaa56cb33d35d8a258",
+    "RIS_CTRL/ris_control_ui_v2/reports/qam64/codebook_regression.log": "cc9b1bf188f58673f64f8516fc2df40d3139d0ada109013f4578ea37af3dc9fd",
+    "RIS_CTRL/ris_control_ui_v2/reports/qam64/offline_regression.log": "725bd78c32a5dadb2cbc4abbb8189da8c9de9a71ce477a28f9cd00249d4e86c8",
+    "RIS_CTRL/ris_control_ui_v2/reports/qam64/frequency_regression.log": "69e64e516473fc3de1842f9ff0bb48943f7e3d922c0ae005b4fd7fa514138c8a",
+    "RIS_CTRL/ris_control_ui_v2/reports/qam64/offline64_final.log": "a0fedf54a33c2b7fbc29c6f47b1a8731f8c83d0dcfa0464d375367f226623dc0",
+    "FPGA/ris_qam_backend/reports/qam64/rtl_simulation.log": "c731f5464d29dd80d65ba90ae878e9be7220c3201236fb478c729f0fd3363262",
+    "FPGA/ris_qam_backend/reports/qam64/legacy_rtl_regression.log": "dad5b3ef49339cfb4b19c079df669e63beab0212b80c6f6207196721fe63f165",
+    "FPGA/ris_qam_backend/reports/qam/hardware_build.log": "defe04ac515c83e63147fe4b44b8a2a3e5f8f20fc55d7d8e2043a62ea3f705b9",
+    "FPGA/ris_qam_backend/reports/firmware/build.log": "5068c52356dea3450bbc5e35cb233210f22f204bf3d39c5ac800af259eed449c",
+    "FPGA/ris_qam_backend/reports/qam64/flash_package.log": "067c8dd2146ab9c6007cfcb3e4b2c54db5f186e9b718c4f716ca02f53c662421"
+  },
+  "artifacts_sha256": {
+    "ris_ctrl_unit.bit": "28b03d2a0d4a039a528b6c9851ab6c24bd7033aaf9cc7a503e5a516a5a0b8ee9",
+    "ris_ctrl_unit.xsa": "9079ac87ff74f9f9d40d6b52e3e6e1b1ff9c1bbd97b9cbd5eb127f9dc587dd32",
+    "ps7_init.tcl": "df63d0e5eca6c0d65b04b90265da502d9225b67964dc40994cf1f896b2812362",
+    "ris_all_io.elf": "666210a821c98f47c52b22d2476671c39f6b67b8620f9758b6c01bc1a9f15628"
+  },
+  "boot": {
+    "board": "ZC706 / XC7Z045",
+    "architecture": "zynq",
+    "flash_type": "qspi-x8-dual_parallel",
+    "flash_program_offset": "0x0",
+    "flash_capacity_bytes": 33554432,
+    "image_bytes": 13556752,
+    "boot_header_checksum_valid": true,
+    "partition_header_checksums_valid": true,
+    "flash_partitions_nonoverlapping": true,
+    "all_partition_contents_match_inputs": true,
+    "bit_matches_xsa": true,
+    "partitions": [
+      {
+        "name": "fsbl.elf",
+        "flash_offset": "0x1700",
+        "bytes": 65544,
+        "load_address": "0x0",
+        "entry_address": "0x0",
+        "attributes": "0x10",
+        "content_matches_input": true
+      },
+      {
+        "name": "ris_ctrl_unit.bit",
+        "flash_offset": "0x11740",
+        "bytes": 13321408,
+        "load_address": "0x0",
+        "entry_address": "0x0",
+        "attributes": "0x20",
+        "content_matches_input": true
+      },
+      {
+        "name": "ris_all_io.elf",
+        "flash_offset": "0xcc5c00",
+        "bytes": 163856,
+        "load_address": "0x100000",
+        "entry_address": "0x100000",
+        "attributes": "0x10",
+        "content_matches_input": true
+      }
+    ],
+    "flash_programmed": false,
+    "hardware_boot_tested": false,
+    "boot_sha256": "e46e934f0f573209868e18f195cc27d5ad67fe0671c3f2272eb9807f32491665"
+  }
+}
