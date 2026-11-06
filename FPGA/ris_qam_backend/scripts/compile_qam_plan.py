@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Validate an offline host ZIP and emit QAM1 MMIO writes / simulation memories.
 
-This tool never opens a device. Retiming is an explicit bench operation, not a
-claim that the original RF model remains valid at a different PWM frequency.
+This tool never opens a device. Output timing comes from the host snapshot;
+older source-only packages retain their explicit bench-retiming option.
 """
 import argparse
 from fractions import Fraction
@@ -11,12 +11,15 @@ import json
 from pathlib import Path
 import struct
 import sys
+from types import SimpleNamespace
 import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "RIS_CTRL/ris_control_ui_v2"))
 from ris_qam_preamble import Preamble, assemble
 from ris_mt import parse_mt
 from ris_qam64_timing import clock_events
+from ris_qam256 import phase_reference_symbols
+from ris_qam_frequency import plan_qam_frequency
 
 CLOCK_HZ = 300_000_000
 MIN_TICKS = 60
@@ -59,6 +62,14 @@ def compile_plan(path, slot_ticks=None, retime_for_bench=False):
         raise ValueError("PWM frequency must be positive")
     requested = Fraction(CLOCK_HZ, 1) / (frequency * slots)
     clock_period = 0
+    configured_timing = m.get("output_timing")
+    if configured_timing is not None:
+        selected = plan_qam_frequency(SimpleNamespace(order=order, slots=slots), configured_timing["requested_pwm_hz"])
+        if configured_timing != selected.document():
+            raise ValueError("output PWM timing manifest mismatch")
+        if slot_ticks is not None:
+            raise ValueError("configured PWM frequency cannot be combined with --slot-ticks")
+        slot_ticks, clock_period = selected.slot_ticks, selected.period_ticks
     if order == 64 and slot_ticks is None:
         period = Fraction(CLOCK_HZ)/frequency
         if period.denominator != 1 or not 1 <= period <= 65535 or period//slots < 29:
@@ -72,9 +83,9 @@ def compile_plan(path, slot_ticks=None, retime_for_bench=False):
         slot_ticks = int(requested)
     integer(slot_ticks, 1 if clock_period else MIN_TICKS, 1000000, "slot_ticks")
     retimed = not clock_period and Fraction(slot_ticks) != requested
-    if retimed and not retime_for_bench:
+    if retimed and not retime_for_bench and configured_timing is None:
         raise ValueError("changed timing requires --retime-for-bench")
-    if order == 64 and not clock_period:
+    if order == 64 and not clock_period and configured_timing is None:
         clock_period = integer(slots*slot_ticks,1,65535,"64QAM period ticks")
         slot_ticks = 1
     patterns, event_bytes, payload = (files[name] for name in ("patterns.bin", "events.bin", "payload.bin"))
@@ -109,13 +120,28 @@ def compile_plan(path, slot_ticks=None, retime_for_bench=False):
     for offset in range(0, len(patterns), 50):
         frames.extend(struct.unpack("<13I", patterns[offset:offset + 50] + b"\0\0"))
     base_slots, logical_repeats, logical_bytes = slots, repeats, len(payload)
+    phase = b""
+    if "phase_compensation" in m:
+        phase = phase_reference_symbols(order, True)
+        reference = m["phase_compensation"]
+        if (not isinstance(reference, dict) or reference.get("symbols") != list(phase)
+                or reference.get("repeat_with_each_frame") is not True
+                or type(reference.get("repeats_per_symbol")) is not int
+                or reference["repeats_per_symbol"] != repeats):
+            raise ValueError("phase compensation manifest mismatch")
+    payload = phase + payload
     preamble_cycles, frame_copies = 0, 1
+    prefix = None
     if "preamble" in m:
         prefix = Preamble.compile(parse_mt(files["preamble_mt.txt"].decode("utf-8")), slots)
         if (m["preamble"].get("cycles") != len(prefix.rows) or m["preamble"].get("width_slots") != list(prefix.widths)
                 or m["preamble"].get("repeat_with_each_frame") is not True or m["preamble"].get("delay_zero") is not True):
             raise ValueError("preamble manifest mismatch")
-        blocks, group, frame_copies = assemble(patterns, event_bytes, index, payload, repeats, m["loop"], prefix, max_group=65535//clock_period if clock_period else None)
+        preamble_cycles = len(prefix.rows)
+    if prefix or len(payload)>4096:
+        blocks, group, frame_copies = assemble(patterns, event_bytes, index, payload, repeats, m["loop"],
+                                               prefix or Preamble((), (), base_slots),
+                                               max_group=65535//clock_period if clock_period else None)
         frames = list(struct.unpack(f"<{len(blocks[0])//4}I", blocks[0]))
         events = list(struct.unpack(f"<{len(blocks[1])//4}I", blocks[1]))
         symbols = list(struct.unpack("<256I", blocks[2]))
@@ -123,7 +149,6 @@ def compile_plan(path, slot_ticks=None, retime_for_bench=False):
         slots *= group
         repeats = 1
         nframes, nevents = len(frames)//13, len(events)
-        preamble_cycles = len(prefix.rows)
     if clock_period:
         symbols_bytes = struct.pack("<256I", *symbols)
         events_bytes = clock_events(struct.pack(f"<{len(events)}I", *events), symbols_bytes, base_slots, clock_period)
@@ -137,17 +162,21 @@ def compile_plan(path, slot_ticks=None, retime_for_bench=False):
     report = {"format": "ris-qam1-mmio-upload-v1", "register_base": "0x41200000",
               "transport_ready": False, "qam_order": order, "edge_tick_mode": bool(clock_period), "source_pwm_hz": float(frequency),
               "actual_pwm_hz": CLOCK_HZ / (clock_period or base_slots * slot_ticks), "slot_ticks": slot_ticks,
-              "slot_ns": (clock_period/base_slots if clock_period else slot_ticks) * 1e9 / CLOCK_HZ, "retimed_for_bench": retimed,
+              "slot_ns": (clock_period/base_slots if clock_period else slot_ticks) * 1e9 / CLOCK_HZ, "retimed_for_bench": retimed and configured_timing is None,
               "rf_performance_validated": False, "frames": nframes, "events": nevents,
               "payload_bytes": len(payload), "K": repeats, "L": slots, "loop": m["loop"],
               "start_command": 2 if m["loop"] else 1,
               "mmio_format": "little-endian uint32 register_offset, uint32 value; no START",
               "source_zip_sha256": hashlib.sha256(Path(path).read_bytes()).hexdigest()}
+    if configured_timing is not None:
+        report["output_timing"] = configured_timing
     if clock_period:
         report.update(base_period_ticks=clock_period,base_period_slots=base_slots,event_unit_ns=1e9/CLOCK_HZ,edge_error_bound_ns=1e9/(2*CLOCK_HZ))
-    if preamble_cycles:
+    if preamble_cycles or phase:
         report.update(preamble_cycles=preamble_cycles, logical_K=logical_repeats, logical_payload_bytes=logical_bytes,
                       base_period_slots=base_slots, frame_copies_in_program=frame_copies)
+    if phase:
+        report.update(phase_compensation_symbols=list(phase), phase_compensation_cycles=len(phase)*logical_repeats)
     return report, writes, frames, events, symbols, payload
 
 

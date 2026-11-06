@@ -1,0 +1,61 @@
+{
+  "date": "2026-11-05",
+  "feature": "QAM phase compensation reference symbols",
+  "reference_symbols": {
+    "256QAM": [
+      "00",
+      "08",
+      "88",
+      "80"
+    ],
+    "64QAM": [
+      "00",
+      "04",
+      "24",
+      "20"
+    ]
+  },
+  "frame_order": [
+    "preamble if enabled",
+    "phase reference symbols if enabled",
+    "formal data"
+  ],
+  "reference_repeats": "same K as formal symbols",
+  "repeat_with_each_frame": true,
+  "default_enabled": false,
+  "tests": {
+    "qam_regression": 52,
+    "original_codebook": 18,
+    "offline_compiler": 8
+  },
+  "hardware_access_performed": false,
+  "rtl_changed": false,
+  "firmware_changed": false,
+  "flash_changed": false,
+  "requires_reflash": false,
+  "unchanged_board_files_count": 33,
+  "board_snapshot_sha256": "185c0c2bd7a1d2531bfd462c9e8897e890ed1f8a76848305eca9b87931706bfe",
+  "sources_sha256": {
+    "RIS_CTRL/ris_control_ui_v2/ris_qam256.py": "5cbbc76638c47dd8a438f2c0ccfd53a1d6cd5e249840d29f4da71f3c381c1689",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam_transport.py": "5fecaf5b123ea2ec89b9f8cfd655caa18c6629097161c78e3235956fde9803fa",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam_preamble.py": "8ef2b36dbb263ba67f977d4baaf47b746d57c8e7a555fae832c45cb8e6b363fb",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam256_gui.py": "b1a9992fc872a704ecafe8a28667e80ef6bec3a13faefffd65ecc46955c1f108",
+    "RIS_CTRL/ris_control_ui_v2/ris_actions.py": "fb648f4cd7e38e399c919aaa5e833715f379156b23f4c416d4c623c2a5c04097",
+    "FPGA/ris_qam_backend/scripts/compile_qam_plan.py": "9194b3eeb4f7a1cad66a43b0b701307f4e31393ba37b2cb6d16c85f1766ecda9",
+    "RIS_CTRL/ris_control_ui_v2/tests/test_qam_phase_compensation.py": "e7bdcadd9d7389e37e54cd9d5a25800bccd8bb86918ef90160d9a3a18e88d842",
+    "RIS_CTRL/ris_control_ui_v2/tests/test_qam_phase_gui.py": "05bdfd47b71b3debd028bfcc14e92b1dca1d51d0374e3b2654315f160f257899",
+    "RIS_CTRL/ris_control_ui_v2/tests/test_qam_full_chain.py": "93ad14a4e96527ff08a2bf2263d36372999c64309059d9d3b403a0d328e11dbb",
+    "RIS_CTRL/ris_control_ui_v2/tests/preview_phase_ui.py": "e6e232aa30d13025ddd39afd101af983c2e5c8f62b3990d0bb7ae89cc259eda0"
+  },
+  "logs_sha256": {
+    "RIS_CTRL/ris_control_ui_v2/reports/phase_compensation/all_qam_tests_final.log": "7aed4fede5194d0f30daa4a170c4cb63402c94a4f176bb5ebdb6e8ffdf69b795",
+    "RIS_CTRL/ris_control_ui_v2/reports/phase_compensation/core_tests.log": "4aca5a35d3817aad4bca20ba08e95dbe7eeb2f2bc20f59d85a461060c2955560",
+    "RIS_CTRL/ris_control_ui_v2/reports/phase_compensation/codebook_regression.log": "9391a3230097971b718a3c1c109d53bbe8ca702ec35222961e345592f6f843fe",
+    "RIS_CTRL/ris_control_ui_v2/reports/phase_compensation/offline_regression.log": "cf6737b925a106b060b9054c24a8d644724a2cddd36d8bbb6eb6e02a21b6a5a0",
+    "RIS_CTRL/ris_control_ui_v2/reports/phase_compensation/ui_preview.log": "717e162ad12dba4ca673a491351a691e8917c6de4138f40814e791c7cc36e911"
+  },
+  "previews_sha256": {
+    "RIS_CTRL/ris_control_ui_v2/preview/19_qam256_phase.png": "11c9789bb9afff70daa2714feb39428ce1ae310fbd662e73a44aea5d61118afd",
+    "RIS_CTRL/ris_control_ui_v2/preview/20_qam64_phase.png": "1aca265732879deb9df65db9f17ed51806b206826d399eba2164c66eb0765496"
+  }
+}

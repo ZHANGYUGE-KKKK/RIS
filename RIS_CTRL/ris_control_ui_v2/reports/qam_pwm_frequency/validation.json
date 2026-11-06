@@ -1,0 +1,82 @@
+{
+  "date": "2026-11-06",
+  "feature": "QAM PWM frequency and responsive status panel",
+  "frequency_limit_depends_on": "slice count and existing board timing; independent of modulation order",
+  "global_max_hz": 161637.93103448275,
+  "256slice_max_hz": 40409.48275862069,
+  "import_preserves_frequency": true,
+  "invalid_import_frequency_blocks_writes": true,
+  "invalid_draft_preserves_running_output": true,
+  "qam256_64slice_160khz_local_c_firmware_chain_passed": true,
+  "status_modulation_uses_crc_matched_snapshot": true,
+  "gui_layout_widths_tested": [
+    1460,
+    1180
+  ],
+  "unique_tests_passed": 71,
+  "tests": [
+    {
+      "path": "RIS_CTRL/ris_control_ui_v2/reports/qam_slice_unified_core.log",
+      "tests": 6,
+      "seconds": 0.671,
+      "passed": true
+    },
+    {
+      "path": "RIS_CTRL/ris_control_ui_v2/reports/qam_slice_unified_gui_chain.log",
+      "tests": 16,
+      "seconds": 639.138,
+      "passed": true
+    },
+    {
+      "path": "RIS_CTRL/ris_control_ui_v2/reports/qam_slice_unified_models.log",
+      "tests": 46,
+      "seconds": 34.409,
+      "passed": true
+    },
+    {
+      "path": "FPGA/ris_qam_backend/reports/qam_pwm_offline_regression.log",
+      "tests": 8,
+      "seconds": 0.045,
+      "passed": true
+    }
+  ],
+  "hardware_access_performed": false,
+  "rtl_changed": false,
+  "firmware_changed": false,
+  "requires_reflash": false,
+  "board_files_checked": 33,
+  "changed_board_files": [],
+  "sources_sha256": {
+    "RIS_CTRL/ris_control_ui_v2/ris_gui.py": "9ca48745b46379b30e184d93f45b34157f086977aa00e56204c17373d631a730",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam256_gui.py": "362c71a9acc06fa8d2a9670c60586ccba53ac7b6ce57e7e3c7de7280b4fa541c",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam256.py": "66921a198a7878b6e8139d5f2ae4b0f6482ad4abbaf8656a0910bc2ff3f07ce6",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam_transport.py": "ada2503c842652e45b5ab43fe4dc88117d581c78db3f017e74c88bef8a62e7fc",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam_frequency.py": "41c5391b397961a195b4e6387224e6a3e59247836f88e6884456cd5734030655",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam64_timing.py": "e7b0ef9ad91845c7f1fd1f96da2834a339cd1eefcac503d57191f08957cce61e",
+    "RIS_CTRL/ris_control_ui_v2/ris_actions.py": "0ba5fa97976c0c1a2fd9030620ee1ffaf7f6177136d3b4bd4f285fca9fe1d00e",
+    "FPGA/ris_qam_backend/scripts/compile_qam_plan.py": "cdbae0643d683f972402ba35b5819fd3487aebbd95978f0a749f18a6077f6300"
+  },
+  "previews_visually_checked": true,
+  "previews": {
+    "RIS_CTRL/ris_control_ui_v2/preview/21_qam256_frequency.png": {
+      "width": 1460,
+      "height": 980,
+      "sha256": "4e5249dad21987119889dab681cb78fc344c908b229ae3a053bcc9fcedcbc81a"
+    },
+    "RIS_CTRL/ris_control_ui_v2/preview/22_qam64_frequency.png": {
+      "width": 1460,
+      "height": 980,
+      "sha256": "ee30a3309de38ed4d22fc2301c69f1c755527655ae05bcde43546f94f09d092b"
+    },
+    "RIS_CTRL/ris_control_ui_v2/preview/24_qam256_64slice_frequency.png": {
+      "width": 1460,
+      "height": 980,
+      "sha256": "893573fc444d1556c53301108a5ec60d1ff469a8373a48c7f8081379d509c808"
+    },
+    "RIS_CTRL/ris_control_ui_v2/preview/23_qam_header_narrow.png": {
+      "width": 1180,
+      "height": 980,
+      "sha256": "7c6af311fa20a7474b93b553455ef271f49b9a6f4194b0c614d45592cc3bb53c"
+    }
+  }
+}

@@ -1,4 +1,4 @@
-"""64QAM edge timing on the existing 300 MHz clock; 100 MHz SHCP unchanged."""
+"""QAM edge timing on the existing 300 MHz clock; 100 MHz SHCP unchanged."""
 from fractions import Fraction
 import struct
 
@@ -32,7 +32,7 @@ def clock_events(events, symbols, base_slots, period):
             fid, duration = source[i]
             n = edge_tick(q+duration, period, base_slots)-edge_tick(q, period, base_slots)
             if n < MIN_EVENT_TICKS or n > 65535:
-                raise ValueError("64QAM边沿间隔超出29–65535 tick；请调整码本或前导码")
+                raise ValueError("QAM边沿间隔超出29–65535 tick；请调整码本或前导码")
             if i in done and struct.unpack_from('<HH', converted, i*4) != (fid,n):
                 raise ValueError("共享事件描述的时间原点不一致")
             struct.pack_into('<HH', converted, i*4, fid, n)

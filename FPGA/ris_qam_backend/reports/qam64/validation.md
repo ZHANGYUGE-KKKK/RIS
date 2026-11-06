@@ -31,3 +31,9 @@ AXI100 MHz、引擎300 MHz、SHCP100 MHz均保持不变。原256QAM命令、CRC�
 - `RIS_CTRL/ris_control_ui_v2/preview/17_qam64_preview.png`、`18_qam64_parameters.png`：真实离线Tk界面截图。
 
 可复现入口：`bash tests/run_qam64_sim.sh`、`bash tests/run_sim.sh icarus`、`python3 tests/check_qam64_offline.py`、上位机 `./run_tests.sh -p 'test_qam*.py'`。最终源码、码本、日志和产物SHA见同目录 `validation.json`。早期首次回归中的静态状态标题问题已修正，并通过最终整套回归。
+
+## 用户授权后的实板烧写验收
+
+2026-11-05已将本次64QAM BOOT.bin烧写到下载线210299372306对应XC7Z045板卡的双并行QSPI偏移0。13,556,752字节通过直接写入器完整比较及厂商工具独立完整比较（414块），用户断电切回QSPI后，BOOT_MODE=1、QAM1/QA64能力、29-tick参数、匹配ARM固件就绪及错误0均已核对；只读TCP STATUS进一步确认64QAM能力和300 MHz引擎。未下发动态QAM波形，未做空口测量。上述开发阶段“不接入硬件”的记录保留为阶段历史。
+
+证据：[Flash实板报告](../flash_qam64_20261105/FLASH_REPORT.md)、[烧写记录](../flash_qam64_20261105/hardware_programming.json)。交付ZIP已同步加入对应证据，BOOT.bin内容与打包时一致。

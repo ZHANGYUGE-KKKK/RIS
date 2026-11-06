@@ -51,7 +51,7 @@ def assemble(patterns, events, index, data, repeats, loop, preamble, max_group=N
         if value not in frame_ids:
             frame_ids[value] = len(frames); frames.append(value)
         return frame_ids[value]
-    low, high = frame_id(bytes(50)), frame_id(bytes([255])*50)
+    low, high = (frame_id(bytes(50)), frame_id(bytes([255])*50)) if preamble.widths else (None, None)
     if len(frames) > 2048:
         raise ValueError("合帧后的图案字典超过2048幅")
     raw_events = tuple(struct.iter_unpack("<HH", events))

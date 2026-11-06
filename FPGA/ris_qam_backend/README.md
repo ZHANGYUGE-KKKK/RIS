@@ -74,3 +74,5 @@ python3 scripts/compile_qam_plan.py /path/to/host_plan.zip /path/to/new-output-f
 新增 `Q64BEGIN`、MODE/能力ID/最短事件寄存器、固件能力查询及CRC模式标识；具体ABI、6位数据格式、前导码及操作见 [64QAM说明](../../RIS_CTRL/ris_control_ui_v2/docs/qam64_usage.md)。新功能需要配套BIT与ELF。本次不烧写实板；旧Flash包记录仍对应其各自产物。
 
 数字验证入口：`bash tests/run_qam64_sim.sh`，覆盖完整64QAM源图案、10周期前导码、跨帧循环、29-tick密集更新、停止及旧模式。报告见 [本次验证](reports/qam64/validation.md)。
+
+2026-11-05用户授权后，本次64QAM镜像已完成实板Flash烧写、两次完整读回、断电QSPI启动及只读网络STATUS验收。当前实板记录见 [64QAM烧写报告](reports/flash_qam64_20261105/FLASH_REPORT.md)，对应镜像为 `export_flash/20261105_qam64/BOOT.bin`；原20261102包仍保留其历史记录。

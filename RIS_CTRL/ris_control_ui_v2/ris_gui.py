@@ -108,7 +108,9 @@ class RisGui:
         main.pack(fill="both", expand=True)
         header = ttk.Frame(main)
         header.pack(fill="x")
-        header.columnconfigure(0, weight=1)
+        header.columnconfigure(1, weight=1, minsize=440)
+        header.columnconfigure(2, minsize=260)
+        header.rowconfigure(0, minsize=160)
         identity = ttk.Frame(header)
         identity.grid(row=0, column=0, sticky="nsew", padx=(0, 16))
         ttk.Label(identity, text="RIS 控制台", style="Title.TLabel").pack(anchor="w")
@@ -127,23 +129,30 @@ class RisGui:
         self.connect_button.pack(side="left")
         self.disconnect_button = ttk.Button(links, text="断开连接", command=self.disconnect)
         self.disconnect_button.pack(side="left", padx=6)
-        monitor = tk.Frame(header, background="#122238", width=440, height=160, padx=18, pady=13)
+        self.status_panel = monitor = tk.Frame(header, background="#122238", padx=18, pady=13)
         monitor.grid(row=0, column=1, sticky="nsew", padx=(0, 12))
-        monitor.pack_propagate(False)
-        tk.Label(monitor, text="RIS 实际工作状态", bg="#122238", fg="#93a7be", font=("sans", 10)).pack(anchor="w")
+        monitor.columnconfigure(0, weight=1)
+        tk.Label(monitor, text="RIS 实际工作状态", bg="#122238", fg="#93a7be", font=("sans", 10)).grid(row=0, column=0, sticky="w")
         self.monitor_title = tk.Label(monitor, textvariable=self.status_title, bg="#122238", fg="#94a3b8",
-                                      font=("sans", 22, "bold"), width=23, anchor="w", justify="left", wraplength=420)
-        self.monitor_title.pack(anchor="w", pady=(6, 4))
-        tk.Label(monitor, textvariable=self.status_detail, bg="#122238", fg="#d7e2ef", wraplength=420,
-                 justify="left", anchor="w", font=("sans", 10)).pack(anchor="w")
-        tk.Label(monitor, textvariable=self.status_meta, bg="#122238", fg="#93a7be", font=("sans", 9)).pack(anchor="w", pady=(7, 0))
-        output = ttk.Frame(header, width=240)
+                                      font=("sans", 22, "bold"), width=1, anchor="w", justify="left", wraplength=440)
+        self.monitor_title.grid(row=1, column=0, sticky="ew", pady=(6, 4))
+        self.monitor_detail = tk.Label(monitor, textvariable=self.status_detail, bg="#122238", fg="#d7e2ef", wraplength=440,
+                                      width=1, justify="left", anchor="w", font=("sans", 10))
+        self.monitor_detail.grid(row=2, column=0, sticky="ew")
+        self.monitor_meta = tk.Label(monitor, textvariable=self.status_meta, bg="#122238", fg="#93a7be",
+                                    width=1, wraplength=440, justify="left", anchor="w", font=("sans", 9))
+        self.monitor_meta.grid(row=3, column=0, sticky="ew", pady=(7, 0))
+        monitor.bind("<Configure>", self._wrap_monitor)
+        self.output_panel = output = ttk.Frame(header)
         output.grid(row=0, column=2, sticky="nsew")
-        output.pack_propagate(False)
+        output.columnconfigure(0, weight=1)
         self.apply_button = ttk.Button(output, text="下发指令", style="Apply.TButton", command=self.apply_current)
-        self.apply_button.pack(fill="x")
-        ttk.Label(output, text="应用当前页面的配置", style="Muted.TLabel").pack(anchor="w", pady=(6, 4))
-        ttk.Label(output, textvariable=self.pending_text, foreground="#1e5c9c", wraplength=235, justify="left").pack(anchor="w")
+        self.apply_button.grid(row=0, column=0, sticky="ew")
+        ttk.Label(output, text="应用当前页面的配置", style="Muted.TLabel").grid(row=1, column=0, sticky="w", pady=(6, 4))
+        self.pending_label = ttk.Label(output, textvariable=self.pending_text, foreground="#1e5c9c", width=1,
+                                       wraplength=256, justify="left")
+        self.pending_label.grid(row=2, column=0, sticky="ew")
+        output.bind("<Configure>", lambda event: self.pending_label.configure(wraplength=max(1, event.width-4)))
         ttk.Label(main, textvariable=self.notice, foreground="#315b80", wraplength=1350).pack(anchor="w", pady=(10, 12))
         ttk.Separator(main).pack(fill="x")
         navigation = ttk.Frame(main)
@@ -173,6 +182,12 @@ class RisGui:
         root.bind("<Control-z>", lambda _: self.mapping_shortcut("undo"))
         self.show_page("home")
         self._enable()
+
+    def _wrap_monitor(self, event):
+        width = max(1, event.width - 40)
+        for label in (self.monitor_title, self.monitor_detail, self.monitor_meta):
+            if int(label.cget("wraplength")) != width:
+                label.configure(wraplength=width)
 
     def _build_board(self):
         self.board_modes = modes = ttk.LabelFrame(self.control_frame, text="全板工作模式", padding=16)

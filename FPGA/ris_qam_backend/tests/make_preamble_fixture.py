@@ -19,7 +19,7 @@ target = out / "retimed"
 if target.exists():
     shutil.rmtree(target)
 rows = parse_mt("\n".join(f"({m},0);" for m in (0, 100, 20, 50, 80, 25, 75, 37.5, 62.5, 50)))
-book = QamCodebook.load(ROOT.parents[1] / "QAM_RULES/256QAM/ris_256qam_codebook_0deg.zip")
+book = QamCodebook.load(ROOT.parents[1] / "QAM_RULES/256QAM/ris_256qam_256slice_codebook_0deg.zip")
 mapping = RisMapping.load(HOST / "mappings/ris_mapping.json")
 path = out / "host_plan.zip"
 export_plan(path, book, mapping, 0, "identity", True, 3, True, b"\x3f\xa5", rows)

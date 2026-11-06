@@ -7,11 +7,12 @@ from tkinter import filedialog, ttk
 from ris_actions import OutputAction
 from ris_frequency import active_frequency, frequency_text
 from ris_patterns import compile_frame
-from ris_qam_transport import make_plan, timing_ticks
+from ris_qam_transport import make_plan
+from ris_qam_frequency import plan_qam_frequency, range_text, GLOBAL_MAX_HZ
 from ris_qam_preamble import Preamble
 from ris_mt import load_mt
 from ris_qam256 import (QamCodebook, ORIENTATIONS, export_plan, integer, parse_symbol,
-                        payload_bytes, read_payload, transform_cell)
+                        payload_bytes, read_payload, transform_cell, phase_reference_symbols)
 
 QAM_TYPE = "400路独立 / 256QAM"
 QAM64_TYPE = "400路独立 / 64QAM"
@@ -24,7 +25,7 @@ class QamPage:
         self.order, self.label = order, f"{order}QAM"
         self.sources = dict(SOURCES) if order == 256 else {**{k:v for k,v in SOURCES.items() if v != "sweep"}, "测试序列00–3F": "sweep"}
         self.app, self.alive, self.book = app, True, None
-        self.default_path = Path(__file__).resolve().parents[2] / "QAM_RULES/256QAM/ris_256qam_codebook_0deg.zip"
+        self.default_path = Path(__file__).resolve().parents[2] / "QAM_RULES/256QAM/ris_256qam_256slice_codebook_0deg.zip"
         if order == 64:
             self.default_path = Path(__file__).resolve().parents[2] / "QAM_RULES/64QAM/ris_64qam_64slice_codebook"
         self.redraw_timer = None
@@ -37,14 +38,15 @@ class QamPage:
         self.sequence = tk.StringVar(value="00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF" if order == 256 else "00 01 07 08 1B 3F")
         self.repeats = tk.StringVar(value="3" if order == 256 else "1")
         self.loop = tk.BooleanVar(value=True)
+        self.phase_compensation = tk.BooleanVar(value=False)
         self.action = tk.StringVar(value="play")
         self.preamble_enabled = tk.BooleanVar(value=False)
         self.preamble_rows = ()
         self.preamble_name = ""
         self.preamble_text = tk.StringVar(value="未启用前导码。加载后，每帧先播放前导码，再播放QAM数据。")
-        self.source_timing_label = "码本周期 / 边沿量化" if order == 64 else "码本原速（严格校验）"
-        self.timing_mode = tk.StringVar(value=self.source_timing_label)
-        self.slot_ns = tk.StringVar(value="200")
+        self.pwm_frequency = tk.StringVar(value="160" if order == 64 else "19.53125")
+        self.pwm_unit = tk.StringVar(value="kHz")
+        self.frequency_preview = tk.StringVar(value="加载码本后显示可用频率范围与实际输出频率。")
         self.loaded_text = tk.StringVar(value="先导入码本目录或ZIP，也可直接加载本项目的0°码本。")
         self.payload_text = tk.StringVar(value="")
         self.file_text = tk.StringVar(value="尚未加载数据文件")
@@ -56,7 +58,8 @@ class QamPage:
         self.frame.pack(fill="both", expand=True)
         self._build()
         for variable in (self.direction, self.symbol, self.slot, self.row, self.column, self.source,
-                         self.sequence, self.repeats, self.loop, self.action, self.timing_mode, self.slot_ns, self.preamble_enabled):
+                         self.sequence, self.repeats, self.loop, self.action, self.pwm_frequency, self.pwm_unit,
+                         self.preamble_enabled, self.phase_compensation):
             variable.trace_add("write", lambda *_: self.request_refresh())
         self.update_state()
 
@@ -77,7 +80,7 @@ class QamPage:
         ttk.Label(action_bar, text="待应用操作：").pack(side="left")
         for value, text in (("play", "连续播放"), ("static", "静态码片核线"), ("stop", "停止 / 保持")):
             ttk.Radiobutton(action_bar, text=text, variable=self.action, value=value).pack(side="left", padx=5)
-        self.export_button = ttk.Button(action_bar, text="导出来源配置包", command=self.export)
+        self.export_button = ttk.Button(action_bar, text="导出发送配置包", command=self.export)
         self.export_button.pack(side="right")
         ttk.Label(footer, textvariable=self.notice, wraplength=1320, foreground="#245c85").pack(anchor="w", pady=(5, 0))
         self.tabs = ttk.Notebook(self.frame)
@@ -92,7 +95,7 @@ class QamPage:
         ttk.Label(compatibility, textvariable=self.compatibility, wraplength=1050, justify="left").pack(anchor="w", pady=10)
         ttk.Label(compatibility, text="方向和极性需按实物核对，静态码片仍需完整400路映射。\n"
                   "码本状态与GPIO位序在总下发时转换；预览、导出和设置修改不会改变当前运行。\n"
-                  "离线ZIP用于保存来源配置；总按钮将编译并分块上传QAM1表，旧固件不会接受独立播放。",
+                  "离线ZIP保存发送配置及输出频率；总按钮将编译并分块上传QAM1表，旧固件不会接受独立播放。",
                   wraplength=1050, justify="left", style="Muted.TLabel").pack(anchor="w", pady=12)
         ttk.Button(compatibility, text="打开方向与极性设置", command=self.app.open_qam_settings).pack(anchor="w", pady=5)
         ttk.Button(compatibility, text="打开FPC—RIS映射", command=self.app.open_mapping).pack(anchor="w", pady=5)
@@ -165,16 +168,24 @@ class QamPage:
         ttk.Label(form, textvariable=self.file_text, wraplength=550).grid(row=2, column=2, sticky="w")
         ttk.Label(form, text="每符号PWM周期数K").grid(row=3, column=0, sticky="w", pady=7)
         ttk.Spinbox(form, from_=1, to=1000000, textvariable=self.repeats, width=12).grid(row=3, column=1, sticky="w", padx=12)
-        ttk.Checkbutton(form, text="循环整帧（含前导码）；取消则播放一次", variable=self.loop).grid(row=3, column=2, sticky="w")
-        ttk.Label(form, textvariable=self.payload_text, wraplength=1100, foreground="#315b80").grid(row=4, column=0, columnspan=3, sticky="w", pady=(16, 0))
-        ttk.Label(form, text="播放时序").grid(row=5, column=0, sticky="w", pady=7)
-        ttk.Combobox(form, textvariable=self.timing_mode,
-                     values=(self.source_timing_label, "低速数字核线（明确改速）"),
-                     state="readonly", width=29).grid(row=5, column=1, sticky="w", padx=12)
-        ttk.Label(form, text="低速核线片长 / ns").grid(row=6, column=0, sticky="w", pady=7)
-        ttk.Entry(form, textvariable=self.slot_ns, width=14).grid(row=6, column=1, sticky="w", padx=12)
-        ttk.Label(form, text="例如200 ns；仅在低速核线模式生效。实际PWM和速率见上方预览。",
-                  wraplength=550).grid(row=6, column=2, sticky="w")
+        ttk.Checkbutton(form, text="循环整帧（含前导码和已启用的相偏补偿）；取消则播放一次", variable=self.loop).grid(row=3, column=2, sticky="w")
+        self.phase_checkbox = ttk.Checkbutton(form, text="相偏补偿", variable=self.phase_compensation)
+        self.phase_checkbox.grid(row=4, column=0, sticky="w", pady=7)
+        phase_hex = phase_reference_symbols(self.order, True).hex(" ").upper()
+        ttk.Label(form, text=f"{phase_hex} · 左下→左上→右上→右下；每点按K播放，位于前导码后、正式数据前。",
+                  wraplength=950, style="Muted.TLabel").grid(row=4, column=1, columnspan=2, sticky="w", padx=12)
+        ttk.Label(form, textvariable=self.payload_text, wraplength=1100, foreground="#315b80").grid(row=5, column=0, columnspan=3, sticky="w", pady=(16, 0))
+        ttk.Label(form, text="输出PWM频率").grid(row=6, column=0, sticky="w", pady=7)
+        frequency = ttk.Frame(form)
+        frequency.grid(row=6, column=1, sticky="w", padx=12)
+        self.frequency_entry = ttk.Entry(frequency, textvariable=self.pwm_frequency, width=14)
+        self.frequency_entry.pack(side="left")
+        ttk.Combobox(frequency, textvariable=self.pwm_unit, values=("Hz", "kHz", "MHz"),
+                     state="readonly", width=6).pack(side="left", padx=(6, 0))
+        ttk.Label(form, text="一个完整方波周期的频率；前导码、相偏补偿和正式数据共用。",
+                  wraplength=520, style="Muted.TLabel").grid(row=6, column=2, sticky="w")
+        ttk.Label(form, textvariable=self.frequency_preview, wraplength=1100, foreground="#315b80").grid(
+            row=7, column=0, columnspan=3, sticky="w", pady=(6, 0))
         form.columnconfigure(2, weight=1)
         prefix = ttk.LabelFrame(parent, text="前导码MT表 · 400路统一控制", padding=12)
         prefix.pack(fill="x", pady=(12, 0))
@@ -194,11 +205,11 @@ class QamPage:
         scroll = ttk.Scrollbar(self.preamble_preview, orient="vertical", command=self.preamble_table.yview)
         scroll.pack(side="right", fill="y")
         self.preamble_table.configure(yscrollcommand=scroll.set)
-        ttk.Label(prefix, text="格式沿用(M,T);，最多10行，每行一个PWM周期，K仅作用于QAM数据。\n"
+        ttk.Label(prefix, text="格式沿用(M,T);，最多10行，每行一个PWM周期；相偏补偿点与正式数据均按K播放。\n"
                   "前导码采用同一时间片网格，表中显示量化后的实际占空比；每次整帧循环均包含前导码。",
                   wraplength=1050, style="Muted.TLabel").pack(anchor="w", pady=(6, 0))
-        ttk.Label(parent, text="来源参数保留；原速模式要求精确兼容。明确选择低速核线后，按设置片长改变实际播放频率。\n"
-                  "改速只用于数字核线，源模型EVM不随之验收。当前QAM1每包最多4096字节。所有编辑仅配置下一次应用。",
+        ttk.Label(parent, text="程序自动换算板端时序，按最近可实现频率输出，并在上方显示实际值；超出支持范围时无法下发。\n"
+                  "每包正式数据最多4096字节。频率及其他编辑均在点击总“下发指令”后应用。",
                   wraplength=1120, justify="left", style="Muted.TLabel").pack(anchor="w", pady=18)
 
     def choose_preamble(self):
@@ -271,8 +282,12 @@ class QamPage:
         self.slot.set("0")
         self.repeats.set(str(candidate.default_repeats))
         self.loaded_text.set(f"{candidate.origin.name} · {len(candidate.angles)}个方向 · 20×20 · {candidate.slots}片/周期 · "
-                             f"PWM {frequency_text(candidate.pwm_hz)} · 6文件校验及全部图案校验通过")
-        self.notice.set("码本已载入，当前输出保持。可预览、配置并导出；静态码片经总按钮应用。")
+                             f"源码本PWM {frequency_text(candidate.pwm_hz)} · 6文件校验及全部图案校验通过")
+        try:
+            actual = self._frequency().actual_hz
+            self.notice.set(f"码本已载入，保留当前频率设置；实际PWM {frequency_text(actual)}。点击总下发才应用。")
+        except ValueError as error:
+            self.notice.set(f"码本已载入，频率设置未改变：{error}；当前输出保持。")
         self.request_refresh()
         return True
 
@@ -325,7 +340,8 @@ class QamPage:
             orientation, high = self.app.qam_wiring()
             data, repeats = self._payload()
             plan = make_plan(self.book, self.app.mapping_page.model.copy(), direction, orientation, high,
-                             repeats, self.loop.get(), data, self._timing(), self.slot_ns.get(), self._preamble())
+                             repeats, self.loop.get(), data, preamble_rows=self._preamble(),
+                             phase_compensation=self.phase_compensation.get(), pwm_hz=self._frequency().requested_hz)
             def completed(reply, error):
                 if error:
                     self.notice.set("结果未确认：" + str(error))
@@ -345,13 +361,15 @@ class QamPage:
         return OutputAction("command", "FRAME " + image.hex().upper(), label, completed,
                             self.app.mapping_page.model.document(), "qam64_static" if self.order == 64 else "qam_static")
 
-    def _timing(self):
-        return "bench" if self.timing_mode.get() == "低速数字核线（明确改速）" else "source"
+    def _frequency(self):
+        if not self.book:
+            raise ValueError(f"请先导入{self.label}码本")
+        return plan_qam_frequency(self.book, self.pwm_frequency.get(), self.pwm_unit.get())
 
     def _play_summary(self, actual, count, repeats):
-        mode = "低速核线" if self._timing() == "bench" else "原速"
         prefix = f"前导{len(self._preamble())}周期 + " if self.preamble_enabled.get() else ""
-        return f"{prefix}{self.label} {mode} · {count}字节 · K={repeats} · PWM {frequency_text(actual)} · {'整帧循环' if self.loop.get() else '单次'}"
+        phase = "相偏补偿4点 + " if self.phase_compensation.get() else ""
+        return f"{prefix}{phase}{self.label} · {count}字节 · K={repeats} · PWM {frequency_text(actual)} · {'整帧循环' if self.loop.get() else '单次'}"
 
     def preview_action(self):
         if self.action.get() != "play":
@@ -361,11 +379,12 @@ class QamPage:
         data, repeats = self._payload()
         if len(data)>4096:
             raise ValueError("当前QAM1一次最多4096字节，不支持边播放边上传")
-        ticks = timing_ticks(self.book, self._timing(), self.slot_ns.get())
+        frequency = self._frequency()
         rows = self._preamble()
-        if rows and len(rows)+len(data)*repeats > 4096*(65535//self.book.slots):
+        phase = phase_reference_symbols(self.order, self.phase_compensation.get())
+        if (rows or len(data)+len(phase)>4096) and len(rows)+(len(data)+len(phase))*repeats > 4096*(65535//(frequency.period_ticks or self.book.slots)):
             raise ValueError("前导码与数据合帧超出现有播放器容量；请缩短数据或减小K")
-        return OutputAction("qam", None, self._play_summary(self.book.pwm_hz if self.order == 64 and self._timing() == "source" else 300000000/(ticks*self.book.slots), len(data), repeats))
+        return OutputAction("qam", None, self._play_summary(frequency.actual_hz, len(data), repeats))
 
     def export(self, path=None):
         try:
@@ -373,18 +392,22 @@ class QamPage:
             orientation, high = self.app.qam_wiring()
             data, repeats = self._payload()
             rows = self._preamble()
+            frequency = self._frequency()
             # Validate before presenting a save dialog.
             compile_frame(self.book.pattern(direction, 0, 0, orientation, high), self.app.mapping_page.model)
             if path is None:
-                path = filedialog.asksaveasfilename(parent=self.app.root, title="导出来源时序的离线配置包",
+                path = filedialog.asksaveasfilename(parent=self.app.root, title="导出当前发送配置包",
                     initialdir=self.app.qam_data_dir if self.app.qam_data_dir.exists() else Path(__file__).resolve().parent,
                     initialfile=f"qam{self.order}_playback_plan.zip", defaultextension=".zip", filetypes=[("播放配置包", "*.zip")])
                 if not path:
                     return False
             manifest = export_plan(path, self.book, self.app.mapping_page.model.copy(), direction,
-                                   orientation, high, repeats, self.loop.get(), data, preamble_rows=rows)
+                                   orientation, high, repeats, self.loop.get(), data, preamble_rows=rows,
+                                   phase_compensation=self.phase_compensation.get(), pwm_hz=frequency.requested_hz)
             prefix_note = f"、前导码{len(rows)}周期" if rows else ""
-            self.notice.set(f"已导出来源时序配置包：{manifest['dictionary_frames']}幅图案、{manifest['event_records']}个时段、{len(data)}字节数据{prefix_note}；不含低速核线改速，未发送到板卡。")
+            if self.phase_compensation.get():
+                prefix_note += "、相偏补偿4点"
+            self.notice.set(f"已导出发送配置包：实际PWM {frequency_text(frequency.actual_hz)}、{len(data)}字节数据{prefix_note}；未发送到板卡。")
             return True
         except (OSError, ValueError) as error:
             self.notice.set(f"未导出：{error}")
@@ -412,9 +435,8 @@ class QamPage:
         text.append("已连接QAM1固件。" if reply.get("qam_supported") else "尚未确认板端QAM1能力；需新副本配套BIT与ELF。")
         if self.book:
             book = self.book
-            slot_ns = 1e9 / (book.pwm_hz * book.slots)
-            text += [f"码本：PWM {frequency_text(book.pwm_hz)}，每片{slot_ns:.6g} ns；独立QAM1每片至少200 ns。",
-                     f"300 MHz时钟下每片={300000000 / (book.pwm_hz * book.slots):.9g}个时钟；这里不做静默取整。"]
+            text += [f"源码本PWM：{frequency_text(book.pwm_hz)}。当前码本支持的输出PWM频率：{range_text(book)}。",
+                     "发送参数中直接设置输出PWM频率，程序显示实际可实现频率。改变频率后的接收效果需按实际链路确认。"]
             try:
                 direction = int(self.direction.get().split("·")[0])
                 evm = book.metadata["directions"][direction].get("evm_equalized_percent")
@@ -422,10 +444,7 @@ class QamPage:
                     text.append(f"源包模型均衡EVM：{evm:.6g}%（非实测，图中显示目标星座）。")
             except (ValueError, IndexError, TypeError):
                 pass
-        if self.order == 64:
-            text = [line for line in text if "独立QAM1每片" not in line and "不做静默取整" not in line]
-            text += ["64QAM原速使用300 MHz边沿计时：周期保持整数tick，边沿按最近tick量化；100 MHz SHCP不变。",
-                     "160 kHz、64片：每周期1875 tick；片长29或30 tick，边沿误差不超过1.667 ns。需64QAM配套BIT/ELF。"]
+        text.append("64QAM与256QAM使用相同计时规则；上限只由slice数及板端时序能力决定。边沿计时需已配套的新版BIT/ELF。")
         try:
             orientation, high = self.app.qam_wiring()
             text.append(f"已确认方向：{ORIENTATIONS[orientation]}；状态1→驱动{'高' if high else '低'}。")
@@ -441,6 +460,13 @@ class QamPage:
         if not self.alive:
             return
         self.update_state()
+        try:
+            frequency = self._frequency()
+            self.frequency_preview.set(f"实际PWM {frequency_text(frequency.actual_hz)} · 周期 {frequency.period_seconds*1e6:.9g} µs · "
+                                       f"频率误差 {frequency.error_ppm:+.3f} ppm · 当前{self.book.slots} slice支持 {range_text(self.book)} · "
+                                       f"统一上限 {frequency_text(float(GLOBAL_MAX_HZ))}（64 slice）")
+        except ValueError as error:
+            self.frequency_preview.set(f"{error} · 统一上限 {frequency_text(float(GLOBAL_MAX_HZ))}（64 slice）")
         try:
             self.refresh_preamble()
         except ValueError as error:
@@ -458,22 +484,18 @@ class QamPage:
         try:
             if self.book:
                 data, repeats = self._payload()
-                source_text = f"来源 {self.book.pwm_hz / repeats:,.3f} Baud"
-                try:
-                    ticks = timing_ticks(self.book, self._timing(), self.slot_ns.get())
-                    actual = self.book.pwm_hz if self.order == 64 and self._timing() == "source" else 300000000/(ticks*self.book.slots)
-                    timing_text = f"实际PWM {frequency_text(actual)} · {actual / repeats:,.3f} Baud · {self.book.bits_per_symbol*actual/repeats:,.3f} bit/s"
-                    if self.order == 64 and self._timing() == "source":
-                        timing_text += " · 边沿量化≤1.667 ns"
-                except ValueError as error:
-                    actual = self.book.pwm_hz
-                    timing_text = str(error)
+                actual = self._frequency().actual_hz
+                timing_text = f"实际PWM {frequency_text(actual)} · {actual / repeats:,.3f} Baud · {self.book.bits_per_symbol*actual/repeats:,.3f} bit/s"
                 preamble = self._preamble()
-                duration = (len(preamble) + len(data) * repeats) / actual
+                phase = phase_reference_symbols(self.order, self.phase_compensation.get())
+                duration = (len(preamble) + (len(phase)+len(data)) * repeats) / actual
                 duration_text = f"{duration * 1e6:.6g} µs" if duration < .001 else (f"{duration * 1000:.6g} ms" if duration < 1 else f"{duration:.6g} s")
                 lead = f"前导{len(preamble)}周期 + " if preamble else ""
-                average = f" · 含前导码帧平均{self.book.bits_per_symbol*len(data)/duration:,.3f} bit/s" if preamble else ""
-                self.payload_text.set(f"{lead}{len(data):,}个符号 · K={repeats} · {source_text} · {timing_text}{average} · 一帧{duration_text} · {'整帧循环' if self.loop.get() else '播放一次'}")
+                if phase:
+                    lead += "相偏补偿4点 + "
+                overhead = "前导码及相偏补偿" if preamble and phase else ("相偏补偿" if phase else "前导码")
+                average = f" · 含{overhead}帧平均{self.book.bits_per_symbol*len(data)/duration:,.3f} bit/s" if preamble or phase else ""
+                self.payload_text.set(f"{lead}{len(data):,}个符号 · K={repeats} · {timing_text}{average} · 一帧{duration_text} · {'整帧循环' if self.loop.get() else '播放一次'}")
         except ValueError as error:
             self.payload_text.set(str(error))
         self.app.refresh_pending()

@@ -20,7 +20,6 @@ with tempfile.TemporaryDirectory() as temporary:
     assert page.load(page.default_path)
     assert page.load_preamble(base/"examples/qam_preamble_mt.txt")
     page.source.set("十六进制字节序列"); page.sequence.set("3F A5 00")
-    page.timing_mode.set("低速数字核线（明确改速）")
     page.tabs.select(1)
     root.attributes("-topmost", True)
     root.update(); time.sleep(.2); root.update()

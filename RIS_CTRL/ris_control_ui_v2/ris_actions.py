@@ -62,7 +62,9 @@ def confirmed_status(connected, reply, action=None, playback=None):
     if reply.get("qam_supported"):
         qs = reply["qam_status"]
         known = action.payload if action and action.kind == "qam" and reply.get("qam_crc") == action.payload.crc else None
-        label = f"{known.modulation_order if known else reply.get('qam_order',256)}QAM"
+        # The legacy qam_order field reports the timing profile (64/256), not
+        # constellation size. Only a CRC-matched host snapshot establishes it.
+        label = f"{known.modulation_order}QAM" if known else "QAM"
         if reply.get("qam_uploading"):
             return f"{label}上传中", f"已确认 {reply['qam_received']:,}/{reply['qam_expected']:,} 字节 · 输出保持", "#93c5fd"
         if qs & 12:
@@ -73,7 +75,16 @@ def confirmed_status(connected, reply, action=None, playback=None):
             frequency = 300000000 / (reply["qam_slot_ticks"] * reply["qam_period_slots"])
             prefix_plan = (action.payload if action and action.kind == "qam" and
                            getattr(action.payload, "preamble", None) and reply["qam_crc"] == action.payload.crc else None)
-            if prefix_plan:
+            phase_plan = known if known and known.phase_symbols else None
+            if phase_plan:
+                parts = [f"PWM {frequency_text(phase_plan.actual_pwm_hz)}"]
+                if phase_plan.preamble:
+                    parts.append(f"前导{len(phase_plan.preamble.rows)}周期")
+                parts.append(f"相偏补偿 {phase_plan.phase_symbols.hex(' ').upper()} ×K{phase_plan.data_repeats}")
+                parts.append(f"正式{len(phase_plan.data_payload)}符号×K{phase_plan.data_repeats}")
+                parts.append(f"包CRC {reply['qam_crc']:08X}")
+                detail = " · ".join(parts)
+            elif prefix_plan:
                 detail = (f"PWM {frequency_text(prefix_plan.actual_pwm_hz)} · 前导{len(prefix_plan.preamble.rows)}周期 + "
                           f"{len(prefix_plan.logical_payload)}符号×K{prefix_plan.logical_repeats} · 包CRC {reply['qam_crc']:08X}")
             else:
@@ -81,9 +92,13 @@ def confirmed_status(connected, reply, action=None, playback=None):
             if not reply["oe"]:
                 return f"{label}输出禁能", detail + " · 板端OE=0", "#fbbf24"
             if qs & 2:
+                if phase_plan:
+                    return (f"{label}帧循环 · 含相偏补偿" if reply["qam_loop"] else f"{label}播放一次 · 含相偏补偿"), detail, "#5eead4"
                 if prefix_plan:
                     return (f"前导码 + {label}帧循环" if reply["qam_loop"] else f"前导码 + {label}播放一次"), detail, "#5eead4"
                 return (f"{label}循环播放" if reply["qam_loop"] else f"{label}播放一次"), detail, "#5eead4"
+            if phase_plan:
+                return f"{label}单次完成 · 保持", detail, "#cbd5e1"
             return (f"前导码 + {label}单次完成 · 保持" if prefix_plan else f"{label}单次完成 · 保持"), detail, "#cbd5e1"
     if not reply["oe"]:
         return "输出禁能 · 高阻", "板端已确认 OE=0", "#fbbf24"

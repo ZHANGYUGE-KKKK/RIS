@@ -17,7 +17,7 @@ from ris_qam256 import (CONTENT, MAX_PAYLOAD, ORIENTATIONS, QamCodebook, export_
                         parse_symbol, payload_bytes, read_payload, transform_cell)
 
 BASE = Path(__file__).resolve().parents[1]
-EXAMPLE = BASE.parents[1] / "QAM_RULES/256QAM/ris_256qam_codebook_0deg.zip"
+EXAMPLE = BASE.parents[1] / "QAM_RULES/256QAM/ris_256qam_256slice_codebook_0deg.zip"
 
 
 class CodebookTests(unittest.TestCase):

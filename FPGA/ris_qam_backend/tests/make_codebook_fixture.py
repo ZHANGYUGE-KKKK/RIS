@@ -17,7 +17,7 @@ if __name__ == "__main__":
     out = ROOT / "build" / "codebook_fixture"
     out.mkdir(parents=True, exist_ok=True)
     plan = out / "host_plan.zip"
-    book = QamCodebook.load(ROOT.parents[1] / "QAM_RULES/256QAM/ris_256qam_codebook_0deg.zip")
+    book = QamCodebook.load(ROOT.parents[1] / "QAM_RULES/256QAM/ris_256qam_256slice_codebook_0deg.zip")
     mapping = RisMapping.load(HOST / "mappings" / "ris_mapping.json")
     export_plan(plan, book, mapping, 0, "identity", True, 1, False, bytes(range(256)))
     try:

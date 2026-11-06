@@ -38,7 +38,7 @@ def decode(plan, loops=1):
 class PreambleTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.book = QamCodebook.load(BASE.parents[1] / "QAM_RULES/256QAM/ris_256qam_codebook_0deg.zip")
+        cls.book = QamCodebook.load(BASE.parents[1] / "QAM_RULES/256QAM/ris_256qam_256slice_codebook_0deg.zip")
         cls.mapping = RisMapping.load(BASE / "mappings/ris_mapping.json")
 
     def plan(self, rows, data=b"\x3f\xa5", k=3, loop=True, high=True):

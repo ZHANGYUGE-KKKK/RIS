@@ -373,7 +373,20 @@ def compile_tables(book, mapping, direction, orientation, state1_high):
     return b"".join(dictionary), bytes(events), tuple(index)
 
 
-def export_plan(path, book, mapping, direction, orientation, state1_high, repeats, loop, payload, preamble_rows=()):
+def phase_reference_symbols(order, enabled=False):
+    """Reference corners: bottom-left, top-left, top-right, bottom-right."""
+    if type(enabled) is not bool:
+        raise ValueError("相偏补偿开关须为布尔值")
+    if not enabled:
+        return b""
+    if order == 256:
+        return bytes.fromhex("00 08 88 80")
+    if order == 64:
+        return bytes.fromhex("00 04 24 20")
+    raise ValueError("相偏补偿仅支持64QAM和256QAM")
+
+
+def export_plan(path, book, mapping, direction, orientation, state1_high, repeats, loop, payload, preamble_rows=(), phase_compensation=False, pwm_hz=None):
     """Export an offline snapshot. No claim of a currently supported wire protocol."""
     integer(repeats, 1, 1000000, "重复次数K")
     if type(state1_high) is not bool or type(loop) is not bool:
@@ -389,10 +402,13 @@ def export_plan(path, book, mapping, direction, orientation, state1_high, repeat
     if destination == book.origin or (book.origin.is_dir() and destination.is_relative_to(book.origin)):
         raise ValueError("请保存到新的位置，不能覆盖源码本")
     patterns, events, index = compile_tables(book, mapping, direction, orientation, state1_high)
+    phase = phase_reference_symbols(book.order, phase_compensation)
+    from ris_qam_frequency import plan_qam_frequency
+    frequency = plan_qam_frequency(book, pwm_hz) if pwm_hz is not None else None
     document = mapping.document()
     encode = lambda value: (json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n").encode("utf-8")
     manifest = {"format": f"ris-qam{book.order}-host-plan-v1", "qam_order": book.order, "transport_ready": False,
-                "purpose": "offline configuration snapshot; requires a future vector playback protocol",
+                "purpose": "offline configuration snapshot for QAM1 compilation; does not start a device",
                 "source_fingerprint": book.fingerprint, "source_checksums": book.checksums,
                 "direction_index": direction, "angle_deg": book.angles[direction],
                 "orientation": orientation, "state1_high": bool(state1_high),
@@ -415,6 +431,16 @@ def export_plan(path, book, mapping, direction, orientation, state1_high, repeat
         manifest["one_pass_seconds"] = (len(prefix.rows)+len(payload)*repeats)/book.pwm_hz
         files["manifest.json"] = encode(manifest)
         files["preamble_mt.txt"] = "".join(f"({m},0);\n" for m, _ in prefix.rows).encode("utf-8")
+    if phase:
+        manifest["phase_compensation"] = {"symbols": list(phase), "repeats_per_symbol": repeats,
+                                          "repeat_with_each_frame": True}
+        manifest["one_pass_seconds"] += len(phase)*repeats/book.pwm_hz
+        files["manifest.json"] = encode(manifest)
+    if frequency:
+        manifest["output_timing"] = frequency.document()
+        manifest["one_pass_seconds"] = ((len(prefix.rows) if preamble_rows else 0)
+                                        + (len(phase)+len(payload))*repeats)*frequency.period_seconds
+        files["manifest.json"] = encode(manifest)
     files["SHA256SUMS.txt"] = "".join(f"{hashlib.sha256(data).hexdigest()}  {name}\n" for name, data in files.items()).encode()
     destination.parent.mkdir(parents=True, exist_ok=True)
     temporary = None

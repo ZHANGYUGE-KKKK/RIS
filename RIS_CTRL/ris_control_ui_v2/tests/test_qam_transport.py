@@ -26,7 +26,7 @@ class TransportTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         subprocess.run(["bash", str(BACKEND / "tests/build_host_model.sh")], check=True)
-        cls.book = QamCodebook.load(BASE.parents[1] / "QAM_RULES/256QAM/ris_256qam_codebook_0deg.zip")
+        cls.book = QamCodebook.load(BASE.parents[1] / "QAM_RULES/256QAM/ris_256qam_256slice_codebook_0deg.zip")
         cls.mapping = RisMapping.load(BASE / "mappings/ris_mapping.json")
 
     def setUp(self):

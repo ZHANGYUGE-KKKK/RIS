@@ -1,0 +1,78 @@
+{
+  "scope": "functional RTL simulation; not board/analog validation",
+  "simulation_pass": true,
+  "exit_code": 0,
+  "source_manifest_match": {
+    "rtl/ris_595_array.v": true,
+    "rtl/ris_595_bringup.v": true,
+    "rtl/ris_595_byte.v": true,
+    "rtl/ris_595_single.v": true,
+    "rtl/ris_595_timing.v": true,
+    "rtl/ris_axi4_slave.v": true,
+    "rtl/ris_controller_axi.v": true,
+    "rtl/ris_ctrl_unit_top.v": true,
+    "rtl/ris_fast_engine.v": true,
+    "rtl/ris_fast_io.v": true,
+    "rtl/ris_frame_ram.v": true,
+    "rtl/ris_mt_engine.v": true,
+    "rtl/ris_qam_player.v": true,
+    "rtl/ris_controller_core.sv": true,
+    "constraints/ris_fast.xdc": true,
+    "constraints/ris_lpc.xdc": true,
+    "constraints/signal_pin_mapping.csv": true,
+    "constraints/zc706_ps_preset.tcl": true
+  },
+  "edges": {
+    "1": {
+      "latches": 9,
+      "high_ns": [
+        12500.0025,
+        12500.0025,
+        12500.0025,
+        12500.0025
+      ],
+      "low_ns": [
+        37500.0075,
+        37500.0075,
+        37500.0075,
+        37500.0075
+      ]
+    },
+    "2": {
+      "latches": 9,
+      "high_ns": [
+        12500.0025,
+        12500.0025,
+        12500.0025,
+        12500.0025
+      ],
+      "low_ns": [
+        37500.0075,
+        37500.0075,
+        37500.0075,
+        37500.0075
+      ]
+    },
+    "3": {
+      "latches": 9,
+      "high_ns": [
+        12500.0025,
+        12500.0025,
+        12500.0025,
+        12500.0025
+      ],
+      "low_ns": [
+        37500.0075,
+        37500.0075,
+        37500.0075,
+        37500.0075
+      ]
+    }
+  },
+  "artifacts_sha256": {
+    "shift_hold.vcd": "5d36193f67986399acb9fe96737fda5d988c5c3603613b41a412612b10da57ca",
+    "edges.csv": "50bef4a22a7cfd4dbae400d20e39d72c30a66c9a2d5a7f1f14a9b889f07f95e8",
+    "run.sh": "a4d873884a5d79d7b6d77a4de05fa737176e9bb424d92f16d50a95ba7e0901b7",
+    "tb_shift_hold.sv": "fe171d56ae221ea148535887b41f9f267edbab7c250c0107710c87fa1e6e2004"
+  }
+}

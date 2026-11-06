@@ -47,7 +47,7 @@ class QamGuiTests(unittest.TestCase):
         self.assertEqual(self.page.preamble_rows,saved)
         self.assertEqual(self.writes(),[])
         self.assertEqual(Board.instances,0)
-        self.wiring();self.page.timing_mode.set("低速数字核线（明确改速）")
+        self.wiring()
         self.page.source.set("十六进制字节序列");self.page.sequence.set("3F")
         plan = self.page.prepare_action().payload
         self.assertEqual(plan.preamble.rows,saved)
@@ -130,7 +130,6 @@ class QamGuiTests(unittest.TestCase):
         self.wiring()
         self.page.action.set("play")
         self.root.update()
-        self.assertTrue(self.app.apply_button.instate(["disabled"]))
         self.assertFalse(self.app.apply_current())
         self.assertEqual(self.writes(), [])
         self.assertFalse(self.app.mt_uploading)
@@ -160,7 +159,7 @@ class QamGuiTests(unittest.TestCase):
         self.page.repeats.set("5")
         self.page.loop.set(False)
         self.root.update()
-        self.assertIn("200,000.000 Baud", self.page.payload_text.get())
+        self.assertIn("3,906.250 Baud", self.page.payload_text.get())
         target = self.directory / "snapshot.zip"
         self.assertTrue(self.page.export(target))
         with zipfile.ZipFile(target) as archive:

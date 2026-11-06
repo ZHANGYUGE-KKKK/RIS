@@ -1,0 +1,35 @@
+{
+  "verified_at": "2026-11-05T13:32:24.244144+08:00",
+  "board": "ZC706 clone / XC7Z045",
+  "cable_serial": "210299372306",
+  "fpga_idcode": "23731093",
+  "jedec_id": "ef6018",
+  "flash_type": "qspi-x8-dual_parallel",
+  "flash_offset": 0,
+  "image_bytes": 13556752,
+  "boot_sha256": "e46e934f0f573209868e18f195cc27d5ad67fe0671c3f2272eb9807f32491665",
+  "boot_mode_during_programming": "JTAG (0)",
+  "direct_full_byte_compare": "PASS",
+  "independent_program_flash_verify": "PASS",
+  "independent_verified_bytes": 13556752,
+  "independent_comparison_chunks": 414,
+  "permanent_protection_bits_set": false,
+  "cold_boot_test": "PASS",
+  "application_listener_initialized": true,
+  "application_network_test": "PASS_READ_ONLY_STATUS",
+  "rf_constellation_test": "NOT_TESTED",
+  "programmer_source_sha256": "8303800960f323931ab21a45dba1c4e7ff08806bc8e0050530821867bf4ad01e",
+  "programmer_elf_sha256": "b5e134b509039caadaad72d191ec58fd028328632d985eecc0216250a1552913",
+  "flash_scripts_sha256": {
+    "flash_qam64.tcl": "a4cee2d9e81c6428487e76061b874d2a5c50be7ada1020ee638cf9677286229d",
+    "verify_flash_qam64.sh": "5611ad185ebf8943bd8c8203a90c00af9099d14166796e6e37b6f21c49906f63",
+    "check_qspi_boot_qam64.tcl": "18efcf5a3f1fc72094b8374873815035aad02d62d40cf2fc717083e4a8b72253"
+  },
+  "evidence_sha256": {
+    "direct_program.log": "ff30a7fbb382130d8ac2cead699dec6ea4feb03ae81198b8278f5de1ab181a3f",
+    "independent_verify.log": "f741c1fcb5cad47561884efb2ef2127ffdd4c69abae14aafcf6bec44b941177e",
+    "inspect_ready.log": "e1e21f37d99d1473aaf1892f9b9f380b7fcc824451711ff796d62f9be911de90",
+    "cold_boot.log": "ba078d407295c5c2fa85e9f5ade64359a05069eb1564eb4ccfd70236a75396cd",
+    "network_status.json": "6bab444b861ca724a81a27e1cf667c931e2ad225798bd280602cb58c56db5f98"
+  }
+}

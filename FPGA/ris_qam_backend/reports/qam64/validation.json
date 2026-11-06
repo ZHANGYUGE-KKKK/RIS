@@ -33,8 +33,7 @@
     "legacy_offline": 8,
     "frequency": 4
   },
-  "hardware_access_performed": false,
-  "flash_programmed": false,
+  "flash_programmed": true,
   "rf_tested": false,
   "previous_backend_changed_sources": [
     "FPGA/ris_qam_backend/rtl/ris_qam_player.v",
@@ -123,5 +122,11 @@
     "flash_programmed": false,
     "hardware_boot_tested": false,
     "boot_sha256": "e46e934f0f573209868e18f195cc27d5ad67fe0671c3f2272eb9807f32491665"
-  }
+  },
+  "development_hardware_access_performed": false,
+  "hardware_access_performed": true,
+  "hardware_boot_tested": true,
+  "read_only_tcp_status_verified": true,
+  "hardware_programming_record": "FPGA/ris_qam_backend/reports/flash_qam64_20261105/hardware_programming.json",
+  "hardware_programming_record_sha256": "48d77d2b9a3b47b5515c25393e5873db45347c5cd1411e1c3c04ff9f4cf58009"
 }

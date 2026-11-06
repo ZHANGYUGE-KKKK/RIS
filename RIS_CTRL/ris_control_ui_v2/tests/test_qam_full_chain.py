@@ -58,7 +58,6 @@ class FullChainTests(unittest.TestCase):
         self.app.qam_orientation.set(ORIENTATIONS["identity"])
         self.app.qam_state1.set("驱动高");self.app.qam_confirmed.set(True)
         self.app.open_qam()
-        self.page.timing_mode.set("低速数字核线（明确改速）")
         self.page.source.set("十六进制字节序列");self.page.sequence.set("3F A5 00")
         self.page.repeats.set("3");self.page.loop.set(False)
         self.root.update()
@@ -73,6 +72,40 @@ class FullChainTests(unittest.TestCase):
         self.server.shutdown();self.server.server_close();self.model.close()
 
     def writes(self):return [x for x in self.server.commands if x!="STATUS"]
+
+    def test_phase_reference_frames_use_total_gate_and_freeze_both_qam_modes(self):
+        self.connect()
+        for order,refs in ((256,b"\x00\x08\x88\x80"),(64,b"\x00\x04\x24\x20")):
+            with self.subTest(order=order):
+                page=self.app.qam_page if order==256 else self.app.qam64_page
+                if order==64:self.assertTrue(page.load(page.default_path))
+                self.app.open_qam(order);page.action.set("play")
+                page.source.set("十六进制字节序列");page.sequence.set("01 2A")
+                page.repeats.set("2");page.loop.set(True)
+                page.pwm_frequency.set("9.765625" if order==256 else "150")
+                prefix=self.directory/f"phase_prefix_{order}.txt"
+                prefix.write_text("(25,0);\n(75,0);")
+                self.assertTrue(page.load_preamble(prefix))
+                before=len(self.writes());page.phase_checkbox.invoke();self.root.update()
+                self.assertEqual(len(self.writes()),before)
+                self.server.blocked.clear();self.server.release.clear();self.server.gate="QDATA"
+                self.assertTrue(self.app.apply_current());plan=self.app.inflight_action.payload
+                self.wait(self.server.blocked.is_set)
+                page.phase_compensation.set(False);page.sequence.set("02")
+                page.repeats.set("3");page.preamble_enabled.set(False);self.root.update()
+                page.pwm_frequency.set("19.53125" if order==256 else "160")
+                self.server.release.set();self.wait(lambda:not self.app.busy,timeout=20)
+                self.assertEqual(plan.phase_symbols,refs)
+                self.assertEqual(plan.data_payload,b"\x01\x2a")
+                self.assertEqual(plan.data_repeats,2)
+                self.assertEqual(plan.frame_cycles,14)
+                self.assertEqual(plan.actual_pwm_hz, 9765.625 if order==256 else 150000)
+                self.assertEqual(self.app.latest["qam_crc"],plan.crc)
+                self.assertIn("相偏补偿",self.app.status_title.get())
+                self.assertIn(refs.hex(" ").upper(),self.app.status_detail.get())
+                self.assertIn("正式2符号×K2",self.app.status_detail.get())
+                self.server.gate=None;page.action.set("stop");self.root.update();self.apply()
+                self.assertEqual(self.writes()[-1],"STOP")
 
     def test_qam64_total_gate_exact_rate_prefix_and_legacy_takeover(self):
         self.page = self.app.qam64_page
@@ -97,8 +130,37 @@ class FullChainTests(unittest.TestCase):
         self.app.open_qam();self.page=self.app.qam_page
         self.assertTrue(self.app.apply_current())
         self.wait(lambda: not self.app.busy, timeout=20)
-        self.assertEqual(self.app.latest["qam_order"],256)
-        self.assertTrue(any(x.startswith("QBEGIN ") for x in self.writes()))
+        self.assertEqual(self.app.latest["qam_order"],64)  # board field is a timing profile
+        self.assertIn("256QAM",self.app.status_title.get())
+        self.assertTrue(any(x.startswith("Q64BEGIN ") for x in self.writes()))
+
+    def test_256qam_64slice_160khz_and_import_validation_keeps_running_output(self):
+        path = self.page.default_path.parent/'ris_256qam_64slice_codebook'
+        self.assertTrue(self.page.load(path))
+        self.page.pwm_frequency.set('160'); self.page.pwm_unit.set('kHz')
+        self.page.source.set('十六进制字节序列'); self.page.sequence.set('00 88 FF')
+        self.page.phase_compensation.set(True); self.page.loop.set(True)
+        prefix = self.directory/'prefix_256_64.txt'; prefix.write_text('(25,0);\n(75,0);')
+        self.assertTrue(self.page.load_preamble(prefix))
+        self.root.update(); self.connect()
+        self.assertEqual(self.writes(), [])
+        self.assertTrue(self.app.apply_current())
+        plan = self.app.inflight_action.payload
+        self.wait(lambda:not self.app.busy, timeout=20)
+        self.assertEqual((plan.modulation_order, plan.actual_pwm_hz, plan.base_period_ticks), (256,160000,1875))
+        self.assertEqual(plan.phase_symbols, bytes.fromhex('00 08 88 80'))
+        self.assertEqual(plan.data_payload, bytes.fromhex('00 88 FF'))
+        self.assertEqual(self.app.latest['qam_crc'], plan.crc)
+        self.assertIn('256QAM', self.app.status_title.get())
+        self.assertIn('160 kHz', self.app.status_detail.get())
+        count = len(self.writes())
+        self.assertTrue(self.page.load(self.page.default_path)); self.root.update()
+        self.assertEqual(self.page.pwm_frequency.get(), '160')
+        self.assertIn('256 slice', self.app.pending_text.get())
+        self.assertFalse(self.app.apply_current())
+        self.assertEqual(len(self.writes()), count)
+        self.assertEqual(self.app.latest['qam_crc'], plan.crc)
+        self.assertTrue(self.app.latest['qam_status']&2)
 
     def test_total_gate_upload_playback_completion_and_frozen_snapshot(self):
         self.connect()
@@ -140,8 +202,8 @@ class FullChainTests(unittest.TestCase):
         self.assertEqual(self.writes()[-1], "STOP")
         self.assertFalse(self.app.latest["qam_uploading"])
 
-    def test_native_rate_blocks_before_network_mutation(self):
-        self.connect();self.page.timing_mode.set("码本原速（严格校验）");self.root.update()
+    def test_unsupported_frequency_blocks_before_network_mutation(self):
+        self.connect();self.page.pwm_frequency.set("1000");self.root.update()
         self.assertFalse(self.app.apply_current())
         self.assertEqual(self.writes(), [])
 
