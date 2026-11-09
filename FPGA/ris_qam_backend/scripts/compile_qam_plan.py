@@ -15,7 +15,7 @@ from types import SimpleNamespace
 import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "RIS_CTRL/ris_control_ui_v2"))
-from ris_qam_preamble import Preamble, assemble
+from ris_qam_preamble import Preamble, assemble, independent_blocks
 from ris_mt import parse_mt
 from ris_qam64_timing import clock_events
 from ris_qam256 import phase_reference_symbols
@@ -129,7 +129,12 @@ def compile_plan(path, slot_ticks=None, retime_for_bench=False):
                 or type(reference.get("repeats_per_symbol")) is not int
                 or reference["repeats_per_symbol"] != repeats):
             raise ValueError("phase compensation manifest mismatch")
-    payload = phase + payload
+    independent = m.get("independent_prefix", False)
+    if type(independent) is not bool:
+        raise ValueError("independent_prefix must be boolean")
+    formal_payload = payload
+    if not independent:
+        payload = phase + payload
     preamble_cycles, frame_copies = 0, 1
     prefix = None
     if "preamble" in m:
@@ -138,7 +143,18 @@ def compile_plan(path, slot_ticks=None, retime_for_bench=False):
                 or m["preamble"].get("repeat_with_each_frame") is not True or m["preamble"].get("delay_zero") is not True):
             raise ValueError("preamble manifest mismatch")
         preamble_cycles = len(prefix.rows)
-    if prefix or len(payload)>4096:
+    prefix_words = []
+    if independent:
+        blocks, prefix_bytes = independent_blocks(patterns, event_bytes, index, formal_payload,
+                                                   prefix or Preamble((), (), base_slots), phase, clock_period)
+        frames = list(struct.unpack(f"<{len(blocks[0])//4}I", blocks[0]))
+        events = list(struct.unpack(f"<{len(blocks[1])//4}I", blocks[1]))
+        symbols = list(struct.unpack("<256I", blocks[2]))
+        prefix_words = list(struct.unpack(f"<{len(prefix_bytes)//4}I", prefix_bytes))
+        payload = blocks[3]
+        slots = clock_period or base_slots
+        nframes, nevents = len(frames)//13, len(events)
+    elif prefix or len(payload)>4096:
         blocks, group, frame_copies = assemble(patterns, event_bytes, index, payload, repeats, m["loop"],
                                                prefix or Preamble((), (), base_slots),
                                                max_group=65535//clock_period if clock_period else None)
@@ -149,14 +165,15 @@ def compile_plan(path, slot_ticks=None, retime_for_bench=False):
         slots *= group
         repeats = 1
         nframes, nevents = len(frames)//13, len(events)
-    if clock_period:
+    if clock_period and not independent:
         symbols_bytes = struct.pack("<256I", *symbols)
         events_bytes = clock_events(struct.pack(f"<{len(events)}I", *events), symbols_bytes, base_slots, clock_period)
         events = list(struct.unpack(f"<{len(events)}I", events_bytes))
         slots = slots//base_slots * clock_period
     writes = [(0x204, 16), (0x208, slot_ticks), (0x20c, repeats), (0x210, slots)]
     if clock_period: writes.insert(1, (0x250,64))
-    for address, data in ((0x240, frames), (0x244, events), (0x248, symbols), (0x24c, payload)):
+    if independent: writes.append((0x26c, preamble_cycles))
+    for address, data in ((0x240, frames), (0x244, events), (0x248, symbols), (0x268, prefix_words), (0x24c, payload)):
         writes.extend((address, value) for value in data)
     # No START in upload file. The global GUI apply must own START/STOP later.
     report = {"format": "ris-qam1-mmio-upload-v1", "register_base": "0x41200000",
@@ -168,6 +185,8 @@ def compile_plan(path, slot_ticks=None, retime_for_bench=False):
               "start_command": 2 if m["loop"] else 1,
               "mmio_format": "little-endian uint32 register_offset, uint32 value; no START",
               "source_zip_sha256": hashlib.sha256(Path(path).read_bytes()).hexdigest()}
+    if independent:
+        report.update(independent_prefix=True, prefix_descriptors=len(prefix_words))
     if configured_timing is not None:
         report["output_timing"] = configured_timing
     if clock_period:
@@ -185,6 +204,7 @@ def emit_plan(path, destination, slot_ticks=None, retime_for_bench=False):
     destination = Path(destination)
     destination.mkdir(parents=True, exist_ok=False)
     (destination / "upload.bin").write_bytes(b"".join(struct.pack("<II", *pair) for pair in writes))
+    (destination / "prefix.hex").write_text("".join(f"{value:08x}\n" for address,value in writes if address==0x268))
     (destination / "manifest.json").write_text(json.dumps(report, indent=2) + "\n")
     for name, values, digits in (("frames", frames, 8), ("events", events, 8),
                                  ("symbols", symbols, 8), ("payload", payload, 2),

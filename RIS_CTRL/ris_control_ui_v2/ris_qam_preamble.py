@@ -1,4 +1,4 @@
-"""Compile uniform MT preambles and QAM cycles into one existing QAM1 program."""
+"""Compile uniform MT preambles: QPR1 independent prefix and legacy QAM1 exports."""
 from array import array
 from dataclasses import dataclass
 from decimal import Decimal, ROUND_HALF_UP
@@ -100,3 +100,36 @@ def assemble(patterns, events, index, data, repeats, loop, preamble, max_group=N
             padded = b"".join(frame+b"\0\0" for frame in frames)
             return (padded, bytes(program), symbols, bytes(stream)), group, copies
     raise ValueError("前导码与数据合帧超过256项索引或32768个时段容量；请缩短数据或减小K")
+
+
+def independent_blocks(patterns, events, index, payload, preamble, phase, clock_period=0):
+    """Full QAM dictionary plus a separate, fixed-period prefix descriptor bank.
+
+    Prefix entries do not consume symbol IDs or payload bytes. Preamble is in
+    physical high/low levels, independent of the QAM state polarity mapping.
+    """
+    from ris_qam64_timing import clock_events, edge_tick
+    frames = [patterns[i:i+50] for i in range(0, len(patterns), 50)]
+    symbols = b"".join(struct.pack("<HH", row["first_record"], row["record_count"]) for row in index)
+    symbols += symbols[:4] * (256-len(index))
+    physical = bytearray(clock_events(events, symbols, preamble.slots, clock_period) if clock_period else events)
+    prefix = bytearray()
+    def frame_id(value):
+        if value not in frames:
+            frames.append(value)
+        return frames.index(value)
+    if preamble.rows:
+        low, high = frame_id(bytes(50)), frame_id(b"\xff"*50)
+        for width in preamble.widths:
+            actual = edge_tick(width, clock_period, preamble.slots) if clock_period else width
+            period = clock_period or preamble.slots
+            wave = [(fid, n) for fid, n in ((high, actual), (low, period-actual)) if n]
+            if clock_period and any(n < 29 for _, n in wave):
+                raise ValueError("前导码脉冲或低电平短于595更新时间，请调整占空比或降低PWM频率")
+            prefix.extend(struct.pack("<HH", len(physical)//4, len(wave)))
+            physical.extend(b"".join(struct.pack("<HH", *event) for event in wave))
+    for symbol in phase:
+        prefix.extend(symbols[symbol*4:symbol*4+4])
+    if len(frames)>2048 or len(physical)//4>32768:
+        raise ValueError("QAM和前导码超过2048幅图案或32768个时段容量")
+    return (b"".join(frame+b"\0\0" for frame in frames), bytes(physical), symbols, bytes(payload)), bytes(prefix)

@@ -31,7 +31,7 @@ manifest = {
     "application": "ris_qam_network", "processor": "ps7_cortexa9_0",
     "defines": ["RIS_ENABLE_NETWORK", "RIS_FAST_TOGGLE", "RIS_MT_TABLE", "RIS_QAM_TABLE"],
     "lwip211_version": "1.8", "tcp_address": "192.168.1.11:7060",
-    "protocol": "RIS706 v1 + QAM ABI 1", "programmed_to_board": False,
+    "protocol": "RIS706 v1 + QAM ABI 1 + QA64 + QPR1", "programmed_to_board": False,
     "sources_sha256": sources, "artifacts_sha256": artifacts,
     "build_scripts_sha256": {str(p.relative_to(root)): sha(p) for p in
                               (root / "scripts").iterdir() if p.name in

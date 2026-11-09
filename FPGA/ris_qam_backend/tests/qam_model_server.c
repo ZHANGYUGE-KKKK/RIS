@@ -8,9 +8,9 @@
 #include <string.h>
 #include <assert.h>
 
-static u32 regs[1024],patterns[2048][13],events[32768],symbols[256];
+static u32 regs[1024],patterns[2048][13],events[32768],symbols[270];
 static u8 payload[4096],physical[50];
-static unsigned frame_words,event_words,symbol_words,payload_bytes;
+static unsigned frame_words,event_words,symbol_words,payload_bytes,prefix_words;
 static ris_controller device;
 static u32 blink;
 static u64 timer;
@@ -48,7 +48,8 @@ void Xil_Out32(UINTPTR address,u32 value){
     }
     if(a==RIS_QAM_MODE)regs[a/4]=value==64 ? 64 : 256;
     if(a==RIS_QAM_CONTROL){
-        if(value==16){regs[RIS_QAM_MODE/4]=256;regs[RIS_QAM_SLOT_TICKS/4]=60;frame_words=event_words=symbol_words=payload_bytes=0;
+        if(value==16){regs[RIS_QAM_MODE/4]=256;regs[RIS_QAM_SLOT_TICKS/4]=60;frame_words=event_words=symbol_words=payload_bytes=prefix_words=0;
+            regs[RIS_QAM_PREFIX_COUNT/4]=regs[RIS_QAM_PREAMBLE_ROWS/4]=0;
             regs[RIS_QAM_FRAME_COUNT/4]=regs[RIS_QAM_EVENT_COUNT/4]=regs[RIS_QAM_SYMBOL_COUNT/4]=regs[RIS_QAM_PAYLOAD_COUNT/4]=0;}
         else if(value==0)regs[RIS_QAM_STATUS/4]&=~(RIS_QAM_RUNNING|RIS_QAM_PREFLIGHT|RIS_QAM_PENDING);
         else if(value==8){
@@ -56,29 +57,31 @@ void Xil_Out32(UINTPTR address,u32 value){
             regs[RIS_QAM_STATUS/4]=0;
         } else if(value==1 || value==2){
             unsigned err=0;regs[RIS_QAM_ERROR/4]=0;
-            for(i=0;i<256 && !err;++i){unsigned j,sum=0,first=symbols[i]&65535u,count=symbols[i]>>16;
+            for(i=0;i<256+prefix_words && !err;++i){unsigned j,sum=0,first=symbols[i]&65535u,count=symbols[i]>>16;
                 if(!count || first+count>event_words){err=1;break;}
                 for(j=first;j<first+count;++j){if((events[j]&65535u)>=frame_words/13 || (!(events[j]>>16) || (regs[RIS_QAM_MODE/4]==64 && (events[j]>>16)<29))){err=2;break;}sum+=events[j]>>16;}
                 if(!err && sum!=regs[RIS_QAM_PERIOD_SLOTS/4])err=3;
             }
             if(err){regs[RIS_QAM_ERROR/4]=err;regs[RIS_QAM_STATUS/4]=16;}
-            else{held_from(events[symbols[payload[0]]&65535u]&65535u);regs[RIS_QAM_STATUS/4]=3;}
+            else{held_from(events[symbols[prefix_words ? 256 : payload[0]]&65535u]&65535u);regs[RIS_QAM_STATUS/4]=3;}
         }
     }
     if(a==RIS_QAM_FRAME_DATA){assert(frame_words<2048*13);patterns[frame_words/13][frame_words%13]=value;frame_words++;
         regs[RIS_QAM_FRAME_COUNT/4]=(frame_words/13)|((frame_words%13)<<12);}
     if(a==RIS_QAM_EVENT_DATA){assert(event_words<32768);events[event_words++]=value;regs[RIS_QAM_EVENT_COUNT/4]=event_words;}
     if(a==RIS_QAM_SYMBOL_DATA){assert(symbol_words<256);symbols[symbol_words++]=value;regs[RIS_QAM_SYMBOL_COUNT/4]=symbol_words;}
+    if(a==RIS_QAM_PREFIX_DATA){assert(prefix_words<14);symbols[256+prefix_words++]=value;regs[RIS_QAM_PREFIX_COUNT/4]=prefix_words;}
     if(a==RIS_QAM_PAYLOAD_DATA){assert(payload_bytes<4096);payload[payload_bytes++]=value;regs[RIS_QAM_PAYLOAD_COUNT/4]=payload_bytes;}
 }
 int main(void){
-    char line[160],reply[1536];
+    char line[160],reply[2048];
     setbuf(stdout,NULL);
     regs[RIS_REG_ID/4]=RIS_DEVICE_ID;regs[RIS_REG_FAST_ID/4]=RIS_FAST_DEVICE_ID;regs[RIS_REG_MT_ID/4]=RIS_MT_DEVICE_ID;
     regs[RIS_QAM_ID/4]=RIS_QAM_ID_VALUE;regs[RIS_REG_FAST_STATUS/4]=1;regs[RIS_REG_STATUS/4]=0x42;
     regs[RIS_REG_FRAME_SLOTS/4]=16;regs[RIS_REG_MT_PERIOD/4]=300;
     regs[RIS_QAM_SLOT_TICKS/4]=60;regs[RIS_QAM_REPEATS/4]=3;regs[RIS_QAM_PERIOD_SLOTS/4]=256;
     regs[RIS_QAM_FRAME_CAPACITY/4]=2048;regs[RIS_QAM_EVENT_CAPACITY/4]=32768;regs[RIS_QAM_BYTE_CAPACITY/4]=4096;
+    regs[RIS_QAM_PREFIX_ID/4]=RIS_QAM_PREFIX_ID_VALUE;regs[RIS_QAM_PREFIX_CAPACITY/4]=14;
     regs[RIS_QAM64_ID/4]=RIS_QAM64_ID_VALUE;regs[RIS_QAM_MODE/4]=256;regs[RIS_QAM64_MIN_EVENT/4]=29;
     regs[RIS_QAM_MIN_TICKS/4]=60;regs[RIS_QAM_CLOCK_HZ/4]=300000000;
     assert(ris_initialize(&device,RIS_BASE_ADDRESS)==0);

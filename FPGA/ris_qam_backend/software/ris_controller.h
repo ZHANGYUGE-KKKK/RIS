@@ -18,10 +18,11 @@ typedef struct {
     int mt_supported;
     u32 mt_expected, mt_loaded, mt_checksum, mt_last_level;
     int qam_supported, qam_uploading, qam_counts_set;
-    int qam64_supported;
+    int qam64_supported, qam_prefix_supported, qam_independent;
+    u32 qam_modulation, qam_preamble, qam_phase;
     u32 qam_order;
     u32 qam_ticks, qam_k, qam_slots, qam_loop;
-    u32 qam_expected[3], qam_loaded[4];
+    u32 qam_expected[3], qam_loaded[5];
     u32 qam_crc, qam_expected_crc, qam_active_crc;
 } ris_controller;
 
@@ -57,6 +58,8 @@ int ris_qam_stop(ris_controller *dev);
 void ris_qam_cancel_upload(ris_controller *dev);
 int ris_qam64_begin(ris_controller *dev,u32 ticks,u32 k,u32 slots,u32 loop);
 int ris_qam_begin(ris_controller *dev,u32 ticks,u32 k,u32 slots,u32 loop);
+int ris_qam_prefix_begin(ris_controller *dev,u32 ticks,u32 k,u32 slots,u32 loop,u32 mode,u32 modulation);
+int ris_qam_prefix_counts(ris_controller *dev,u32 frames,u32 events,u32 bytes,u32 preamble,u32 phase,u32 crc);
 int ris_qam_counts(ris_controller *dev,u32 frames,u32 events,u32 bytes,u32 crc);
 int ris_qam_data(ris_controller *dev,unsigned kind,u32 offset,const u8 *data,u32 bytes);
 int ris_qam_start(ris_controller *dev,u32 crc);

@@ -28,16 +28,19 @@ static int byte(const char *s,u8 *value)
 }
 int ris_protocol_execute(ris_controller *dev,char *line,char *reply,size_t capacity,u32 *blink_ms)
 {
-    char *tokens[6],*save,*token;
+    char *tokens[8],*save,*token;
     unsigned count=0,i;
     u32 id=0,index=0,bit=0,value=0,status,errors,extra=0;
+#ifdef RIS_QAM_TABLE
+    u32 mode=0,order=0;
+#endif
     u8 image[50],data=0;
     u64 mask=0,frames;
     int rc=-7,restart=0,valid=1,qcommand=0;
-    char qextra[1152]="";
+    char qextra[1400]="";
     char image_hex[101];
     for (token=strtok_r(line," \t",&save);token;token=strtok_r(NULL," \t",&save)) {
-        if (count==6) {valid=0; break;}
+        if (count==8) {valid=0; break;}
         tokens[count++]=token;
     }
     if (count<2 || !number(tokens[0],&id) || id==0) valid=0;
@@ -53,10 +56,14 @@ int ris_protocol_execute(ris_controller *dev,char *line,char *reply,size_t capac
                 rc=ris_qam_begin(dev,index,bit,value,extra);
             else if(!strcmp(op,"Q64BEGIN") && count==6 && number(tokens[2],&index) && number(tokens[3],&bit) && number(tokens[4],&value) && number(tokens[5],&extra))
                 rc=ris_qam64_begin(dev,index,bit,value,extra);
+            else if(!strcmp(op,"QPBEGIN") && count==8 && number(tokens[2],&index) && number(tokens[3],&bit) && number(tokens[4],&value) && number(tokens[5],&extra) && number(tokens[6],&mode) && number(tokens[7],&order))
+                rc=ris_qam_prefix_begin(dev,index,bit,value,extra,mode,order);
+            else if(!strcmp(op,"QPCOUNTS") && count==8 && number(tokens[2],&index) && number(tokens[3],&bit) && number(tokens[4],&value) && number(tokens[5],&extra) && number(tokens[6],&mode) && number(tokens[7],&order))
+                rc=ris_qam_prefix_counts(dev,index,bit,value,extra,mode,order);
             else if(!strcmp(op,"QCOUNTS") && count==6 && number(tokens[2],&index) && number(tokens[3],&bit) && number(tokens[4],&value) && number(tokens[5],&extra))
                 rc=ris_qam_counts(dev,index,bit,value,extra);
             else if(!strcmp(op,"QDATA") && count==5 && strlen(tokens[2])==1 && number(tokens[3],&index)) {
-                const char *kinds="FESP";const char *kind=strchr(kinds,tokens[2][0]);
+                const char *kinds="FESPB";const char *kind=strchr(kinds,tokens[2][0]);
                 u8 bytes[48];size_t length=strlen(tokens[4]);
                 if(kind && length && length<=96 && !(length&1)) {
                     for(i=0;i<length/2;++i){int a=hex(tokens[4][i*2]),b=hex(tokens[4][i*2+1]);if(a<0 || b<0)break;bytes[i]=(u8)((a<<4)|b);}
@@ -154,6 +161,13 @@ int ris_protocol_execute(ris_controller *dev,char *line,char *reply,size_t capac
             size_t used=strlen(qextra);
             snprintf(qextra+used,sizeof(qextra)-used,",\"qam64_supported\":%s,\"qam_order\":%lu,\"qam64_min_event_ticks\":29",
                 dev->qam64_supported ? "true":"false",(unsigned long)(dev->qam64_supported ? ris_read(dev,RIS_QAM_MODE) : 256));
+        }
+        {
+            size_t used=strlen(qextra);
+            snprintf(qextra+used,sizeof(qextra)-used,",\"qam_prefix_supported\":%s,\"qam_max_prefix\":14,\"qam_prefix_count\":%lu,\"qam_preamble_rows\":%lu",
+                dev->qam_prefix_supported ? "true":"false",
+                (unsigned long)(dev->qam_prefix_supported ? ris_read(dev,RIS_QAM_PREFIX_COUNT) : 0),
+                (unsigned long)(dev->qam_prefix_supported ? ris_read(dev,RIS_QAM_PREAMBLE_ROWS) : 0));
         }
     } else strcpy(qextra,",\"qam_supported\":false");
 #endif

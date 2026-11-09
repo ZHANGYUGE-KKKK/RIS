@@ -341,7 +341,7 @@ class QamPage:
             data, repeats = self._payload()
             plan = make_plan(self.book, self.app.mapping_page.model.copy(), direction, orientation, high,
                              repeats, self.loop.get(), data, preamble_rows=self._preamble(),
-                             phase_compensation=self.phase_compensation.get(), pwm_hz=self._frequency().requested_hz)
+                             phase_compensation=self.phase_compensation.get(), pwm_hz=self._frequency().requested_hz, independent_prefix=True)
             def completed(reply, error):
                 if error:
                     self.notice.set("结果未确认：" + str(error))
@@ -382,8 +382,6 @@ class QamPage:
         frequency = self._frequency()
         rows = self._preamble()
         phase = phase_reference_symbols(self.order, self.phase_compensation.get())
-        if (rows or len(data)+len(phase)>4096) and len(rows)+(len(data)+len(phase))*repeats > 4096*(65535//(frequency.period_ticks or self.book.slots)):
-            raise ValueError("前导码与数据合帧超出现有播放器容量；请缩短数据或减小K")
         return OutputAction("qam", None, self._play_summary(frequency.actual_hz, len(data), repeats))
 
     def export(self, path=None):
@@ -403,7 +401,7 @@ class QamPage:
                     return False
             manifest = export_plan(path, self.book, self.app.mapping_page.model.copy(), direction,
                                    orientation, high, repeats, self.loop.get(), data, preamble_rows=rows,
-                                   phase_compensation=self.phase_compensation.get(), pwm_hz=frequency.requested_hz)
+                                   phase_compensation=self.phase_compensation.get(), pwm_hz=frequency.requested_hz, independent_prefix=True)
             prefix_note = f"、前导码{len(rows)}周期" if rows else ""
             if self.phase_compensation.get():
                 prefix_note += "、相偏补偿4点"
@@ -432,7 +430,7 @@ class QamPage:
         text = ["QAM1：总按钮先核对板端能力，再分块上传、校验完整包并启动；可单次或循环。",
                 "上传中选择停止并点击总按钮可取消；修改草稿、切页和导出ZIP不更新实际输出。"]
         reply = self.app.latest or {}
-        text.append("已连接QAM1固件。" if reply.get("qam_supported") else "尚未确认板端QAM1能力；需新副本配套BIT与ELF。")
+        text.append("已确认独立前导码播放器。" if reply.get("qam_prefix_supported") else "尚未确认独立前导码能力；连续播放需本次配套BIT与ELF。")
         if self.book:
             book = self.book
             text += [f"源码本PWM：{frequency_text(book.pwm_hz)}。当前码本支持的输出PWM频率：{range_text(book)}。",

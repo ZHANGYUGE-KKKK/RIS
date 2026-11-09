@@ -73,6 +73,25 @@ class FullChainTests(unittest.TestCase):
 
     def writes(self):return [x for x in self.server.commands if x!="STATUS"]
 
+    def test_user_263_cycle_frame_with_total_gate(self):
+        self.assertTrue(self.page.load(self.page.default_path.parent/'ris_256qam_64slice_codebook'))
+        self.page.source.set('测试序列00–FF');self.page.repeats.set('1')
+        self.page.pwm_frequency.set('120');self.page.pwm_unit.set('kHz')
+        self.page.phase_compensation.set(True);self.page.loop.set(True)
+        prefix=self.directory/'user_prefix.txt';prefix.write_text('(25,0);\n(50,0);\n(75,0);')
+        self.assertTrue(self.page.load_preamble(prefix));self.root.update()
+        path=self.directory/'user_export.zip';self.assertTrue(self.page.export(path))
+        self.assertEqual(self.writes(),[])
+        self.connect();self.assertEqual(self.writes(),[])
+        self.assertTrue(self.app.apply_current());plan=self.app.inflight_action.payload
+        self.wait(lambda:not self.app.busy,timeout=20)
+        self.assertTrue(self.app.connected,self.app.notice.get())
+        self.assertEqual((plan.frame_cycles,plan.actual_pwm_hz,len(plan.payload)),(263,120000,256))
+        self.assertEqual((self.app.latest['qam_prefix_count'],self.app.latest['qam_preamble_rows']),(7,3))
+        self.assertEqual(self.app.latest['qam_crc'],plan.crc)
+        self.assertEqual(sum(c.startswith('QSTART ') for c in self.writes()),1)
+        self.assertFalse(any(c.startswith('MT') for c in self.writes()))
+
     def test_phase_reference_frames_use_total_gate_and_freeze_both_qam_modes(self):
         self.connect()
         for order,refs in ((256,b"\x00\x08\x88\x80"),(64,b"\x00\x04\x24\x20")):
@@ -124,7 +143,7 @@ class FullChainTests(unittest.TestCase):
         self.assertEqual(plan.actual_pwm_hz,160000)
         self.assertIn("64QAM",self.app.status_title.get())
         self.assertIn("160 kHz",self.app.status_detail.get())
-        self.assertTrue(any(x.startswith("Q64BEGIN ") for x in self.writes()))
+        self.assertTrue(any(x.startswith("QPBEGIN ") for x in self.writes()))
         self.page.action.set("stop");self.root.update();self.apply()
         self.assertFalse(self.app.latest["qam_status"]&3)
         self.app.open_qam();self.page=self.app.qam_page
@@ -132,7 +151,7 @@ class FullChainTests(unittest.TestCase):
         self.wait(lambda: not self.app.busy, timeout=20)
         self.assertEqual(self.app.latest["qam_order"],64)  # board field is a timing profile
         self.assertIn("256QAM",self.app.status_title.get())
-        self.assertTrue(any(x.startswith("Q64BEGIN ") for x in self.writes()))
+        self.assertTrue(any(x.startswith("QPBEGIN ") for x in self.writes()))
 
     def test_256qam_64slice_160khz_and_import_validation_keeps_running_output(self):
         path = self.page.default_path.parent/'ris_256qam_64slice_codebook'
@@ -215,7 +234,7 @@ class FullChainTests(unittest.TestCase):
         self.assertFalse(any(c.startswith("QSTART") for c in self.writes()))
         self.assertIn("字节数",self.app.notice.get())
 
-    def test_preamble_upload_snapshot_and_status_use_existing_firmware(self):
+    def test_preamble_upload_snapshot_and_status_use_independent_prefix(self):
         prefix = self.directory / "preamble.txt"
         prefix.write_text("(20,0);\n(50,0);\n(80,0);")
         self.assertTrue(self.page.load_preamble(prefix))
@@ -233,7 +252,7 @@ class FullChainTests(unittest.TestCase):
         self.assertEqual(self.app.latest["qam_crc"], plan.crc)
         self.assertEqual(plan.logical_payload, b"\x3f\xa5\0")
         self.assertEqual(len(plan.preamble.rows), 3)
-        self.assertEqual(self.app.latest["qam_repeats"], 1)
+        self.assertEqual(self.app.latest["qam_repeats"], 3)
         self.assertIn("前导码",self.app.status_title.get())
         self.assertIn("19.53125 kHz",self.app.status_detail.get())
         self.assertIn("K3",self.app.status_detail.get())

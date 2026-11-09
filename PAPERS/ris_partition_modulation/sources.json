@@ -1,0 +1,24 @@
+[
+  {
+    "name": "01_2023_Programmable_metasurface_for_front-back_scattering_communication.pdf",
+    "title": "Programmable metasurface for front-back scattering communication",
+    "doi": "10.1515/nanoph-2023-0365",
+    "source_url": "https://dr.ntu.edu.sg/server/api/core/bitstreams/76b38d6b-98b9-40f5-94a0-d59dc184150a/content",
+    "final_url": "https://cf002.cdn.4science.cloud/4s-assetstore-dspacecrisntu/74/36/26/74362604447566101769703752603003674202?response-content-type=application%2Fpdf&response-content-disposition=attachment%3B%20filename%3D%2210.1515_nanoph-2023-0365.pdf%22&Expires=1794232080&Signature=JRM20TOlYjWiOZQmz3ees1xMtpVJhctnRmiW3ukuqsgax0pOO1EZBA-gpbMxl~xUcv24sot9L9BOGURBXcy~18QDc1TqA0zEIazDpZfW1xXjQAH~C-MHpC5gxu0vTHfC-psMGx41nea2sOmZYKSCYrrhS2Ji-xRetNPykKd~q6XD920m4K02lLpFBF3zZFC-QcSDYLNJDP0VF6kKhirsDdQ4YcS-B6Bg6Z4Ef30NoCL1k6uq6VzFTmJMbRrNEnJ8~YpjZWoqVdYA~sfVFdUuhXWmCuoH2iU6Mw7oBe36f1rJh8k3EEgDvh2zNjKSrckF1XoBJ6bgL3Kvl4HWHAIaHg__&Key-Pair-Id=K20AKEP5FKG3TS",
+    "version": "publisher version in institutional repository",
+    "pages": 9,
+    "bytes": 3614582,
+    "sha256": "df8f62a246e6df584732ee95c6f3128f7ef93bec134530cb2cac478d616f3a39"
+  },
+  {
+    "name": "02_2020_Space-Time_Modulated_Metasurfaces_with_Spatial_Discretization_Free-Space_N-Path_Systems.pdf",
+    "title": "Space-Time-Modulated Metasurfaces with Spatial Discretization: Free-Space N-Path Systems",
+    "doi": "10.1103/PhysRevApplied.14.064060",
+    "source_url": "https://arxiv.org/pdf/2006.06394v2",
+    "final_url": "https://arxiv.org/pdf/2006.06394v2",
+    "version": "arXiv v2 author manuscript",
+    "pages": 19,
+    "bytes": 14470794,
+    "sha256": "1ee713e896234a0605e31f4e8d4f2082dad56659cfe159c6f6b13f1295db7aae"
+  }
+]

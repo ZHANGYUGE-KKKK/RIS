@@ -3,13 +3,14 @@ void ris_qam_cancel_upload(ris_controller *d)
 {
     unsigned i;
     d->qam_uploading=d->qam_counts_set=0;d->qam_crc=0xffffffffu;d->qam_expected_crc=0;
+    d->qam_independent=0;d->qam_preamble=d->qam_phase=0;
     for(i=0;i<3;++i)d->qam_expected[i]=0;
-    for(i=0;i<4;++i)d->qam_loaded[i]=0;
+    for(i=0;i<5;++i)d->qam_loaded[i]=0;
 }
 u32 ris_qam_received(const ris_controller *d)
-{return d->qam_loaded[0]+d->qam_loaded[1]+d->qam_loaded[2]+d->qam_loaded[3];}
+{return d->qam_loaded[0]+d->qam_loaded[1]+d->qam_loaded[2]+d->qam_loaded[3]+d->qam_loaded[4];}
 u32 ris_qam_expected_bytes(const ris_controller *d)
-{return d->qam_expected[0]*52u+d->qam_expected[1]*4u+1024u+d->qam_expected[2];}
+{return d->qam_expected[0]*52u+d->qam_expected[1]*4u+1024u+d->qam_expected[2]+4u*(d->qam_preamble+d->qam_phase);}
 static u32 qam_crc_bytes(u32 crc,const u8 *p,u32 n)
 {
     u32 i,b;for(i=0;i<n;++i){crc^=p[i];for(b=0;b<8;++b)crc=(crc>>1)^((0u-(crc&1u))&0xedb88320u);}
@@ -68,7 +69,7 @@ int ris_qam_begin(ris_controller *d,u32 ticks,u32 k,u32 slots,u32 loop)
 {return qam_begin(d,ticks,k,slots,loop,256);}
 int ris_qam64_begin(ris_controller *d,u32 ticks,u32 k,u32 slots,u32 loop)
 {return qam_begin(d,ticks,k,slots,loop,64);}
-int ris_qam_counts(ris_controller *d,u32 frames,u32 events,u32 bytes,u32 crc)
+static int qam_counts(ris_controller *d,u32 frames,u32 events,u32 bytes,u32 crc)
 {
     if(!d->qam_uploading || d->qam_counts_set || !frames || frames>2048 || !events || events>32768 || !bytes || bytes>4096)
         return RIS_NOT_ACCEPTED;
@@ -77,29 +78,52 @@ int ris_qam_counts(ris_controller *d,u32 frames,u32 events,u32 bytes,u32 crc)
     qam_crc_word(d,frames);qam_crc_word(d,events);qam_crc_word(d,bytes);if(d->qam_order==64)qam_crc_word(d,64);d->qam_counts_set=1;
     return RIS_OK;
 }
+int ris_qam_counts(ris_controller *d,u32 frames,u32 events,u32 bytes,u32 crc)
+{if(d->qam_independent)return RIS_NOT_ACCEPTED;return qam_counts(d,frames,events,bytes,crc);}
+/* QPR1 is additive: legacy QBEGIN/QCOUNTS and their CRC stay unchanged. */
+int ris_qam_prefix_begin(ris_controller *d,u32 ticks,u32 k,u32 slots,u32 loop,u32 mode,u32 modulation)
+{
+    int rc;
+    if(!d->qam_prefix_supported || (mode!=0 && mode!=64) || (modulation!=64 && modulation!=256))return RIS_NOT_ACCEPTED;
+    rc=qam_begin(d,ticks,k,slots,loop,mode==64 ? 64 : 256);if(rc)return rc;
+    d->qam_independent=1;d->qam_modulation=modulation;return RIS_OK;
+}
+int ris_qam_prefix_counts(ris_controller *d,u32 frames,u32 events,u32 bytes,u32 preamble,u32 phase,u32 crc)
+{
+    int rc;
+    if(!d->qam_independent || preamble>10 || (phase!=0 && phase!=4))return RIS_NOT_ACCEPTED;
+    rc=qam_counts(d,frames,events,bytes,crc);if(rc)return rc;
+    d->qam_preamble=preamble;d->qam_phase=phase;
+    qam_crc_word(d,RIS_QAM_PREFIX_ID_VALUE);qam_crc_word(d,d->qam_modulation);
+    qam_crc_word(d,preamble);qam_crc_word(d,phase);
+    ris_write(d,RIS_QAM_PREAMBLE_ROWS,preamble);barrier();
+    return ris_read(d,RIS_QAM_PREAMBLE_ROWS)==preamble ? RIS_OK : RIS_HARDWARE_ERROR;
+}
 int ris_qam_data(ris_controller *d,unsigned kind,u32 offset,const u8 *data,u32 bytes)
 {
-    u32 size[4],address[4]={RIS_QAM_FRAME_DATA,RIS_QAM_EVENT_DATA,RIS_QAM_SYMBOL_DATA,RIS_QAM_PAYLOAD_DATA};
+    u32 size[5],address[5]={RIS_QAM_FRAME_DATA,RIS_QAM_EVENT_DATA,RIS_QAM_SYMBOL_DATA,RIS_QAM_PREFIX_DATA,RIS_QAM_PAYLOAD_DATA};
     u32 i,n,word=0,s,actual;
-    if(!d->qam_uploading || !d->qam_counts_set || kind>3 || !data || !bytes || bytes>48)return RIS_NOT_ACCEPTED;
-    size[0]=d->qam_expected[0]*52u;size[1]=d->qam_expected[1]*4u;size[2]=1024;size[3]=d->qam_expected[2];
-    if(offset!=d->qam_loaded[kind] || offset>size[kind] || bytes>size[kind]-offset || (kind<3 && bytes%4))goto bad;
-    for(i=0;i<4;++i)if((i<kind && d->qam_loaded[i]!=size[i]) || (i>kind && d->qam_loaded[i]))goto bad;
+    if(!d->qam_uploading || !d->qam_counts_set || kind>4 || !data || !bytes || bytes>48)return RIS_NOT_ACCEPTED;
+    /* Public kind numbers retain FESP=0..3; B=4. RAM/CRC order is FESBP. */
+    if(kind==3)kind=4;else if(kind==4){if(!d->qam_independent)return RIS_NOT_ACCEPTED;kind=3;}
+    size[0]=d->qam_expected[0]*52u;size[1]=d->qam_expected[1]*4u;size[2]=1024;size[3]=4u*(d->qam_preamble+d->qam_phase);size[4]=d->qam_expected[2];
+    if(offset!=d->qam_loaded[kind] || offset>size[kind] || bytes>size[kind]-offset || (kind<4 && bytes%4))goto bad;
+    for(i=0;i<5;++i)if((i<kind && d->qam_loaded[i]!=size[i]) || (i>kind && d->qam_loaded[i]))goto bad;
     if(ris_read(d,RIS_QAM_STATUS)&15u)goto bad;
     /* Validate the complete packet before issuing any MMIO write. */
-    if(kind<3)for(n=0;n<bytes;n+=4){
+    if(kind<4)for(n=0;n<bytes;n+=4){
         word=(u32)data[n]|((u32)data[n+1]<<8)|((u32)data[n+2]<<16)|((u32)data[n+3]<<24);
         if(kind==0 && ((offset+n)/4)%13==12 && word>>16)goto bad;
         if(kind==1 && ((word&65535u)>=d->qam_expected[0] || !(word>>16) || (d->qam_order==64 && (word>>16)<29)))goto bad;
-        if(kind==2 && (!(word>>16) || (word&65535u)+(word>>16)>d->qam_expected[1]))goto bad;
+        if((kind==2 || kind==3) && (!(word>>16) || (word&65535u)+(word>>16)>d->qam_expected[1]))goto bad;
     }
-    for(n=0;n<bytes;n+=(kind==3 ? 1u : 4u)){
-        word=data[n];if(kind<3)word|=((u32)data[n+1]<<8)|((u32)data[n+2]<<16)|((u32)data[n+3]<<24);
+    for(n=0;n<bytes;n+=(kind==4 ? 1u : 4u)){
+        word=data[n];if(kind<4)word|=((u32)data[n+1]<<8)|((u32)data[n+2]<<16)|((u32)data[n+3]<<24);
         ris_write(d,address[kind],word);
     }
     barrier();s=d->qam_loaded[kind]+bytes;
     if(kind==0){actual=ris_read(d,RIS_QAM_FRAME_COUNT);if((actual&4095u)!=s/52u || (actual>>12)!=(s%52u)/4u)goto hardware;}
-    else if(ris_read(d,kind==1 ? RIS_QAM_EVENT_COUNT : kind==2 ? RIS_QAM_SYMBOL_COUNT : RIS_QAM_PAYLOAD_COUNT)!=(kind==3 ? s : s/4))goto hardware;
+    else if(ris_read(d,kind==1 ? RIS_QAM_EVENT_COUNT : kind==2 ? RIS_QAM_SYMBOL_COUNT : kind==3 ? RIS_QAM_PREFIX_COUNT : RIS_QAM_PAYLOAD_COUNT)!=(kind==4 ? s : s/4))goto hardware;
     d->qam_loaded[kind]=s;d->qam_crc=qam_crc_bytes(d->qam_crc,data,bytes);return RIS_OK;
 hardware:ris_qam_cancel_upload(d);return RIS_HARDWARE_ERROR;
 bad:ris_qam_cancel_upload(d);return RIS_NOT_ACCEPTED;
@@ -109,9 +133,10 @@ int ris_qam_start(ris_controller *d,u32 crc)
     u32 s;int rc;XTime start;
     if(!d->qam_uploading || !d->qam_counts_set || crc!=d->qam_expected_crc || (d->qam_crc^0xffffffffu)!=crc ||
        d->qam_loaded[0]!=d->qam_expected[0]*52u || d->qam_loaded[1]!=d->qam_expected[1]*4u ||
-       d->qam_loaded[2]!=1024 || d->qam_loaded[3]!=d->qam_expected[2]){ris_qam_cancel_upload(d);return RIS_NOT_ACCEPTED;}
+       d->qam_loaded[2]!=1024 || d->qam_loaded[3]!=4u*(d->qam_preamble+d->qam_phase) || d->qam_loaded[4]!=d->qam_expected[2]){ris_qam_cancel_upload(d);return RIS_NOT_ACCEPTED;}
     if(ris_read(d,RIS_QAM_FRAME_COUNT)!=d->qam_expected[0] || ris_read(d,RIS_QAM_EVENT_COUNT)!=d->qam_expected[1] ||
-       ris_read(d,RIS_QAM_SYMBOL_COUNT)!=256 || ris_read(d,RIS_QAM_PAYLOAD_COUNT)!=d->qam_expected[2]){ris_qam_cancel_upload(d);return RIS_HARDWARE_ERROR;}
+       ris_read(d,RIS_QAM_SYMBOL_COUNT)!=256 ||
+       (d->qam_independent && (ris_read(d,RIS_QAM_PREFIX_COUNT)!=d->qam_preamble+d->qam_phase || ris_read(d,RIS_QAM_PREAMBLE_ROWS)!=d->qam_preamble)) || ris_read(d,RIS_QAM_PAYLOAD_COUNT)!=d->qam_expected[2]){ris_qam_cancel_upload(d);return RIS_HARDWARE_ERROR;}
     /* Enabling OE does not stop or alter normal/fast clocks. Current image is held. */
     rc=ris_output_enable(d,1);if(rc)return rc;
     rc=qam_control(d,d->qam_loop ? RIS_QAM_LOOP : RIS_QAM_ONCE);if(rc)return rc;

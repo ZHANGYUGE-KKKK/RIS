@@ -1,5 +1,7 @@
 # 256QAM完整控制链路（2026-11-02）
 
+当前GUI下发使用[QPR1独立前导码扩展](../../../FPGA/ris_qam_backend/QPR1.md)，需2026-11-09配套RTL和固件。下文QBEGIN接口保留兼容。
+
 当前GUI已统一按slice数选择计时路径，频率规则见[输出PWM频率设置](qam_pwm_frequency.md)；下方旧接口参数保留用于兼容与链路说明。
 
 本副本已实现 GUI → TCP → Zynq ARM 固件 → AXI → FPGA QAM1 播放器 → 50片595。已完成软件联调、数字仿真、Flash烧写、两次完整读回及断电启动检查。动态输出与空口星座尚未实测；原工程保持独立。实板记录见 [烧写报告](../../../FPGA/ris_qam_backend/reports/flash/FLASH_REPORT.md)。

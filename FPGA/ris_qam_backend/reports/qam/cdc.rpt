@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-| Date         : Thu Nov  5 12:27:43 2026
+| Date         : Mon Nov  9 18:58:38 2026
 | Host         : wenhan running 64-bit Ubuntu 26.10
 | Command      : report_cdc -file /home/wenhan/PROJECTS/RIS/FPGA/ris_qam_backend/reports/qam/cdc.rpt
 | Design       : ris_ctrl_unit_top
@@ -14,5 +14,5 @@ CDC Report
 Severity  Source Clock  Destination Clock  CDC Type      Exceptions  Endpoints  Safe  Unsafe  Unknown  No ASYNC_REG  
 --------  ------------  -----------------  ------------  ----------  ---------  ----  ------  -------  ------------  
 Info      raw_fast      clk_fpga_0         Safely Timed  None              443   443       0        0             0  
-Info      clk_fpga_0    raw_fast           Safely Timed  None             1410  1410       0        0             0  
+Info      clk_fpga_0    raw_fast           Safely Timed  None             1428  1428       0        0             0  
 

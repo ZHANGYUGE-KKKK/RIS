@@ -60,6 +60,7 @@ def build(output):
             shutil.copy2(source / name, staging / name)
         json_file(staging / "accepted_artifacts.json", accepted)
         shutil.copy2(fsbl, staging / "fsbl.elf")
+        shutil.copy2(ROOT / "QPR1.md", staging / "QPR1.md")
         shutil.copy2(ROOT / "scripts/verify_zynq_boot.py", staging / "verify_zynq_boot.py")
         (staging / "BOOT.bif").write_text("the_ROM_image:\n{\n    [bootloader] fsbl.elf\n    ris_ctrl_unit.bit\n    ris_all_io.elf\n}\n")
         for args, name in ((["-image", "BOOT.bif", "-o", "BOOT.bin", "-w", "on"], "bootgen_build.log"),
@@ -87,7 +88,9 @@ def build(output):
 启动后TCP地址沿用 `192.168.1.11:7060`；初始化输出全0，不自动开始QAM播放。
 电脑使用新版控制台 `/home/wenhan/PROJECTS/RIS/RIS_CTRL/ris_control_ui_v2/start_gui.sh --qam`，由总下发按钮上传码本和数据后播放。
 码本/数据运行时经TCP写入FPGA RAM，不内置在BOOT.bin中，掉电后需要重新下发。
-原1 MHz码本仍不能原速播放；低速数字核线需明确选择200 ns/片，对应PWM 19.53125 kHz，不能当作来源模型射频性能验收。
+本包支持QPR1独立前导码：每帧先发送最多10个统一MT周期，再发送可选的4个相偏参考点，最后发送正式QAM数据；周期与边界连续。
+正式数据最多4096字节，前导码和相偏参考点不占用正式数据容量或256项QAM符号索引。
+64QAM与256QAM均在GUI中设置最终PWM频率，频率上限按slice数检查；SHCP仍为100 MHz。
 
 离线复核（不访问硬件）：
 

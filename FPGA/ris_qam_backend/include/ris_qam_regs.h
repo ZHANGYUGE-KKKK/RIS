@@ -27,6 +27,12 @@
 #define RIS_QAM64_ID           0x0254u
 #define RIS_QAM64_MIN_EVENT    0x0258u
 #define RIS_QAM64_ID_VALUE     0x51413634u
+#define RIS_QAM_PREFIX_ID       0x025cu
+#define RIS_QAM_PREFIX_COUNT    0x0260u
+#define RIS_QAM_PREFIX_CAPACITY 0x0264u
+#define RIS_QAM_PREFIX_DATA     0x0268u /* first_event + event_count, same as S */
+#define RIS_QAM_PREAMBLE_ROWS   0x026cu /* first 0..10 prefix entries repeat once */
+#define RIS_QAM_PREFIX_ID_VALUE 0x51505231u
 #define RIS_QAM_HELD_FRAME     0x0280u /* 13 RO words, only coherent when idle */
 #define RIS_QAM_ID_VALUE       0x51414d31u
 #define RIS_QAM_STOP           0u

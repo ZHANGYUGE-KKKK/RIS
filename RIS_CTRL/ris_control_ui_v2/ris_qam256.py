@@ -386,7 +386,7 @@ def phase_reference_symbols(order, enabled=False):
     raise ValueError("相偏补偿仅支持64QAM和256QAM")
 
 
-def export_plan(path, book, mapping, direction, orientation, state1_high, repeats, loop, payload, preamble_rows=(), phase_compensation=False, pwm_hz=None):
+def export_plan(path, book, mapping, direction, orientation, state1_high, repeats, loop, payload, preamble_rows=(), phase_compensation=False, pwm_hz=None, independent_prefix=False):
     """Export an offline snapshot. No claim of a currently supported wire protocol."""
     integer(repeats, 1, 1000000, "重复次数K")
     if type(state1_high) is not bool or type(loop) is not bool:
@@ -440,6 +440,9 @@ def export_plan(path, book, mapping, direction, orientation, state1_high, repeat
         manifest["output_timing"] = frequency.document()
         manifest["one_pass_seconds"] = ((len(prefix.rows) if preamble_rows else 0)
                                         + (len(phase)+len(payload))*repeats)*frequency.period_seconds
+        files["manifest.json"] = encode(manifest)
+    if independent_prefix:
+        manifest["independent_prefix"] = True
         files["manifest.json"] = encode(manifest)
     files["SHA256SUMS.txt"] = "".join(f"{hashlib.sha256(data).hexdigest()}  {name}\n" for name, data in files.items()).encode()
     destination.parent.mkdir(parents=True, exist_ok=True)

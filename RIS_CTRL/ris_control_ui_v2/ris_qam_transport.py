@@ -2,6 +2,7 @@
 
 CRC32 canonical order: seven LE u32 values (ticks,K,L,loop,frames,events,bytes),
 then F (52 bytes/frame), E (4 bytes/event), S (256 LE words), P (raw bytes).
+QPR1 adds its magic/order/row/phase metadata and the B block before P.
 """
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
@@ -10,7 +11,7 @@ import struct
 import zlib
 
 from ris_qam256 import compile_tables, integer, phase_reference_symbols
-from ris_qam_preamble import Preamble, assemble
+from ris_qam_preamble import Preamble, assemble, independent_blocks
 from ris_qam64_timing import period_ticks, clock_events
 from ris_qam_frequency import plan_qam_frequency
 
@@ -61,6 +62,8 @@ class QamPlan:
     modulation_order: int = 256
     base_period_ticks: int = 0
     phase_symbols: bytes = b""
+    independent_prefix: bool = False
+    prefix_descriptors: bytes = b""
 
     @property
     def frames(self): return len(self.blocks[0]) // 52
@@ -78,16 +81,31 @@ class QamPlan:
     def frame_cycles(self):
         return (len(self.preamble.rows) if self.preamble else 0) + (len(self.phase_symbols)+len(self.data_payload))*self.data_repeats
     @property
-    def total_bytes(self): return sum(map(len, self.blocks))
+    def total_bytes(self): return sum(map(len, self.blocks)) + len(self.prefix_descriptors)
     @property
     def crc(self):
         crc = zlib.crc32(struct.pack("<7I", self.slot_ticks, self.repeats, self.slots,
                                     int(self.loop), self.frames, self.events, len(self.payload)))
         if self.base_period_ticks: crc = zlib.crc32(struct.pack("<I", 64), crc)
-        for block in self.blocks: crc = zlib.crc32(block, crc)
+        if self.independent_prefix:
+            crc = zlib.crc32(struct.pack("<4I", 0x51505231, self.modulation_order,
+                                        len(self.preamble.rows) if self.preamble else 0, len(self.phase_symbols)), crc)
+        for block in self.upload_blocks: crc = zlib.crc32(block, crc)
         return crc
 
+    @property
+    def upload_blocks(self):
+        return self.blocks[:3] + (self.prefix_descriptors, self.payload) if self.independent_prefix else self.blocks
+
     def commands(self):
+        if self.independent_prefix:
+            yield f"QPBEGIN {self.slot_ticks} {self.repeats} {self.slots} {int(self.loop)} {64 if self.base_period_ticks else 0} {self.modulation_order}"
+            yield f"QPCOUNTS {self.frames} {self.events} {len(self.payload)} {len(self.preamble.rows) if self.preamble else 0} {len(self.phase_symbols)} {self.crc}"
+            for kind, block in zip("FESBP", self.upload_blocks):
+                for offset in range(0, len(block), CHUNK_BYTES):
+                    yield f"QDATA {kind} {offset} {block[offset:offset+CHUNK_BYTES].hex().upper()}"
+            yield f"QSTART {self.crc}"
+            return
         yield f"{'Q64BEGIN' if self.base_period_ticks else 'QBEGIN'} {self.slot_ticks} {self.repeats} {self.slots} {int(self.loop)}"
         yield f"QCOUNTS {self.frames} {self.events} {len(self.payload)} {self.crc}"
         for kind, block in zip("FESP", self.blocks):
@@ -102,6 +120,8 @@ class QamPlan:
                               ("qam_max_payload", len(self.payload))):
             if type(reply.get(key)) is not int or reply[key] < required:
                 raise ValueError(f"播放包超过板端容量：{key}")
+        if self.independent_prefix and (reply.get("qam_prefix_supported") is not True or reply.get("qam_max_prefix") != 14):
+            raise ValueError("板端未提供独立前导码播放能力；请使用本次配套BIT、ELF和Flash启动包")
         if self.base_period_ticks:
             if reply.get("qam64_supported") is not True or reply.get("qam64_min_event_ticks") != 29 or reply.get("qam_clock_hz") != CLOCK_HZ:
                 raise ValueError("板端未提供QAM边沿计时能力；请使用配套BIT和ELF")
@@ -110,7 +130,7 @@ class QamPlan:
             raise ValueError("播放片长与板端实际时钟/时序能力不匹配")
 
 
-def make_plan(book, mapping, direction, orientation, state1_high, repeats, loop, payload, mode="source", slot_ns="200", preamble_rows=(), phase_compensation=False, pwm_hz=None):
+def make_plan(book, mapping, direction, orientation, state1_high, repeats, loop, payload, mode="source", slot_ns="200", preamble_rows=(), phase_compensation=False, pwm_hz=None, independent_prefix=False):
     integer(repeats, 1, 1_000_000, "K")
     if type(loop) is not bool: raise ValueError("循环参数须为布尔值")
     integer(len(payload), 1, 4096, "QAM1待发数据字节数")
@@ -129,6 +149,14 @@ def make_plan(book, mapping, direction, orientation, state1_high, repeats, loop,
     integer(len(patterns) // 50, 1, 2048, "QAM1图案数")
     integer(len(events) // 4, 1, 32768, "QAM1时段数")
     preamble = Preamble.compile(preamble_rows, book.slots) if preamble_rows else None
+    if independent_prefix:
+        blocks, descriptors = independent_blocks(patterns, events, index, payload,
+                                                 preamble or Preamble((), (), book.slots), phase, clock_period)
+        return QamPlan(blocks, ticks, repeats, clock_period or book.slots, loop, book.pwm_hz,
+                       book.fingerprint, book.angles[direction], preamble=preamble,
+                       logical_payload=bytes(payload), logical_repeats=repeats, logical_slots=book.slots,
+                       modulation_order=book.order, base_period_ticks=clock_period, phase_symbols=phase,
+                       independent_prefix=True, prefix_descriptors=descriptors)
     if preamble or len(stream) > 4096:
         blocks, group, copies = assemble(patterns, events, index, stream, repeats, loop,
                                          preamble or Preamble((), (), book.slots),

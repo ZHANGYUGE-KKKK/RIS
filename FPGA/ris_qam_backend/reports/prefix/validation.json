@@ -1,0 +1,77 @@
+{
+  "date": "2026-11-09",
+  "feature": "QPR1 independent preamble and phase descriptors",
+  "hardware_access_performed": false,
+  "flashed_to_board": false,
+  "user_case": {
+    "cycles": 263,
+    "events": 8835,
+    "pwm_hz": 120000.0,
+    "upload_bytes": 66552,
+    "crc": "C7C0BBAB"
+  },
+  "full64_case": {
+    "cycles": 214,
+    "events": 7005,
+    "pwm_hz": 160000.0,
+    "upload_bytes": 24940,
+    "crc": "105D2789"
+  },
+  "real_gui_and_c_tests": {
+    "new_protocol": 6,
+    "legacy_protocol": 10,
+    "gui_tcp_c_chain": 9,
+    "phase_gui": 1,
+    "qam64_regression": 6,
+    "qam256_codebook": 18
+  },
+  "retained_logs_test_count": 50,
+  "rtl_source_oracle_cases": [
+    "rtl_user256.log",
+    "rtl_dense.log",
+    "rtl_full64.log"
+  ],
+  "legacy_axi_variants": 2,
+  "timing_passed": true,
+  "wns_ns": 0.007,
+  "whs_ns": 0.036,
+  "timing_failing_endpoints": 0,
+  "clock_hz": {
+    "axi": 100000000,
+    "player": 300000000,
+    "shcp": 100000000
+  },
+  "capacity": {
+    "symbols": 256,
+    "preamble_rows": 10,
+    "phase_points": 4,
+    "formal_bytes": 4096,
+    "frames": 2048,
+    "events": 32768
+  },
+  "original_rtl_constraint_files_unchanged": 17,
+  "test_logs": {
+    "new_protocol": "RIS_CTRL/ris_control_ui_v2/reports/prefix_protocol_tests.log",
+    "legacy_protocol": "RIS_CTRL/ris_control_ui_v2/reports/prefix_legacy_transport_tests.log",
+    "gui_tcp_c_chain": "RIS_CTRL/ris_control_ui_v2/reports/prefix_gui_chain.log",
+    "phase_gui": "RIS_CTRL/ris_control_ui_v2/reports/prefix_phase_gui.log",
+    "qam64_regression": "RIS_CTRL/ris_control_ui_v2/reports/prefix_qam64_regression.log",
+    "qam256_codebook": "RIS_CTRL/ris_control_ui_v2/reports/prefix_qam256_regression.log"
+  },
+  "sources_sha256": {
+    "FPGA/ris_qam_backend/rtl/ris_qam_player.v": "5f058bcc386e2221516d540bb6c5c3b534eb92e56cf181a1963742a5e62b95d9",
+    "FPGA/ris_qam_backend/software/ris_controller.c": "67c467c766c4d878ae51693ce08ed1b026dbd804bb227984daba89848a4beeea",
+    "FPGA/ris_qam_backend/software/ris_controller.h": "dbbd7dd3930774278f6cff00ecb3ecd68cfec407f242e81a0a533f2fe8a1da65",
+    "FPGA/ris_qam_backend/software/ris_qam_driver.inc": "2fcdb7f06fb7cbc4f1d89381249a858d3132a5b60a14830cc047ccd1f614b5f3",
+    "FPGA/ris_qam_backend/software/network/ris_protocol.c": "281d824872c031d2dcf629e80de2533036da3f9d1c11ac64f86177062eb818c7",
+    "FPGA/ris_qam_backend/software/network/ris_network.h": "22a76eebf76d25347cac218e77e7448cee73a4196d3d740fc5bb60562eda80b8",
+    "FPGA/ris_qam_backend/include/ris_qam_regs.h": "3086f1315a6ff0917353086ca533056ebfef96f714bd22ff433d18df46c3c22b",
+    "FPGA/ris_qam_backend/software/ris_qam_regs.h": "3086f1315a6ff0917353086ca533056ebfef96f714bd22ff433d18df46c3c22b",
+    "FPGA/ris_qam_backend/scripts/compile_qam_plan.py": "da36a39bd7e461e54058ff2fa42cd3d9466f631ba86fa58f3f86736260cea0ff",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam_transport.py": "34107d860135a473a946e1104b0abbf1ec50781721d6f15bd96dd59e1d3a719b",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam_preamble.py": "e3c810002e5994d40d36a8281dff00c052dfec2750cf81f376a430ac90b0227f",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam256.py": "02cf44ca242f5bef112a0e2aa51831b427e6436743d937154043a38600234c65",
+    "RIS_CTRL/ris_control_ui_v2/ris_qam256_gui.py": "963feb653c788a3e122601061b1583a661b43568a85766b5c6c50bae551fc0e6",
+    "RIS_CTRL/ris_control_ui_v2/ris_client.py": "aff0e4dfd7c155eb7fa053977471d363e88542815fc9dfc6a86562830c44a4b2"
+  }
+}

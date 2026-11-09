@@ -33,6 +33,7 @@ module ris_qam_player (
     reg [3:0] frame_bank;
     reg [15:0] event_count;
     reg [8:0] symbol_count;
+    reg [3:0] prefix_count, preamble_rows;
     reg [12:0] payload_count;
     (* ASYNC_REG="TRUE" *) reg [1:0] ack_sync, owned_sync, running_sync, busy_sync;
     (* ASYNC_REG="TRUE" *) reg [7:0] error_meta, error_sync;
@@ -47,20 +48,24 @@ module ris_qam_player (
                    (wr_addr==16'h020c && wr_data>=1 && wr_data<=1000000) ||
                    (wr_addr==16'h0210 && wr_data>=1 && wr_data<=65535);
     wire mode_ok=wr_addr==16'h0250 && (wr_data==0 || wr_data==64);
+    wire prefix_config_ok=wr_addr==16'h026c && wr_data<=10;
     wire upload_ok=(wr_addr==16'h0240 && frame_count<2048 &&
                         (frame_bank!=12 || wr_data[31:16]==0)) ||
                    (wr_addr==16'h0244 && event_count<32768) ||
                    (wr_addr==16'h0248 && symbol_count<256) ||
-                   (wr_addr==16'h024c && payload_count<4096 && wr_data<256);
+                   (wr_addr==16'h024c && payload_count<4096 && wr_data<256) ||
+                   (wr_addr==16'h0268 && prefix_count<14);
     wire start_ok=(wr_data==1 || wr_data==2) && writable && allow_start &&
                   frame_count!=0 && frame_bank==0 && event_count!=0 &&
-                  symbol_count==256 && payload_count!=0 && (mode64 ? slot_ticks==1 : slot_ticks>=MIN_TICKS);
+                  symbol_count==256 && payload_count!=0 &&
+                  (prefix_count==preamble_rows || prefix_count==preamble_rows+4) &&
+                  (mode64 ? slot_ticks==1 : slot_ticks>=MIN_TICKS);
     wire command_ok=wr_addr==16'h0204 && !pending &&
                    (start_ok || wr_data==0 ||
                     (wr_data==8 && !busy_sync[1] && !running_sync[1]) ||
                     (wr_data==16 && writable));
     assign wr_resp=resetn && wr_strb==15 &&
-                    (command_ok || (writable && (config_ok || upload_ok || mode_ok))) ? 0 : 2;
+                    (command_ok || (writable && (config_ok || upload_ok || mode_ok || prefix_config_ok))) ? 0 : 2;
     wire fire=wr_valid && wr_resp==0;
 
     // True dual-clock synchronous memories. Thirteen 32-bit frame banks avoid
@@ -68,28 +73,29 @@ module ris_qam_player (
     reg [10:0] frame_address;
     wire [415:0] frame_read;
     reg [14:0] event_address;
-    reg [7:0] symbol_address;
+    reg [8:0] symbol_address;
     reg [11:0] payload_address;
     reg [31:0] event_read, symbol_read, event_raw, symbol_raw;
     reg [7:0] payload_read,payload_raw;
     (* ram_style="block" *) reg [31:0] event_ram[0:32767];
-    (* ram_style="block" *) reg [31:0] symbol_ram[0:255];
+    (* ram_style="block" *) reg [31:0] symbol_ram[0:511];
     (* ram_style="block" *) reg [7:0] payload_ram[0:4095];
     reg frame_we,event_we,symbol_we,payload_we;
     reg [10:0] frame_wa;
     reg [3:0] frame_wbank;
     reg [14:0] event_wa;
-    reg [7:0] symbol_wa;
+    reg [8:0] symbol_wa;
     reg [11:0] payload_wa;
     reg [31:0] upload_data;
     // Registered write controls keep asynchronous-reset bus logic off BRAM pins.
     always @(posedge clk) begin
         frame_we<=resetn && fire && wr_addr==16'h0240;
         event_we<=resetn && fire && wr_addr==16'h0244;
-        symbol_we<=resetn && fire && wr_addr==16'h0248;
+        symbol_we<=resetn && fire && (wr_addr==16'h0248 || wr_addr==16'h0268);
         payload_we<=resetn && fire && wr_addr==16'h024c;
         frame_wa<=frame_count[10:0];frame_wbank<=frame_bank;
-        event_wa<=event_count[14:0];symbol_wa<=symbol_count[7:0];
+        event_wa<=event_count[14:0];
+        symbol_wa<=wr_addr==16'h0268 ? 9'd256+prefix_count : {1'b0,symbol_count[7:0]};
         payload_wa<=payload_count[11:0];upload_data<=wr_data;
         if(event_we) event_ram[event_wa]<=upload_data;
         if(symbol_we) symbol_ram[symbol_wa]<=upload_data;
@@ -114,6 +120,7 @@ module ris_qam_player (
         if(!resetn) begin
             mode64<=0;request_toggle<=0;command<=0;slot_ticks<=MIN_TICKS;repeats<=3;period_slots<=256;
             frame_count<=0;frame_bank<=0;event_count<=0;symbol_count<=0;payload_count<=0;
+            prefix_count<=0;preamble_rows<=0;
             ack_sync<=0;owned_sync<=0;running_sync<=0;busy_sync<=0;error_meta<=0;error_sync<=0;
         end else begin
             ack_sync<={ack_sync[0],acknowledged};owned_sync<={owned_sync[0],owned};
@@ -123,6 +130,7 @@ module ris_qam_player (
                 16'h0204: if(wr_data==16) begin
                     mode64<=0;slot_ticks<=MIN_TICKS;
                     frame_count<=0;frame_bank<=0;event_count<=0;symbol_count<=0;payload_count<=0;
+                    prefix_count<=0;preamble_rows<=0;
                 end else begin command<=wr_data[3:0];request_toggle<=!request_toggle;end
                 16'h0250: mode64<=wr_data==64;
                 16'h0208: slot_ticks<=wr_data;
@@ -133,6 +141,8 @@ module ris_qam_player (
                 16'h0244: event_count<=event_count+1'b1;
                 16'h0248: symbol_count<=symbol_count+1'b1;
                 16'h024c: payload_count<=payload_count+1'b1;
+                16'h0268: prefix_count<=prefix_count+1'b1;
+                16'h026c: preamble_rows<=wr_data[3:0];
                 default: begin end
             endcase
         end
@@ -164,6 +174,10 @@ module ris_qam_player (
             16'h0250: rd_data=mode64 ? 64 : 256;
             16'h0254: rd_data=32'h51413634; // QA64 additive timing capability
             16'h0258: rd_data=29;
+            16'h025c: rd_data=32'h51505231; // QPR1 independent prefix descriptors
+            16'h0260: rd_data={28'b0,prefix_count};
+            16'h0264: rd_data=14;
+            16'h026c: rd_data={28'b0,preamble_rows};
             default: if(rd_addr>=16'h0280 && rd_addr<=16'h02b0 && rd_addr[1:0]==0) begin
                 if(rd_addr==16'h02b0) rd_data={16'b0,held_snapshot[399:384]};
                 else rd_data=held_snapshot[(rd_addr-16'h0280)*8+:32];
@@ -175,7 +189,9 @@ module ris_qam_player (
     reg [4:0] state;
     reg mode64_meta,mode64_fast;
     reg loop_mode, stop_pending, launching, next_valid, next_last;
-    reg [7:0] validate_symbol;
+    reg [8:0] validate_symbol;
+    reg [3:0] prefix_count_meta,prefix_count_fast,preamble_rows_meta,preamble_rows_fast;
+    reg next_prefix;
     reg [15:0] validate_left;
     reg [16:0] validate_sum;
     reg [16:0] descriptor_end,event_sum;
@@ -188,6 +204,8 @@ module ris_qam_player (
     // Configuration and upload counts cannot change while the player is busy.
     always @(posedge fast_clk) begin
         mode64_meta<=mode64;mode64_fast<=mode64_meta;
+        prefix_count_meta<=prefix_count;prefix_count_fast<=prefix_count_meta;
+        preamble_rows_meta<=preamble_rows;preamble_rows_fast<=preamble_rows_meta;
         ticks_meta<=slot_ticks;ticks_fast<=ticks_meta;
         repeats_meta<=repeats;repeats_fast<=repeats_meta;
         slots_meta<=period_slots;slots_fast<=slots_meta;
@@ -228,18 +246,30 @@ module ris_qam_player (
         input [16:0] ending;
         input [19:0] rep;
         input [11:0] pos;
+        input prefix;
         begin
             next_valid<=0;next_last<=0;
+            next_prefix<=prefix;
             next_first<=first;next_end<=ending;next_repeat<=rep;next_payload<=pos;
             if({1'b0,index}+1<ending) begin
                 next_index<=index+1'b1;event_address<=index[14:0]+1'b1;state<=FE_WAIT;
-            end else if(rep+1<repeats_fast) begin
+            end else if(rep+1<repeats_fast && (!prefix || pos>=preamble_rows_fast)) begin
                 next_index<=first;next_repeat<=rep+1'b1;event_address<=first[14:0];state<=FE_WAIT;
+            end else if(prefix) begin
+                next_repeat<=0;
+                if(pos+1<prefix_count_fast) begin
+                    next_payload<=pos+1'b1;symbol_address<=9'd257+pos;state<=FD_WAIT;
+                end else begin
+                    next_prefix<=0;next_payload<=0;payload_address<=0;state<=FP_WAIT;
+                end
             end else if({1'b0,pos}+1<payload_count_fast || loop_mode) begin
                 if({1'b0,pos}+1<payload_count_fast) begin
                     next_payload<=pos+1'b1;payload_address<=pos+1'b1;
-                end else begin next_payload<=0;payload_address<=0;end
-                next_repeat<=0;state<=FP_WAIT;
+                    state<=FP_WAIT;
+                end else if(prefix_count_fast!=0) begin
+                    next_prefix<=1;next_payload<=0;symbol_address<=256;state<=FD_WAIT;
+                end else begin next_payload<=0;payload_address<=0;state<=FP_WAIT;end
+                next_repeat<=0;
             end else begin next_last<=1;next_valid<=1;state<=READY;end
         end
     endtask
@@ -248,6 +278,7 @@ module ris_qam_player (
         if(!fast_resetn) begin
             request_sync<=0;acknowledged<=0;owned<=0;running<=0;busy<=0;error_code<=0;
             state<=IDLE;loop_mode<=0;stop_pending<=0;launching<=0;next_valid<=0;next_last<=0;
+            next_prefix<=0;
             frame_address<=0;event_address<=0;symbol_address<=0;payload_address<=0;
             validate_symbol<=0;validate_left<=0;validate_sum<=0;
             current_index<=0;current_first<=0;current_end<=0;current_repeat<=0;current_payload<=0;
@@ -290,11 +321,14 @@ module ris_qam_player (
                         end else if(validate_left!=1) begin
                             validate_sum<=event_sum;validate_left<=validate_left-1'b1;
                             event_address<=event_address+1'b1;state<=VE_WAIT;
-                        end else if(validate_symbol!=255) begin
+                        end else if(validate_symbol!=9'd255+prefix_count_fast) begin
                             validate_symbol<=validate_symbol+1'b1;symbol_address<=validate_symbol+1'b1;
                             state<=VD_WAIT;
                         end else begin
-                            launching<=1;next_payload<=0;next_repeat<=0;payload_address<=0;state<=FP_WAIT;
+                            launching<=1;next_payload<=0;next_repeat<=0;
+                            next_prefix<=prefix_count_fast!=0;
+                            if(prefix_count_fast!=0) begin symbol_address<=256;state<=FD_WAIT;end
+                            else begin payload_address<=0;state<=FP_WAIT;end
                         end
                     end
                     FP_WAIT: state<=FP_W2;FP_W2: state<=FP_CHECK;
@@ -317,7 +351,7 @@ module ris_qam_player (
                             current_frame<=frame_read[399:0];slots_left<=next_slots-1'b1;ticks_left<=ticks_fast-1'b1;
                             current_index<=next_index;current_first<=next_first;current_end<=next_end;
                             current_repeat<=next_repeat;current_payload<=next_payload;
-                            prefetch(next_index,next_first,next_end,next_repeat,next_payload);
+                            prefetch(next_index,next_first,next_end,next_repeat,next_payload,next_prefix);
                         end
                     end
                     default: begin end
@@ -346,7 +380,7 @@ module ris_qam_player (
                         ticks_left<=ticks_fast-1'b1;slots_left<=next_slots-1'b1;
                         current_index<=next_index;current_first<=next_first;current_end<=next_end;
                         current_repeat<=next_repeat;current_payload<=next_payload;
-                        prefetch(next_index,next_first,next_end,next_repeat,next_payload);
+                        prefetch(next_index,next_first,next_end,next_repeat,next_payload,next_prefix);
                     end
             end
         end

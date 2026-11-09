@@ -6,7 +6,7 @@
 
 内存容量：2048幅400位图案、32768个RLE时段、256个符号描述、4096字节数据序列。K范围1–1,000,000；每字节的PWM周期重复K次，再进入下一字节；循环作用于整个数据序列。相邻重复图案仍按时序锁存，不合并或省略短时段。单次播放和STOP保持最后锁存的完整400位状态，RELEASE才归还普通控制通路。
 
-**本目录已接入RTL、AXI寄存器、板端C驱动与TCP QAM1协议，GUI总按钮可完整上传并启动。配套镜像已完成Flash烧写、两次完整读回和断电启动验收。不能把旧固件的统一MT能力当作独立QAM播放能力。** 使用与协议见 [完整链路说明](../../RIS_CTRL/ris_control_ui_v2/docs/qam256_end_to_end.md)。UART仍保留原全板命令，不承载QAM表上传。
+**本目录已接入RTL、AXI寄存器、板端C驱动与TCP QAM1协议，GUI总按钮可完整上传并启动。历史QAM1/64QAM镜像已完成Flash验收；2026-11-09的QPR1是新配套构建，尚未烧写。不能把旧固件的统一MT能力当作独立QAM播放能力。** 使用与协议见 [完整链路说明](../../RIS_CTRL/ris_control_ui_v2/docs/qam256_end_to_end.md)。UART仍保留原全板命令，不承载QAM表上传。
 
 ## 时序与码本限制
 
@@ -76,3 +76,9 @@ python3 scripts/compile_qam_plan.py /path/to/host_plan.zip /path/to/new-output-f
 数字验证入口：`bash tests/run_qam64_sim.sh`，覆盖完整64QAM源图案、10周期前导码、跨帧循环、29-tick密集更新、停止及旧模式。报告见 [本次验证](reports/qam64/validation.md)。
 
 2026-11-05用户授权后，本次64QAM镜像已完成实板Flash烧写、两次完整读回、断电QSPI启动及只读网络STATUS验收。当前实板记录见 [64QAM烧写报告](reports/flash_qam64_20261105/FLASH_REPORT.md)，对应镜像为 `export_flash/20261105_qam64/BOOT.bin`；原20261102包仍保留其历史记录。
+
+## QPR1独立前导码
+
+2026-11-09新增独立前缀，保留完整256项QAM索引及4096字节正式数据，支持10行前导码及4个相偏参考点。见[寄存器/协议和验证](QPR1.md)及[控制台操作](../../RIS_CTRL/ris_control_ui_v2/docs/qam256_preamble.md)。本次产物需整套使用，不代表实板已更新。
+
+本次可烧写文件：[20261109_qpr1/BOOT.bin](export_flash/20261109_qpr1/BOOT.bin)，[完整配套ZIP](export_flash/RIS_ZC706_QAM_QSPI_20261109_qpr1.zip)。数字仿真、50项持久日志测试、时序及未烧写状态见[验证记录](reports/prefix/validation.md)。

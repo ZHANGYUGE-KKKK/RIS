@@ -94,6 +94,8 @@ int ris_initialize(ris_controller *dev, UINTPTR base)
     dev->last_result = 0u;
     dev->qam_supported = 0;
     dev->qam64_supported = 0;
+    dev->qam_prefix_supported = 0;
+    dev->qam_modulation = 0;
     dev->qam_order = 256;
     dev->qam_active_crc = 0;
     ris_qam_cancel_upload(dev);
@@ -131,6 +133,7 @@ int ris_initialize(ris_controller *dev, UINTPTR base)
 #ifdef RIS_QAM_TABLE
     if (ris_read(dev,RIS_QAM_ID)!=RIS_QAM_ID_VALUE) return RIS_BAD_DEVICE;
     dev->qam_supported=1;
+    dev->qam_prefix_supported=ris_read(dev,RIS_QAM_PREFIX_ID)==RIS_QAM_PREFIX_ID_VALUE;
     dev->qam64_supported=ris_read(dev,RIS_QAM64_ID)==RIS_QAM64_ID_VALUE;
 #endif
     /* First-board setting: SHCP = 1 MHz, each guard/latch/recovery = 500 ns.

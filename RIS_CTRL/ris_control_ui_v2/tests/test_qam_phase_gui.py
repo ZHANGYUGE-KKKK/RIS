@@ -27,7 +27,8 @@ class PhaseGuiTests(unittest.TestCase):
                 self.assertIn('相偏补偿4点',p.payload_text.get())
                 self.assertIn('一帧512 µs' if order==256 else '一帧62.5 µs',p.payload_text.get())
                 plan=self.app._prepare_action().payload
-                self.assertEqual(plan.payload,refs+b'\x01')
+                self.assertEqual(plan.payload,b'\x01')
+                self.assertEqual(len(plan.prefix_descriptors),16)
                 self.assertEqual(plan.data_payload,b'\x01')
                 self.assertEqual(plan.frame_cycles,10)
                 path=self.directory/f'phase{order}.zip'

@@ -80,7 +80,7 @@ class RisClient:
                     raise ValueError("QAM能力字段格式错误")
                 if reply["qam_supported"]:
                     limits = {"qam_abi": (1, 1), "qam_status": (0, 31), "qam_error": (0, 4),
-                              "qam_received": (0, 242688), "qam_expected": (0, 242688),
+                              "qam_received": (0, 242744), "qam_expected": (0, 242744),
                               "qam_crc": (0, 0xffffffff), "qam_slot_ticks": (1 if reply.get("qam_order") == 64 else 60, 1000000),
                               "qam_repeats": (1, 1000000), "qam_period_slots": (1, 65535),
                               "qam_frames": (0, 2048), "qam_events": (0, 32768),
@@ -98,6 +98,12 @@ class RisClient:
                             raise ValueError("64QAM最短边沿间隔错误")
                         if reply["qam_order"] == 64 and (not reply["qam64_supported"] or reply["qam_slot_ticks"] != 1):
                             raise ValueError("64QAM计时模式错误")
+                    if "qam_prefix_supported" in reply:
+                        if type(reply["qam_prefix_supported"]) is not bool:
+                            raise ValueError("独立前导码能力字段无效")
+                        for key, high in (("qam_max_prefix",14), ("qam_prefix_count",14), ("qam_preamble_rows",10)):
+                            if type(reply.get(key)) is not int or not 0 <= reply[key] <= high:
+                                raise ValueError("独立前导码状态字段无效")
                     if any(type(reply.get(key)) is not bool for key in ("qam_uploading", "qam_loop")):
                         raise ValueError("QAM模式字段格式错误")
                     if reply["qam_min_ticks"] > reply["qam_max_ticks"]:
@@ -136,7 +142,9 @@ class RisClient:
         if (reply.get("qam_crc") != plan.crc or not reply.get("qam_status", 0) & 1 or reply.get("qam_error") or
             reply.get("qam_slot_ticks") != plan.slot_ticks or reply.get("qam_repeats") != plan.repeats or
             reply.get("qam_period_slots") != plan.slots or reply.get("qam_loop") is not plan.loop or
-            (plan.base_period_ticks and reply.get("qam_order") != 64)):
+            (plan.base_period_ticks and reply.get("qam_order") != 64) or
+            (plan.independent_prefix and (reply.get("qam_prefix_count") != len(plan.prefix_descriptors)//4 or
+                                         reply.get("qam_preamble_rows") != (len(plan.preamble.rows) if plan.preamble else 0)))):
             self.command("STOP")
             raise ProtocolError("QAM启动确认与本次配置快照不一致，已请求停止")
         return reply, False

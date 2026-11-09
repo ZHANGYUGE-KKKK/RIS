@@ -18,7 +18,7 @@ module tb_ris_qam;
     integer pulses[0:9];
     integer expected_frame[0:65535],expected_ticks[0:65535];
     reg [399:0] dictionary[0:2047];
-    reg [31:0] file_frames[0:26623],file_events[0:32767],file_symbols[0:255];
+    reg [31:0] file_frames[0:26623],file_events[0:32767],file_symbols[0:255],file_prefix[0:13],prefix_dimensions[0:3],oracle[0:65535];
     reg [7:0] file_payload[0:4095];
     integer latches=0, expected_index=0, expected_count=0;
     real previous_latch=0, shift_rise[0:9], shift_fall[0:9];
@@ -126,7 +126,7 @@ module tb_ris_qam;
         if(dut.qam_owned || dut.qam_running)$fatal(1,"invalid table acquired outputs");
     endtask
     integer i,j,n,p,k,e,first,count,nframes,nevents,npayload,krepeat,loopticks;
-    integer saved_latches;
+    integer saved_latches,prefix_entries,preamble_entries,fixture_period,oracle_count;
     reg [415:0] padded;
     reg [31:0] held_word;
     string fixture_dir;
@@ -187,9 +187,17 @@ module tb_ris_qam;
             $readmemh({fixture_dir,"/events.hex"},file_events,0,nevents-1);
             $readmemh({fixture_dir,"/symbols.hex"},file_symbols);
             $readmemh({fixture_dir,"/payload.hex"},file_payload,0,npayload-1);
+            prefix_entries=0;preamble_entries=0;fixture_period=$test$plusargs("CHECK_QAM64") ? 1875:256;
+            if($test$plusargs("CHECK_PREFIX"))begin
+                $readmemh({fixture_dir,"/prefix_dimensions.hex"},prefix_dimensions);
+                fixture_period=prefix_dimensions[0];prefix_entries=prefix_dimensions[1];
+                preamble_entries=prefix_dimensions[2];oracle_count=prefix_dimensions[3];
+                $readmemh({fixture_dir,"/prefix.hex"},file_prefix,0,prefix_entries-1);
+                $readmemh({fixture_dir,"/oracle.hex"},oracle,0,oracle_count-1);
+            end
             control(16);
-            if($test$plusargs("CHECK_QAM64"))write_reg('h250,64);
-            write_reg('h208,loopticks);write_reg('h210,$test$plusargs("CHECK_QAM64") ? 1875:256);write_reg('h20c,krepeat);
+            if($test$plusargs("CHECK_QAM64") || $test$plusargs("CHECK_PREFIX"))write_reg('h250,64);
+            write_reg('h208,loopticks);write_reg('h210,fixture_period);write_reg('h20c,krepeat);
             for(i=0;i<nframes;i++)begin
                 padded=0;
                 for(j=0;j<13;j++)begin padded[j*32+:32]=file_frames[i*13+j];write_reg('h240,file_frames[i*13+j]);end
@@ -197,20 +205,33 @@ module tb_ris_qam;
             end
             for(i=0;i<nevents;i++)write_reg('h244,file_events[i]);
             for(i=0;i<256;i++)write_reg('h248,file_symbols[i]);
+            write_reg('h26c,preamble_entries);
+            for(i=0;i<prefix_entries;i++)write_reg('h268,file_prefix[i]);
             for(i=0;i<npayload;i++)write_reg('h24c,file_payload[i]);
             n=0;
+            for(p=0;p<prefix_entries;p++)begin
+                first=file_prefix[p][15:0];count=file_prefix[p][31:16];
+                for(k=0;k<(p<preamble_entries ? 1:krepeat);k++)for(e=first;e<first+count;e++)begin
+                    expected_frame[n]=file_events[e][15:0];expected_ticks[n]=file_events[e][31:16]*loopticks;n++;
+                end
+            end
             for(p=0;p<npayload;p++)begin
                 first=file_symbols[file_payload[p]][15:0];count=file_symbols[file_payload[p]][31:16];
                 for(k=0;k<krepeat;k++)for(e=first;e<first+count;e++)begin
                     expected_frame[n]=file_events[e][15:0];expected_ticks[n]=file_events[e][31:16]*loopticks;n++;
                 end
             end
+            if($test$plusargs("CHECK_PREFIX"))begin
+                if(n!=oracle_count)$fatal(1,"prefix count differs from independent oracle");
+                for(i=0;i<n;i++)if(expected_frame[i]!=oracle[i][15:0] || expected_ticks[i]!=oracle[i][31:16])
+                    $fatal(1,"prefix event %0d differs from source-slot oracle",i);
+            end
             expected_count=n;expected_index=0;latches=0;checking=1;
             control(1);wait_idle();
             if(latches!=n || expected_index!=n)$fatal(1,"codebook count got %0d expected %0d",latches,n);
             release_pins();
             $display("PASS QAM: real 256-symbol codebook, %0d vectors and K=%0d payload events checked",n,krepeat);
-            if($test$plusargs("CHECK_PREAMBLE") || $test$plusargs("CHECK_QAM64"))begin
+            if($test$plusargs("CHECK_PREAMBLE") || $test$plusargs("CHECK_QAM64") || $test$plusargs("CHECK_PREFIX"))begin
                 if(n*2>65536)$fatal(1,"preamble fixture too long");
                 for(i=0;i<n;i++)begin expected_frame[n+i]=expected_frame[i];expected_ticks[n+i]=expected_ticks[i];end
                 expected_count=n*2;expected_index=0;latches=0;checking=1;
@@ -237,6 +258,39 @@ module tb_ris_qam;
             write_reg('h244,28<<16);for(i=0;i<256;i++)write_reg('h248,1<<16);write_reg('h24c,0);
             control(1);check_error(2);
             $display("RIS_QAM64_TEST_PASS: full source, prefix/frame boundaries, 29-tick dense events, STOP, min-event rejection, 100MHz SHCP");
+        end
+        if($test$plusargs("CHECK_PREFIX"))begin
+            // Independent prefix must be validated and frozen just like S.
+            control(16);write_reg('h250,64);write_reg('h208,1);write_reg('h210,58);write_reg('h20c,1);
+            frame(0);write_reg('h244,58<<16);for(i=0;i<256;i++)write_reg('h248,1<<16);
+            write_reg('h24c,0);write_reg('h26c,1);reject('h26c,11);reject('h204,1);
+            write_reg('h268,(1<<16)|1);control(1);check_error(1);
+            // Bad prefix period fails before outputs change.
+            control(16);write_reg('h250,64);write_reg('h208,1);write_reg('h210,58);frame(0);
+            write_reg('h244,58<<16);write_reg('h244,59<<16);
+            for(i=0;i<256;i++)write_reg('h248,1<<16);
+            write_reg('h24c,0);write_reg('h26c,1);write_reg('h268,(1<<16)|1);
+            control(1);check_error(3);
+            // Dense 29-tick edges across all ten prefix rows, four K2 phase
+            // descriptors, payload and the wrap back to the prefix bank.
+            control(16);write_reg('h250,64);write_reg('h208,1);write_reg('h210,58);write_reg('h20c,2);
+            frame(0);frame(1);write_reg('h244,29<<16);write_reg('h244,(29<<16)|1);
+            for(i=0;i<256;i++)write_reg('h248,2<<16);
+            write_reg('h26c,10);for(i=0;i<14;i++)write_reg('h268,2<<16);
+            reject('h268,2<<16);write_reg('h24c,0);write_reg('h24c,255);
+            for(i=0;i<128;i++)begin expected_frame[i]=i%2;expected_ticks[i]=29;end
+            expected_count=128;expected_index=0;latches=0;checking=1;
+            control(2);reject('h268,0);reject('h26c,0);wait(latches>=90);
+            wait(dut.u_qam.phase==10);control(0);wait_idle();release_pins();
+            // Same prefix sequencing in the existing integer-slice path.
+            control(16);write_reg('h208,60);write_reg('h210,4);write_reg('h20c,2);
+            frame(0);frame(1);write_reg('h244,2<<16);write_reg('h244,(2<<16)|1);
+            for(i=0;i<256;i++)write_reg('h248,2<<16);
+            write_reg('h26c,1);write_reg('h268,2<<16);write_reg('h24c,255);
+            for(i=0;i<64;i++)begin expected_frame[i]=i%2;expected_ticks[i]=120;end
+            expected_count=6;expected_index=0;latches=0;checking=1;
+            control(1);wait_idle();if(latches!=6)$fatal(1,"legacy prefix/K count");release_pins();
+            $display("RIS_PREFIX_TEST_PASS: independent prefix/S/payload, source oracle, K, exact boundaries, frame loop, validation");
         end
         // Reset while shifting cancels ownership and disables outputs.
         fixture(0);control(2);wait(dut.qam_running);wait(dut.u_qam.phase==10);
