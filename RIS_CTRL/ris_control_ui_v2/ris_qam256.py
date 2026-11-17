@@ -427,10 +427,11 @@ def export_plan(path, book, mapping, direction, orientation, state1_high, repeat
         from ris_qam_preamble import Preamble
         prefix = Preamble.compile(preamble_rows, book.slots)
         manifest["preamble"] = {"cycles": len(prefix.rows), "width_slots": list(prefix.widths),
-                                "repeat_with_each_frame": True, "delay_zero": True}
+                                "delay_slots": list(prefix.delays), "repeat_with_each_frame": True,
+                                "delay_zero": all(t == 0 for _, t in prefix.rows)}
         manifest["one_pass_seconds"] = (len(prefix.rows)+len(payload)*repeats)/book.pwm_hz
         files["manifest.json"] = encode(manifest)
-        files["preamble_mt.txt"] = "".join(f"({m},0);\n" for m, _ in prefix.rows).encode("utf-8")
+        files["preamble_mt.txt"] = "".join(f"({m},{t});\n" for m, t in prefix.rows).encode("utf-8")
     if phase:
         manifest["phase_compensation"] = {"symbols": list(phase), "repeats_per_symbol": repeats,
                                           "repeat_with_each_frame": True}

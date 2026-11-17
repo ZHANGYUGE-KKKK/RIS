@@ -80,3 +80,7 @@ RIS/
 64QAM已作为独立控制类型接入主控制台（与256QAM并列）；默认码本为 `QAM_RULES/64QAM/ris_64qam_64slice_codebook`，入口 `./RIS_CTRL/ris_control_ui_v2/start_gui.sh --qam64`。操作、时序及配套文件要求见 [64QAM说明](RIS_CTRL/ris_control_ui_v2/docs/qam64_usage.md)。
 
 2026-11-09：QAM已同步增加QPR1独立前导码与相偏描述，解除前缀对256项QAM索引的占用。配套[Flash包](FPGA/ris_qam_backend/export_flash/RIS_ZC706_QAM_QSPI_20261109_qpr1.zip)已离线生成并校验，尚未烧写；见[验证记录](FPGA/ris_qam_backend/reports/prefix/validation.md)。
+
+2026-11-10：上位机新增[演示模式与统一JSON预设](RIS_CTRL/ris_control_ui_v2/docs/demo_mode.md)。功能菜单中选择演示模式，可加载十条预设，再经总按钮应用；各原有下发功能共用“导出当前配置”入口。
+
+2026-11-10：QPR1镜像已成功烧写开发板，内置比较通过，按用户要求未执行额外独立读回。需由用户断电切回QSPI启动后上电；最新状态见[QPR1实板烧写记录](FPGA/ris_qam_backend/reports/flash_qpr1_20261110/FLASH_REPORT.md)。

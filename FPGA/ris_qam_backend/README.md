@@ -6,7 +6,7 @@
 
 内存容量：2048幅400位图案、32768个RLE时段、256个符号描述、4096字节数据序列。K范围1–1,000,000；每字节的PWM周期重复K次，再进入下一字节；循环作用于整个数据序列。相邻重复图案仍按时序锁存，不合并或省略短时段。单次播放和STOP保持最后锁存的完整400位状态，RELEASE才归还普通控制通路。
 
-**本目录已接入RTL、AXI寄存器、板端C驱动与TCP QAM1协议，GUI总按钮可完整上传并启动。历史QAM1/64QAM镜像已完成Flash验收；2026-11-09的QPR1是新配套构建，尚未烧写。不能把旧固件的统一MT能力当作独立QAM播放能力。** 使用与协议见 [完整链路说明](../../RIS_CTRL/ris_control_ui_v2/docs/qam256_end_to_end.md)。UART仍保留原全板命令，不承载QAM表上传。
+**本目录已接入RTL、AXI寄存器、板端C驱动与TCP QAM1协议，GUI总按钮可完整上传并启动。历史QAM1/64QAM镜像已完成Flash验收；QPR1镜像已于2026-11-10成功烧写，程序内置比较通过，按用户要求未做额外独立读回，断电QSPI启动尚待用户操作。不能把旧固件的统一MT能力当作独立QAM播放能力。** 使用与协议见 [完整链路说明](../../RIS_CTRL/ris_control_ui_v2/docs/qam256_end_to_end.md)。UART仍保留原全板命令，不承载QAM表上传。
 
 ## 时序与码本限制
 
@@ -82,3 +82,14 @@ python3 scripts/compile_qam_plan.py /path/to/host_plan.zip /path/to/new-output-f
 2026-11-09新增独立前缀，保留完整256项QAM索引及4096字节正式数据，支持10行前导码及4个相偏参考点。见[寄存器/协议和验证](QPR1.md)及[控制台操作](../../RIS_CTRL/ris_control_ui_v2/docs/qam256_preamble.md)。本次产物需整套使用，不代表实板已更新。
 
 本次可烧写文件：[20261109_qpr1/BOOT.bin](export_flash/20261109_qpr1/BOOT.bin)，[完整配套ZIP](export_flash/RIS_ZC706_QAM_QSPI_20261109_qpr1.zip)。数字仿真、50项持久日志测试、时序及未烧写状态见[验证记录](reports/prefix/validation.md)。
+
+2026-11-10：上述QPR1镜像已成功写入同一开发板，大小13,556,752字节，写入程序内置比较通过。按用户要求，未启动额外独立读回检查；断电QSPI启动和网络验收未执行。原打包文件不变，最新实板事件见[烧写记录](reports/flash_qpr1_20261110/FLASH_REPORT.md)。
+
+
+## 发端 PL 网口回传接收（SGMII）
+
+厂家板 J18 / RTL8211FS 通过 GTX SGMII 接入 PS GEM1 EMIO。对应顶层与管脚约束为 `rtl/ris_ctrl_unit_top.v`、`constraints/ris_pl_eth.xdc`，重建配置为 `scripts/configure_pl_eth_bd.tcl`。原 RIS GEM0/TCP 7060 控制通路保留。
+
+发端新增 GEM1 UDP 7061 回传接收和 GEM0 TCP 7070 JSONL 监视通道，协议及上位机运行方法见 [UPLINK.md](UPLINK.md)。收端工程尚未接入本次开发；双板数据通路需要后续实板验收。
+
+独立构建入口为 `bash scripts/build_uplink.sh` 与 `bash scripts/build_uplink_firmware.sh`，使用独立构建/BSP目录并输出到 `export_uplink/`，不覆盖 `export_qam/` 或现有 Flash 包，不自动下载或烧写。验证记录位于 `reports/pl_eth_sgmii_20261113/`。

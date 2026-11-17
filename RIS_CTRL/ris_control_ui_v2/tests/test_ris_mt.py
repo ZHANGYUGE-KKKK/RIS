@@ -119,6 +119,14 @@ class MTTests(unittest.TestCase):
         self.assertTrue(all(len(c) < 140 for c in commands))
         self.assertEqual(len(commands), len(p.segments) + 2)
 
+    def test_rounding_at_end_of_nonwrapping_cycle_does_not_create_a_wrap_pulse(self):
+        for loop in (False, True):
+            p = compile_mt(parse_mt('(50,50);'), '2.4', 'M', loop)
+            self.assertEqual(p.period, 125)
+            for tick in range(500):
+                expected = int(tick % 125 >= 63) if loop or tick < 125 else 0
+                self.assertEqual(output(p, tick), expected, (loop, tick))
+
 
 if __name__ == '__main__':
     unittest.main()

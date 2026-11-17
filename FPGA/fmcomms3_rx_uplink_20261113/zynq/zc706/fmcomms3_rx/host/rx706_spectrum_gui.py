@@ -1,0 +1,2414 @@
+"""Optional Tk/Matplotlib window for local capture analysis; no board traffic."""
+import json
+import queue
+import threading
+import tkinter as tk
+from tkinter import filedialog, messagebox, scrolledtext, ttk
+from pathlib import Path
+
+from rx706_spectrum import AnalysisCancelled, analyze_bin, display_trace
+from rx706_ui_contrast import bright_hint
+
+RECOVERY_MODE = "周期方波载波恢复"
+PWM_MODE = "PWM v1（旧协议）"
+PWM2_MODE = "PWM（占空比）"
+PWM_MODES = (PWM_MODE, PWM2_MODE)
+QAM_MODE = "QAM 解调"
+QAM_PWM_MODE = "PWM前导 + QAM"
+TDCM_MODE = "TDCM 谐波QAM"
+QAM_MODES = (TDCM_MODE,)
+RECOVERY_MODES = (PWM_MODE, PWM2_MODE, TDCM_MODE)
+MODE_KINDS = {RECOVERY_MODE: 'periodic', PWM_MODE: 'pwm', PWM2_MODE: 'pwm2',
+              QAM_MODE: 'qam', QAM_PWM_MODE: 'qam', TDCM_MODE: 'qam'}
+PLOT_NAMES = ("总览", "频谱", "星座", "IQ 波形", "PWM 包络")
+PWM150_PRESET = '150k：净荷24%～72%，前导24%×3'
+PWM170_PRESET = '169.971671k：20%步长7%，8档温度计码'
+PWM_DATA_DIR = Path(__file__).resolve().parent/'gui_data/current_pwm'
+
+
+class SpectrumWindow:
+    def __init__(self, parent, filename=""):
+        # Lazy imports keep the board-control UI usable without plotting packages.
+        from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+        from matplotlib.figure import Figure
+
+        self.window = tk.Toplevel(parent)
+        self.window.title("接收信号分析 · IQ / 星座 / 频谱")
+        self.window.geometry("1260x940")
+        self.window.minsize(960, 700)
+        self.window.protocol("WM_DELETE_WINDOW", self.close)
+        self.closed = self.busy = False
+        self.events = queue.Queue()
+        self.cancel = threading.Event()
+        self.thread = None
+        self.result = None
+        self.recovery = None
+        self._open_pwm_after_analysis = False
+        self._pwm_dialog = None
+        self._pwm_dialog_result = None
+        self._autotune_report = None
+        self._autotune_token = 0
+        self._fixed_source_sha256 = None
+        self.poll_after = None
+        self.filename = tk.StringVar(value=str(filename))
+        self.channel = tk.StringVar(value="RX1")
+        self.nfft = tk.StringVar(value="65536")
+        self.averages = tk.StringVar(value="16")
+        self.first_tuple = tk.StringVar(value="0")
+        self.rate = tk.StringVar(value="15.36")
+        self.remove_dc = tk.BooleanVar(value=True)
+        self.constellation_mode = tk.StringVar(value=PWM2_MODE)
+        self.cycle_khz = tk.StringVar(value="100")
+        self.recovery_ms = tk.StringVar(value="1000")
+        self.center_hint = tk.StringVar(value="自动")
+        self.qam_order = tk.StringVar(value="256")
+        # Used only by the portable configuration front door, never expert/replay.
+        self.qam_auto_acquisition = tk.BooleanVar(value=True)
+        self.qam_symbol_khz = tk.StringVar(value="100")
+        self.qam_rolloff = tk.StringVar(value="0.35")
+        self.qam_pulse = tk.StringVar(value="RRC")
+        self.qam_carrier_mhz = tk.StringVar(value="0")
+        self.qam_preamble_enabled = tk.BooleanVar(value=False)
+        self.qam_preamble_format = tk.StringVar(value="符号值（Gray）")
+        self.qam_preamble_symbols = tk.StringVar(value="0 0 0")
+        self.qam_preamble_frequency_khz = tk.StringVar(value="1")
+        self.qam_preamble_evm = tk.StringVar(value="10")
+        self.qam_preamble_search_ms = tk.StringVar(value="1000")
+        self.qam_pwm_symbols = tk.StringVar(value="0 0 0")
+        self.qam_pwm_gap_us = tk.StringVar(value="0")
+        self.qam_pwm_search_ms = tk.StringVar(value="1000")
+        self.qam_pwm_error = tk.StringVar(value="25")
+        self.qam_pwm_width_offset = tk.StringVar(value="0")
+        self.qam_pwm_frequency_khz = tk.StringVar(value="1")
+        self.qam_pwm_qam_window = tk.StringVar(value="8")
+        self.tdcm_symbol_khz = tk.StringVar(value="19.53125")
+        self.tdcm_base_khz = tk.StringVar(value="19.53125")
+        self.tdcm_pwm_khz = tk.StringVar(value="19.53125")
+        self.tdcm_carrier_mhz = tk.StringVar(value="-0.2")
+        self.tdcm_harmonic = tk.StringVar(value="1")
+        self.tdcm_normalization = tk.StringVar(value="PWM两态参考")
+        self.tdcm_amplitude = tk.StringVar(value="1")
+        self.tdcm_phase = tk.StringVar(value="0")
+        self.tdcm_count = tk.StringVar(value="0")
+        self.pwm_symbol_khz = tk.StringVar(value="169.971671")
+        self.pwm2_total_chips = tk.StringVar(value="25")
+        self.pwm2_prefix_chips = tk.StringVar(value="5")
+        self.pwm2_guard_chips = tk.StringVar(value="8")
+        self.pwm2_preset = tk.StringVar(value="自定义")
+        self.pwm2_layout_summary = tk.StringVar()
+        self.pwm2_decision_mode = tk.StringVar(value="连续脉宽")
+        self.pwm2_training_enabled = tk.BooleanVar(value=True)
+        self.pwm2_training_tolerance = tk.StringVar(value="0.5")
+        self.pwm2_preamble_start = tk.StringVar(value="20")
+        self.pwm2_preamble_step = tk.StringVar(value="0")
+        self.pwm2_preamble_count = tk.StringVar(value="3")
+        self.pwm2_preamble_summary = tk.StringVar()
+        self.pwm2_payload_count = tk.StringVar(value="自动")
+        self.pwm2_auto_scale = tk.BooleanVar(value=True)
+        self.pwm2_clock_width = tk.BooleanVar(value=True)
+        self.pwm2_mapping = tk.StringVar(value="高片数减前高")
+        self.pwm2_width_table = tk.StringVar(value="6 7 8 9 10 11 12 13 14 15 16 17 18")
+        self.show_advanced = tk.BooleanVar(value=False)
+        self.pwm2_input_mode = tk.StringVar(value='脉冲宽度与时延')
+        self.pwm_duty_start = tk.StringVar(value='0')
+        self.pwm_duty_step = tk.StringVar(value='5')
+        self.pwm_duty_count = tk.StringVar(value='8')
+        self.pwm_min_high_chips = tk.StringVar(value='6')
+        self.pwm_joint_delay = tk.BooleanVar(value=True)
+        self.pwm_low_guard_chips = tk.StringVar(value='1')
+        self.pwm_pulse_codebook = tk.StringVar(value='')
+        self.pwm_width_quantization = tk.StringVar(value='左右区间（最近码字）')
+        self.pwm_air_crc12 = False
+        self.pwm_cycle_calibration = {}
+        self.pwm_nearest_decision = True
+        self.pwm_pulse_tolerance = tk.StringVar(value='0.4')
+        self.pwm_duty_summary = tk.StringVar()
+        self.pwm_auto_search = tk.BooleanVar(value=True)
+        self.pwm_code_chips = tk.StringVar(value="8")
+        self.pwm_guard_chips = tk.StringVar(value="2")
+        self.pwm_polarity = tk.StringVar(value="自动（PWM约束）")
+        self.pwm_decimation = tk.StringVar(value="1")
+        self.pwm_tolerance = tk.StringVar(value="0.30")
+        self.pwm_hysteresis = tk.StringVar(value="0.10")
+        self.pwm_glitch_chips = tk.StringVar(value="0.15")
+        self.pwm_reference_enabled = tk.BooleanVar(value=False)
+        self.pwm_reference = tk.StringVar(value="7 6 4 2")
+        self.pwm_sync_symbols = tk.StringVar(value="64")
+        from rx706_pwm_frames import default_users, DEFAULT_TRAINING
+        self.pwm_frame_enabled = tk.BooleanVar(value=True)
+        self.pwm_frame_user_count = tk.StringVar(value='1')
+        self.pwm_frame_startup_count = tk.StringVar(value='0')
+        self.pwm_frame_startup_pattern = tk.StringVar(value=DEFAULT_TRAINING)
+        self.pwm_frame_training_count = tk.StringVar(value='0')
+        self.pwm_frame_training_pattern = tk.StringVar(value=DEFAULT_TRAINING)
+        self.pwm_frame_search = tk.StringVar(value='4096')
+        self.pwm_frame_identity_errors = tk.StringVar(value='1')
+        self.pwm_frame_training_tolerance = tk.StringVar(value='0.3')
+        self.pwm_frame_reference_enabled = tk.BooleanVar(value=False)
+        self.pwm_frame_reference_format = tk.StringVar(value='符号值')
+        self.pwm_frame_reference_repeat = tk.BooleanVar(value=True)
+        self.pwm_frame_reference_reset = tk.BooleanVar(value=True)
+        self.pwm_frame_users = default_users()
+        self.auto = tk.BooleanVar(value=True)
+        self.pending_download = None
+        self.status = tk.StringVar(value="选择已下载的 bin，点击分析；无需连接板卡")
+        self.summary = tk.StringVar(value="频率轴为 I+jQ 的有符号基带频率；0 Hz 为接收 LO。")
+        self._build_ui(Figure, FigureCanvasTkAgg, NavigationToolbar2Tk)
+        from rx706_workflows import ReceiverWorkflows
+        self.workflows = ReceiverWorkflows(self, self.outer, self.outer.winfo_children()[0])
+        self.refresh_parameter_visibility()
+        self.filename.trace_add('write', self._source_changed)
+        # All interpretation settings retire prior results, not just PWM fields.
+        for name in self.workflows.settings_names():
+            if name != 'filename':
+                getattr(self, name).trace_add('write', self._receiver_changed)
+
+    def run_workflow(self):
+        return self.workflows.run()
+
+    def _build_ui(self, Figure, FigureCanvasTkAgg, NavigationToolbar2Tk):
+        from rx706_plot_navigation import PlotNavigation
+        self.controls = []
+        self.plot_view = tk.StringVar(value="总览")
+        self.brief_status = tk.StringVar(value="选择 IQ 文件后分析；滚轮缩放、左键拖动、双击单图放大")
+        self.fullscreen = False
+        self.sidebar_visible = True
+        self.sidebar_width = 360
+        self._active_plot_name = "总览"
+        self._overview_limits = None
+        self.window.geometry("1500x960")
+        self.window.minsize(1000, 650)
+        outer = ttk.Frame(self.window, padding=8)
+        outer.pack(fill="both", expand=True)
+        self.outer = outer
+        path_row = ttk.Frame(outer)
+        path_row.pack(fill="x", pady=(0, 6))
+        ttk.Label(path_row, text="IQ 文件").pack(side="left", padx=(0, 6))
+        entry = ttk.Entry(path_row, textvariable=self.filename)
+        entry.pack(side="left", fill="x", expand=True, padx=(0, 8))
+        browse = ttk.Button(path_row, text="打开 bin…", command=self.browse)
+        browse.pack(side="left", padx=(0, 8))
+        self.fixed_pwm_button = ttk.Button(path_row, text="加载固定 PWM 数据", command=self.load_fixed_pwm_data)
+        self.fixed_pwm_button.pack(side="left", padx=(0, 8))
+        self.frame_builder_button = ttk.Button(path_row, text='帧配置向导…', command=self.generate_frame_config)
+        self.frame_builder_button.pack(side='left', padx=(0, 8))
+        self.controls.extend((entry, browse, self.fixed_pwm_button, self.frame_builder_button))
+        self.analyze_button = ttk.Button(path_row, text="运行接收", command=self.run_workflow)
+        self.analyze_button.pack(side="left", padx=(0, 8))
+        self.stop_button = ttk.Button(path_row, text="停止", command=self.cancel.set, state="disabled")
+        self.stop_button.pack(side="left")
+        bar = ttk.Frame(outer)
+        bar.pack(fill="x", pady=(0, 4))
+        self.sidebar_button = ttk.Button(bar, text="隐藏侧栏", command=self.toggle_sidebar)
+        self.sidebar_button.pack(side="left", padx=(0, 10))
+        ttk.Label(bar, text="图表视图").pack(side="left", padx=(0, 5))
+        view = ttk.Combobox(bar, textvariable=self.plot_view, values=PLOT_NAMES, state="readonly", width=9)
+        view.pack(side="left", padx=(0, 10))
+        view.bind("<<ComboboxSelected>>", lambda event: self.set_plot_view())
+        ttk.Button(bar, text="复位视图 (R)", command=lambda: self.navigation.reset()).pack(side="left", padx=(0, 8))
+        ttk.Button(bar, text="最大化", command=self.maximize).pack(side="left", padx=(0, 8))
+        ttk.Button(bar, text="全屏 (F11)", command=self.toggle_fullscreen).pack(side="left", padx=(0, 12))
+        self.pwm_symbols_button = ttk.Button(bar, text="PWM 符号表 / 比特流…", command=self.show_pwm_symbols)
+        self.pwm_symbols_button.pack(side="left", padx=(0, 10))
+        ttk.Label(bar, text="滚轮缩放 · 拖动平移 · 双击放大/返回").pack(side="left")
+        self.brief_label = bright_hint(ttk.Label(outer, textvariable=self.brief_status, anchor="w"))
+        self.brief_label.pack(fill="x", pady=(0, 4))
+        self.panes = ttk.Panedwindow(outer, orient="horizontal")
+        self.panes.pack(fill="both", expand=True)
+        self.sidebar = ttk.Frame(self.panes, width=self.sidebar_width)
+        chart = ttk.Frame(self.panes)
+        self.panes.add(self.sidebar, weight=0)
+        self.panes.add(chart, weight=1)
+        notebook = ttk.Notebook(self.sidebar)
+        notebook.pack(fill="both", expand=True, padx=(0, 6))
+        parameters = ttk.Frame(notebook)
+        details = ttk.Frame(notebook)
+        notebook.add(parameters, text="分析参数")
+        notebook.add(details, text="统计 / 状态")
+        self.info_text = scrolledtext.ScrolledText(details, wrap="word", width=32, state="disabled", font="TkDefaultFont")
+        self.info_text.pack(fill="both", expand=True)
+        self.parameter_canvas = tk.Canvas(parameters, highlightthickness=0, width=340)
+        scrollbar = ttk.Scrollbar(parameters, orient="vertical", command=self.parameter_canvas.yview)
+        scrollbar.pack(side="right", fill="y")
+        self.parameter_canvas.pack(side="left", fill="both", expand=True)
+        self.parameter_canvas.configure(yscrollcommand=scrollbar.set)
+        body = ttk.Frame(self.parameter_canvas, padding=(4, 4, 8, 10))
+        self.parameter_body = body
+        body_id = self.parameter_canvas.create_window((0, 0), window=body, anchor="nw")
+        body.bind("<Configure>", lambda event: self.parameter_canvas.configure(scrollregion=self.parameter_canvas.bbox("all")))
+        self.parameter_canvas.bind("<Configure>", lambda event: self.parameter_canvas.itemconfigure(body_id, width=event.width))
+
+        self._parameter_groups = []
+        self._parameter_titles = {}
+        self._advanced_fields = []
+        mode_groups = {
+            '载波恢复设置': RECOVERY_MODES,
+            'QAM 解调设置': (QAM_MODE, QAM_PWM_MODE),
+            'QAM：可配置前导 / 导频': QAM_MODES,
+            '混合模式：PWM前导 + QAM': (QAM_PWM_MODE, TDCM_MODE),
+            'TDCM：按谐波复系数解调': (TDCM_MODE,),
+            'PWM 脉宽与信息解调': (*PWM_MODES, QAM_PWM_MODE, TDCM_MODE),
+            'PWM version2：协议与映射': (PWM2_MODE, QAM_PWM_MODE, TDCM_MODE),
+            'version2：前导与恢复': (PWM2_MODE,),
+            '已知循环校验 / BER': PWM_MODES,
+            '最简帧：公共训练与用户数据': (PWM2_MODE,),
+        }
+
+        def group(title):
+            box = ttk.LabelFrame(body, text=title, padding=8)
+            box.pack(fill="x", pady=(0, 9))
+            box.columnconfigure(1, weight=1)
+            self._parameter_groups.append((box, mode_groups.get(title)))
+            self._parameter_titles[box] = title
+            return box
+
+        def field(box, label, variable, values=None, callback=None, advanced=False, modes=None):
+            row = box.grid_size()[1]
+            caption = ttk.Label(box, text=label, wraplength=140)
+            caption.grid(row=row, column=0, sticky="w", padx=(0, 7), pady=4)
+            widget = (ttk.Combobox(box, textvariable=variable, values=values, state="readonly", width=16)
+                      if values else ttk.Entry(box, textvariable=variable, width=16))
+            widget.grid(row=row, column=1, sticky="ew", pady=4)
+            if callback:
+                widget.bind("<<ComboboxSelected>>", callback)
+            self.controls.append(widget)
+            if advanced or modes:
+                self._advanced_fields.extend((w, advanced, modes) for w in (caption, widget))
+            return widget
+
+        box = group("信号解调模式")
+        field(box, "解调模式", self.constellation_mode,
+              ("原始 IQ", *RECOVERY_MODES), self.on_mode_changed)
+        field(box, "快速预设", self.pwm2_preset,
+              ("自定义", PWM150_PRESET, PWM170_PRESET, "20片：8+10+2", "50片：20+25+5", "50片：8+40+2"), self.apply_pwm2_preset)
+        toggle = ttk.Checkbutton(box, text="显示高级参数", variable=self.show_advanced,
+                                 command=self.refresh_parameter_visibility)
+        toggle.grid(row=2, column=0, columnspan=2, sticky='w')
+        self.controls.append(toggle)
+        box = group("采样与频谱")
+        field(box, "通道", self.channel, ("RX1", "RX2"))
+        field(box, "FFT 点数", self.nfft, tuple(str(1 << p) for p in range(8, 21)), advanced=True)
+        field(box, "平均段数", self.averages, advanced=True)
+        field(box, "起始采样点", self.first_tuple, advanced=True)
+        field(box, "采样率 (MS/s)", self.rate)
+        dc = ttk.Checkbutton(box, text="频谱去直流", variable=self.remove_dc)
+        dc.grid(row=5, column=0, columnspan=2, sticky="w", pady=4)
+        self.controls.append(dc)
+        self._advanced_fields.append((dc, True, None))
+        ttk.Checkbutton(box, text="新下载文件自动分析", variable=self.auto).grid(row=6, column=0, columnspan=2, sticky="w", pady=4)
+        box = group("载波恢复设置")
+        field(box, "完整周期频率 (kHz，仅方波)", self.cycle_khz, modes=(RECOVERY_MODE,))
+        field(box, "恢复时长 (ms)", self.recovery_ms)
+        field(box, "基带载波 (MHz / 自动)", self.center_hint, advanced=True)
+        box = group("QAM 解调设置")
+        field(box, "QAM阶数", self.qam_order, ("16", "64", "256"))
+        field(box, "符号率 (kSym/s)", self.qam_symbol_khz)
+        field(box, "基带载波频偏 (MHz)", self.qam_carrier_mhz)
+        field(box, "发端脉冲形状", self.qam_pulse, ("RRC", "Rectangular"))
+        field(box, "RRC滚降系数", self.qam_rolloff)
+        ttk.Label(box, text="载波已居中填0；参数须与发端一致。静态相位/定时估计，存在90°歧义，未测BER。", wraplength=290).grid(row=5, column=0, columnspan=2)
+        box = group("QAM：可配置前导 / 导频")
+        pilot = ttk.Checkbutton(box, text="启用已知前导同步与频偏校正", variable=self.qam_preamble_enabled)
+        pilot.grid(row=0, column=0, columnspan=2, sticky="w")
+        self.controls.append(pilot)
+        field(box, "前导表示方式", self.qam_preamble_format, ("符号值（Gray）", "I/Q电平"))
+        field(box, "前导序列（空格分隔）", self.qam_preamble_symbols)
+        field(box, "残余频偏范围 ±kHz", self.qam_preamble_frequency_khz)
+        field(box, "前导匹配EVM上限 (%)", self.qam_preamble_evm)
+        field(box, "前导搜索时长 (ms)", self.qam_preamble_search_ms)
+        ttk.Label(box, text="填3～256个已知符号；默认0 0 0仅为示例，须与发端一致。"
+                  "符号值支持0b二进制、0x十六进制，使用本机Gray映射；I/Q按未归一化奇数电平填写，"
+                  "如 -15,-15 -15,-15 -15,-15。去除本次匹配前导后输出后续符号。"
+                  "三符号可能误匹配；仅估计固定频偏和相位，不持续跟踪，不自动剔除后续重复前导。",
+                  wraplength=290).grid(row=9, column=0, columnspan=2, sticky="w")
+        box = group("混合模式：PWM前导 + QAM")
+        field(box, "PWM前导符号值", self.qam_pwm_symbols)
+        field(box, "PWM→QAM间隔 (µs)", self.qam_pwm_gap_us)
+        field(box, "PWM搜索时长 (ms)", self.qam_pwm_search_ms)
+        field(box, "PWM拟合误差上限 (%)", self.qam_pwm_error)
+        field(box, "高电平脉宽偏移 (片)", self.qam_pwm_width_offset)
+        field(box, "PWM残余频偏范围 ±kHz", self.qam_pwm_frequency_khz)
+        field(box, "QAM起始搜索窗 (符号)", self.qam_pwm_qam_window)
+        ttk.Label(box, text="用于TDCM的PWM前导。PWM符号率沿用TDCM设置，"
+                  "片数沿用version2（默认25/5/8）；此默认下0 0 0表示三个20%符号。"
+                  "按已知序列拟合两态IQ，支持等幅反相；无需8个PWM符号。"
+                  "间隔从最后一个PWM完整周期结束算起；脉宽偏移=实测高片数−标称高片数。"
+                  "PWM估计粗频偏，不提供QAM绝对相位。上方QAM前导可选；勾选后须在PWM之后发送对应QAM训练符号。"
+                  "不勾选则直接盲解调QAM，仍有90°歧义。当前仅处理一帧候选。",
+                  wraplength=290).grid(row=9, column=0, columnspan=2, sticky="w")
+        box = group("TDCM：按谐波复系数解调")
+        field(box, "QAM符号率 (kSym/s)", self.tdcm_symbol_khz)
+        field(box, "谐波基频 (kHz)", self.tdcm_base_khz)
+        field(box, "PWM前导频率 (kHz)", self.tdcm_pwm_khz)
+        field(box, "原载波基带位置 (MHz)", self.tdcm_carrier_mhz)
+        field(box, "目标谐波阶数（带正负）", self.tdcm_harmonic)
+        field(box, "归一化 / 校准", self.tdcm_normalization, ("PWM两态参考", "盲归一化"))
+        field(box, "幅度系数", self.tdcm_amplitude)
+        field(box, "相位修正 (°)", self.tdcm_phase)
+        field(box, "提取符号数（0到文件尾）", self.tdcm_count)
+        ttk.Label(box, text="选择“TDCM 谐波QAM”生效。默认+1阶、19.53125kHz，每51.2µs提取一个复系数；"
+                  "原载波填−0.2时，+1阶约−0.18046875MHz，不能把+1阶位置填为原载波。"
+                  "PWM序列、片数、切换间隔和容差沿用混合模式；此处单独配置前导频率。"
+                  "不使用RRC/矩形脉冲匹配设置。PWM两态参考假定：高电平对应Γ1、低电平Γ0，"
+                  "方形QAM最远角点对应该阶谐波的理论最大幅度；幅度系数和相位修正须按发端约定核对。"
+                  "盲归一化仍有90°歧义。可选QAM训练须实际发在PWM后；不自动分割后续帧。",
+                  wraplength=290).grid(row=9, column=0, columnspan=2, sticky="w")
+        box = group("PWM 脉宽与信息解调")
+        field(box, "方波频率 (kHz)", self.pwm_symbol_khz)
+        simple_fields = []
+        for label, variable in (('占空比步长 (百分点)', self.pwm_duty_step),
+                                ('符号数量', self.pwm_duty_count)):
+            entry = field(box, label, variable)
+            if variable is self.pwm_duty_count:
+                self._pwm_count_widget = entry
+            simple_fields.extend(box.grid_slaves(row=entry.grid_info()['row']))
+        duty_summary = ttk.Label(box, textvariable=self.pwm_duty_summary, wraplength=290)
+        duty_summary.grid(row=3, column=0, columnspan=2, sticky='w')
+        simple_fields.append(duty_summary)
+        self._simple_pwm_fields = simple_fields
+        self._pulse_fields = []
+        for label, variable in (('最小高电平宽度 (片)', self.pwm_min_high_chips),
+                                ('末尾低电平预留 (片)', self.pwm_low_guard_chips),
+                                ('脉宽判决容差 (片，<0.5)', self.pwm_pulse_tolerance)):
+            entry = field(box, label, variable)
+            self._pulse_fields.extend(box.grid_slaves(row=entry.grid_info()['row']))
+        joint = ttk.Checkbutton(box, text='按时延＋脉宽联合码表解码', variable=self.pwm_joint_delay,
+                                command=self.refresh_parameter_visibility)
+        joint.grid(row=box.grid_size()[1], column=0, columnspan=2, sticky='w')
+        self._pulse_fields.append(joint)
+        self.controls.append(joint)
+        codebook = ttk.Button(box, text='查看 / 编辑延迟与脉宽码表…', command=self.configure_pulse_codebook)
+        codebook.grid(row=box.grid_size()[1], column=0, columnspan=2, sticky='ew', pady=4)
+        self._pulse_fields.append(codebook)
+        self.controls.append(codebook)
+        quantizer = field(box, '补偿后脉宽判决', self.pwm_width_quantization,
+                          ('左右区间（最近码字）', '脉宽向下取整'))
+        self._pulse_fields.extend(box.grid_slaves(row=quantizer.grid_info()['row']))
+        for variable in (self.pwm_duty_start, self.pwm_duty_step, self.pwm_duty_count,
+                         self.pwm_min_high_chips, self.pwm_joint_delay, self.pwm_pulse_codebook):
+            variable.trace_add('write', lambda *args: self.update_duty_summary())
+        self.pwm_low_guard_chips.trace_add('write', lambda *args: self.update_duty_summary())
+        self.pwm_width_quantization.trace_add('write', lambda *args: self.update_duty_summary())
+        self.pwm_symbol_khz.trace_add('write', lambda *args: self.update_duty_summary())
+        self.update_duty_summary()
+        field(box, "v1编码时间片数", self.pwm_code_chips, ("2", "4", "8", "16"), modes=(PWM_MODE,))
+        field(box, "v1末尾保护片数", self.pwm_guard_chips, modes=(PWM_MODE,))
+        field(box, "控制状态 1 对应", self.pwm_polarity, ("自动（PWM约束）", "A=1", "B=1"), advanced=True)
+        field(box, "处理抽取倍数", self.pwm_decimation, ("1", "2", "4", "8", "16"), advanced=True)
+        field(box, "脉宽容差 (时间片)", self.pwm_tolerance, advanced=True)
+        field(box, "两态滞回半宽 (比例)", self.pwm_hysteresis, advanced=True)
+        field(box, "单次毛刺上限 (时间片)", self.pwm_glitch_chips, advanced=True)
+        explanation = ttk.Label(box, text="v1：默认100kHz对应当前固定方波测试；1Mbps目标需填333.333333kHz，不能直接用于100kHz文件。"
+                  "8+2=10片，10%～80%对应符号0～7；全0为空闲。"
+                  "先选“PWM v1（旧协议）”再分析。原速率即可解调；可选抽取会先抗混叠滤波，"
+                  "抽取后每片至少3点，建议4点以上；3～4点会显示计时余量提示。"
+                  "毛刺上限0为严格模式；仅忽略闭合短回跳，累计不超过0.30片。"
+                  "毛刺告警不等于误码。A/B映射需由训练序列核对。", wraplength=290)
+        explanation.grid(row=box.grid_size()[1], column=0, columnspan=2, sticky="w", pady=(6, 0))
+        self._advanced_fields.append((explanation, True, None))
+        search = ttk.Checkbutton(box, text="自动搜索有效PWM片段", variable=self.pwm_auto_search)
+        self._pwm_search_widget = search
+        search.grid(row=box.grid_size()[1], column=0, columnspan=2, sticky="w", pady=4)
+        self.controls.append(search)
+        self._advanced_fields.append((search, True, None))
+        box = group("PWM version2：协议与映射")
+        field(box, "协议输入方式", self.pwm2_input_mode, ('脉冲宽度与时延', '占空比范围', '时间片协议'))
+        self._time_protocol_fields = []
+        field(box, "每符号总片数", self.pwm2_total_chips)
+        field(box, "前置固定高片数", self.pwm2_prefix_chips)
+        field(box, "末尾固定低片数", self.pwm2_guard_chips)
+        field(box, "符号判决依据", self.pwm2_decision_mode, ("时间片码型", "连续脉宽"))
+        field(box, "符号映射", self.pwm2_mapping, ("高片数减前高", "自定义高片数表"))
+        table_entry = field(box, "符号0、1…对应高片数", self.pwm2_width_table)
+        self._mapping_fields = box.grid_slaves(row=table_entry.grid_info()['row'])
+        self._time_protocol_fields = [w for w in box.winfo_children() if int(w.grid_info()['row']) > 0]
+        ttk.Label(box, textvariable=self.pwm2_layout_summary, wraplength=290).grid(row=8, column=0, columnspan=2, sticky='w')
+        for variable in (self.pwm2_total_chips, self.pwm2_prefix_chips, self.pwm2_guard_chips,
+                         self.pwm_symbol_khz, self.rate, self.pwm_decimation):
+            variable.trace_add('write', lambda *args: self.update_pwm2_layout())
+        self.update_pwm2_layout()
+        box = group("version2：前导与恢复")
+        self._training_box = box
+        train = ttk.Checkbutton(box, text="启用已知前导校准", variable=self.pwm2_training_enabled)
+        train.grid(row=0, column=0, columnspan=2, sticky='w')
+        self.controls.append(train)
+        field(box, "前导起始占空比 (%)", self.pwm2_preamble_start)
+        field(box, "前导占空比步长 (百分点)", self.pwm2_preamble_step)
+        field(box, "前导符号数量", self.pwm2_preamble_count)
+        ttk.Label(box, textvariable=self.pwm2_preamble_summary, wraplength=290).grid(row=4, column=0, columnspan=2, sticky="w")
+        field(box, "每帧净荷数（自动/0/整数）", self.pwm2_payload_count)
+        fit = ttk.Checkbutton(box, text="自动标定宽度档位（需覆盖全部档位）", variable=self.pwm2_auto_scale)
+        fit.grid(row=6, column=0, columnspan=2, sticky='w', pady=4)
+        self.controls.append(fit)
+        field(box, "前导单符号拟合误差上限 (片)", self.pwm2_training_tolerance, advanced=True)
+        clock = ttk.Checkbutton(box, text="使用拟合时钟测宽，减少起点抖动", variable=self.pwm2_clock_width)
+        clock.grid(row=8, column=0, columnspan=2, sticky='w')
+        self.controls.append(clock)
+        self._advanced_fields.append((clock, True, None))
+        ttk.Label(box, text="补偿请选择连续脉宽。前导匹配另计采样率决定的测宽余量。前导可同宽或多宽；帧长固定时填写净荷长度，避免前导与净荷同宽造成错位。自动档位标定只用先前观测，不使用参考循环纠错。", wraplength=290).grid(row=9, column=0, columnspan=2, sticky='w')
+        self.pwm2_training_enabled.trace_add('write', lambda *args: self.refresh_parameter_visibility())
+        self.pwm2_mapping.trace_add('write', lambda *args: self.refresh_parameter_visibility())
+        self.pwm2_input_mode.trace_add('write', lambda *args: (self.refresh_parameter_visibility(), self.update_pwm2_layout()))
+        for variable in (self.pwm2_training_enabled, self.pwm2_preamble_start, self.pwm2_payload_count,
+                         self.pwm2_preamble_step, self.pwm2_preamble_count, self.pwm2_clock_width,
+                         self.pwm2_auto_scale):
+            variable.trace_add('write', lambda *args: self.update_duty_summary())
+        box = group('最简帧：公共训练与用户数据')
+        box.configure(text='用户身份前导与数据块')
+        enable = ttk.Checkbutton(box, text='启用最简帧（取消可测试旧格式）', variable=self.pwm_frame_enabled,
+                                 command=self.refresh_parameter_visibility)
+        enable.grid(row=0, column=0, columnspan=2, sticky='w')
+        self._frame_enable_widget = enable
+        self.controls.append(enable)
+        field(box, '用户数（默认单用户）', self.pwm_frame_user_count)
+        configure = ttk.Button(box, text='用户身份与净荷 / 已知数据…', command=self.configure_frame_users)
+        configure.grid(row=box.grid_size()[1], column=0, columnspan=2, sticky='ew', pady=4)
+        self.controls.append(configure)
+        check = ttk.Checkbutton(box, text='启用已知净荷 BER / 误块率测试', variable=self.pwm_frame_reference_enabled)
+        check.grid(row=box.grid_size()[1], column=0, columnspan=2, sticky='w', pady=4)
+        self.controls.append(check)
+        field(box, '已知净荷表示方式', self.pwm_frame_reference_format, ('符号值', '二进制比特'))
+        for label, variable in (('循环重复已知数据', self.pwm_frame_reference_repeat),
+                                ('每块从参考起点开始（否则按用户连续）', self.pwm_frame_reference_reset)):
+            widget = ttk.Checkbutton(box, text=label, variable=variable)
+            widget.grid(row=box.grid_size()[1], column=0, columnspan=2, sticky='w')
+            self.controls.append(widget)
+        field(box, '首身份搜索范围（周期；0全段）', self.pwm_frame_search, advanced=True)
+        field(box, '身份码最大错误符号数', self.pwm_frame_identity_errors, advanced=True)
+        row = box.grid_size()[1]
+        for col, label, action in ((0, '保存帧配置…', self.save_frame_config), (1, '载入帧配置…', self.load_frame_config)):
+            widget = ttk.Button(box, text=label, command=action)
+            widget.grid(row=row, column=col, sticky='ew', pady=4)
+            self.controls.append(widget)
+        self.autotune_button = ttk.Button(box, text='自动接收调试 → 全文件码率 / BER', command=self.start_pwm_autotune)
+        self.autotune_button.grid(row=box.grid_size()[1], column=0, columnspan=2, sticky='ew', pady=4)
+        self.controls.append(self.autotune_button)
+        self.freeze_pwm_button = ttk.Button(box, text='保存本文件固定接收方案…', command=self.save_pwm_autotune)
+        self.freeze_pwm_button.grid(row=box.grid_size()[1], column=0, columnspan=2, sticky='ew', pady=4)
+        self.controls.append(self.freeze_pwm_button)
+        ttk.Label(box, text='仅循环发送“用户身份前导＋净荷”，没有缓冲和公共训练。前导用于身份识别、符号定时及下降沿拖尾校正。前导长度由序列项数决定，数据长度逐用户配置；默认单用户。',
+                  wraplength=290).grid(row=box.grid_size()[1], column=0, columnspan=2, sticky='w')
+        box = group("已知循环校验 / BER")
+        check = ttk.Checkbutton(box, text="启用已知发端符号循环", variable=self.pwm_reference_enabled)
+        check.grid(row=0, column=0, columnspan=2, sticky='w', pady=4)
+        self.controls.append(check)
+        field(box, "循环符号值（v2用空格分隔）", self.pwm_reference)
+        field(box, "同步窗 (符号数)", self.pwm_sync_symbols)
+        ttk.Label(box, text="填写解码符号值，参考仅用于校验。高片数6～18在前高6配置下对应符号0～12。擦除单列；训练不计BER。", wraplength=290).grid(row=3, column=0, columnspan=2, sticky='w', pady=(6, 0))
+        self.pwm_frame_enabled.trace_add('write', lambda *args: (self.refresh_parameter_visibility(), self.update_duty_summary()))
+        for variable in (self.pwm_frame_user_count, self.pwm_frame_startup_count, self.pwm_frame_training_count):
+            variable.trace_add('write', lambda *args: self.update_duty_summary())
+        self.refresh_parameter_visibility()
+        self.parameter_footer = ttk.Label(body, text="采样率优先使用文件同名JSON。修改参数后点分析；详细指标在“统计 / 状态”。", wraplength=300)
+        self.parameter_footer.pack(fill="x")
+        self._sidebar_wheel_tag = f"RxSidebarWheel{id(self)}"
+        self.window.bind_class(self._sidebar_wheel_tag, "<MouseWheel>", self._sidebar_wheel)
+        self.window.bind_class(self._sidebar_wheel_tag, "<Button-4>", self._sidebar_wheel)
+        self.window.bind_class(self._sidebar_wheel_tag, "<Button-5>", self._sidebar_wheel)
+        def tag_widgets(widget):
+            widget.bindtags((self._sidebar_wheel_tag, *widget.bindtags()))
+            for child in widget.winfo_children():
+                tag_widgets(child)
+        tag_widgets(self.parameter_canvas)
+
+        self.figure = Figure(figsize=(12, 8), dpi=100, layout="constrained")
+        self._create_plot_axes()
+        self._empty_axes()
+        self.canvas = FigureCanvasTkAgg(self.figure, master=chart)
+        self.toolbar = NavigationToolbar2Tk(self.canvas, chart, pack_toolbar=False)
+        self.toolbar.pack(side="bottom", fill="x")
+        self.canvas.get_tk_widget().pack(fill="both", expand=True)
+        self.canvas.get_tk_widget().bind("<Enter>", lambda event: self.canvas.get_tk_widget().focus_set())
+        self.navigation = PlotNavigation(self.canvas, self.toolbar, self.double_click_plot, self._apply_view_layout)
+        self.canvas.draw()
+        self._info_traces = [(v, v.trace_add("write", self._refresh_info)) for v in (self.status, self.summary)]
+        self._refresh_info()
+        self.window.bind("<F11>", self.toggle_fullscreen)
+        self.window.bind("<Escape>", self.exit_fullscreen)
+        self.maximize()
+        self.poll_after = self.window.after(50, self.poll)
+
+    def _create_plot_axes(self):
+        grid = self.figure.add_gridspec(2, 2, height_ratios=(1, 1.2))
+        self.axes = self.figure.add_subplot(grid[0, :])
+        self.iq_axes = self.figure.add_subplot(grid[1, 0])
+        self.wave_axes = self.figure.add_subplot(grid[1, 1])
+        self._plot_axes = {"频谱": self.axes, "星座": self.iq_axes,
+                           "IQ 波形": self.wave_axes, "PWM 包络": self.wave_axes}
+        self._overview_specs = {ax: ax.get_subplotspec() for ax in self.figure.axes}
+        self._single_spec = self.figure.add_gridspec(1, 1)[0, 0]
+
+    def _sidebar_wheel(self, event):
+        steps = -1 if getattr(event, "num", None) == 4 else 1 if getattr(event, "num", None) == 5 else -int(event.delta / 120)
+        if steps:
+            self.parameter_canvas.yview_scroll(steps, "units")
+        return "break"
+
+    def _refresh_info(self, *args):
+        if self.closed:
+            return
+        text = self.status.get()+"\n\n"+self.summary.get()
+        self.info_text.configure(state="normal")
+        self.info_text.delete("1.0", "end")
+        self.info_text.insert("1.0", text)
+        self.info_text.configure(state="disabled")
+        if "未锁定" in self.status.get() or "失败" in self.status.get():
+            brief = self.status.get().splitlines()[-1]
+        elif self.recovery is not None:
+            r = self.recovery
+            if r.kind == 'qam':
+                brief = f'{r.order}QAM | {len(r.scatter)} symbols | decision EVM {r.evm_percent:.2f}% | 未测BER'
+            elif r.kind in ('pwm', 'pwm2'):
+                good = int(r.frames['valid'].sum())
+                warned = int((r.frames['valid'] & (r.frames['glitch_count'] > 0)).sum())
+                from rx706_pwm_autotune import symbol_rate_description
+                brief = (f"{r.protocol_label} [{('码型' if r.decision_mode == 'pattern' else '脉宽')}] | {symbol_rate_description(r)} | "
+                         f"有效 {good}/{len(r.frames)}（毛刺告警{warned}） | {r.mapping_note} | 原Fs / {r.decimation}")
+                if r.frame_check is not None:
+                    stats = r.frame_check.overall
+                    brief += (f" | 错位{stats['bit_errors']}/{stats['compared_bits']}，"
+                              f"错块{stats['bad_blocks']}/{stats['evaluated_blocks']}，擦除{stats['erased_bits']}位")
+                elif r.reference_check is not None:
+                    c = r.reference_check
+                    brief += (f" | 错比特 {c.bit_errors}/{c.compared_bits}，擦除 {c.erasures}/{c.evaluation_symbols}"
+                              if c.locked else " | 参考循环未同步，未测BER")
+            else:
+                brief = f"周期恢复 | 载波 {r.carrier_hz/1e6:+.6f} MHz | 周期 {r.cycle_hz/1000:.4f} kHz | 两态相位差 {abs(r.phase_difference_deg):.2f}° | 幅度差 {r.amplitude_difference_db:+.2f} dB"
+        else:
+            brief = self.status.get().splitlines()[0] if self.status.get() else ""
+        self.brief_status.set(brief[:180])
+        if hasattr(self, 'workflows'):
+            self.workflows.results()
+
+    def maximize(self, event=None):
+        try:
+            self.window.state("zoomed")
+        except tk.TclError:
+            self.window.geometry(f"{self.window.winfo_screenwidth()}x{max(650,self.window.winfo_screenheight()-80)}+0+0")
+
+    def toggle_fullscreen(self, event=None):
+        self.fullscreen = not self.fullscreen
+        self.window.attributes("-fullscreen", self.fullscreen)
+
+    def exit_fullscreen(self, event=None):
+        self.fullscreen = False
+        self.window.attributes("-fullscreen", False)
+
+    def toggle_sidebar(self):
+        if self.sidebar_visible:
+            self.sidebar_width = max(250, self.panes.sashpos(0))
+            self.panes.forget(self.sidebar)
+            self.sidebar_button.configure(text="显示侧栏")
+        else:
+            self.panes.insert(0, self.sidebar, weight=0)
+            self.panes.sashpos(0, self.sidebar_width)
+            self.sidebar_button.configure(text="隐藏侧栏")
+        self.sidebar_visible = not self.sidebar_visible
+
+    def _apply_view_layout(self):
+        if not hasattr(self, "_overview_specs"):
+            return
+        chosen = self._plot_axes.get(self.plot_view.get())
+        for ax, spec in self._overview_specs.items():
+            visible = chosen is None or ax is chosen
+            ax.set_visible(visible)
+            ax.set_in_layout(visible)
+            ax.set_subplotspec(self._single_spec if ax is chosen else spec)
+        if chosen is self.iq_axes:
+            chosen.set_aspect("equal", adjustable="box")
+            # Expand the bounds once to fill the large panel without allowing
+            # Matplotlib's aspect solver to override cursor zoom/pan limits.
+            panel = self._single_spec.get_position(self.figure)
+            fw,fh = self.figure.get_size_inches()
+            ratio = panel.width*fw/(panel.height*fh)
+            xlim,ylim = chosen.get_xlim(),chosen.get_ylim()
+            cx,cy = sum(xlim)/2,sum(ylim)/2
+            width,height = abs(xlim[1]-xlim[0]),abs(ylim[1]-ylim[0])
+            width = max(width,height*ratio)
+            height = max(height,width/ratio)
+            chosen.set_xlim(cx-width/2,cx+width/2)
+            chosen.set_ylim(cy-height/2,cy+height/2)
+        elif chosen is None:
+            self.iq_axes.set_aspect("equal", adjustable="box")
+            # Fill the overview panel while retaining identical I/Q units.
+            # Two nearly antipodal states otherwise collapse the axes to a
+            # thin strip, moving titles and labels when limits change.
+            panel = self._overview_specs[self.iq_axes].get_position(self.figure)
+            fw,fh = self.figure.get_size_inches()
+            ratio = panel.width*fw/(panel.height*fh)
+            xlim,ylim = self.iq_axes.get_xlim(),self.iq_axes.get_ylim()
+            cx,cy = sum(xlim)/2,sum(ylim)/2
+            width,height = abs(xlim[1]-xlim[0]),abs(ylim[1]-ylim[0])
+            width = max(width,height*ratio)
+            height = max(height,width/ratio)
+            self.iq_axes.set_xlim(cx-width/2,cx+width/2)
+            self.iq_axes.set_ylim(cy-height/2,cy+height/2)
+
+    def _plots_changed(self):
+        for ax in self.figure.axes:
+            ax.title.set_fontsize(10)
+            ax.title.set_wrap(True)
+        if hasattr(self, "_overview_specs"):
+            self._overview_limits = {ax: (ax.get_xlim(), ax.get_ylim()) for ax in self.figure.axes}
+            self._apply_view_layout()
+        navigation = getattr(self, "navigation", None)
+        if navigation is not None:
+            navigation.new_data()
+        self.canvas.draw_idle()
+
+    def set_plot_view(self, name=None):
+        if name is not None:
+            self.plot_view.set(name)
+        previous = self._active_plot_name
+        if previous == "总览" and self.plot_view.get() != "总览":
+            self._overview_limits = {ax: (ax.get_xlim(), ax.get_ylim()) for ax in self.figure.axes}
+        elif self.plot_view.get() == "总览" and self._overview_limits is not None:
+            for ax, (xlim,ylim) in self._overview_limits.items():
+                ax.set_xlim(xlim); ax.set_ylim(ylim)
+        self._apply_view_layout()
+        self._active_plot_name = self.plot_view.get()
+        self.canvas.draw_idle()
+
+    def double_click_plot(self, ax):
+        name = next((name for name,item in self._plot_axes.items() if item is ax), "总览")
+        self.set_plot_view(name if self.plot_view.get() == "总览" else "总览")
+
+    def _empty_axes(self):
+        for ax in (self.axes, self.iq_axes, self.wave_axes):
+            ax.clear()
+            ax.grid(alpha=.25)
+        self.axes.set(xlabel='Baseband frequency (MHz), I + jQ', ylabel='Amplitude (dBFS / FFT bin)', ylim=(-140,5))
+        self.iq_axes.set(title='Raw IQ scatter', xlabel='I (ADC counts)', ylabel='Q (ADC counts)')
+        self.iq_axes.set_aspect('equal', adjustable='box')
+        self.wave_axes.set(title='Contiguous IQ waveform', xlabel='Time from selection start (us)', ylabel='ADC counts')
+
+    def draw_constellation(self):
+        if self.result is None or self.closed:
+            return
+        import numpy as np
+        result = self.result
+        expected_kind = MODE_KINDS.get(self.constellation_mode.get())
+        if self.recovery is not None and expected_kind == self.recovery.kind:
+            self.draw_recovered()
+            return
+        x = result.constellation
+        self.iq_axes.clear()
+        self.iq_axes.scatter(x.real, x.imag, s=3, alpha=.25, linewidths=0, rasterized=True)
+        self.iq_axes.set(title=f'Raw IQ | {len(x):,} samples', xlabel='I (ADC counts)', ylabel='Q (ADC counts)')
+        self.iq_axes.set_aspect('equal', adjustable='box')
+        self.iq_axes.grid(alpha=.25)
+        z = result.waveform
+        time_us = np.arange(len(z))/result.sample_rate_hz*1e6
+        self.wave_axes.clear()
+        for y, label in ((z.real,'I'), (z.imag,'Q'), (abs(z),'Magnitude')):
+            self.wave_axes.plot(time_us, y, lw=.6, label=label)
+        self.wave_axes.set(title='Raw IQ waveform', xlabel='Time from selection start (us)', ylabel='ADC counts')
+        self.wave_axes.legend(fontsize=7)
+        self.wave_axes.grid(alpha=.25)
+        self._plots_changed()
+
+    def draw_qam(self):
+        import numpy as np
+        r = self.recovery
+        for ax in (self.iq_axes, self.wave_axes):
+            ax.clear()
+            ax.grid(alpha=.25)
+        z = r.scatter
+        step = max(1,len(z)//20000)
+        self.iq_axes.scatter(z.real[::step], z.imag[::step], s=3, alpha=.3)
+        grid = np.unique(r.ideal)
+        self.iq_axes.plot(grid.real, grid.imag, 'rx', ms=4)
+        prefix = f"TDCM {r.tdcm['harmonic']:+d} | " if getattr(r,'tdcm',None) is not None else ''
+        self.iq_axes.set(title=prefix+f'{r.order}QAM payload (compensated) | nearest-grid EVM {r.evm_percent:.2f}%', xlabel='Normalized I', ylabel='Normalized Q')
+        self.iq_axes.set_aspect('equal', adjustable='box')
+        t = (r.time_s-r.time_s[0])*1e6
+        self.wave_axes.plot(t[:1000], z.real[:1000], '.-', lw=.5, label='I')
+        self.wave_axes.plot(t[:1000], z.imag[:1000], '.-', lw=.5, label='Q')
+        self.wave_axes.set(title='TDCM harmonic symbols' if prefix else 'QAM symbol samples', xlabel='Time (us)')
+        self.wave_axes.legend(fontsize=7)
+        self._plots_changed()
+
+    def refresh_parameter_visibility(self):
+        """Show only settings used by the selected demodulator."""
+        mode, advanced = self.constellation_mode.get(), self.show_advanced.get()
+        for box, modes in self._parameter_groups:
+            box.pack_forget()
+            advanced_group = (mode == PWM2_MODE and self._parameter_titles[box] in (
+                '采样与频谱', '载波恢复设置', 'PWM version2：协议与映射',
+                'version2：前导与恢复', '已知循环校验 / BER'))
+            legacy_hidden = (mode == PWM2_MODE and (self.pwm_frame_enabled.get() or self.pwm2_input_mode.get() == '脉冲宽度与时延') and
+                             self._parameter_titles[box] in ('version2：前导与恢复', '已知循环校验 / BER'))
+            if (modes is None or mode in modes) and (advanced or not advanced_group) and not legacy_hidden:
+                box.pack(fill='x', pady=(0, 9))
+        for widget in self._training_box.winfo_children():
+            if widget.grid_info() or widget.winfo_manager() == '':
+                widget.grid()
+        for widget, needs_advanced, modes in self._advanced_fields:
+            if (not needs_advanced or advanced) and (modes is None or mode in modes):
+                widget.grid()
+            else:
+                widget.grid_remove()
+        if not self.pwm2_training_enabled.get():
+            for widget in self._training_box.winfo_children():
+                if int(widget.grid_info().get('row', 0)) != 0:
+                    widget.grid_remove()
+        if self.pwm2_mapping.get() != '自定义高片数表':
+            for widget in self._mapping_fields:
+                widget.grid_remove()
+        else:
+            for widget in self._mapping_fields:
+                widget.grid()
+        pulse = mode == PWM2_MODE and self.pwm2_input_mode.get() == '脉冲宽度与时延'
+        simple = mode == PWM2_MODE and self.pwm2_input_mode.get() in ('占空比范围', '脉冲宽度与时延')
+        for widget in self._simple_pwm_fields:
+            widget.grid() if simple else widget.grid_remove()
+        for widget in self._time_protocol_fields:
+            if self.pwm2_input_mode.get() != '时间片协议':
+                widget.grid_remove()
+            elif widget not in self._mapping_fields or self.pwm2_mapping.get() == '自定义高片数表':
+                widget.grid()
+        if mode == PWM2_MODE and self.pwm_frame_enabled.get():
+            self._pwm_search_widget.grid_remove()
+        for widget in self._pulse_fields:
+            widget.grid() if pulse else widget.grid_remove()
+        self._frame_enable_widget.grid_remove() if pulse else self._frame_enable_widget.grid()
+        self._pwm_count_widget.configure(state='readonly' if pulse and self.pwm_joint_delay.get() else 'normal')
+        if hasattr(self, 'parameter_footer'):
+            self.parameter_footer.pack_forget()
+            self.parameter_footer.pack(fill='x')
+
+        if hasattr(self, 'workflows'):
+            self.workflows.visibility()
+
+    def update_duty_summary(self):
+        from rx706_pwm_protocol import duty_protocol
+        try:
+            if self.pwm2_input_mode.get() == '脉冲宽度与时延':
+                config = self.pulse_config()
+                total = config['total_chips']
+                period = 1000/float(self.pwm_symbol_khz.get())
+                minimum = config['min_high_chips']
+                if self.pwm_joint_delay.get() and self.pwm_duty_count.get() != str(config['symbol_count']):
+                    self.pwm_duty_count.set(str(config['symbol_count']))
+                rates = '；'.join(f"{u['name']} {r/1000:.3f} kbit/s" for u, r in
+                                 zip(config['frame_options']['users'], config['user_information_rates']))
+                self.pwm_duty_summary.set(f"步长{config['step_percent']:g}%＝{total}片；最小高电平{minimum}片＝{minimum*config['step_percent']:g}%。\n"
+                    f"当前周期{period:.3f}µs，最短高电平{minimum/total*period:.3f}µs；"
+                    '拖尾及周期下限待前导估计。\n'
+                    f"末尾低电平预留{config['low_guard_chips']}片；合法组合{config['available_combinations']}种，当前码表{config['symbol_count']}种。\n"
+                    f"每符号信息量 log₂(M)＝{config['information_bits']:.6f} bit。\n"
+                    f"码元信息速率（前导计入；多用户按完整时隙分摊）：{rates}。\n"
+                    f"逐符号固定整数映射最多{config['integer_payload_bits']} bit（需选2的整数次幂个码字）；当前输出为符号编号的二进制标记。\n"
+                    '拖尾完全由各用户前导估计；数据脉冲可延后。')
+                self.pwm2_layout_summary.set(self.pwm_duty_summary.get())
+                self.pwm_duty_summary.set(self.pwm_duty_summary.get()+f'\n判决：{self.pwm_width_quantization.get()}。')
+                if config['cycle_calibration']:
+                    spec = config['cycle_calibration']
+                    self.pwm_duty_summary.set(self.pwm_duty_summary.get()+
+                        f"\n循环已知码校准实验：U{spec['user_id']}净荷位置{spec['payload_indices']}，"
+                        f"已知符号{spec['symbols']}；{spec['average_blocks']}块取中位数；这4个位置不计BER。")
+                return
+            preamble_text = self.preamble_summary()
+            _, values = duty_protocol(self.pwm_duty_start.get(), self.pwm_duty_step.get(),
+                                      self.pwm_duty_count.get())
+            self.pwm_duty_summary.set('结束占空比 '+f'{values[-1]:g}%'+
+                '\n符号0起：'+'、'.join(f'{v:g}%' for v in values[:16])+('…' if len(values)>16 else '')+
+                '\n最近档位判决；超容差仍恢复并标注。\n'+preamble_text)
+        except ValueError as exc:
+            self.pwm_duty_summary.set(str(exc))
+        if self.pwm2_input_mode.get() == '脉冲宽度与时延':
+            self.pwm2_layout_summary.set(self.pwm_duty_summary.get())
+            return
+        self.update_pwm2_layout()
+
+    def preamble_summary(self):
+        if self.pwm2_input_mode.get() == '脉冲宽度与时延':
+            return f'用户身份前导＋数据；{self.pwm_frame_user_count.get()}用户，长度逐用户配置。'
+        if self.pwm_frame_enabled.get():
+            return (f'最简帧：缓冲{self.pwm_frame_startup_count.get()}＋训练{self.pwm_frame_training_count.get()}；'
+                    f'{self.pwm_frame_user_count.get()}用户；身份码与净荷长度逐用户配置。')
+        from rx706_pwm_protocol import preamble_duties
+        try:
+            values = preamble_duties(self.pwm2_preamble_start.get(), self.pwm2_preamble_step.get(),
+                                     self.pwm2_preamble_count.get())
+        except ValueError as exc:
+            self.pwm2_preamble_summary.set(str(exc))
+            raise
+        text = ('前导：'+'、'.join(f'{v:g}%' for v in values[:16])+('…' if len(values)>16 else '')+
+                f'；结束 {values[-1]:g}%；共{len(values)}符号。')
+        self.pwm2_preamble_summary.set(text)
+        payload = self.pwm2_payload_count.get()
+        if payload == '自动':
+            if self.pwm2_input_mode.get() == '占空比范围':
+                payload = self.pwm_duty_count.get()
+            else:
+                payload = '自动（按映射档位数）'
+        return (text + f'\n每帧净荷 {payload}；' +
+                ('矫正已启用；' if self.pwm2_training_enabled.get() else '矫正已手动关闭；') +
+                ('拟合时钟测宽。' if self.pwm2_clock_width.get() else '边沿测宽。') +
+                ('\n自动档位标定已启用；覆盖全部档位后生效，初期仅前导偏移。'
+                 if self.pwm2_auto_scale.get() else '\n自动档位标定已关闭；同宽前导只校准偏移。'))
+
+    def apply_pwm2_preset(self, event=None):
+        selected = self.pwm2_preset.get()
+        if selected != '自定义':
+            self.pwm_frame_enabled.set(False)
+        layout = {'20片：8+10+2': (20, 8, 2),
+                  '50片：20+25+5': (50, 20, 5),
+                  '50片：8+40+2': (50, 8, 2), PWM150_PRESET: (25, 6, 7)}.get(selected)
+        if layout:
+            self.constellation_mode.set(PWM2_MODE)
+            for variable, value in zip((self.pwm2_total_chips, self.pwm2_prefix_chips,
+                                        self.pwm2_guard_chips), layout):
+                variable.set(str(value))
+            self.pwm2_preset.set(selected)
+        if selected == PWM150_PRESET:
+            self.constellation_mode.set(PWM2_MODE)
+            for name, value in dict(pwm_symbol_khz='150', pwm2_preamble_start='24', pwm2_preamble_step='0', pwm2_preamble_count='3', pwm2_payload_count='自动',
+                    pwm2_decision_mode='连续脉宽', pwm2_training_tolerance='0.8',
+                    pwm_tolerance='0.35', pwm_decimation='1', pwm_polarity='自动（PWM约束）',
+                    pwm2_mapping='高片数减前高', pwm_sync_symbols='256',
+                    pwm2_input_mode='占空比范围', pwm_duty_start='24', pwm_duty_step='4', pwm_duty_count='13',
+                    pwm_reference=' '.join(map(str, range(13)))).items():
+                getattr(self, name).set(value)
+            self.pwm2_training_enabled.set(True)
+            self.pwm2_auto_scale.set(True)
+            self.pwm2_clock_width.set(True)
+            self.pwm_reference_enabled.set(True)
+        elif selected == PWM170_PRESET:
+            self.constellation_mode.set(PWM2_MODE)
+            for name, value in dict(pwm_symbol_khz='169.971671', pwm_duty_start='20',
+                    pwm_duty_step='7', pwm_duty_count='8', pwm2_input_mode='占空比范围',
+                    pwm2_preamble_start='20', pwm2_preamble_step='0', pwm2_preamble_count='3',
+                    pwm2_payload_count='8', pwm2_training_tolerance='0.5',
+                    pwm2_decision_mode='连续脉宽', pwm_tolerance='0.30', pwm_decimation='1',
+                    pwm_polarity='自动（PWM约束）').items():
+                getattr(self, name).set(value)
+            self.pwm2_training_enabled.set(True)
+            self.pwm2_clock_width.set(True)
+            self.pwm2_auto_scale.set(True)
+            self.pwm_reference_enabled.set(False)
+        elif layout:
+            self.pwm2_training_enabled.set(True)
+            self.pwm2_clock_width.set(True)
+            self.pwm2_decision_mode.set("连续脉宽")
+            self.pwm_reference_enabled.set(False)
+            self.pwm2_mapping.set('高片数减前高')
+            self.pwm2_input_mode.set('时间片协议')
+        if hasattr(self, '_parameter_groups'):
+            self.refresh_parameter_visibility()
+        self.update_pwm2_layout()
+
+    def frame_config(self, widths=None, users=None):
+        from rx706_pwm_frames import default_users, validate_frame_options
+        if widths is None:
+            if self.pwm2_input_mode.get() == '脉冲宽度与时延':
+                widths = tuple(range(32768))
+            else:
+                from rx706_pwm_protocol import duty_protocol
+                compiled, _ = duty_protocol(self.pwm_duty_start.get(), self.pwm_duty_step.get(), self.pwm_duty_count.get())
+                widths = compiled['symbol_widths']
+        count = int(self.pwm_frame_user_count.get())
+        if not 1 <= count <= 16:
+            raise ValueError('用户数须为1～16')
+        if len(self.pwm_frame_users) < count:
+            alphabet = min(len(widths), int(self.pwm_duty_count.get()))
+            self.pwm_frame_users.extend(default_users(count, alphabet)[len(self.pwm_frame_users):])
+        config = dict(user_count=count, users=(self.pwm_frame_users if users is None else users)[:count],
+            startup_symbols=0, startup_pattern='', training_symbols=0, training_pattern='',
+            search_symbols=self.pwm_frame_search.get(), identity_errors=self.pwm_frame_identity_errors.get(),
+            training_tolerance=self.pwm_frame_training_tolerance.get(), clock_width=self.pwm2_clock_width.get(),
+            reference_enabled=self.pwm_frame_reference_enabled.get(),
+            reference_format='bits' if self.pwm_frame_reference_format.get() == '二进制比特' else 'symbols',
+            reference_repeat=self.pwm_frame_reference_repeat.get(), reference_reset=self.pwm_frame_reference_reset.get())
+        return validate_frame_options(config, widths)
+
+    def pulse_config(self):
+        from rx706_pwm_pulse import validate_pulse_options
+        config = dict(step_percent=self.pwm_duty_step.get(), symbol_count=int(self.pwm_duty_count.get()),
+            min_high_chips=int(self.pwm_min_high_chips.get()),
+            low_guard_chips=int(self.pwm_low_guard_chips.get()),
+            joint_delay=self.pwm_joint_delay.get(),
+            codebook=self.pwm_pulse_codebook.get(), frame_options=self.frame_config(),
+            width_quantization='floor_width' if self.pwm_width_quantization.get() == '脉宽向下取整' else 'nearest',
+            cycle_calibration=self.pwm_cycle_calibration, air_crc12=self.pwm_air_crc12,
+            nearest_decision=self.pwm_nearest_decision,
+            tolerance_chips=float(self.pwm_pulse_tolerance.get()))
+        return validate_pulse_options(config, float(self.pwm_symbol_khz.get())*1000)
+
+    def configure_pulse_codebook(self):
+        dialog = tk.Toplevel(self.window)
+        self._workflow_editor = dialog
+        dialog.grab_set()
+        dialog.title('符号值 → 延迟片数、高电平片数')
+        dialog.geometry('650x520')
+        dialog.transient(self.window)
+        box = ttk.Frame(dialog, padding=12)
+        box.pack(fill='both', expand=True)
+        ttk.Label(box, text='每行“延迟片数 高电平片数”，按行对应符号0、1…；起点为0。联合码表时两项共同决定符号；仅脉宽映射时数据时延单列恢复。前导总按此表的已知延迟定位。', wraplength=610).pack(fill='x')
+        text = scrolledtext.ScrolledText(box, height=18)
+        text.pack(fill='both', expand=True, pady=8)
+        value = self.pwm_pulse_codebook.get()
+        if not value:
+            try:
+                config = self.pulse_config()
+                value = '\n'.join(f'{d:g} {w:g}' for d, w in config['codebook'])
+            except ValueError:
+                value = ''
+        text.insert('1.0', value)
+        def save():
+            old = self.pwm_pulse_codebook.get()
+            self.pwm_pulse_codebook.set(text.get('1.0', 'end').strip())
+            try:
+                self.pulse_config()
+            except ValueError as exc:
+                self.pwm_pulse_codebook.set(old)
+                messagebox.showerror('码表错误', str(exc), parent=dialog)
+                return
+            dialog.destroy()
+        ttk.Button(box, text='应用码表', command=save).pack(side='right')
+        ttk.Button(box, text='恢复全部合法时延/脉宽组合', command=lambda: (self.pwm_pulse_codebook.set(''), self.pwm_joint_delay.set(True), dialog.destroy())).pack(side='left')
+
+    def configure_frame_users(self):
+        """Edit each user without coupling marker/payload lengths across users."""
+        from pathlib import Path
+        from rx706_pwm_frames import default_users, parse_symbols
+        try:
+            count, alphabet = int(self.pwm_frame_user_count.get()), int(self.pwm_duty_count.get())
+            if not 1 <= count <= 16 or not 2 <= alphabet <= 32768:
+                raise ValueError('用户数须为1～16，码字数须为2～32768')
+        except ValueError as exc:
+            messagebox.showerror('配置错误', str(exc), parent=self.window)
+            return
+        if len(self.pwm_frame_users) < count:
+            self.pwm_frame_users.extend(default_users(count, alphabet)[len(self.pwm_frame_users):])
+        users = [dict(user) for user in self.pwm_frame_users]
+        dialog = tk.Toplevel(self.window)
+        self._workflow_editor = dialog
+        dialog.grab_set()
+        dialog.title('用户身份与净荷 / 已知数据')
+        dialog.geometry('780x600')
+        dialog.transient(self.window)
+        box = ttk.Frame(dialog, padding=12)
+        box.pack(fill='both', expand=True)
+        current, name, identity, length = (tk.StringVar() for _ in range(4))
+        selected = [0]
+        chooser = ttk.Combobox(box, textvariable=current, state='readonly', values=[str(i+1) for i in range(count)])
+        chooser.pack(fill='x')
+        for label, variable in (('用户名称', name), ('身份码：空格分隔的PWM符号值（序列项数就是长度）', identity),
+                                ('每块净荷长度（PWM符号数）', length)):
+            ttk.Label(box, text=label).pack(anchor='w', pady=(10, 2))
+            ttk.Entry(box, textvariable=variable).pack(fill='x')
+        ttk.Label(box, text='已知净荷参考（可留空）；格式及循环规则沿用主窗口设置').pack(anchor='w', pady=(10, 2))
+        reference = scrolledtext.ScrolledText(box, height=9, wrap='word')
+        reference.pack(fill='both', expand=True)
+        ttk.Label(box, text='填写真实发端数据；符号值用空格分隔，比特用0/1。也可载入UTF-8文本文件。身份码和参考都可自定义；参考仅用于测试，不改变接收结果。',
+                  wraplength=730).pack(fill='x', pady=8)
+
+        def store_user():
+            code = parse_symbols(identity.get(), alphabet)
+            size = int(length.get())
+            if not 4 <= len(code) <= 256 or not 1 <= size <= 1000000:
+                raise ValueError('身份码长度须为4～256，净荷长度须为1～1000000')
+            users[selected[0]] = dict(name=name.get().strip() or f'U{selected[0]+1}', identity=' '.join(map(str, code)),
+                                      payload_symbols=size, reference=reference.get('1.0', 'end').strip())
+
+        def show_user(at):
+            selected[0] = at
+            user = users[at]
+            current.set(str(at+1))
+            name.set(user['name'])
+            code = user['identity']
+            identity.set(code if isinstance(code, str) else ' '.join(map(str, code)))
+            length.set(str(user['payload_symbols']))
+            reference.delete('1.0', 'end')
+            value = user.get('reference', '')
+            reference.insert('1.0', value if isinstance(value, str) else ' '.join(map(str, value)))
+
+        def switch(event):
+            at = int(current.get())-1
+            try:
+                store_user()
+            except ValueError as exc:
+                current.set(str(selected[0]+1))
+                messagebox.showerror('配置错误', str(exc), parent=dialog)
+                return
+            show_user(at)
+
+        def load_reference():
+            filename = filedialog.askopenfilename(parent=dialog, title='选择已知净荷文本', filetypes=[('UTF-8文本', '*.txt'), ('所有文件', '*.*')])
+            if filename:
+                reference.delete('1.0', 'end')
+                reference.insert('1.0', '@'+str(Path(filename).resolve()))
+
+        def save():
+            try:
+                store_user()
+                self.frame_config(users=users)
+            except (ValueError, OSError) as exc:
+                messagebox.showerror('配置错误', str(exc), parent=dialog)
+                return
+            self.pwm_frame_users = users
+            self._receiver_changed()
+            self.update_duty_summary()
+            dialog.destroy()
+
+        chooser.bind('<<ComboboxSelected>>', switch)
+        buttons = ttk.Frame(box)
+        buttons.pack(fill='x')
+        ttk.Button(buttons, text='载入已知数据文件…', command=load_reference).pack(side='left')
+        ttk.Button(buttons, text='保存所有用户', command=save).pack(side='right')
+        show_user(0)
+
+    def generate_frame_config(self):
+        if self.busy:
+            return
+        from rx706_pwm_frame_builder import FrameBuilderDialog
+        import copy
+        try:
+            if int(self.pwm_frame_user_count.get()) != 1 or len(self.pwm_frame_users) > 1:
+                raise ValueError('快速向导只支持单用户，未修改任何配置。多用户请使用原用户编辑器。')
+            # frame_config may extend missing users; opening a draft must not do so.
+            original_users = self.pwm_frame_users
+            saved_users = copy.deepcopy(original_users)
+            try:
+                profile = self._pwm_profile_snapshot() if self.pwm2_input_mode.get() == '脉冲宽度与时延' else None
+            finally:
+                original_users[:] = saved_users
+                self.pwm_frame_users = original_users
+            self._frame_builder = FrameBuilderDialog(self.window, profile,
+                apply_callback=lambda config: self.load_frame_config(config=config))
+        except (ValueError, TypeError, KeyError) as exc:
+            messagebox.showerror('无法打开帧向导', str(exc), parent=self.window)
+
+    def save_frame_config(self):
+        try:
+            pulse = self.pwm2_input_mode.get() == '脉冲宽度与时延'
+            self.pulse_config() if pulse else self.frame_config()
+            config = dict(user_count=int(self.pwm_frame_user_count.get()), users=self.pwm_frame_users,
+                startup_symbols=self.pwm_frame_startup_count.get(), startup_pattern=self.pwm_frame_startup_pattern.get(),
+                training_symbols=self.pwm_frame_training_count.get(), training_pattern=self.pwm_frame_training_pattern.get(),
+                search_symbols=self.pwm_frame_search.get(), identity_errors=self.pwm_frame_identity_errors.get(),
+                training_tolerance=self.pwm_frame_training_tolerance.get(),
+                reference_enabled=self.pwm_frame_reference_enabled.get(), reference_format=self.pwm_frame_reference_format.get(),
+                reference_repeat=self.pwm_frame_reference_repeat.get(), reference_reset=self.pwm_frame_reference_reset.get(),
+                clock_width=self.pwm2_clock_width.get(),
+                symbol_khz=self.pwm_symbol_khz.get(), duty_start=self.pwm_duty_start.get(),
+                duty_step=self.pwm_duty_step.get(), duty_count=self.pwm_duty_count.get())
+            if pulse:
+                for key in ('startup_symbols', 'startup_pattern', 'training_symbols', 'training_pattern', 'duty_start'):
+                    config.pop(key, None)
+                config.update(schema_version=3, mode='脉冲宽度与时延',
+                    min_high_chips=self.pwm_min_high_chips.get(), low_guard_chips=self.pwm_low_guard_chips.get(),
+                    joint_delay=self.pwm_joint_delay.get(), codebook=self.pwm_pulse_codebook.get(),
+                    width_quantization='floor_width' if self.pwm_width_quantization.get() == '脉宽向下取整' else 'nearest',
+                    cycle_calibration=self.pwm_cycle_calibration, air_crc12=self.pwm_air_crc12,
+                    nearest_decision=self.pwm_nearest_decision,
+                    state_one={'A=1': 'A', 'B=1': 'B'}.get(self.pwm_polarity.get(), 'auto'),
+                    tolerance_chips=float(self.pwm_pulse_tolerance.get()))
+                if self._fixed_source_sha256:
+                    config['source_sha256'] = self._fixed_source_sha256
+            filename = filedialog.asksaveasfilename(parent=self.window, title='保存发收端共用的帧配置', defaultextension='.json', filetypes=[('帧配置', '*.json')])
+            if filename:
+                from pathlib import Path
+                Path(filename).write_text(json.dumps(config, ensure_ascii=False, indent=2), encoding='utf-8')
+        except (OSError, ValueError) as exc:
+            messagebox.showerror('保存失败', str(exc), parent=self.window)
+
+    def _receiver_changed(self, *args):
+        if getattr(self, '_workflow_restoring', False) or getattr(self, '_updating_result_rate', False):
+            return
+        self._autotune_token = getattr(self, '_autotune_token', 0)+1
+        self._autotune_report = None
+        if getattr(self, '_autotune_running', False):
+            self.cancel.set()
+        if (getattr(self, 'result', None) is not None or
+                getattr(self, 'recovery', None) is not None or
+                getattr(self, '_pwm_dialog', None) is not None):
+            self._invalidate_analysis()
+
+        if hasattr(self, 'workflows'):
+            self.workflows.refresh()
+
+    def _pwm_profile_snapshot(self):
+        """Explicit current sender frame; reference is only for post-selection scoring."""
+        import copy
+        self.pulse_config()
+        return dict(schema_version=3, mode='脉冲宽度与时延',
+            user_count=int(self.pwm_frame_user_count.get()), users=copy.deepcopy(self.pwm_frame_users),
+            search_symbols=self.pwm_frame_search.get(), identity_errors=self.pwm_frame_identity_errors.get(),
+            reference_enabled=self.pwm_frame_reference_enabled.get(),
+            reference_format=self.pwm_frame_reference_format.get(),
+            reference_repeat=self.pwm_frame_reference_repeat.get(), reference_reset=self.pwm_frame_reference_reset.get(),
+            symbol_khz=self.pwm_symbol_khz.get(), duty_step=self.pwm_duty_step.get(),
+            duty_count=self.pwm_duty_count.get(), min_high_chips=self.pwm_min_high_chips.get(),
+            low_guard_chips=self.pwm_low_guard_chips.get(), joint_delay=self.pwm_joint_delay.get(),
+            codebook=self.pwm_pulse_codebook.get(), nearest_decision=self.pwm_nearest_decision,
+            width_quantization='floor_width' if self.pwm_width_quantization.get() == '脉宽向下取整' else 'nearest',
+            cycle_calibration=copy.deepcopy(self.pwm_cycle_calibration), air_crc12=self.pwm_air_crc12,
+            tolerance_chips=float(self.pwm_pulse_tolerance.get()),
+            state_one={'A=1': 'A', 'B=1': 'B'}.get(self.pwm_polarity.get(), 'auto'))
+
+    def _autotune_note(self, text):
+        log = getattr(self, '_autotune_log', None)
+        if log is not None and log.winfo_exists():
+            log.insert('end', text+'\n')
+            log.see('end')
+
+    def start_pwm_autotune(self):
+        """Search only receiver parameters, then independently score the fixed decode."""
+        if self.closed or self.busy:
+            return
+        try:
+            if self.pwm2_input_mode.get() != '脉冲宽度与时延':
+                raise ValueError('自动接收调试需要脉冲宽度与时延模式及用户指定帧JSON')
+            name = self.filename.get().strip()
+            if not name:
+                raise ValueError('请先选择bin并载入本次发送帧JSON')
+            profile = self._pwm_profile_snapshot()
+            if not profile['codebook']:
+                raise ValueError('请载入明确码表/前导/净荷长度的本次帧JSON，不能推测未知发送帧')
+        except (ValueError, TypeError) as exc:
+            self.status.set('自动接收调试：'+str(exc))
+            return
+        self._receiver_changed()
+        self._invalidate_analysis()
+        token = self._autotune_token
+        channel = 1 if self.channel.get() == 'RX1' else 2
+        self.busy = self._autotune_running = True
+        self.cancel.clear()
+        self._buttons()
+        self.status.set('自动搜索接收参数；前导/码表固定，参考净荷不参与选择…')
+        old = getattr(self, '_autotune_window', None)
+        if old is not None and old.winfo_exists():
+            old.destroy()
+        dialog = self._autotune_window = tk.Toplevel(self.window)
+        dialog.title('自动接收调试 · 候选 / 进度')
+        dialog.geometry('850x430')
+        self._autotune_log = scrolledtext.ScrolledText(dialog, wrap='word')
+        self._autotune_log.pack(fill='both', expand=True)
+        ttk.Button(dialog, text='取消搜索', command=self.cancel.set).pack()
+        self._autotune_note('固定前导、码表和帧组合；短窗扫描12候选，最多前1秒选参，再以固定参数分析完整文件（最长2秒）。关闭此窗口不取消，主窗口停止按钮亦可取消。')
+
+        def worker():
+            import tempfile
+            from pathlib import Path
+            from rx706_pwm_autotune import search
+            try:
+                with tempfile.TemporaryDirectory(prefix='rx706_pwm_search_') as folder:
+                    path = Path(folder)/'frame.json'
+                    path.write_text(json.dumps(profile, ensure_ascii=False), encoding='utf-8')
+                    report = search(name, path, channel=channel, cancel_event=self.cancel,
+                        progress=lambda item: self.events.put(('autotune_progress', (token, item))))
+                report['original_profile'] = profile
+                report['profile'] = 'GUI snapshot embedded as original_profile'
+                self.events.put(('autotune_done', (token, report, None)))
+            except AnalysisCancelled:
+                self.events.put(('autotune_done', (token, None, '搜索已取消；未应用任何候选。')))
+            except Exception as exc:
+                self.events.put(('autotune_done', (token, None, '搜索失败：'+str(exc))))
+        self.thread = threading.Thread(target=worker, daemon=True)
+        self.thread.start()
+
+    def _handle_autotune_event(self, kind, value):
+        if kind == 'autotune_progress':
+            token, item = value
+            if token == self._autotune_token:
+                c, m = item['candidate'], item.get('metrics')
+                detail = (f"有效覆盖 {m['usable_fraction']:.3%}；身份 {m['identity_blocks']}/{m['complete_blocks']}"
+                          if m else item.get('error', '未获取'))
+                stage = {'scan': '候选初筛', 'selection': '选参比较', 'full_record': '全文件固定验证'}.get(item.get('stage'), '候选')
+                line = f"{stage} [0, {item['duration_s']:g}]s  {c['state_one']}=1  {c['symbol_hz']:.6f}Hz  容差{c['tolerance_chips']:g}片：{detail}"
+                self._autotune_note(line)
+                self.status.set(line)
+            return
+        token, report, error = value
+        self.busy = self._autotune_running = False
+        self._buttons()
+        if token != self._autotune_token:
+            self.status.set('输入已改变；已丢弃过期搜索结果，请重新搜索。')
+            return
+        if error or self.cancel.is_set():
+            self.status.set(error or '搜索已取消；未应用候选。')
+            self._autotune_note(self.status.get())
+            return
+        if report['selected_profile'] is None:
+            self.status.set('没有可安全应用的候选：'+report['status'])
+            self._autotune_note(self.status.get())
+            return
+        import copy
+        selected = copy.deepcopy(report['original_profile'])
+        c = report['selection']['candidate']
+        selected.update(symbol_khz=str(c['symbol_hz']/1000), tolerance_chips=c['tolerance_chips'],
+                        state_one=c['state_one'], source_sha256=report['provenance']['source_sha256'])
+        selected['receiver_settings'] = dict(channel=report['channel'], first_tuple=0,
+            duration_ms=report['provenance']['duration_s']*1000, decimation=1, hysteresis=.1,
+            glitch_tolerance_chips=.15, auto_search=False, center_hint='自动')
+        if not self.load_frame_config(config=selected):
+            self.status.set('候选载入失败，未开始最终评分。')
+            return
+        report['fixed_profile_with_reference'] = selected
+        self._autotune_report = report
+        self._autotune_note(f"已应用固定接收参数。选参区间前{min(report['provenance']['duration_s'], 1):g}秒；最终分析完整{report['provenance']['duration_s']:g}秒。原JSON参考仅用于事后BER/BLER统计，不反馈候选排名。")
+        self._autotune_note(report['selection']['metrics'].get('timing_note', ''))
+        self.analyze()
+
+    def save_pwm_autotune(self):
+        if self.busy:
+            return
+        report = self._autotune_report
+        if not report:
+            messagebox.showinfo('尚无固定方案', '请先完成自动接收调试；参数变化后须重新搜索。', parent=self.window)
+            return
+        filename = filedialog.asksaveasfilename(parent=self.window, title='保存本文件固定接收方案',
+            defaultextension='.json', filetypes=[('固定帧配置', '*.json')])
+        if not filename:
+            return
+        try:
+            from pathlib import Path
+            path = Path(filename)
+            path.write_text(json.dumps(report['fixed_profile_with_reference'], ensure_ascii=False, indent=2), encoding='utf-8')
+            path.with_suffix('.search.json').write_text(json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False), encoding='utf-8')
+            self.status.set('固定方案和搜索记录已保存；重新载入该JSON恢复极性/速率/容差/参考及接收设置。')
+        except (ValueError, OSError) as exc:
+            messagebox.showerror('保存失败', str(exc), parent=self.window)
+
+    def _pwm_file_summary(self, result):
+        from rx706_pwm_autotune import file_evaluation
+        e = file_evaluation(result)
+        s = e['reference_overall']
+        ber = (f"{s['bit_errors']}/{s['compared_bits']} = {s['ber']:.6%}"
+               if s['ber'] is not None else '未测（未启用或无完整参考覆盖）')
+        bler = (f"{s['bad_blocks']}/{s['evaluated_blocks']} = {s['bler']:.3%}"
+                if s['bler'] is not None else '未测')
+        erase = f"{e['physical_erasure_fraction']:.3%}" if e['physical_erasure_fraction'] is not None else '未测'
+        duration = e['analyzed_duration_s']
+        useful = e['decided_payload_symbol_rate_hz']
+        rates = ('有效净荷速率未测：缺少有效采样时长。\n' if duration is None else
+                 f"有效净荷（已判决，非无误码保证）：{useful/1000:.3f} ksym/s = "
+                 f"{e['decided_payload_symbols']} / {duration:.9g} s。\n"
+                 f"时长分母：实际读取{e['analyzed_input_samples']}个采样 / {e['analyzed_sample_rate_hz']:.9g} Hz，"
+                 f"起点tuple={e['analyzed_first_tuple']}；包含失锁、间隙与不完整尾部的时间。\n"
+                 f"已判决净荷的等效信息容量上限：{e['decided_payload_information_ceiling_bps']/1000:.3f} kbit/s。\n")
+        gross = e['physical_equivalent_ceiling_bps']
+        if gross is None:
+            physical = f"物理码率等效上限未测：{e['physical_rate_source']}；不能用配置码率冒充实测。\n"
+        else:
+            physical = (f"物理码率等效上限（含前导/训练）：{gross/1e6:.6f} Mbit/s。\n"
+                        f"实测码元率 {e['physical_symbol_rate_hz']:.6f} Baud × log₂({e['codebook_size']})；"
+                        f"时钟来源：{e['physical_rate_source']}。\n"
+                        f"物理码片率：{e['physical_chip_rate_hz']/1e6:.6f} Mchip/s，不是独立比特率。\n")
+        if gross is not None:
+            physical += (f"去身份/保留校准后净荷理论上限（{e['scored_payload_per_cycle']}/{e['frame_cycle_symbols']}）："
+                         f"{e['payload_information_ceiling_bps']/1000:.3f} kbit/s。\n")
+        text = (physical + rates +
+                '物理等效上限不扣前导/训练、错误或擦除；固定训练并不承载同数量独立信息。\n'
+                '实际传输比特率及无误码净比特率：未知；未定义传输比特映射、CRC/FEC，不能由标签位或容量推得。\n'
+                f"{e['label_bits_per_symbol']}位输出是符号编号，不等于同数量独立信息比特。\n"
+                f"完整净荷：{e['complete_payload_symbols']}符号，已判决{e['decided_payload_symbols']}，"
+                f"擦除{e['erased_payload_symbols']}（{erase}），身份失败{e['identity_failed_blocks']}/{e['complete_blocks']}块。\n"
+                f"按JSON参考比对 BER（已比较标签位，不含擦除）：{ber}；BLER：{bler}。\n"
+                f"参考覆盖擦除{s['erased_bits']}标签位；参考未覆盖{s['unreferenced_blocks']}块。"
+                '此参考覆盖计数不能替代上面的完整净荷判决擦除。\n'
+                f"完整块最近码字估计{s['estimated_symbols']}符号，按实际判决参与校验。\n"
+                '身份和保留校准不计净荷，尾部不完整块排除。参考未经独立认证；搜索不利用净荷BER。\n'
+                +result.pulse_options.get('timing_note', ''))
+        if self._autotune_report is not None:
+            self._autotune_report['gui_post_selection_evaluation'] = e
+        return text
+
+    def _invalidate_analysis(self):
+        """A displayed/exportable result always belongs to the current inputs."""
+        self.result = self.recovery = None
+        report = getattr(self, '_qam_report', None)
+        if report is not None and not report.closed:
+            report.close()
+        self._qam_report = None
+        dialog = self._pwm_dialog
+        if dialog is not None and dialog.winfo_exists():
+            dialog.destroy()
+        self._pwm_dialog = self._pwm_dialog_result = None
+        self._empty_axes()
+        self.canvas.draw_idle()
+        self.summary.set('输入已改变；请重新分析。')
+
+    def _source_changed(self, *args):
+        if getattr(self, '_workflow_restoring', False):
+            return
+        self._receiver_changed()
+        self._fixed_source_sha256 = None
+        self._invalidate_analysis()
+        # A/B labels are fitted separately for each capture, not transmitter bits.
+        self.pwm_polarity.set('自动（PWM约束）')
+        self.status.set('已选择采样文件；请确认帧配置后分析。')
+
+    def load_frame_config(self, filename=None, config=None):
+        if self.busy:
+            return False
+        if config is None:
+            filename = filename or filedialog.askopenfilename(parent=self.window, title='载入帧配置',
+                initialdir=str(PWM_DATA_DIR), filetypes=[('帧配置', '*.json')])
+        if not filename and config is None:
+            return
+        from pathlib import Path
+        try:
+            config = json.loads(Path(filename).read_text(encoding='utf-8-sig')) if config is None else dict(config)
+            if not isinstance(config, dict):
+                raise ValueError('帧配置须为JSON对象')
+            if config.get('source_sha256') and self.filename.get():
+                from rx706_pwm_autotune import sha256
+                if sha256(self.filename.get()) != config['source_sha256']:
+                    raise ValueError('固定方案不属于当前bin；请先选择对应采样文件')
+            mapping = dict(user_count='pwm_frame_user_count', startup_symbols='pwm_frame_startup_count',
+                startup_pattern='pwm_frame_startup_pattern', training_symbols='pwm_frame_training_count',
+                training_pattern='pwm_frame_training_pattern', search_symbols='pwm_frame_search',
+                identity_errors='pwm_frame_identity_errors', training_tolerance='pwm_frame_training_tolerance',
+                reference_enabled='pwm_frame_reference_enabled', reference_format='pwm_frame_reference_format',
+                reference_repeat='pwm_frame_reference_repeat', reference_reset='pwm_frame_reference_reset',
+                clock_width='pwm2_clock_width',
+                symbol_khz='pwm_symbol_khz', duty_start='pwm_duty_start', duty_step='pwm_duty_step', duty_count='pwm_duty_count')
+            from rx706_pwm_protocol import duty_protocol
+            from rx706_pwm_frames import validate_frame_options
+            if config.get('mode') == '脉冲宽度与时延':
+                for key, default in dict(codebook='', min_high_chips=6, low_guard_chips=1,
+                        joint_delay=True, tolerance_chips=.4).items():
+                    config.setdefault(key, default)
+                from rx706_pwm_pulse import validate_pulse_options
+                if config.get('schema_version', 2) < 3 and 'tail_us' in config and not config.get('codebook'):
+                    # Preserve the old sender's automatic codebook while removing
+                    # its fixed receive-tail assumption.
+                    import math
+                    config['low_guard_chips'] = int(config.get('low_guard_chips', 1))+math.ceil(
+                        float(config['tail_us'])*1e-6*float(config['symbol_khz'])*1000*100/float(config['duty_step'])-1e-9)
+                frames = dict(config, reference_format='bits' if config.get('reference_format') in ('二进制比特', 'bits') else 'symbols')
+                validate_pulse_options(dict(config, step_percent=config['duty_step'], symbol_count=config['duty_count'],
+                                           frame_options=frames), float(config['symbol_khz'])*1000)
+                if not isinstance(config['codebook'], str):
+                    config['codebook'] = '\n'.join(f'{d:g} {w:g}' for d, w in config['codebook'])
+                config['reference_format'] = '二进制比特' if frames['reference_format'] == 'bits' else '符号值'
+                self._invalidate_analysis()
+                self._receiver_changed()
+                self.pwm_nearest_decision = config.get('nearest_decision', True)
+                self.pwm_pulse_tolerance.set(str(config['tolerance_chips']))
+                self.pwm_air_crc12 = bool(config.get('air_crc12', False))
+                self.pwm_cycle_calibration = config.get('cycle_calibration') or {}
+                self.pwm_width_quantization.set('脉宽向下取整' if config.get('width_quantization') == 'floor_width' else '左右区间（最近码字）')
+                mapping.update(min_high_chips='pwm_min_high_chips', low_guard_chips='pwm_low_guard_chips',
+                    joint_delay='pwm_joint_delay',
+                    codebook='pwm_pulse_codebook')
+                self.pwm_frame_users = config['users']
+                self.pwm2_input_mode.set('脉冲宽度与时延')
+                for key, attribute in mapping.items():
+                    if key in config:
+                        getattr(self, attribute).set(config[key])
+                self.pwm_frame_enabled.set(True)
+                self.constellation_mode.set(PWM2_MODE)
+                self.refresh_parameter_visibility()
+                self.update_duty_summary()
+                self.pwm_polarity.set({'A': 'A=1', 'B': 'B=1'}.get(config.get('state_one'), '自动（PWM约束）'))
+                self._fixed_source_sha256 = config.get('source_sha256')
+                fixed = config.get('receiver_settings', {})
+                if 'center_hint' in fixed:
+                    self.center_hint.set(fixed['center_hint'])
+                for key, attribute in (('first_tuple', 'first_tuple'), ('duration_ms', 'recovery_ms'),
+                                       ('decimation', 'pwm_decimation'), ('hysteresis', 'pwm_hysteresis'),
+                                       ('glitch_tolerance_chips', 'pwm_glitch_chips')):
+                    if key in fixed:
+                        getattr(self, attribute).set(str(fixed[key]))
+                if 'auto_search' in fixed:
+                    self.pwm_auto_search.set(bool(fixed['auto_search']))
+                if 'channel' in fixed:
+                    self.channel.set('RX1' if fixed['channel'] == 1 else 'RX2')
+                if hasattr(self, 'workflows'):
+                    self.workflows.accepted()
+                return True
+            widths = duty_protocol(config['duty_start'], config['duty_step'], config['duty_count'])[0]['symbol_widths']
+            validate_frame_options(dict(config, reference_format='bits' if config['reference_format'] == '二进制比特' else 'symbols'), widths)
+            self._invalidate_analysis()
+            self.pwm_cycle_calibration = {}
+            self.pwm_air_crc12 = False
+            self.pwm_pulse_tolerance.set('0.4')
+            self.pwm_frame_users = config['users']
+            for key, attribute in mapping.items():
+                getattr(self, attribute).set(config[key])
+            self.pwm_frame_enabled.set(True)
+            self.pwm2_input_mode.set('占空比范围')
+            self.constellation_mode.set(PWM2_MODE)
+            self.refresh_parameter_visibility()
+            self.update_duty_summary()
+            return True
+        except (OSError, ValueError, KeyError, TypeError) as exc:
+            messagebox.showerror('载入失败', str(exc), parent=self.window)
+            return False
+
+    def load_fixed_pwm_data(self):
+        if self.busy:
+            return
+        profile = PWM_DATA_DIR/'frame.json'
+        candidates = [p for p in PWM_DATA_DIR.glob('rx_*.bin') if p.is_file()]
+        capture = max(candidates, key=lambda p: p.stat().st_mtime_ns) if candidates else PWM_DATA_DIR/'rx_test.bin'
+        if not profile.is_file() or not capture.is_file():
+            messagebox.showerror('固定数据未就绪', f'请将 frame.json 和 rx_test.bin 放入：\n{PWM_DATA_DIR}', parent=self.window)
+            return
+        if not self.load_frame_config(profile):
+            return
+        self.filename.set(str(capture))
+        self.channel.set('RX1')
+        self.first_tuple.set('0')
+        self.rate.set('15.36')
+        self.recovery_ms.set('1000')
+        self.pwm_polarity.set('B=1')
+        self.pwm_decimation.set('1')
+        self.result = self.recovery = None
+        self.summary.set('已加载固定采样与配套帧配置；点击“分析信号”重新解码。')
+        self.status.set(f'固定 PWM 数据（最新下载）：{capture.name}')
+
+    def pwm2_protocol_options(self):
+        if self.pwm2_input_mode.get() == '脉冲宽度与时延':
+            return dict(kind='pwm2', pulse_options=self.pulse_config())
+        from rx706_pwm import pwm2_layout
+        from rx706_pwm_protocol import parse_widths
+        from rx706_pwm_training import validate_training
+        simple = self.pwm2_input_mode.get() == '占空比范围'
+        if simple:
+            from rx706_pwm_protocol import duty_protocol
+            compiled, _ = duty_protocol(self.pwm_duty_start.get(), self.pwm_duty_step.get(), self.pwm_duty_count.get())
+            total, prefix, guard = (compiled[k] for k in ('total_chips', 'prefix_chips', 'guard_chips'))
+            widths = compiled['symbol_widths']
+        else:
+            total = int(self.pwm2_total_chips.get())
+            prefix = int(self.pwm2_prefix_chips.get())
+            guard = int(self.pwm2_guard_chips.get())
+            widths = (parse_widths(self.pwm2_width_table.get(), total,
+                              minimum=prefix, maximum=total-guard)
+                      if self.pwm2_mapping.get() == '自定义高片数表' else tuple(range(prefix, total-guard+1)))
+        code = pwm2_layout(total, prefix, guard)
+        if len(set(widths)) != len(widths):
+            raise ValueError('符号映射表中的高片数不能重复')
+        result = dict(kind='pwm2', total_chips=total, prefix_chips=prefix, code_chips=code,
+                      guard_chips=guard, symbol_widths=widths,
+                      output_binary=simple,
+                      decision_mode='pattern' if not simple and self.pwm2_decision_mode.get() == '时间片码型' else 'width')
+        if self.pwm_frame_enabled.get():
+            if not simple:
+                raise ValueError('最简帧使用占空比范围输入；时间片协议请取消最简帧')
+            config = self.frame_config(widths)
+            result['training_options'] = dict(frame_options=config, alphabet_widths=widths)
+        elif self.pwm2_training_enabled.get():
+            from rx706_pwm_protocol import preamble_duties
+            duties = preamble_duties(self.pwm2_preamble_start.get(), self.pwm2_preamble_step.get(),
+                                     self.pwm2_preamble_count.get())
+            preamble = tuple(v*total/100 for v in duties)
+            training = dict(preamble_widths=preamble, alphabet_widths=widths,
+                            payload_symbols=len(widths) if self.pwm2_payload_count.get() == '自动' else int(self.pwm2_payload_count.get()),
+                            same_tolerance_chips=float(self.pwm2_training_tolerance.get()),
+                            auto_scale=self.pwm2_auto_scale.get(), clock_width=self.pwm2_clock_width.get())
+            validate_training(total, prefix, code, training)
+            result['training_options'] = training
+        return result
+
+    def update_pwm2_layout(self):
+        from rx706_pwm import pwm2_layout
+        try:
+            if self.pwm2_input_mode.get() == '脉冲宽度与时延':
+                self.update_duty_summary()
+                return
+            if self.pwm2_input_mode.get() == '占空比范围':
+                from rx706_pwm_protocol import duty_protocol
+                import math
+                _, duties = duty_protocol(self.pwm_duty_start.get(), self.pwm_duty_step.get(), self.pwm_duty_count.get())
+                self.pwm2_layout_summary.set(f'当前按占空比输入：{duties[0]:g}%～{duties[-1]:g}%，'
+                    f'{len(duties)}种符号，每符号{math.ceil(math.log2(len(duties)))}位二进制。'
+                    '需要自定义高片数映射时切换到时间片协议。')
+                return
+            total, prefix, guard = (int(v.get()) for v in
+                (self.pwm2_total_chips, self.pwm2_prefix_chips, self.pwm2_guard_chips))
+            code = pwm2_layout(total, prefix, guard)
+            preset = {'20片：8+10+2': (20, 8, 2), '50片：20+25+5': (50, 20, 5),
+                      '50片：8+40+2': (50, 8, 2), PWM150_PRESET: (25, 6, 7)}.get(self.pwm2_preset.get())
+            if preset is not None and preset != (total, prefix, guard):
+                self.pwm2_preset.set('自定义')
+            text = (f'合法高片数{prefix}～{total-guard}；默认符号=高片数−{prefix}。'
+                    f'{prefix}+{code}+{guard}={total}片；{code+1}态，k=0～{code}。'
+                    f'占空比{100*prefix/total:g}%～{100*(total-guard)/total:g}%，步进{100/total:g}%。')
+            fs, symbol, decimation = float(self.rate.get())*1e6, float(self.pwm_symbol_khz.get())*1000, int(self.pwm_decimation.get())
+            if fs > 0 and symbol > 0 and decimation > 0:
+                points = fs/(symbol*total*decimation)
+                text += f' 每片{points:.3f}个处理点。'
+                if points < 3:
+                    text += '不足3点，请降低符号率或抽取倍数。'
+                elif points < 4:
+                    text += '低于建议4点，计时余量较小。'
+            self.pwm2_layout_summary.set(text)
+        except (ValueError, ZeroDivisionError) as exc:
+            self.pwm2_layout_summary.set(f'参数待检查：{exc}')
+
+    def on_mode_changed(self, event=None):
+        if self.closed or self.busy:
+            return
+        self.refresh_parameter_visibility()
+        expected_kind = MODE_KINDS.get(self.constellation_mode.get())
+        wrong_header = (expected_kind == 'qam' and self.recovery is not None and
+                        (self.constellation_mode.get() in (QAM_PWM_MODE,TDCM_MODE)) !=
+                        (getattr(self.recovery, 'pwm_preamble', None) is not None))
+        wrong_tdcm = (expected_kind == 'qam' and self.recovery is not None and
+                      (self.constellation_mode.get() == TDCM_MODE) != (getattr(self.recovery,'tdcm',None) is not None))
+        if self.constellation_mode.get() in RECOVERY_MODES and (self.recovery is None or self.recovery.kind != expected_kind or wrong_header or wrong_tdcm):
+            self.status.set('已切换模式；核对当前参数后点击“分析信号”。')
+            if self.result is not None:
+                self.draw_constellation()
+        else:
+            self.draw_constellation()
+
+    def draw_recovered(self):
+        import numpy as np
+        r = self.recovery
+        if r.kind == 'qam':
+            self.draw_qam()
+            return
+        pwm = r.kind in ('pwm','pwm2')
+        self.iq_axes.clear()
+        groups = [(-1,'Transitions','#aaaaaa'), (0,'State A','#2879ad'), (1,'State B','#cf7130')]
+        for state, label, color in groups:
+            z = r.scatter[r.scatter_states == state]
+            self.iq_axes.scatter(z.real,z.imag,s=3,alpha=.2,linewidths=0,color=color,label=label)
+        self.iq_axes.plot(r.centers.real,r.centers.imag,'kx',markersize=7)
+        title = 'Recovered PWM IQ' if pwm else 'Recovered A/B IQ'
+        if pwm and not r.decode_locked:
+            title += ' | code NOT locked'
+        self.iq_axes.set(title=title,xlabel='I (ADC counts)',ylabel='Q (ADC counts)')
+        xlo,xhi = np.percentile(r.scatter.real,[.5,99.5])
+        ylo,yhi = np.percentile(r.scatter.imag,[.5,99.5])
+        distance = abs(r.centers[1]-r.centers[0])
+        xpad,ypad = max((xhi-xlo)*.12,1.),max((yhi-ylo)*.2,distance*.05,1.)
+        self.iq_axes.set_xlim(xlo-xpad,xhi+xpad)
+        self.iq_axes.set_ylim(ylo-ypad,yhi+ypad)
+        outside = np.count_nonzero((r.scatter.real < xlo-xpad)|(r.scatter.real > xhi+xpad)|
+                                  (r.scatter.imag < ylo-ypad)|(r.scatter.imag > yhi+ypad))
+        self.iq_axes.text(.01,.02,f'{outside}/{len(r.scatter)} samples outside focused view',fontsize=6,transform=self.iq_axes.transAxes)
+        self.iq_axes.set_aspect('equal',adjustable='box')
+        self.iq_axes.grid(alpha=.25)
+        self.iq_axes.legend(fontsize=6,loc='upper center',ncol=3)
+        self.wave_axes.clear()
+        t = (r.waveform_time_s-r.waveform_time_s[0])*1e6
+        if pwm:
+            self.wave_axes.plot(t,r.decision_metric,color='#aaaaaa',lw=.6,label='IQ projection')
+            self.wave_axes.step(t,r.levels.astype(int),where='post',lw=1,label='Control 0/1')
+            plot_label = f'PWM duty ({len(r.symbol_widths)} symbols)' if r.output_binary else r.protocol_label
+            self.wave_axes.set(title=plot_label+'\nControl envelope | P = pilot',xlabel='Time from view start (us)',ylabel='Control level',ylim=(-.25,1.7))
+            shown = r.frames[(r.frames['start_s'] >= r.level_time_s[0]) & (r.frames['start_s'] <= r.level_time_s[-1])]
+            for row in shown:
+                at = (row['start_s']-r.level_time_s[0])*1e6
+                label = str(row['symbol'])+('!' if row['glitch_count'] else '') if row['valid'] else ('P' if row['symbol'] == -3 else 'idle' if row['symbol'] == -2 else '?')
+                self.wave_axes.axvline(at,color='#479160',lw=.5,alpha=.5)
+                self.wave_axes.text(at,1.12,label,fontsize=7)
+        else:
+            z = r.waveform
+            for y,label in ((z.real,'I'),(z.imag,'Q'),(abs(z),'Magnitude')):
+                self.wave_axes.plot(t,y,lw=.7,label=label)
+            self.wave_axes.set(title='Recovered IQ waveform',xlabel='Time from view start (us)',ylabel='ADC counts')
+        self.wave_axes.legend(fontsize=7,loc='upper right')
+        self.wave_axes.grid(alpha=.25)
+        self._plots_changed()
+
+    def browse(self):
+        filename = filedialog.askopenfilename(parent=self.window, title="选择下载完成的 IQ bin 文件",
+            initialdir=str(PWM_DATA_DIR), filetypes=[("原始 IQ", "*.bin"), ("所有文件", "*")])
+        if filename:
+            self.filename.set(filename)
+
+    def offer_download(self, filename):
+        if self.closed:
+            return
+        if self.busy:
+            self.pending_download = str(filename)
+            return
+        self.filename.set(str(filename))
+        if self.auto.get():
+            self.run_workflow()
+
+    def _buttons(self):
+        for widget in self.controls:
+            widget.configure(state="disabled" if self.busy else
+                             ("readonly" if isinstance(widget, ttk.Combobox) else "normal"))
+        self.analyze_button.configure(state="disabled" if self.busy else "normal")
+        self.stop_button.configure(state="normal" if self.busy else "disabled")
+        if not self.busy:
+            self.refresh_parameter_visibility()
+
+    def analyze(self):
+        if self.closed or self.busy:
+            return
+        try:
+            name = self.filename.get().strip()
+            if not name:
+                raise ValueError("请选择已下载的 bin 文件")
+            if self._fixed_source_sha256:
+                from rx706_pwm_autotune import sha256
+                if sha256(name) != self._fixed_source_sha256:
+                    raise ValueError('固定方案输入SHA256不匹配，请重新搜索或载入本文件的帧配置')
+            options = dict(channel=1 if self.channel.get() == "RX1" else 2,
+                nfft=int(self.nfft.get()), averages=int(self.averages.get()),
+                first_tuple=int(self.first_tuple.get()), sample_rate_hz=float(self.rate.get()) * 1e6,
+                remove_dc=self.remove_dc.get())
+            recovery_options = None
+            if self.constellation_mode.get() in RECOVERY_MODES:
+                center = self.center_hint.get().strip()
+                recovery_options = dict(duration_s=float(self.recovery_ms.get())/1000,
+                    center_hint_hz=None if center.lower() in ('自动', 'auto', '') else float(center)*1e6)
+                if self.constellation_mode.get() in QAM_MODES:
+                    recovery_options.update(kind='qam', order=int(self.qam_order.get()),
+                        symbol_hz=float(self.qam_symbol_khz.get())*1000,
+                        rolloff=float(self.qam_rolloff.get()), pulse=self.qam_pulse.get(),
+                        center_hint_hz=float(self.qam_carrier_mhz.get())*1e6)
+                    if self.constellation_mode.get() == TDCM_MODE:
+                        recovery_options.update(symbol_hz=float(self.tdcm_symbol_khz.get())*1000,
+                            center_hint_hz=float(self.tdcm_carrier_mhz.get())*1e6)
+                    if self.qam_preamble_enabled.get():
+                        from rx706_qam_preamble import validate_preamble
+                        preamble = dict(symbols=self.qam_preamble_symbols.get(),
+                            representation='iq' if self.qam_preamble_format.get() == 'I/Q电平' else 'labels',
+                            max_frequency_hz=float(self.qam_preamble_frequency_khz.get())*1000,
+                            max_evm_percent=float(self.qam_preamble_evm.get()),
+                            search_s=float(self.qam_preamble_search_ms.get())/1000)
+                        validate_preamble(preamble, recovery_options['order'], recovery_options['symbol_hz'])
+                        recovery_options['preamble_options'] = preamble
+                    if self.constellation_mode.get() in (QAM_PWM_MODE,TDCM_MODE):
+                        from rx706_qam_pwm import validate_pwm_header
+                        pwm = dict(symbols=self.qam_pwm_symbols.get(),
+                            total_chips=int(self.pwm2_total_chips.get()),
+                            prefix_chips=int(self.pwm2_prefix_chips.get()),
+                            guard_chips=int(self.pwm2_guard_chips.get()),
+                            symbol_hz=float(self.tdcm_pwm_khz.get() if self.constellation_mode.get() == TDCM_MODE else self.pwm_symbol_khz.get())*1000,
+                            gap_s=float(self.qam_pwm_gap_us.get())/1e6,
+                            search_s=float(self.qam_pwm_search_ms.get())/1000,
+                            max_error_percent=float(self.qam_pwm_error.get()),
+                            width_offset_chips=float(self.qam_pwm_width_offset.get()),
+                            max_frequency_hz=float(self.qam_pwm_frequency_khz.get())*1000,
+                            qam_search_symbols=float(self.qam_pwm_qam_window.get()))
+                        validate_pwm_header(pwm, options['sample_rate_hz'])
+                        recovery_options['pwm_preamble_options'] = pwm
+                    if self.constellation_mode.get() == TDCM_MODE:
+                        from rx706_tdcm import validate_tdcm
+                        tdcm = dict(base_hz=float(self.tdcm_base_khz.get())*1000,
+                            harmonic=int(self.tdcm_harmonic.get()),
+                            normalization='pwm' if self.tdcm_normalization.get() == 'PWM两态参考' else 'blind',
+                            amplitude_scale=float(self.tdcm_amplitude.get()),phase_deg=float(self.tdcm_phase.get()),
+                            payload_symbols=int(self.tdcm_count.get()))
+                        validate_tdcm(options['sample_rate_hz'],recovery_options['symbol_hz'],tdcm)
+                        recovery_options['tdcm_options'] = tdcm
+                elif self.constellation_mode.get() in PWM_MODES:
+                    recovery_options.update(kind='pwm', symbol_hz=float(self.pwm_symbol_khz.get())*1000,
+                        code_chips=10 if self.constellation_mode.get() == PWM2_MODE else int(self.pwm_code_chips.get()),
+                        guard_chips=2 if self.constellation_mode.get() == PWM2_MODE else int(self.pwm_guard_chips.get()),
+                        state_one={'A=1': 'A', 'B=1': 'B'}.get(self.pwm_polarity.get(), 'auto'),
+                        decimation=int(self.pwm_decimation.get()), width_tolerance=float(self.pwm_tolerance.get()),
+                        hysteresis=float(self.pwm_hysteresis.get()),
+                        glitch_tolerance_chips=float(self.pwm_glitch_chips.get()))
+                    recovery_options['auto_search'] = self.pwm_auto_search.get()
+                    if self.constellation_mode.get() == PWM2_MODE:
+                        recovery_options.update(self.pwm2_protocol_options())
+                    if self.pwm_reference_enabled.get() and not (self.constellation_mode.get() == PWM2_MODE and self.pwm_frame_enabled.get()):
+                        from rx706_pwm_reference import parse_reference
+                        sync = int(self.pwm_sync_symbols.get())
+                        if not 8 <= sync <= 4096:
+                            raise ValueError('同步窗须为 8～4096 个符号')
+                        recovery_options['reference_options'] = dict(
+                            sequence=parse_reference(self.pwm_reference.get(), len(recovery_options['symbol_widths']) if self.constellation_mode.get() == PWM2_MODE else int(self.pwm_code_chips.get())),
+                            sync_symbols=sync)
+                else:
+                    recovery_options['cycle_hz'] = float(self.cycle_khz.get())*1000
+        except ValueError as exc:
+            self.status.set(f"参数错误：{exc}")
+            return
+        self._invalidate_analysis()
+        self.axes.set_title("Analyzing local IQ file...")
+        self.toolbar.update()
+        self.canvas.draw()
+        self.busy = True
+        self._analysis_token = self._autotune_token
+        self.cancel.clear()
+        self.status.set("正在分块读取和分析本地文件…")
+        self.summary.set("")
+        self._buttons()
+        self.thread = threading.Thread(target=self._analyze_worker, args=(name, options, recovery_options),
+                                       daemon=True, name="rx706-fft")
+        self.thread.start()
+
+    def _analyze_worker(self, name, options, recovery_options=None):
+        try:
+            result = analyze_bin(name, cancel_event=self.cancel, **options)
+            recovery, recovery_error = None, None
+            if recovery_options is not None:
+                from rx706_recovery import recover_periodic
+                try:
+                    recovery_options = dict(recovery_options)
+                    kind = recovery_options.pop('kind','periodic')
+                    if kind == 'qam':
+                        automatic = recovery_options.pop('auto_acquisition', False)
+                        if automatic:
+                            from rx706_qam_acquisition import recover_auto_qam
+                            recovery = recover_auto_qam(result, cancel_event=self.cancel, **recovery_options)
+                        else:
+                            from rx706_qam import recover_qam
+                            recovery = recover_qam(result, cancel_event=self.cancel, **recovery_options)
+                    elif kind in ('pwm', 'pwm2'):
+                        from rx706_pwm import recover_pwm, recover_pwm2
+                        reference_options = recovery_options.pop('reference_options', None)
+                        recovery_options.setdefault('allow_unlocked', True)
+                        recovery = (recover_pwm2 if kind == 'pwm2' else recover_pwm)(result, cancel_event=self.cancel, **recovery_options)
+                        if reference_options is not None and recovery.decode_locked:
+                            from rx706_pwm_reference import check_reference
+                            recovery.reference_check = check_reference(recovery.frames,
+                                bits_per_symbol=recovery.bits_per_symbol,
+                                symbol_bitwords=recovery.symbol_bitwords, **reference_options)
+                    else:
+                        recovery = recover_periodic(result, cancel_event=self.cancel, **recovery_options)
+                except ValueError as exc:
+                    recovery_error = str(exc)
+            # Prepare a bounded plot trace in the worker as well.
+            self.events.put(("result", (result, display_trace(result), recovery, recovery_error)))
+        except AnalysisCancelled as exc:
+            self.events.put(("cancelled", str(exc)))
+        except Exception as exc:
+            self.events.put(("error", str(exc)))
+
+    def poll(self):
+        if self.closed:
+            return
+        try:
+            kind, value = self.events.get_nowait()
+        except queue.Empty:
+            pass
+        else:
+            if kind in ('autotune_progress', 'autotune_done'):
+                self._handle_autotune_event(kind, value)
+                self.poll_after = self.window.after(50, self.poll)
+                return
+            if getattr(self, '_analysis_token', getattr(self, '_autotune_token', 0)) != getattr(self, '_autotune_token', 0):
+                self.busy = False
+                self._buttons()
+                self.status.set('输入已改变；已丢弃旧分析结果。')
+                self.poll_after = self.window.after(50, self.poll)
+                return
+            self.busy = False
+            self._buttons()
+            if kind == 'result' and self.cancel.is_set():
+                # Stop also retires work already queued but not yet displayed.
+                kind, value = 'cancelled', '分析已停止。'
+                self._invalidate_analysis()
+            self._empty_axes()
+            self.toolbar.update()
+            if kind == "result":
+                result, (freq, power), self.recovery, recovery_error = value
+                self.result = result
+                self._updating_result_rate = True
+                try:
+                    self.rate.set(f"{result.sample_rate_hz / 1e6:g}")
+                finally:
+                    self._updating_result_rate = False
+                self.axes.plot(freq, power, color="#2467a4", linewidth=0.8)
+                self.axes.set_xlim(-result.sample_rate_hz / 2e6, result.sample_rate_hz / 2e6)
+                self.axes.set_ylim(max(-180, float(result.dbfs.max()) - 110), max(5, float(result.dbfs.max()) + 5))
+                self.axes.set_title(f"RX{result.channel} | Hann | N={result.nfft:,} | averages={result.averages}")
+                self.draw_constellation()
+                if self.recovery is not None:
+                    tdcm = getattr(self.recovery,'tdcm',None)
+                    carrier = self.recovery.carrier_hz if tdcm is None else tdcm['corrected_carrier_hz']
+                    self.axes.axvline(carrier/1e6, color='#479160', linestyle='--',
+                                     linewidth=1, label='RF carrier reference' if tdcm is not None else 'Recovered carrier center')
+                    if tdcm is not None:
+                        self.axes.axvline(tdcm['target_hz']/1e6,color='#cf8518',linestyle=':',
+                                         linewidth=1,label=f"TDCM {tdcm['harmonic']:+d} harmonic")
+                    self.axes.legend(fontsize=7)
+                if result.peak_hz is not None:
+                    self.axes.plot(result.peak_hz / 1e6, result.peak_dbfs, "o", color="#d15d32", markersize=5)
+                    peak = f"主峰 {result.peak_hz / 1e6:+.6f} MHz / {result.peak_dbfs:.2f} dBFS"
+                else:
+                    peak = "所分析片段没有可显示的非零信号"
+                rf = (f"；配置 LO + 主峰 ≈ {(result.lo_hz + result.peak_hz)/1e6:.6f} MHz"
+                      if result.lo_hz is not None and result.peak_hz is not None else "；RF 绝对频率未知（无 LO 元数据）")
+                occupied = (f"；99% 频带 {result.occupied_99_hz[0]/1e6:+.4f}～{result.occupied_99_hz[1]/1e6:+.4f} MHz"
+                            if result.occupied_99_hz is not None else "")
+                peak_list = " / ".join(f"{f/1e6:+.4f} MHz ({p:.1f} dBFS/bin)" for f,p in result.peaks)
+                papr = f"{result.papr_db:.2f} dB" if result.papr_db is not None else "无信号"
+                self.status.set(f"RX{result.channel}：{peak}{rf}\n"
+                    f"总功率 {result.power_dbfs:.2f} dBFS；分段去直流功率 {result.ac_power_dbfs:.2f} dBFS；"
+                    f"RMS {result.rms_counts:.2f} counts；PAPR {papr}；"
+                    f"削顶 {result.clipped:,}/{result.samples:,} ({result.clipped/result.samples:.3%}){occupied}\n"
+                    f"局部频谱峰：{peak_list or '无'}")
+                self.summary.set(f"Fs={result.sample_rate_hz / 1e6:g} MSPS（{result.rate_source}）；"
+                    f"Δf={result.sample_rate_hz / result.nfft:.3f} Hz；"
+                    f"分析点 [{result.first_tuple:,}, {result.first_tuple + result.samples:,}) / 共 {result.total_tuples:,} 点；"
+                    f"时长 {result.samples / result.sample_rate_hz:.6g} s；去直流={'是' if result.remove_dc else '否'}。"
+                    "功率参考为 |I+jQ|²/2048²，非 dBm；频带包含噪声和干扰。"
+                    "原始星座为有界抽样的IQ散点；请选择解调模式恢复符号。")
+                if self.recovery is not None:
+                    r = self.recovery
+                    if r.kind == 'qam':
+                        self.status.set(self.status.get()+f'\n{r.order}QAM：{len(r.scatter)}净荷符号；净荷最近邻EVM {r.evm_percent:.2f}%；未测BER')
+                    elif r.kind in ('pwm', 'pwm2'):
+                        good = int(r.frames['valid'].sum())
+                        candidates = int((r.frames['candidate_symbol'] >= 0).sum())
+                        idle = int((r.frames['symbol'] == -2).sum())
+                        training_count = int(r.frames['training'].sum()) if r.training_calibration is not None else 0
+                        warned = int((r.frames['valid'] & (r.frames['glitch_count'] > 0)).sum())
+                        protocol_status = r.protocol_label if r.version == 2 else f'PWM：{r.code_chips}+{r.guard_chips}片'
+                        from rx706_pwm_autotune import symbol_rate_description
+                        self.status.set(self.status.get()+f"\n{protocol_status}；"
+                            f"{symbol_rate_description(r)}；有效 {good}（毛刺告警{warned}），空闲 {idle}，"
+                            f"无效 {len(r.frames)-good-idle-training_count}；训练 {training_count}；候选符号 {candidates}；两态分离度 {r.separation:.1f}；{r.mapping_note}")
+                        if not r.decode_locked:
+                            self.status.set(self.status.get()+'\nPWM编码未锁定（两态已恢复）：'+r.decode_note)
+                    else:
+                        self.status.set(self.status.get() +
+                        f"\n周期恢复：载波中心 {r.carrier_hz/1e6:+.6f} MHz；完整周期 {r.cycle_hz/1000:.4f} kHz；"
+                        f"相位差 {abs(r.phase_difference_deg):.2f}°；幅度差(B/A) {r.amplitude_difference_db:+.2f} dB；"
+                        f"两簇距离/簇内 RMS {r.separation:.1f}")
+                    self.summary.set(f"原始频谱范围 {result.first_tuple/result.sample_rate_hz:.6g}～"
+                        f"{(result.first_tuple+result.samples)/result.sample_rate_hz:.6g} s；"
+                        f"恢复范围 {r.first_tuple/result.sample_rate_hz:.6g}～{(r.first_tuple+r.input_samples)/result.sample_rate_hz:.6g} s；"
+                        f"恢复片段削顶 {r.clipped}/{r.input_samples}；低通截止 {r.cutoff_hz/1000:.1f} kHz；"
+                        f"抽取 {r.decimation} 倍，输出 {r.output_rate_hz/1e6:g} MS/s。"
+                        + ("PWM按两态IQ距离恢复电平。首尾不完整符号不解码，内部无效符号保留?。"
+                           if r.kind in ('pwm','pwm2') else
+                           "周期模式恢复相对A/B状态，未确认绝对0/1。") + "功率非dBm。")
+                    if r.kind == 'qam':
+                        preview = ' '.join(''.join(map(str, b)) for b in r.bits[:24])
+                        self.summary.set(f'{r.order}QAM；符号率 {r.symbol_hz/1000:g} kSym/s；载波频偏 {r.carrier_hz/1e6:g} MHz。\n静态相位和定时估计；未跟踪时钟漂移或残余频偏；90°旋转歧义未消除。\n判决EVM不能替代参考EVM或证明锁定。Gray映射：I后Q，各轴从负到正，MSB优先，须与发端一致。\n候选比特（未帧同步、未测BER）：{preview}')
+                        sync = getattr(r, 'preamble', None)
+                        if sync is not None:
+                            self.status.set(self.status.get()+f"\n前导候选 {sync['length']}符号；位置 {sync['time_s']*1e6:.3f} µs；残余频偏 {sync['frequency_hz']:+.3f} Hz；前导EVM {sync['evm_percent']:.2f}%")
+                            self.summary.set(f"{r.order}QAM；已按配置前导进行定时、固定频偏与相位校正。\n"
+                                f"前导采样中心 {sync['time_s']:.9f} s；净荷首符号采样中心 {sync['payload_time_s']:.9f} s。\n"
+                                f"前导 {sync['length']}符号；匹配EVM {sync['evm_percent']:.2f}%；残余频偏 {sync['frequency_hz']:+.3f} Hz；"
+                                f"总校正频偏 {sync['total_frequency_hz']:+.3f} Hz；初始相位 {sync['phase_deg']:+.2f}°。\n"
+                                "前导用于消除90°相位歧义；短前导可能误匹配，结果须与发端核对。"
+                                "未跟踪时钟漂移、时变相位或频偏；未自动剔除后续前导。\n"
+                                "Gray映射：I后Q，各轴从负到正，MSB优先；前导已排除，未测BER。"
+                                f"判决EVM不能证明锁定。\n候选净荷比特：{preview}")
+                        pwm_sync = getattr(r, 'pwm_preamble', None)
+                        if pwm_sync is not None:
+                            if sync is None:
+                                self.summary.set(f'{r.order}QAM；PWM前导定位后进行盲定时和静态相位估计。\n'
+                                    '未使用QAM训练符号，90°相位歧义未消除；PWM两态不能确定QAM的绝对相位。\n'
+                                    '仅校正PWM估计的固定粗频偏；未持续跟踪残余频偏、时变相位或时钟漂移。\n'
+                                    'Gray映射：I后Q，各轴从负到正，MSB优先；判决EVM不能证明锁定。\n'
+                                    f'候选数据（未测BER）：{preview}')
+                            pwm_note = (f"PWM前导候选 {len(pwm_sync['symbols'])}符号；"
+                                f"起点 {pwm_sync['time_s']*1e6:.3f} µs；完整前导结束 {pwm_sync['end_time_s']*1e6:.3f} µs；"
+                                f"QAM边界 {pwm_sync['qam_time_s']*1e6:.3f} µs。\n"
+                                f"PWM两态拟合误差 {pwm_sync['error_percent']:.2f}%；"
+                                f"PWM粗频偏校正 {pwm_sync['frequency_hz']:+.3f} Hz；间隔 {pwm_sync['gap_s']*1e6:g} µs。")
+                            self.status.set(self.status.get()+'\n'+pwm_note)
+                            self.summary.set(pwm_note+'\n'+self.summary.get()+
+                                '\nPWM及切换间隔不输出为QAM数据；未自动分割后续帧。')
+                        tdcm = getattr(r,'tdcm',None)
+                        if tdcm is not None and pwm_sync is not None:
+                            self.status.set(self.status.get()+f"\nTDCM {tdcm['harmonic']:+d}阶；每符号 {1e6/r.symbol_hz:g} µs；目标频点 {tdcm['target_hz']/1000:+.6f} kHz")
+                            self.summary.set(f"TDCM {tdcm['harmonic']:+d}阶 → {r.order}QAM；基频 {tdcm['base_hz']/1000:g} kHz；"
+                                f"符号率 {r.symbol_hz/1000:g} kSym/s。\n原载波设置 {r.carrier_hz/1000:+.6f} kHz；"
+                                f"校正后 {tdcm['corrected_carrier_hz']/1000:+.6f} kHz；目标谐波 {tdcm['target_hz']/1000:+.6f} kHz。\n"
+                                f"PWM前导候选 {pwm_sync['time_s']:.9f} s；QAM边界 {pwm_sync['qam_time_s']:.9f} s；"
+                                f"稳定片段拟合误差 {pwm_sync['error_percent']:.2f}%。\n"
+                                f"每 {1e6/r.symbol_hz:g} µs完整窗口提取复系数；每符号{tdcm['cycles_per_symbol']}个调制周期；首尾不完整窗口不输出。\n"
+                                f"校准：{tdcm['calibration_note']}；幅度系数 {tdcm['amplitude_scale']:g}；相位修正 {tdcm['phase_deg']:g}°。\n"
+                                "PWM两态校准须符合发端的幅度/时移约定，不能据此保证映射正确；后续重复前导不自动剔除。"
+                                "未持续跟踪载波/时钟漂移；判决EVM不能证明锁定，未测BER。\n"
+                                f"Gray映射：I后Q，各轴从负到正，MSB优先。候选比特：{preview}")
+                    if r.kind == 'qam':
+                        from rx706_workflows import auto_acquisition_note, auto_qam_summary, qam_training_note
+                        self.status.set(self.status.get()+'\n'+qam_training_note(r))
+                        auto_note = auto_acquisition_note(r)
+                        if auto_note:
+                            self.status.set(self.status.get()+'\n'+auto_note)
+                            self.summary.set(auto_qam_summary(r))
+                    if r.kind in ('pwm', 'pwm2'):
+                        nominal = r.symbol_rate_hz*r.bits_per_symbol
+                        preview = ' | '.join(r.frames['bits' if r.decode_locked else 'candidate_bits'][:32])
+                        preview_label = '分组比特流预览' if r.decode_locked else '候选分组比特流预览（允许错误，不用于BER）'
+                        self.summary.set(self.summary.get()+f"\n每符号 {r.bits_per_symbol} bit；时间片速率 "
+                            f"{r.symbol_rate_hz*(r.total_chips)/1e6:.6g} MHz；"
+                            f"每片 {r.output_rate_hz/(r.symbol_rate_hz*(r.total_chips)):.3f} 个处理点。"
+                            f"\n理论编码速率 {nominal/1e6:.6g} Mbps；片段有效判决比特率 {r.decoded_bit_rate/1e6:.6g} Mbps（非净荷吞吐/BER）。"
+                            f"\n单次毛刺上限 {r.glitch_tolerance_chips:.3g} 片，累计上限0.30片。"
+                            "可判决的短毛刺单独告警；误码以参考序列比对为准。波形保留原始电平跳变。"
+                            f"\n{preview_label}：{preview}\n点击“PWM 符号表 / 比特流…”查看 T1/T0 和导出。")
+                        reference_summary = (r.reference_check.summary() if r.reference_check is not None else
+                            '未测 BER；如发端循环发送7642，请勾选“启用已知发端符号循环”后重新分析。')
+                        self.summary.set(self.summary.get()+'\n'+reference_summary)
+                        self.summary.set(self.summary.get()+f'\n当前每片 {r.output_rate_hz/(r.symbol_rate_hz*(r.total_chips)):.3f} 个IQ点。'
+                            +(r.sampling_note or ''))
+                        if r.calibration_start_s > r.first_tuple/result.sample_rate_hz:
+                            self.summary.set(self.summary.get()+f'\n首窗未能稳定分出两态，载波初始化改用文件 {r.calibration_start_s*1e3:.3f} ms 处窗口；'
+                                '原始起始段仍保留并参与波形/编码检查，没有删样或补位。')
+                        if not r.decode_locked:
+                            self.summary.set(self.summary.get()+'\n'+r.decode_note+
+                                '候选符号按最近脉宽估计并保留失败原因；已确认信息仍为?，候选不据此计算BER。')
+                        if r.state_fit_note:
+                            self.summary.set(self.summary.get()+'\n'+r.state_fit_note)
+                        if r.search_note:
+                            self.summary.set(self.summary.get()+'\n'+r.search_note)
+                        if r.version == 2:
+                            import math
+                            reference_summary = (r.reference_check.summary() if r.reference_check is not None else
+                                f'未测BER。可填写已知符号循环（k=0～{r.code_chips}，必须用空格分隔），启用校验。')
+                            preview_label = f'中间{r.code_chips}片码型' if r.decode_locked else f'候选中间{r.code_chips}片码型（非确认信息）'
+                            states = len(r.symbol_widths) if r.symbol_widths is not None else r.code_chips+1
+                            self.summary.set(
+                                f'PWM version2：{r.prefix_chips}片固定高 + {r.code_chips}片可调 + {r.guard_chips}片固定低，共{r.total_chips}片。\n'
+                                f'判决依据：{"时间片码型（不使用连续脉宽取整）" if r.decision_mode == "pattern" else "连续脉宽"}。\n'
+                                f'符号k={"码型连续1片数" if r.decision_mode == "pattern" else "高片数"}−{r.prefix_chips}，范围0～{r.code_chips}；占空比{100*r.prefix_chips/r.total_chips:g}%～{100*(r.prefix_chips+r.code_chips)/r.total_chips:g}%，步进{100/r.total_chips:g}%。\n'
+                                f'时间片速率 {r.symbol_rate_hz*r.total_chips/1e6:.6g} MHz；每片 {r.output_rate_hz/(r.symbol_rate_hz*r.total_chips):.3f} 个处理点。\n'
+                                f'{states}态信息量上限 log2({states})≈{math.log2(states):.4f} bit/符号；'
+                                f'理想信息率上限 {r.symbol_rate_hz*math.log2(states)/1e6:.6g} Mbps（非实测净荷速率）。\n'
+                                f'输出的{r.code_chips}片码型受连续1后接0的规则约束，不是同等数量的独立信息比特。'
+                                f'全{r.total_chips}片低为空闲；中间{r.code_chips}片全0是有效符号k=0。\n'
+                                f'{preview_label}：{preview}\n{reference_summary}\n'
+                                f'恢复范围 {r.first_tuple/result.sample_rate_hz:.6f}～'
+                                f'{(r.first_tuple+r.input_samples)/result.sample_rate_hz:.6f} s；'
+                                f'削顶 {r.clipped}/{r.input_samples}。\n'
+                                f'{r.search_note}\n{r.sampling_note}\n{r.state_fit_note}\n{r.decode_note}')
+                            if r.training_calibration is not None:
+                                calibration = r.training_calibration
+                                offsets = calibration['corrections_chips']
+                                offset_text = (f'{min(offsets):+.4f}～{max(offsets):+.4f}片' if offsets else '尚无可用补偿')
+                                configured = calibration.get('preamble_widths') is not None
+                                label = f"前导高片数 {calibration['preamble_widths']}" if configured else '20%三连训练补偿'
+                                self.summary.set(self.summary.get()+
+                                    f"\n{label}：{calibration['updates']}个前导区段，排除{calibration['training_symbols']}个训练符号；补偿范围{offset_text}。"
+                                    '\n原始脉宽不改写。P为前导，不输出净荷；受损前导沿用先前校准。'
+                                    f"\n比例范围{calibration.get('scale_range', [])}；{calibration.get('spacing_symbols', 0)}行使用档位标定。"
+                                    '\n参考循环只用于独立校验，不用于补偿或纠错；擦除单列。')
+                                if r.decision_mode == 'pattern':
+                                    self.summary.set(self.summary.get()+'\n当前按原始时间片码型判决；脉宽补偿列仅供对照，不影响码型符号值。')
+                            if r.symbol_widths is not None:
+                                self.summary.set(self.summary.get()+'\n当前符号映射（符号:高片数）：'+
+                                    '  '.join(f'{k}:{w}' for k, w in enumerate(r.symbol_widths)))
+                            if r.output_binary:
+                                duties = [100*w/r.total_chips for w in r.symbol_widths]
+                                calibration_note = ''
+                                if r.training_calibration is not None:
+                                    cal = r.training_calibration
+                                    calibration_note = (f"\n{r.calibration_description}\n排除{cal['training_symbols']}个前导符号。"
+                                        f"比例范围{cal['scale_range']}；{cal['spacing_symbols']}行使用档位标定。")
+                                self.summary.set(f'PWM占空比解调；实测频率 {r.measured_symbol_rate_hz/1000:.5f} kHz。\n'
+                                    f'{states}种符号，符号0～{states-1}，每符号输出{r.bits_per_symbol}位二进制。\n'
+                                    '符号→占空比：'+'  '.join(f'{k}→{v:g}%' for k, v in enumerate(duties))+
+                                    '\n'+reference_summary+calibration_note+
+                                    '\n先前观测用于校准；参考循环不参与纠错。原始数据保留，擦除单列。\n'+
+                                    f'{r.search_note}\n{r.sampling_note}\n{r.decode_note}')
+                            if r.frame_check is not None:
+                                self.summary.set('PWM占空比最简帧；'+r.calibration_description+'\n'+
+                                    r.frame_check.summary()+'\n'+r.sampling_note+'\n'+r.decode_note)
+                            if r.pulse_options is not None:
+                                pulse = r.pulse_options
+                                tails = [c['tail_us'] for c in r.pulse_calibrations]
+                                rates = '；'.join(f"{u['name']} {rate/1000:.3f} kbit/s" for u, rate in
+                                    zip(r.frame_options['users'], pulse['user_information_rates']))
+                                self.summary.set(r.calibration_description+'\n'+
+                                    f"当前码表{pulse['symbol_count']}种；log₂(M)={pulse['information_bits']:.6f} bit/符号。\n"
+                                    f"码元信息速率（前导计入；多用户按完整时隙分摊）：{rates}。\n"
+                                    f"输出{r.bits_per_symbol}位符号编号，仅{pulse['symbol_count']}种有效，不等于同位数独立净荷。\n"
+                                    f"成功前导{len(tails)}个，实测拖尾范围{min(tails):.4f}～{max(tails):.4f}µs。\n"+
+                                    f"按实测拖尾保守评估，完整落在符号内的码字最少{min(c['conservative_codewords'] for c in r.pulse_calibrations)}种；发送码表编号保持不变。\n"+
+                                    r.frame_check.summary()+'\n'+r.sampling_note+'\n'+r.decode_note)
+                elif recovery_error:
+                    if self.constellation_mode.get() == PWM2_MODE and self.pwm2_input_mode.get() == '脉冲宽度与时延':
+                        recovery_error += ' 请同时核对指定JSON中的前导、码表与帧长度是否匹配本文件。'
+                    prefix = 'QAM 解调' if self.constellation_mode.get() in QAM_MODES else ('PWM 解调' if self.constellation_mode.get() in PWM_MODES else '周期恢复')
+                    self.status.set(self.status.get() + f"\n{prefix}未锁定：" + recovery_error)
+                    self.summary.set(self.summary.get() + " 已显示原始 IQ，未强行生成星座簇。")
+            else:
+                self.axes.set_title("Analysis stopped" if kind == "cancelled" else "Analysis failed")
+                self.status.set(("" if kind == "cancelled" else "分析失败：") + value)
+            if kind == 'result' and self.recovery is not None and getattr(self.recovery, 'pulse_options', None):
+                self.summary.set(self._pwm_file_summary(self.recovery))
+            self.canvas.draw()
+            if getattr(self, '_open_pwm_after_analysis', False):
+                self._open_pwm_after_analysis = False
+                if kind == 'result' and self.recovery is not None and self.recovery.kind in ('pwm', 'pwm2'):
+                    self.show_pwm_symbols()
+                elif kind != 'cancelled':
+                    detail = str(recovery_error) if kind == 'result' and recovery_error else self.status.get()
+                    slots = f'{self.pwm2_total_chips.get()}片/前高{self.pwm2_prefix_chips.get()}/后低{self.pwm2_guard_chips.get()}' if self.constellation_mode.get() == PWM2_MODE else (
+                        f'{self.pwm_code_chips.get()}+{self.pwm_guard_chips.get()}') if hasattr(self, 'pwm_code_chips') else ''
+                    config = (f'\n\n本次设置：{self.constellation_mode.get()} {self.pwm_symbol_khz.get()} kHz，'
+                              f'{slots}片，'
+                              f'{self.pwm_polarity.get()}；抽取{self.pwm_decimation.get()}倍，Fs={self.rate.get()} MS/s。') if hasattr(self, 'pwm_symbol_khz') else ''
+                    advice = ('\n\n实际恢复片段触限过多：请降低输入电平或接收增益后重新采集；修改PWM参数不能还原已削顶的采样。'
+                              if '恢复片段削顶' in detail else '\n\n请核对实际 PWM 符号率、保护片数和 A/B 对应关系后重试。')
+                    messagebox.showwarning('PWM 解调未完成', detail+config+advice, parent=self.window)
+            if self.pending_download is not None:
+                filename, self.pending_download = self.pending_download, None
+                self.offer_download(filename)
+        self.poll_after = self.window.after(50, self.poll)
+
+    def show_qam_symbols(self):
+        """View the current QAM result without changing any receive settings."""
+        if self.closed:
+            return
+        if self.busy:
+            messagebox.showinfo('分析进行中', 'QAM分析尚未结束，请完成后再打开符号表。', parent=self.window)
+            return
+        r = self.recovery
+        if r is None or r.kind != 'qam' or self.result is None:
+            note = '尚无QAM解调结果。请先载入本次发送配置并点击“运行接收”；不会切换为PWM或修改帧配置。'
+            self.status.set(note)
+            messagebox.showinfo('尚无QAM符号', note, parent=self.window)
+            return
+        report = getattr(self, '_qam_report', None)
+        if report is not None and not report.closed and report.r is not r:
+            report.close()
+        if report is None or report.closed:
+            from rx706_qam_debug_gui import QAMReportWindow
+            report = QAMReportWindow(self.window, r, self.result)
+            self._qam_report = report
+        for tab in report.notebook.tabs():
+            if report.notebook.tab(tab, 'text') == '候选符号 / 比特':
+                report.notebook.select(tab)
+                break
+        report.window.deiconify()
+        report.window.lift()
+        report.window.focus_set()
+        return report.window
+
+    def show_pwm_symbols(self):
+        """Route by workflow; never reinterpret QAM as legacy PWM on a click."""
+        if self.closed:
+            return
+        from rx706_workflows import AREAS
+        qam_area = getattr(getattr(self, 'workflows', None), 'area', None) == AREAS[1]
+        if (qam_area or self.constellation_mode.get() in QAM_MODES or
+                getattr(self.recovery, 'kind', None) == 'qam'):
+            return self.show_qam_symbols()
+        if self.busy:
+            pwm_running = self.constellation_mode.get() in PWM_MODES
+            if pwm_running:
+                self._open_pwm_after_analysis = True
+            messagebox.showinfo('分析进行中',
+                'PWM 正在分析，完成后会自动打开符号表。' if pwm_running else
+                '当前分析尚未结束，请等待完成后再点击 PWM 符号表。', parent=self.window)
+            return
+        r = self.recovery
+        if r is None or r.kind not in ('pwm', 'pwm2'):
+            if not self.filename.get().strip():
+                self.browse()
+                if not self.filename.get().strip():
+                    return
+            if self.constellation_mode.get() not in PWM_MODES:
+                self.constellation_mode.set(PWM2_MODE)
+                if hasattr(self, '_parameter_groups'):
+                    self.refresh_parameter_visibility()
+            self._open_pwm_after_analysis = True
+            self.analyze()
+            if not self.busy:
+                self._open_pwm_after_analysis = False
+                messagebox.showwarning('无法开始 PWM 解调', self.status.get(), parent=self.window)
+            return
+        existing = getattr(self, '_pwm_dialog', None)
+        if existing is not None and existing.winfo_exists():
+            if getattr(self, '_pwm_dialog_result', None) is r:
+                existing.deiconify()
+                existing.lift()
+                existing.focus_set()
+                return existing
+            existing.destroy()
+        import csv
+        from pathlib import Path
+        source_name = str(self.result.path) if self.result is not None else self.filename.get()
+        dialog = tk.Toplevel(self.window)
+        self._pwm_dialog = dialog
+        self._pwm_dialog_result = r
+        dialog.title("PWM 符号持续时间与信息 · "+Path(source_name).name)
+        dialog.transient(self.window)
+        dialog.geometry("1360x680")
+        dialog.minsize(900, 450)
+        outer = ttk.Frame(dialog, padding=10)
+        outer.pack(fill='both', expand=True)
+        good = int(r.frames['valid'].sum())
+        idle = int((r.frames['symbol'] == -2).sum())
+        training_count = int(r.frames['training'].sum()) if r.training_calibration is not None else 0
+        warned = int((r.frames['valid'] & (r.frames['glitch_count'] > 0)).sum())
+        reference = r.reference_check
+        estimated = (int((r.frames['decision_estimated'] & r.frames['valid']).sum())
+                     if r.pulse_options is not None else 0)
+        reference_summary = reference.summary() if reference is not None else '未测BER（未启用已知发端符号循环）。'
+        if not r.decode_locked:
+            reference_summary = ('PWM编码未锁定：'+r.decode_note+
+                '\n已展示候选符号/比特（允许错误），候选不受检查失败拦截；已确认信息保持?，不计算BER。')
+        ttk.Label(outer, text=f"{r.protocol_label}；{r.total_chips} 片 / 符号；"
+            f"有效 {good}（其中毛刺告警{warned}），空闲 {idle}，训练 {training_count}，无效 {len(r.frames)-good-idle-training_count}；{r.mapping_note}。"
+            "? 为擦除，- 为空闲或前导。\n"+r.calibration_description+'\n'+reference_summary,
+            wraplength=1280).pack(fill='x', pady=(0, 8))
+        if r.pulse_options is not None:
+            ttk.Label(outer, text=f'最近码字估计 {estimated} 个：超容差仍显示符号和比特，金色标记；这些判决参与BER/误块率。缺脉冲或身份失败仍为擦除。',
+                      wraplength=1280).pack(fill='x', pady=(0, 6))
+        selected_user = tk.StringVar(value='全部用户')
+        user_filter = None
+        if r.frame_check is not None:
+            user_filter = ttk.Combobox(outer, textvariable=selected_user, state='readonly',
+                values=['全部用户']+[f"{i+1}: {u['name']}" for i, u in enumerate(r.frame_options['users'])])
+            user_filter.pack(fill='x', pady=(0, 6))
+
+        def selected_frames(payload_only=False):
+            rows = r.frames
+            if r.frame_check is not None:
+                if selected_user.get() != '全部用户':
+                    rows = rows[rows['user_id'] == int(selected_user.get().split(':', 1)[0])]
+                if payload_only:
+                    rows = rows[rows['frame_part'] == '净荷']
+            elif payload_only and r.training_calibration is not None:
+                rows = rows[~rows['training']]
+            return rows
+        headers = ('符号序号', '起始时间(μs)', '状态1持续(μs)', '状态0持续(μs)',
+                   '原始高片数', '原始占空比(%)', '原始时间片码型', '码型中1的片数', '原始码型推断符号',
+                   '脉宽判决用高片数', '脉宽候选符号（允许错误）', '候选比特', '候选依据',
+                   '符号值', '信息比特', '判决', '恢复高片数', '判决占空比(%)', '恢复占空比(%)',
+                   '忽略毛刺数', '累计忽略(ns)', '最大忽略(ns)', '波形告警（单独统计）',
+                   '参考符号', '参考比特', '序列校验', '错比特数（同步不计入BER）')
+        if r.version == 2 and not r.output_binary:
+            headers = tuple({'信息比特': f'中间{r.code_chips}片码型', '候选比特': f'候选{r.code_chips}片码型',
+                             '参考比特': f'参考{r.code_chips}片码型'}.get(title, title) for title in headers)
+        if r.decision_mode == 'pattern':
+            headers = tuple({'脉宽判决用高片数': '脉宽分支高片数（对照）',
+                             '脉宽候选符号（允许错误）': '码型候选符号（允许错误）'}.get(title, title) for title in headers)
+        field_names = ('index', 'start_s', 'one_us', 'zero_us', 'high_chips',
+                       'duty_percent', 'pattern', 'pattern_ones', 'pattern_symbol', 'decision_high_chips',
+                       'candidate_symbol', 'candidate_bits', 'candidate_source',
+                       'symbol', 'bits', 'reason', 'decoded_high_chips', 'decision_duty_percent', 'decoded_duty_percent',
+                       'glitch_count', 'glitch_us', 'glitch_max_us', 'warning',
+                       'expected_symbol', 'expected_bits', 'reference_status', 'bit_errors')
+        if r.training_calibration is not None:
+            headers += ('训练段', '校准编号', '脉宽补偿(片)', '补偿后高片数', '补偿后T1(μs)', '补偿后T0(μs)', '原始脉宽检查（非参考验证）', '测宽比例', '校准依据', '拟合时钟测宽(片)')
+            field_names += ('training', 'calibration_id', 'width_correction_chips', 'corrected_high_chips',
+                            'corrected_one_us', 'corrected_zero_us', 'raw_reason',
+                            'width_scale', 'calibration_source', 'clock_high_chips')
+        if r.output_binary and r.pulse_options is None:
+            headers += (f'{len(r.symbol_widths)}位温度计码（档位映射）',)
+            field_names += ('duty_thermometer',)
+        if r.pulse_options is not None:
+            headers += ('上升沿时间(µs)', '下降沿时间(µs)', '脉冲延迟(片)', '脉冲延迟(µs)',
+                        '原始高脉冲(µs)', '前导估计拖尾(µs)', '前导残差(µs)', '估计判决', '最近码字距离(片)')
+            field_names += ('rise_s', 'fall_s', 'delay_chips', 'delay_us', 'raw_pulse_us', 'tail_us',
+                            'calibration_error_us', 'decision_estimated', 'decision_distance_chips')
+        if r.frame_check is not None:
+            headers += ('帧内区段', '用户编号', '块编号', '块内净荷序号', '身份码有效', '完整块')
+            field_names += ('frame_part', 'user_id', 'block_id', 'payload_index', 'identity_ok', 'block_complete')
+        if r.pulse_options and r.pulse_options.get('air_crc12_report'):
+            cr = r.pulse_options['air_crc12_report']['overall']
+            ttk.Label(outer, text='CRC12 observed-window BLER: '+str(cr['observed_scheduled_bler'])+
+                      ' | failed/expected: '+str(cr['failed_slots'])+'/'+str(cr['expected_complete_slots'])+
+                      ' | full-transmission BLER unknown; see exported pulse_config.air_crc12_report').pack(fill='x')
+        table_box = ttk.Frame(outer)
+        table_box.pack(fill='both', expand=True)
+        tree = ttk.Treeview(table_box, columns=field_names, show='headings', height=15)
+        vertical = ttk.Scrollbar(table_box, orient='vertical', command=tree.yview)
+        horizontal = ttk.Scrollbar(table_box, orient='horizontal', command=tree.xview)
+        tree.configure(yscrollcommand=vertical.set, xscrollcommand=horizontal.set)
+        vertical.pack(side='right', fill='y')
+        horizontal.pack(side='bottom', fill='x')
+        tree.pack(fill='both', expand=True)
+        from rx706_table_layout import configure_symbol_table
+        restore_columns = configure_symbol_table(tree, field_names, headers, r.total_chips, r.code_chips)
+        compact = tuple(key for key in ('index', 'start_s', 'high_chips', 'decision_high_chips',
+                         'decoded_high_chips', 'symbol', 'reason', 'reference_status') if key in field_names)
+        if r.output_binary:
+            compact = ('index', 'start_s', 'duty_percent', 'decision_duty_percent',
+                       'decoded_duty_percent', 'symbol', 'duty_thermometer', 'bits', 'reason')
+        if r.frame_check is not None:
+            compact = ('index', 'frame_part', 'user_id', 'block_id', 'payload_index',
+                       'symbol', 'bits', 'reference_status', 'bit_errors', 'reason')
+        if r.pulse_options is not None:
+            compact = ('index', 'user_id', 'block_id', 'delay_chips', 'corrected_high_chips',
+                       'tail_us', 'symbol', 'bits', 'decision_estimated', 'reference_status', 'reason')
+            if r.pulse_options.get('cycle_calibration'):
+                compact = ('index', 'frame_part', 'user_id', 'block_id', 'delay_chips', 'corrected_high_chips',
+                           'width_scale', 'symbol', 'bits', 'reference_status', 'reason')
+        tree.configure(displaycolumns=compact)
+        tree.tag_configure('invalid', foreground='#b64720')
+        tree.tag_configure('idle', foreground='#777777')
+        tree.tag_configure('warning', foreground='#a56a00')
+        tree.tag_configure('mismatch', foreground='#c02020')
+        tree.tag_configure('training', foreground='#355fb5')
+
+        def values(row, numeric=False):
+            from rx706_pwm import pattern_symbol, decision_width_chips
+            start = float(row['start_s'])*1e6
+            position = int(row['index'])-int(r.frames['index'][0])
+            if row['symbol'] == -3:
+                check_values = ('', '', '训练/不统计', '')
+            elif reference is not None and reference.locked:
+                expected = int(reference.expected[position])
+                errors = int(reference.row_bit_errors[position])
+                expected_bits = (reference.row_expected_bits[position] if r.frame_check is not None else
+                    reference.bitwords[expected] if reference.bitwords is not None else format(expected, f'0{r.bits_per_symbol}b'))
+                check_values = (expected if expected >= 0 else '', expected_bits,
+                                str(reference.row_status[position]), errors if errors >= 0 else '')
+            else:
+                check_values = ('', '', '未同步' if reference is not None else '未启用', '')
+            calibration_values = ()
+            if r.training_calibration is not None:
+                calibration_values = (bool(row['training']), int(row['calibration_id']),
+                    *(float(row[key]) if numeric else f'{row[key]:.4f}' for key in
+                      ('width_correction_chips', 'corrected_high_chips', 'corrected_one_us', 'corrected_zero_us')),
+                    str(row['raw_reason']), float(row['width_scale']), str(row['calibration_source']),
+                    float(row['clock_high_chips']))
+            raw_pattern = str(row['pattern'])
+            raw_k = pattern_symbol(raw_pattern, r.total_chips, r.code_chips, r.prefix_chips)
+            if raw_k >= 0 and r.symbol_widths is not None:
+                raw_k = r.width_symbol(raw_k+r.prefix_chips)
+            raw_value = raw_k if raw_k >= 0 else '空闲' if raw_k == -2 else '码型不符'
+            used_width = decision_width_chips(row)
+            decoded_width = ((r.symbol_widths[int(row['symbol'])] if r.symbol_widths is not None else
+                              int(row['symbol'])+(r.prefix_chips or 1)) if row['valid'] else None)
+            return (int(row['index']), start if numeric else f'{start:.4f}',
+                    *(float(row[key]) if numeric else f'{row[key]:.4f}'
+                      for key in ('one_us', 'zero_us', 'high_chips', 'duty_percent')),
+                    raw_pattern, raw_pattern.count('1'), raw_value, used_width if numeric else f'{used_width:.4f}',
+                    int(row['candidate_symbol']) if row['candidate_symbol'] >= 0 else ('训练' if row['candidate_symbol'] == -3 else '空闲' if row['candidate_symbol'] == -2 else '?'),
+                    str(row['candidate_bits']), str(row['candidate_source']),
+                    int(row['symbol']) if row['symbol'] >= 0 else ('训练' if row['symbol'] == -3 else '空闲' if row['symbol'] == -2 else '无效'),
+                    str(row['bits']), str(row['reason']),
+                    decoded_width if decoded_width is not None else '',
+                    100*used_width/r.total_chips if numeric else f'{100*used_width/r.total_chips:.3f}',
+                    (100*decoded_width/r.total_chips if numeric else f'{100*decoded_width/r.total_chips:.3f}') if decoded_width is not None else '',
+                    int(row['glitch_count']),
+                    *(float(row[key])*1e3 if numeric else f'{row[key]*1e3:.2f}' for key in ('glitch_us', 'glitch_max_us')),
+                    str(row['warning']), *check_values, *calibration_values,
+                    *((r.duty_thermometer(row),) if r.output_binary and r.pulse_options is None else ()),
+                    *((float(row['rise_s'])*1e6, float(row['fall_s'])*1e6,
+                       *(float(row[key]) for key in ('delay_chips', 'delay_us', 'raw_pulse_us', 'tail_us', 'calibration_error_us')),
+                       bool(row['decision_estimated']) if numeric else '是' if row['decision_estimated'] else '否',
+                       float(row['decision_distance_chips']))
+                      if r.pulse_options is not None else ()),
+                    *((str(row['frame_part']), int(row['user_id']), int(row['block_id']),
+                       int(row['payload_index']) if row['payload_index'] >= 0 else '',
+                       bool(row['identity_ok']), bool(row['block_complete'])) if r.frame_check is not None else ()))
+
+        def populate_table():
+            tree.delete(*tree.get_children())
+            for row in selected_frames()[:2000]:
+                tag = ('warning' if row['glitch_count'] else '') if row['valid'] else ('training' if row['symbol'] == -3 else 'idle' if row['symbol'] == -2 else 'invalid')
+                if row['valid'] and '超容差' in row['reason']:
+                    tag = 'warning'
+                if row['valid'] and r.pulse_options is not None and row['decision_estimated']:
+                    tag = 'warning'
+                position = int(row['index'])-int(r.frames['index'][0])
+                if reference is not None and reference.locked and '不匹配' in reference.row_status[position]:
+                    tag = 'mismatch'
+                tree.insert('', 'end', values=values(row), tags=(tag,) if tag else ())
+        populate_table()
+        ttk.Label(outer, text=f"表格显示前 {min(2000,len(r.frames))} 行，共 {len(r.frames)} 行；CSV 导出全部结果。"
+            "起始时间相对原始采集文件；T1/T0取忽略短毛刺后的主脉冲边沿。"
+            + ("当前按时间片码型判决，候选与码型推断一致；脉宽和补偿列仅供对照。" if r.decision_mode == 'pattern' else
+               "原始码型按每片多数采样显示，与连续边沿测宽是两种估计；脉宽候选按判决用高片数取整，可能与码型推断不同。") +
+            "金色为毛刺告警或最近码字估计；红色为参考不匹配；最近估计仍计入BER。", wraplength=1250).pack(fill='x', pady=6)
+        show_candidates = tk.BooleanVar(value=not r.decode_locked)
+        ttk.Label(outer, text=(f'中间{r.code_chips}片码型预览（前2000个符号；受约束码型）' if r.version == 2 and not r.output_binary else
+                              '分组比特预览（前2000个符号，MSB优先；候选含未通过检查的估计值）')).pack(anchor='w')
+        text = scrolledtext.ScrolledText(outer, height=5, wrap='word')
+        text.pack(fill='x', pady=4)
+        def refresh_preview():
+            text.configure(state='normal')
+            text.delete('1.0', 'end')
+            text.insert('1.0', ' | '.join(selected_frames(payload_only=r.frame_check is not None)['candidate_bits' if show_candidates.get() else 'bits'][:2000]))
+            text.configure(state='disabled')
+        refresh_preview()
+        if user_filter is not None:
+            user_filter.bind('<<ComboboxSelected>>', lambda event: (populate_table(), refresh_preview()))
+        ttk.Checkbutton(outer, text='预览候选比特（允许错误，不用于BER）', variable=show_candidates,
+                        command=refresh_preview).pack(anchor='w')
+        buttons = ttk.Frame(outer)
+        buttons.pack(fill='x', pady=(6, 0))
+        show_details = tk.BooleanVar(value=False)
+        ttk.Checkbutton(buttons, text='显示全部诊断列', variable=show_details,
+                        command=lambda: tree.configure(displaycolumns=field_names if show_details.get() else compact)).pack(side='right', padx=8)
+        ttk.Button(buttons, text='复位列宽', command=restore_columns).pack(side='right')
+
+        def export(kind):
+            is_csv = kind == 'csv'
+            extension = 'csv' if is_csv else 'txt'
+            suffix = '_pwm.csv' if is_csv else ('_candidate_bits.txt' if kind == 'candidate' else '_bits.txt')
+            target = filedialog.asksaveasfilename(parent=dialog, title='导出全部 PWM 解调结果',
+                initialfile=Path(source_name).stem+suffix,
+                defaultextension='.'+extension, filetypes=[('PWM CSV' if is_csv else '分组比特流', '*.'+extension)])
+            if not target:
+                return
+            try:
+                if is_csv:
+                    with open(target, 'w', newline='', encoding='utf-8-sig') as stream:
+                        writer = csv.writer(stream)
+                        writer.writerow(headers)
+                        writer.writerows(values(row, numeric=True) for row in selected_frames())
+                else:
+                    with open(target, 'w', encoding='utf-8') as stream:
+                        stream.write(f'# {r.protocol_label}; {r.total_chips} slots; {r.mapping_note}; ?=erasure; -=idle\n')
+                        if r.version == 2 and not r.output_binary:
+                            stream.write(f'# Middle {r.code_chips}-slot thermometer words; {r.code_chips+1} states, not independent payload bits.\n')
+                            stream.write(f'# Decision basis: {r.decision_mode}; raw time-slot pattern and width measurements retained in CSV.\n')
+                        stream.write('# '+reference_summary.replace('\n', '\n# ')+'\n')
+                        if kind == 'candidate':
+                            stream.write('# 候选比特：含检查失败的最近脉宽估计，仅供观察，不用于BER。\n')
+                        exported = selected_frames(payload_only=True)
+                        if r.training_calibration is not None:
+                            stream.write('# Configured preambles excluded; calibration uses preceding observations only.\n')
+                        stream.write(' | '.join(exported['candidate_bits' if kind == 'candidate' else 'bits'])+'\n')
+            except OSError as exc:
+                messagebox.showerror('导出失败', str(exc), parent=dialog)
+                return
+            messagebox.showinfo('导出完成', target, parent=dialog)
+
+        ttk.Button(buttons, text='导出全部 CSV…', command=lambda: export('csv')).pack(side='left', padx=(0, 10))
+        ttk.Button(buttons, text='导出分组比特流…', command=lambda: export('txt')).pack(side='left')
+        ttk.Button(buttons, text='导出候选比特流…', command=lambda: export('candidate')).pack(side='left', padx=(10, 0))
+        if r.frame_check is not None:
+            def export_metrics():
+                target = filedialog.asksaveasfilename(parent=dialog, title='导出逐块结果和整体指标',
+                    initialfile=Path(source_name).stem+'_blocks.json', defaultextension='.json', filetypes=[('统计JSON', '*.json')])
+                if not target:
+                    return
+                try:
+                    report = dict(config=r.frame_options, locked=r.frame_check.locked,
+                                  summary=r.frame_check.summary(), overall=r.frame_check.overall,
+                                  per_user=r.frame_check.per_user, blocks=r.frame_check.blocks)
+                    if r.pulse_options is not None:
+                        report.update(pulse_config=r.pulse_options, calibrations=r.pulse_calibrations)
+                    Path(target).write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+                except OSError as exc:
+                    messagebox.showerror('导出失败', str(exc), parent=dialog)
+            ttk.Button(buttons, text='导出逐块统计…', command=export_metrics).pack(side='left', padx=(10, 0))
+        dialog.update_idletasks()
+        dialog.deiconify()
+        dialog.lift()
+        dialog.focus_set()
+        return dialog
+
+    def close(self):
+        if self.closed:
+            return
+        self.closed = True
+        self.cancel.set()
+        report = getattr(self, '_qam_report', None)
+        if report is not None and not report.closed:
+            report.close()
+        self._qam_report = None
+        if hasattr(self, "navigation"):
+            self.navigation.close()
+        canvas = getattr(self, 'canvas', None)
+        idle_draw = getattr(canvas, '_idle_draw_id', None)
+        if idle_draw is not None:
+            try:
+                canvas.get_tk_widget().after_cancel(idle_draw)
+            except tk.TclError:
+                pass
+            canvas._idle_draw_id = None
+        for variable, token in getattr(self, "_info_traces", []):
+            variable.trace_remove("write", token)
+        if hasattr(self, "_sidebar_wheel_tag"):
+            for event in ("<MouseWheel>", "<Button-4>", "<Button-5>"):
+                self.window.unbind_class(self._sidebar_wheel_tag, event)
+        if self.poll_after:
+            self.window.after_cancel(self.poll_after)
+            self.poll_after = None
+        self.window.destroy()

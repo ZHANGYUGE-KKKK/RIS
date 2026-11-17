@@ -1,0 +1,23 @@
+{
+  "completed_at": "2026-11-10T14:44:04.707418+08:00",
+  "board": "ZC706 / XC7Z045",
+  "cable_serial": "210299372306",
+  "package": "export_flash/20261109_qpr1",
+  "boot_sha256": "de9e51fa88438930c1bd5ae929c8ceac9eba67ad9544e3a5a848ef256e8557bd",
+  "image_bytes": 13556752,
+  "flash_type": "qspi-x8-dual_parallel",
+  "flash_offset": 0,
+  "boot_mode_during_programming": "JTAG (0)",
+  "programming_result": "PASS",
+  "writer_result": "0x600D",
+  "direct_full_byte_compare": "PASS",
+  "independent_program_flash_verify": "SKIPPED_AT_USER_REQUEST",
+  "cold_boot_test": "NOT_PERFORMED",
+  "network_status_test": "NOT_PERFORMED",
+  "note": "User requested no post-program independent readback. The already-running writer completed its built-in comparison. No additional verification command was run.",
+  "evidence_sha256": {
+    "inspect_initial.log": "e1e21f37d99d1473aaf1892f9b9f380b7fcc824451711ff796d62f9be911de90",
+    "package_preflight.json": "277ac4b0b2542491d3f238e5853c1583866105463ec6cdc354afe3bad01759fb",
+    "direct_program.log": "a79045f4b61db8da9a1a86fa79dbcfe4116ac2f741643f427fe08ed03a02c050"
+  }
+}

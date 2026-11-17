@@ -1,12 +1,10 @@
 """Compile uniform MT preambles: QPR1 independent prefix and legacy QAM1 exports."""
 from array import array
 from dataclasses import dataclass
-from decimal import Decimal, ROUND_HALF_UP
 import struct
 
 from ris_qam256 import integer
-
-MAX_PREAMBLE_ROWS = 10
+from ris_mt import MAX_PREAMBLE_ROWS, pulse_ticks, validate_preamble
 
 
 @dataclass(frozen=True)
@@ -18,20 +16,28 @@ class Preamble:
     @classmethod
     def compile(cls, rows, slots):
         integer(slots, 1, 65535, "每周期片数")
-        if not 1 <= len(rows) <= MAX_PREAMBLE_ROWS:
-            raise ValueError("前导码MT表需要1–10行，每行对应一个PWM周期")
-        saved, widths = [], []
-        for i, (m, t) in enumerate(rows, 1):
-            m, t = Decimal(m), Decimal(t)
-            if not m.is_finite() or not t.is_finite() or not 0 <= m <= 100:
-                raise ValueError(f"前导码第{i}行：占空比需要在0–100%之间")
-            if t != 0:
-                raise ValueError(f"前导码第{i}行：延时T必须为0")
-            width = int((m * slots / 100).to_integral_value(rounding=ROUND_HALF_UP))
+        saved, widths = validate_preamble(rows), []
+        for i, (m, t) in enumerate(saved, 1):
+            _, width = pulse_ticks(m, t, slots)
             if (m > 0 and width == 0) or (m < 100 and width == slots):
                 raise ValueError(f"前导码第{i}行：脉冲或低电平不足一个时间片，请调整占空比")
-            saved.append((m, t)); widths.append(width)
+            widths.append(width)
         return cls(tuple(saved), tuple(widths), slots)
+
+    @property
+    def delays(self):
+        return tuple(pulse_ticks(m, t, self.slots)[0] for m, t in self.rows)
+
+    def runs(self, index, clock_period=0):
+        """One complete cycle: leading low, pulse, trailing low; no wrap."""
+        from ris_qam64_timing import edge_tick
+        width, delay = self.widths[index], self.delays[index]
+        period = clock_period or self.slots
+        if not width:
+            return ((0, period),)
+        start = edge_tick(delay, period, self.slots) if clock_period else delay
+        end = edge_tick(delay+width, period, self.slots) if clock_period else delay+width
+        return tuple((level, n) for level, n in ((0, start), (1, end-start), (0, period-end)) if n)
 
 
 def assemble(patterns, events, index, data, repeats, loop, preamble, max_group=None):
@@ -58,8 +64,8 @@ def assemble(patterns, events, index, data, repeats, loop, preamble, max_group=N
     waveforms = [raw_events[row["first_record"]:row["first_record"]+row["record_count"]] for row in index]
     aliases = {wave: i for i, wave in enumerate(waveforms)}
     sequence = array("H")
-    for width in preamble.widths:
-        wave = tuple((fid, n) for fid, n in ((high, width), (low, base-width)) if n)
+    for i in range(len(preamble.rows)):
+        wave = tuple((high if level else low, n) for level, n in preamble.runs(i))
         if wave not in aliases:
             aliases[wave] = len(waveforms); waveforms.append(wave)
         sequence.append(aliases[wave])
@@ -108,7 +114,7 @@ def independent_blocks(patterns, events, index, payload, preamble, phase, clock_
     Prefix entries do not consume symbol IDs or payload bytes. Preamble is in
     physical high/low levels, independent of the QAM state polarity mapping.
     """
-    from ris_qam64_timing import clock_events, edge_tick
+    from ris_qam64_timing import clock_events
     frames = [patterns[i:i+50] for i in range(0, len(patterns), 50)]
     symbols = b"".join(struct.pack("<HH", row["first_record"], row["record_count"]) for row in index)
     symbols += symbols[:4] * (256-len(index))
@@ -120,10 +126,8 @@ def independent_blocks(patterns, events, index, payload, preamble, phase, clock_
         return frames.index(value)
     if preamble.rows:
         low, high = frame_id(bytes(50)), frame_id(b"\xff"*50)
-        for width in preamble.widths:
-            actual = edge_tick(width, clock_period, preamble.slots) if clock_period else width
-            period = clock_period or preamble.slots
-            wave = [(fid, n) for fid, n in ((high, actual), (low, period-actual)) if n]
+        for i in range(len(preamble.rows)):
+            wave = [(high if level else low, n) for level, n in preamble.runs(i, clock_period)]
             if clock_period and any(n < 29 for _, n in wave):
                 raise ValueError("前导码脉冲或低电平短于595更新时间，请调整占空比或降低PWM频率")
             prefix.extend(struct.pack("<HH", len(physical)//4, len(wave)))

@@ -1,0 +1,47 @@
+{
+  "board_role": "transmitter_ris_controller",
+  "firmware_build_pass": true,
+  "new_bsp_has_two_gems": true,
+  "pbuf_pool_size": 256,
+  "mem_size": 262144,
+  "hardware_handoff_matches_bsp": true,
+  "hwh_sha256": {
+    "ris_system.hwh": "d9d1f12508e5bddec6f426392c8c617f442de33c2cd153671e31cebf801e7289"
+  },
+  "application_sources_match": true,
+  "source_sha256": {
+    "software/main.c": "6af20ead1e9054330d31325bf1c69fc9161d65dc11c4aca8ca72dddf8d60d082",
+    "software/ris_controller.c": "67c467c766c4d878ae51693ce08ed1b026dbd804bb227984daba89848a4beeea",
+    "software/ris_controller.h": "dbbd7dd3930774278f6cff00ecb3ecd68cfec407f242e81a0a533f2fe8a1da65",
+    "software/ris_controller_regs.h": "a207bc3f5050138fc276ba1ccd07ac41a6183e90a7674c6c5f9a8a6ced7b3880",
+    "software/ris_qam_driver.inc": "2fcdb7f06fb7cbc4f1d89381249a858d3132a5b60a14830cc047ccd1f614b5f3",
+    "software/ris_qam_regs.h": "3086f1315a6ff0917353086ca533056ebfef96f714bd22ff433d18df46c3c22b",
+    "software/network/ris_network.c": "0f81122d49aefaf1eba487826f3e0b7583f60978ed11f75a4bca9baf23e487c9",
+    "software/network/ris_network.h": "22a76eebf76d25347cac218e77e7448cee73a4196d3d740fc5bb60562eda80b8",
+    "software/network/ris_pl_eth_board.c": "a966b5d2a2184831734760dfc9edd44b96458b92674524781d0fe308c393d1fb",
+    "software/network/ris_pl_eth_board.h": "257d9fb00bd43761afa6ed0dae955426e8660e2e30042ba67f9177dcb3821e72",
+    "software/network/ris_protocol.c": "281d824872c031d2dcf629e80de2533036da3f9d1c11ac64f86177062eb818c7",
+    "software/network/ris_protocol.h": "513d832d6d07bdf43fa6cb410f107f85cbbbec49b172646cf1041c505157df29",
+    "software/network/ris_uplink.c": "aa7b3d16417021c716239d80cb361551fc1c8010fe95552ba79ac4af8219956c",
+    "software/network/ris_uplink.h": "080570c88860b61b4ee9d817f2904442d126d90eebb4dce169b6e35288c233d0",
+    "software/network/ris_uplink_core.c": "40159afdec5c85b5d3c78c44ebb460b0258b431917e9539ac965dbe261f10a49",
+    "software/network/ris_uplink_core.h": "388a9ecd9508da59c7f19d253152829edb829d73ce82edf0ef670da70d158c12"
+  },
+  "library_sha256": {
+    "liblwip4.a": "dc0b3d3492be9c680b728544deadf5ca09ebfa35ad61e7b82f41a90a9c8c108e",
+    "libxil.a": "d981b83101b5b0e7d3ebad55d5fdd329ec6a8afa72d6740ed0c246768b859b45"
+  },
+  "script_sha256": {
+    "scripts/patch_uplink_bsp.py": "ea9f16c5aa6396ab4df3ff44e2c7c01f54af6d7ee6b0c9fb508d33fefc4fd28e",
+    "scripts/build_uplink_firmware.tcl": "a5399f466aaaf90c473e8bf5a4c2f1d8bdb5db54d8a46d96bad680471a299b9f",
+    "scripts/build_uplink_firmware.sh": "51efb7ce38f2a6d12f4c8a272fd4e93159ae92904eeba151b661ad3d497f2bf4"
+  },
+  "artifact_sha256": {
+    "ris_uplink_network.elf": "e2b613f6d04085bdd73b696301ee72cce64485cdf0ae92d5f55718f743724405",
+    "ris_ctrl_unit.bit": "5fd3ad76afed4c267be71632f843cb164a4aa65c7e64c7dfdac9d96a70e8ea6c",
+    "ris_ctrl_unit.xsa": "dc5acc4c2486807bc977287f5b55f2c5e9725a101d739e2d700ca8862377bf62",
+    "ps7_init.tcl": "71a6420d75012b977590d027ac8f5fca8c87cd756676a357698556892446bb38"
+  },
+  "board_programmed": false,
+  "end_to_end_hardware_tested": false
+}

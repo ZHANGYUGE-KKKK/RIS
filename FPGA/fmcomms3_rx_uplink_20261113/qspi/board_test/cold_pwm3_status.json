@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "type": "pwm3_status",
+  "enabled": false,
+  "symbol_hz": 10000,
+  "windows": 0,
+  "frames": 0,
+  "reports_queued": 0,
+  "carrier_hz": 0,
+  "capture_result": 0,
+  "uplink_result": 0,
+  "link_up": true,
+  "init_error": 0
+}

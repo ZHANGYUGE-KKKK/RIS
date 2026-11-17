@@ -1,0 +1,3 @@
+RIS_ETH1_SGMII_GUI_APPLY_PASS
+WRAPPER /home/wenhan/PROJECTS/RIS/FPGA/ris_qam_backend/vivado_qam/ris_ctrl_unit.gen/sources_1/bd/ris_system/hdl/ris_system_wrapper.v
+PORTS /DDR_addr /DDR_ba /DDR_cas_n /DDR_ck_n /DDR_ck_p /DDR_cke /DDR_cs_n /DDR_dm /DDR_dq /DDR_dqs_n /DDR_dqs_p /DDR_odt /DDR_ras_n /DDR_reset_n /DDR_we_n /FIXED_IO_ddr_vrn /FIXED_IO_ddr_vrp /FIXED_IO_mio /FIXED_IO_ps_clk /FIXED_IO_ps_porb /FIXED_IO_ps_srstb /pl_eth_mdio_mdc /pl_eth_mdio_mdio_i /pl_eth_mdio_mdio_o /pl_eth_mdio_mdio_t /pl_eth_refclk_clk_n /pl_eth_refclk_clk_p /pl_eth_reset_n /pl_eth_sgmii_rxn /pl_eth_sgmii_rxp /pl_eth_sgmii_txn /pl_eth_sgmii_txp /pl_eth_si5324_reset_n /ris_data /ris_mr_n /ris_oe_n /ris_shcp /ris_stcp

@@ -1,5 +1,7 @@
 /* Raw lwIP callbacks only collect requests. AXI operations run in main(). */
 #include "ris_network.h"
+#include "ris_uplink.h"
+#include "xil_printf.h"
 #include "xparameters.h"
 #include "xgpiops.h"
 #include "xscugic.h"
@@ -103,12 +105,20 @@ int ris_network_init(void)
     Xil_ExceptionEnableMask(XIL_EXCEPTION_IRQ);
     pcb=tcp_new();
     if (!pcb) return -1;
-    if (tcp_bind(pcb,IP_ADDR_ANY,RIS_NET_PORT)!=ERR_OK) {tcp_abort(pcb); return -1;}
+    tcp_bind_netif(pcb,&board);
+    if (tcp_bind(pcb,&ip,RIS_NET_PORT)!=ERR_OK) {tcp_abort(pcb); return -1;}
     listener=tcp_listen(pcb);
     if (!listener) {tcp_abort(pcb); return -1;}
     tcp_accept(listener,accepted);
     XTime_GetTime(&last_tcp); last_arp=last_link=last_health=last_tcp;
     active=1;
+    /* A PL-link failure must not take down the existing PS control service. */
+    {
+        int uplink_rc=ris_uplink_init(&board);
+        xil_printf("RIS uplink init rc=%d UDP %s:%u -> TCP %s:%u\r\n",
+            uplink_rc,RIS_UPLINK_PL_ADDRESS,RIS_UPLINK_UDP_PORT,
+            RIS_NET_ADDRESS,RIS_UPLINK_MONITOR_PORT);
+    }
     return 0;
 }
 void ris_network_poll(void)
@@ -117,6 +127,7 @@ void ris_network_poll(void)
     if (!active) return;
     xemacif_input(&board);
     XTime_GetTime(&now);
+    ris_uplink_poll(now);
     if (now-last_tcp>=COUNTS_PER_SECOND/4) {tcp_tmr(); last_tcp=now;}
     if (now-last_arp>=COUNTS_PER_SECOND) {
         etharp_tmr();

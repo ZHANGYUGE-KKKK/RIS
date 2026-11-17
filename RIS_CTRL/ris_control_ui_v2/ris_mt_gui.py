@@ -1,10 +1,11 @@
 """File selection and preview; loading/editing never sends output commands."""
 from pathlib import Path
+from decimal import Decimal
 import tkinter as tk
 from tkinter import ttk, filedialog
 
-from ris_frequency import frequency_text
-from ris_mt import compile_mt, load_mt, rounded
+from ris_mt import DEFAULT_MT_DIRECTORY, MAX_ROWS, compile_mt, load_mt, validate_preamble
+from ris_mt_preview import MTPreview
 
 
 class MTControls:
@@ -14,6 +15,10 @@ class MTControls:
         self.path = None
         self._plan_key = self._plan = None
         self.loop = tk.BooleanVar(value=True)
+        self.preamble_enabled = tk.BooleanVar(value=False)
+        self.preamble_rows = ()
+        self.preamble_path = None
+        self.preamble_text = tk.StringVar(value="未加载前导码；格式(M,T);，最多10行，M+T不大于100%。")
         self.file_text = tk.StringVar(value="默认方波：M=50%，T=0%；可加载 MATLAB 导出的 MT 文本表")
         self.mode = tk.StringVar(value="uniform")
         row = ttk.Frame(parent)
@@ -39,17 +44,64 @@ class MTControls:
         self.stop_button.pack(side="left", padx=4)
         ttk.Label(playback, text="选择后，经右上角总按钮应用。").pack(side="left", padx=8)
         ttk.Label(parent, textvariable=self.file_text, wraplength=1060).pack(anchor="w", pady=(3, 0))
+        prefix = ttk.LabelFrame(parent, text="前导码MT表", padding=10)
+        prefix.pack(fill="x", pady=(12, 0))
+        buttons = ttk.Frame(prefix)
+        buttons.pack(fill="x")
+        self.preamble_checkbox = ttk.Checkbutton(buttons, text="启用前导码", variable=self.preamble_enabled)
+        self.preamble_checkbox.pack(side="left")
+        self.preamble_load_button = ttk.Button(buttons, text="加载前导码MT表", command=self.choose_preamble)
+        self.preamble_load_button.pack(side="left", padx=12)
+        ttk.Label(prefix, textvariable=self.preamble_text, wraplength=1020).pack(anchor="w", pady=(6, 0))
+        ttk.Label(prefix, text="每行一个PWM周期，与正式MT内容共用频率和周期边界；每次循环先发前导码，再发正式内容。\n"
+                  "未加载正式MT表时，正式内容为一个默认50%方波周期；前导码与正式表合计最多512行。",
+                  wraplength=1020, style="Muted.TLabel").pack(anchor="w", pady=(5, 0))
         self.loop.trace_add("write", lambda *_: app.refresh_pending())
+        self.preamble_enabled.trace_add("write", self._preamble_changed)
+
+    @property
+    def has_table(self):
+        return bool(self.rows) or self.preamble_enabled.get()
+
+    @staticmethod
+    def _validate_preamble(rows):
+        validate_preamble(rows)
+
+    def _preamble_changed(self, *_):
+        if self.preamble_rows:
+            self.preamble_text.set(f"{self.preamble_path.name} · {len(self.preamble_rows)}个周期 · "
+                                   f"{'已启用' if self.preamble_enabled.get() else '未启用'} · 经总下发按钮应用")
+        self.update_state()
+        self.app.refresh_pending()
+
+    def choose_preamble(self):
+        path = filedialog.askopenfilename(parent=self.app.root, title="加载前导码MT表",
+                                         initialdir=str(DEFAULT_MT_DIRECTORY),
+                                         filetypes=[("MT 文本表", "*.txt *.mt *.csv"), ("所有文件", "*")])
+        if path:
+            self.load_preamble(path)
+
+    def load_preamble(self, path):
+        try:
+            rows = load_mt(path)
+            self._validate_preamble(rows)
+        except (OSError, UnicodeError, ValueError) as error:
+            self.app.notice.set(f"前导码未载入，保留原配置：{error}")
+            return False
+        self.preamble_rows, self.preamble_path = rows, Path(path)
+        self.preamble_enabled.set(True)
+        self.app.notice.set("前导码已载入配置快照；点击右上角总下发按钮后应用。")
+        return True
 
     def update_state(self):
-        enabled = bool(self.rows)
+        enabled = self.has_table
         for button in (self.once_button, self.loop_button):
             button.configure(state="normal" if enabled else "disabled")
         self.stop_button.configure(state="normal")
         self.cancel_button.configure(state="normal" if self.app.mt_uploading else "disabled")
 
     def start(self, loop):
-        if not self.rows:
+        if not self.has_table:
             self.app.notice.set("请先加载 MT 时域表")
             return False
         self.app.stage_mt(loop)
@@ -57,6 +109,7 @@ class MTControls:
 
     def choose(self):
         path = filedialog.askopenfilename(parent=self.app.root, title="加载 MT 时域表",
+                                         initialdir=str(DEFAULT_MT_DIRECTORY),
                                          filetypes=[("MT 文本表", "*.txt *.mt *.csv"), ("所有文件", "*")])
         if path:
             self.load(path)
@@ -80,14 +133,23 @@ class MTControls:
         self.update_state()
 
     def plan(self):
-        key = (self.rows, self.app.fast_value.get(), self.app.fast_unit.get(), self.loop.get())
+        prefix = ()
+        if self.preamble_enabled.get():
+            if not self.preamble_rows:
+                raise ValueError("已启用前导码，请先加载前导码MT表")
+            self._validate_preamble(self.preamble_rows)
+            prefix = self.preamble_rows
+        rows = prefix + (self.rows or ((Decimal(50), Decimal(0)),))
+        if len(rows) > MAX_ROWS:
+            raise ValueError(f"前导码与正式MT表合计最多{MAX_ROWS}行，请缩短MT表")
+        key = (rows, self.app.fast_value.get(), self.app.fast_unit.get(), self.loop.get())
         if key != self._plan_key:
             plan = compile_mt(*key)
             self._plan_key, self._plan = key, plan
         return self._plan
 
     def preview(self):
-        if not self.rows:
+        if not self.has_table:
             self.app.notice.set("请先加载 MT 时域表；默认方波为 50% 占空比、0% 延时")
             return
         try:
@@ -95,39 +157,4 @@ class MTControls:
         except ValueError as error:
             self.app.notice.set(str(error))
             return
-        window = tk.Toplevel(self.app.root)
-        preview_count = min(10, len(plan.rows))
-        window.title(f"MT 表与实际输出预览 · 前 {preview_count} 个周期")
-        ttk.Label(window, text=f"400 路统一 · {frequency_text(plan.actual)} · "
-                  f"{'循环' if plan.loop else '一次，整表结束后置低'} · "
-                  f"预览 {preview_count} / {len(plan.rows)} 个周期 · 100 ns 最小边沿间隔").pack(padx=12, pady=8)
-        canvas = tk.Canvas(window, width=880, height=150, background="white")
-        canvas.pack(fill="x", padx=12)
-        span = preview_count * plan.period
-        xscale = 800 / span
-        for cycle in range(preview_count + 1):
-            x = 40 + cycle * plan.period * xscale
-            canvas.create_line(x, 20, x, 120, fill="#ccd4df", dash=(3, 3))
-            canvas.create_text(x, 135, text=f"{cycle}P")
-        time, level = 0, 0
-        sequence = [(0, plan.initial_delay)] + list(plan.segments)
-        for value, ticks in sequence:
-            if time >= span:
-                break
-            x1, x2 = 40 + time * xscale, 40 + min(span, time + ticks) * xscale
-            y1, y2 = 110 - level * 75, 110 - value * 75
-            canvas.create_line(x1, y1, x1, y2, x2, y2, fill="#176796", width=2)
-            time += ticks
-            level = value
-        tree = ttk.Treeview(window, columns=("n", "m", "t", "qm", "qt"), show="headings", height=preview_count)
-        for name, label in zip(tree['columns'], ("周期", "M (%)", "T (%)", "量化 M (%)", "量化 T (%)")):
-            tree.heading(name, text=label)
-            tree.column(name, width=160, anchor="center")
-        for index, (m, t) in enumerate(plan.rows[:preview_count], 1):
-            tree.insert('', 'end', values=(index, str(m), str(t),
-                        f"{rounded(m * plan.period / 100) / plan.period * 100:.6g}",
-                        f"{rounded(t * plan.period / 100) / plan.period * 100:.6g}"))
-        tree.pack(fill="both", expand=True, padx=12, pady=8)
-        ttk.Label(window, text="曲线和表格显示 MT 表前 10 个周期，不足 10 个时显示全部；实际播放仍使用完整表。\n"
-                  "M+T>100% 时高电平回绕到本周期开头，每个周期独立。预览不会改变板卡输出。",
-                  wraplength=860).pack(padx=12, pady=8)
+        return MTPreview(self.app.root, plan)

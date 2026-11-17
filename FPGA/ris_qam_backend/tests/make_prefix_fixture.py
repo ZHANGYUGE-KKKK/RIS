@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """User's exact 263-cycle frame and a 10-row/K3/64QAM fixture."""
 from pathlib import Path
+from decimal import Decimal, ROUND_HALF_UP
 import json
 import shutil
 import struct
@@ -17,6 +18,11 @@ for name,order,rows,k,freq,data in (
  ('user256',256,[('25','0'),('50','0'),('75','0')],1,120000,bytes(range(256))),
  ('full64',64,[(str(m),'0') for m in (0,100,25,50,75,12.5,87.5,37.5,62.5,50)],3,160000,bytes(range(64))),
 ):
+ if '--delayed' in sys.argv[1:]:
+  name='delayed_'+name
+  rows=([('25','25'),('50','50'),('75','0')] if order==256 else
+        [('25','25'),('50','50'),('0','100'),('100','0'),('12.5','37.5'),
+         ('75','25'),('37.5','12.5'),('25','0'),('50','25'),('49.21875','50.78125')])
  book=QamCodebook.load(ROOT.parents[1]/f'QAM_RULES/{order}QAM/ris_{order}qam_64slice_codebook')
  out=ROOT/'build/prefix_fixture'/name
  out.mkdir(parents=True,exist_ok=True)
@@ -49,8 +55,10 @@ for name,order,rows,k,freq,data in (
     a=(2*start*period+book.slots)//(2*book.slots)
     b=(2*q*period+book.slots)//(2*book.slots)
     expected.append((physical_frames.index(values[start]),b-a));start=q
- for width in plan.preamble.widths:
-  add_cycle([b'\xff'*50 if q<width else bytes(50) for q in range(book.slots)])
+ for m,t in rows:
+  delay=int((Decimal(t)*book.slots/100).to_integral_value(rounding=ROUND_HALF_UP))
+  width=min(int((Decimal(m)*book.slots/100).to_integral_value(rounding=ROUND_HALF_UP)),book.slots-delay)
+  add_cycle([b'\xff'*50 if delay<=q<delay+width else bytes(50) for q in range(book.slots)])
  for symbol in plan.phase_symbols+data:
   for _ in range(k):add_cycle(source[symbol])
  (target/'oracle.hex').write_text(''.join(f'{duration<<16|fid:08x}\n' for fid,duration in expected))

@@ -139,8 +139,11 @@ def compile_plan(path, slot_ticks=None, retime_for_bench=False):
     prefix = None
     if "preamble" in m:
         prefix = Preamble.compile(parse_mt(files["preamble_mt.txt"].decode("utf-8")), slots)
+        zero_delay = all(t == 0 for _, t in prefix.rows)
+        saved_delays = m["preamble"].get("delay_slots", [0]*len(prefix.rows) if zero_delay else None)
         if (m["preamble"].get("cycles") != len(prefix.rows) or m["preamble"].get("width_slots") != list(prefix.widths)
-                or m["preamble"].get("repeat_with_each_frame") is not True or m["preamble"].get("delay_zero") is not True):
+                or saved_delays != list(prefix.delays) or m["preamble"].get("repeat_with_each_frame") is not True
+                or m["preamble"].get("delay_zero") is not zero_delay):
             raise ValueError("preamble manifest mismatch")
         preamble_cycles = len(prefix.rows)
     prefix_words = []

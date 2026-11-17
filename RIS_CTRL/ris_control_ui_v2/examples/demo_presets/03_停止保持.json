@@ -1,0 +1,15 @@
+{
+  "format": "ris-control-preset",
+  "version": 1,
+  "name": "03_停止保持",
+  "source": "全板控制",
+  "action": {
+    "kind": "command",
+    "summary": "停止切换 / 保持当前输出",
+    "tag": "",
+    "payload": {
+      "command": "STOP"
+    }
+  },
+  "mapping": null
+}

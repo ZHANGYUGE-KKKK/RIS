@@ -27,7 +27,17 @@ module ris_ctrl_unit_top (
     output wire [9:0]  ris_shcp,
     output wire [9:0]  ris_stcp,
     output wire        ris_mr_n,
-    output wire        ris_oe_n
+    output wire        ris_oe_n,
+    input wire         pl_eth_sgmii_rxp,
+    input wire         pl_eth_sgmii_rxn,
+    output wire        pl_eth_sgmii_txp,
+    output wire        pl_eth_sgmii_txn,
+    input wire         pl_eth_refclk_clk_p,
+    input wire         pl_eth_refclk_clk_n,
+    output wire        pl_eth_mdio_mdc,
+    inout wire         pl_eth_mdio_mdio_io,
+    output wire        pl_eth_reset_n,
+    output wire        pl_eth_si5324_reset_n
 );
     ris_system_wrapper u_system (
         .DDR_addr(DDR_addr), .DDR_ba(DDR_ba), .DDR_cas_n(DDR_cas_n),
@@ -39,7 +49,13 @@ module ris_ctrl_unit_top (
         .FIXED_IO_mio(FIXED_IO_mio), .FIXED_IO_ps_clk(FIXED_IO_ps_clk),
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb), .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
         .ris_data(ris_data), .ris_shcp(ris_shcp), .ris_stcp(ris_stcp),
-        .ris_mr_n(ris_mr_n), .ris_oe_n(ris_oe_n)
+        .ris_mr_n(ris_mr_n), .ris_oe_n(ris_oe_n),
+        .pl_eth_sgmii_rxp(pl_eth_sgmii_rxp), .pl_eth_sgmii_rxn(pl_eth_sgmii_rxn),
+        .pl_eth_sgmii_txp(pl_eth_sgmii_txp), .pl_eth_sgmii_txn(pl_eth_sgmii_txn),
+        .pl_eth_refclk_clk_p(pl_eth_refclk_clk_p), .pl_eth_refclk_clk_n(pl_eth_refclk_clk_n),
+        .pl_eth_mdio_mdc(pl_eth_mdio_mdc), .pl_eth_mdio_mdio_io(pl_eth_mdio_mdio_io),
+        .pl_eth_reset_n(pl_eth_reset_n),
+        .pl_eth_si5324_reset_n(pl_eth_si5324_reset_n)
     );
 endmodule
 

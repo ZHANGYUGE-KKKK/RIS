@@ -1,0 +1,44 @@
+#ifndef RX_RF_PROFILE_H
+#define RX_RF_PROFILE_H
+
+/* Compile-time GUI profile. Select 915 / 2P4 / 5P8 here, or pass
+ * -DRX_RF_PROFILE=915 / 2400 / 5800 to the application compiler. */
+#define RX_RF_PROFILE_915 915
+#define RX_RF_PROFILE_2P4 2400
+#define RX_RF_PROFILE_5P8 5800
+#ifndef RX_RF_PROFILE
+#define RX_RF_PROFILE RX_RF_PROFILE_5P8
+#endif
+
+#if RX_RF_PROFILE == RX_RF_PROFILE_5P8
+#define RX_RF_PROFILE_NAME "CONFIG5P8"
+#define RX_RF_LO_HZ 5800000000ULL
+#define RX_RF_LO_MHZ 5800U
+#define RX_RF_TX_BIST 0x00U
+#define RX_RF_TX_BIST_MASK 0x00U
+#define RX_RF_TX_DESCRIPTION "TX BIST OFF (external RX)"
+#define RX_RF_START_POWER_DBM (-80)
+#elif RX_RF_PROFILE == RX_RF_PROFILE_2P4
+#define RX_RF_PROFILE_NAME "CONFIG2P4"
+#define RX_RF_LO_HZ 2400000000U
+#define RX_RF_LO_MHZ 2400U
+#define RX_RF_TX_BIST 0x00U
+#define RX_RF_TX_BIST_MASK 0x00U
+#define RX_RF_TX_DESCRIPTION "TX BIST OFF (external RX)"
+#define RX_RF_START_POWER_DBM (-80)
+#elif RX_RF_PROFILE == RX_RF_PROFILE_915
+#define RX_RF_PROFILE_NAME "CONFIG915"
+#define RX_RF_LO_HZ 915000000U
+#define RX_RF_LO_MHZ 915U
+#define RX_RF_TX_BIST 0x53U
+#define RX_RF_TX_BIST_MASK 0x30U
+#define RX_RF_TX_DESCRIPTION "TX1 BIST~960 kHz"
+#define RX_RF_START_POWER_DBM (-40)
+#else
+#error Unsupported RX_RF_PROFILE: choose RX_RF_PROFILE_915, RX_RF_PROFILE_2P4 or RX_RF_PROFILE_5P8
+#endif
+
+#define RX_RF_SOURCE1_MHZ (RX_RF_LO_MHZ + 1U)
+#define RX_RF_SOURCE2_MHZ (RX_RF_LO_MHZ + 2U)
+
+#endif

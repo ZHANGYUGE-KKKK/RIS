@@ -9,16 +9,17 @@ import threading
 import time
 import tempfile
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, filedialog
 from tkinter.scrolledtext import ScrolledText
 
 from ris_actions import OutputAction, confirmed_status, describe_command
 from ris_client import DEFAULT_HOST, DEFAULT_PORT, RisClient
 from ris_frequency import frequency_text, plan_frequency
+from ris_mt import DEFAULT_CONFIG_DIRECTORY
 from ris_qam256 import ORIENTATIONS
 from ris_qam256_gui import QAM_TYPE, QAM64_TYPE, UNIFORM_TYPE
 
-FEATURES = {"board": "全板控制", "mt": "MT时域控制", "patterns": "图案切换控制", "settings": "全板设置"}
+FEATURES = {"board": "全板控制", "mt": "MT时域控制", "patterns": "图案切换控制", "settings": "全板设置", "demo": "演示模式"}
 
 
 class RisGui:
@@ -34,6 +35,7 @@ class RisGui:
         self.mapping_page = self.manual = self.pattern_page = self.mt_controls = None
         self.qam_page = None
         self.qam64_page = None
+        self.demo_page = None
         self.mt_type = tk.StringVar(value=UNIFORM_TYPE)
         self.qam_orientation = tk.StringVar(value="未确认")
         self.qam_state1 = tk.StringVar(value="未确认")
@@ -161,15 +163,19 @@ class RisGui:
         self.feature_box = ttk.Combobox(navigation, textvariable=self.feature, values=list(FEATURES.values()), state="readonly", width=21, font=("sans", 12))
         self.feature_box.pack(side="left", padx=(12, 20))
         self.feature_box.bind("<<ComboboxSelected>>", lambda _: self.show_page(next(key for key, name in FEATURES.items() if name == self.feature.get())))
-        ttk.Label(navigation, textvariable=self.page_hint, style="Muted.TLabel").pack(side="left")
+        self.export_config_button = ttk.Button(navigation, text="导出当前配置", command=self.export_config)
+        self.export_config_button.pack(side="right", padx=(12, 0))
+        hint = ttk.Label(navigation, textvariable=self.page_hint, style="Muted.TLabel", width=1, wraplength=600)
+        hint.pack(side="left", fill="x", expand=True)
+        hint.bind("<Configure>", lambda event: hint.configure(wraplength=max(1, event.width)))
         self.content = ttk.Frame(main)
         self.content.pack(fill="both", expand=True)
         self.frames = {key: ttk.Frame(self.content) for key in ("home", *FEATURES)}
-        self.control_frame, self.mt_frame, self.pattern_frame, self.settings_frame = [self.frames[k] for k in FEATURES]
+        self.control_frame, self.mt_frame, self.pattern_frame, self.settings_frame = [self.frames[k] for k in ("board", "mt", "patterns", "settings")]
         welcome = ttk.Frame(self.frames["home"], padding=40)
         welcome.place(relx=.5, rely=.4, anchor="center")
         ttk.Label(welcome, text="先选择功能，再配置和下发", font=("sans", 20, "bold")).pack(pady=12)
-        ttk.Label(welcome, text="全板控制    /    MT时域控制    /    图案切换控制    /    全板设置", style="Muted.TLabel").pack(pady=6)
+        ttk.Label(welcome, text="全板控制    /    MT时域控制    /    图案切换控制    /    全板设置    /    演示模式", style="Muted.TLabel").pack(pady=6)
         ttk.Label(welcome, text="页面中的操作只修改配置；右上角“下发指令”应用当前页面的更新。", style="Muted.TLabel").pack(pady=6)
         self._build_settings()
         from ris_mapping_gui import MappingPage
@@ -178,6 +184,8 @@ class RisGui:
         self._build_mt()
         from ris_pattern_gui import PatternPage
         self.pattern_page = PatternPage(self, self.mapping_page, self.pattern_frame, pattern_storage)
+        from ris_demo_gui import DemoPage
+        self.demo_page = DemoPage(self, self.frames["demo"], self.qam_data_dir.parent / "presets")
         root.bind("<Control-s>", lambda _: self.mapping_shortcut("save"))
         root.bind("<Control-z>", lambda _: self.mapping_shortcut("undo"))
         self.show_page("home")
@@ -478,6 +486,10 @@ class RisGui:
 
     def _prepare_action(self):
         page = self.current_page
+        if page == "demo":
+            if not self.demo_page:
+                raise ValueError("正在初始化演示预设。")
+            return self.demo_page.prepare_action()
         if page == "board":
             mode = self.board_mode.get()
             commands = {"stop": "STOP", "all0": "ALL 0", "all1": "ALL 1"}
@@ -517,9 +529,10 @@ class RisGui:
                 return OutputAction("command", "STOP", "停止 MT / 保持当前输出")
             if not self.mt_controls:
                 raise ValueError("正在初始化 MT 配置。")
-            if self.mt_controls.rows:
+            if self.mt_controls.has_table:
                 plan = self.mt_controls.plan()
-                return OutputAction("mt", plan, f"MT {'循环整表' if plan.loop else '播放一次'} · {len(plan.rows)} 周期 · {frequency_text(plan.actual)}")
+                prefix_note = f" · 含前导码{len(self.mt_controls.preamble_rows)}周期" if self.mt_controls.preamble_enabled.get() else ""
+                return OutputAction("mt", plan, f"MT {'循环整表' if plan.loop else '播放一次'} · {len(plan.rows)} 周期 · {frequency_text(plan.actual)}{prefix_note}")
             plan = plan_frequency(self.fast_value.get(), self.fast_unit.get())
             return OutputAction("command", f"FASTTICKS {plan.ticks}", f"默认方波 · {frequency_text(plan.actual)}")
         if page == "patterns":
@@ -548,6 +561,27 @@ class RisGui:
             raise ValueError("映射已修改，请重新选择单元或测试配置。")
         return action
 
+    def export_config(self, path=None):
+        """One JSON preset format for every operation accepted by the total gate."""
+        from ris_presets import save_preset
+        try:
+            action = self._prepare_action()
+            if path is None:
+                directory = DEFAULT_CONFIG_DIRECTORY
+                directory.mkdir(parents=True, exist_ok=True)
+                path = filedialog.asksaveasfilename(parent=self.root, title="导出当前配置为演示预设",
+                    initialdir=str(directory),
+                    initialfile=f"ris_{self.current_page}_preset.json", defaultextension=".json",
+                    filetypes=[("RIS预设JSON", "*.json")])
+                if not path:
+                    return False
+            save_preset(path, action, FEATURES.get(self.current_page, ""))
+            self.notice.set(f"已导出预设：{Path(path).name}。可在“演示模式”加载；当前输出保持。")
+            return True
+        except (OSError, ValueError) as error:
+            self.notice.set(f"配置未导出：{error}")
+            return False
+
     def refresh_pending(self):
         if not hasattr(self, "apply_button"):
             return
@@ -565,6 +599,7 @@ class RisGui:
         cancel = action and action.kind == "command" and action.payload == "STOP" and self.mt_uploading
         enabled = self.connected and available and (not self.busy or cancel)
         self.apply_button.configure(state="normal" if enabled else "disabled", text="取消上传并停止" if cancel else "下发指令")
+        self.export_config_button.configure(state="normal" if available else "disabled")
         try:
             plan = plan_frequency(self.board_frequency.get(), self.board_unit.get())
             self.frequency_preview.set(f"方波预览：{frequency_text(plan.requested)} → 实际 {frequency_text(plan.actual)}；频率范围 1 Hz～5 MHz。")
@@ -576,7 +611,7 @@ class RisGui:
         if not self.mt_controls or not hasattr(self, "fast_preview"):
             return
         try:
-            if self.mt_controls.rows:
+            if self.mt_controls.has_table:
                 plan = self.mt_controls.plan()
                 text = f"MT：{len(plan.rows)} 个周期，{len(plan.segments)} 个硬件时段；实际 {frequency_text(plan.actual)}；{'循环整表' if plan.loop else '播放一次，结束后置低'}。"
             else:
@@ -930,6 +965,7 @@ def main():
     views.add_argument("--mt", action="store_true", help="打开 MT 时域配置")
     views.add_argument("--qam", action="store_true", help="打开256QAM配置并载入本项目码本")
     views.add_argument("--qam64", action="store_true", help="打开64QAM配置并载入64片码本")
+    views.add_argument("--demo", action="store_true", help="打开演示模式；不下发预设")
     parser.add_argument("--codebook", help="导入所选QAM类型的码本目录或ZIP（不下发）")
     parser.add_argument("--mapping-file", help="导入映射；副本的保存目标位于新目录")
     args = parser.parse_args()
@@ -946,6 +982,8 @@ def main():
         app.show_page("patterns")
     elif args.mt:
         app.show_page("mt")
+    elif args.demo:
+        app.show_page("demo")
     elif args.qam64:
         app.open_qam(64)
         if not args.codebook:

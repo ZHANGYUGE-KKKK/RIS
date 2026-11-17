@@ -1,0 +1,10 @@
+VALIDATE_BD_DESIGN_FORCE_PASS
+FCLK0 100.000000 MHz
+FCLK1 200.000000 MHz
+PHY_RESET_GPIO 54 (EMIO 0)
+EXTERNAL_INTERFACES /DDR /FIXED_IO /pl_eth_mdio /pl_eth_rgmii
+EXTERNAL_PORTS /DDR_addr /DDR_ba /DDR_cas_n /DDR_ck_n /DDR_ck_p /DDR_cke /DDR_cs_n /DDR_dm /DDR_dq /DDR_dqs_n /DDR_dqs_p /DDR_odt /DDR_ras_n /DDR_reset_n /DDR_we_n /FIXED_IO_ddr_vrn /FIXED_IO_ddr_vrp /FIXED_IO_mio /FIXED_IO_ps_clk /FIXED_IO_ps_porb /FIXED_IO_ps_srstb /pl_eth_mdio_mdc /pl_eth_mdio_mdio_i /pl_eth_mdio_mdio_o /pl_eth_mdio_mdio_t /pl_eth_reset_n /pl_eth_rgmii_rd /pl_eth_rgmii_rx_ctl /pl_eth_rgmii_rxc /pl_eth_rgmii_td /pl_eth_rgmii_tx_ctl /pl_eth_rgmii_txc /ris_data /ris_mr_n /ris_oe_n /ris_shcp /ris_stcp
+WRAPPER /home/wenhan/PROJECTS/RIS/FPGA/ris_qam_backend/vivado_qam/ris_ctrl_unit.gen/sources_1/bd/ris_system/hdl/ris_system_wrapper.v
+CORE_INPUT clkin /ps7_FCLK_CLK1
+CORE_INPUT tx_reset /reset_eth_peripheral_reset
+CORE_INPUT rx_reset /reset_eth_peripheral_reset

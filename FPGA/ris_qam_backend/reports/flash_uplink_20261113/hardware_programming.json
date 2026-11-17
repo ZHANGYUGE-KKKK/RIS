@@ -1,0 +1,43 @@
+{
+  "completed_at": "2026-11-13T14:34:55+08:00",
+  "board": "ZC706 transmitter / XC7Z045",
+  "cable_serial": "210299372306",
+  "package": "export_flash/20261113_uplink",
+  "boot_sha256": "1a87fb8d2fb5fb51adbad49a2942c680b7b6a4034bcee7e46ded26889c6add55",
+  "image_bytes": 13573136,
+  "flash_type": "qspi-x8-dual_parallel",
+  "flash_offset": 0,
+  "flash_jedec_id": "ef6018",
+  "boot_mode_during_programming": "JTAG (0)",
+  "programming_result": "PASS",
+  "writer_result": "0x600D",
+  "direct_full_byte_compare": "PASS",
+  "independent_program_flash_verify": "NOT_RUN",
+  "cold_boot_test": "PASS",
+  "network_status_test": "PASS",
+  "rollback_image": "export_flash/20261109_qpr1/BOOT.bin",
+  "evidence_sha256": {
+    "reports/flash_uplink_20261113/direct_program.U38vTe.log": "137b6464c64124459f0f82ea0c7fd41ca45805f3fa9583d7ed2880e999a01269",
+    "reports/flash_uplink_20261113/cold_boot_probe.log": "1f2a40db3104d230a55120494c5f61f8d2c46f32f0072e2b7e833e60e256cbd2",
+    "reports/flash_uplink_20261113/cold_boot_uart.log": "d86ce61249ac2cb73fcdc443f9efc86c8a664de609ca39359dba8c1c9a2dcde0",
+    "reports/flash_uplink_20261113/cold_boot_network.log": "c2af32d1902fc3ada45adb45a3689dde83b6c30ee881a2dbf00016de9b96aa17"
+  },
+  "boot_mode_after_power_cycle": "QSPI (1)",
+  "cold_boot_verified_at": "2026-11-13T14:36:50+08:00",
+  "gem1_link": "1000 Mbps full duplex",
+  "verified_payload_lengths": [
+    18,
+    1024
+  ],
+  "cold_boot_counters": {
+    "accepted": 2,
+    "datagrams": 4,
+    "forwarded": 2,
+    "invalid": 1,
+    "queue_dropped": 0,
+    "source_rejected": 1
+  },
+  "receiver": "Linux test NIC 192.168.2.12",
+  "rf_tested": false,
+  "two_board_tested": false
+}

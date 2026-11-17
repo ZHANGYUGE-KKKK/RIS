@@ -1,0 +1,49 @@
+{
+  "source_pdf": "/home/wenhan/PROJECTS/ARCHIVE/ARCHIVE/3403518977ZC706/ZC706/1_四川真为电子_ZC706_SCH.pdf",
+  "source_pdf_pages": [
+    4,
+    7,
+    8,
+    9,
+    36,
+    43,
+    45,
+    46
+  ],
+  "printed_phy_sheet": "49/58",
+  "board_role": "transmitter_ris_controller",
+  "phy": "RTL8211FS U48 / J18",
+  "mode_straps": "011 (UTP <-> SGMII)",
+  "phy_address_from_schematic": 2,
+  "pcs_mdio_address": 8,
+  "pins": {
+    "pl_eth_sgmii_txp": "Y2",
+    "pl_eth_sgmii_txn": "Y1",
+    "pl_eth_sgmii_rxp": "AB6",
+    "pl_eth_sgmii_rxn": "AB5",
+    "pl_eth_refclk_clk_p": "W8",
+    "pl_eth_refclk_clk_n": "W7",
+    "pl_eth_mdio_mdc": "L13",
+    "pl_eth_mdio_mdio_io": "K13",
+    "pl_eth_reset_n": "H14",
+    "pl_eth_si5324_reset_n": "W23"
+  },
+  "standards": {
+    "mdc_mdio_phy_reset": "LVCMOS15 (Bank35; U70 translates to 3.3V)",
+    "si5324_reset": "LVCMOS25 (Bank11 VADJ, following existing project 2.5V)",
+    "gt": "dedicated GTX analog I/O"
+  },
+  "clock": {
+    "source": "Si5324 U60 CKOUT2 through C165/C166",
+    "frequency_hz": 125000000,
+    "crystal_hz": 114285000,
+    "ps_i2c": "I2C0 MIO50/51",
+    "mux_address": 116,
+    "mux_channel_mask": 16,
+    "si5324_address": 104,
+    "mux_reset_gpio": 46,
+    "phy_reset_gpio": 54,
+    "si5324_reset_gpio": 55
+  },
+  "verification_scope": "schematic, generated hardware and offline software; physical board assembly/link not tested"
+}

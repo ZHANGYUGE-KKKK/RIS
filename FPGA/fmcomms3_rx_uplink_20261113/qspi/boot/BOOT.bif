@@ -1,0 +1,6 @@
+the_ROM_image:
+{
+    [bootloader] fsbl.elf
+    zc706_rx_uplink.bit
+    zc706_rx_uplink.elf
+}

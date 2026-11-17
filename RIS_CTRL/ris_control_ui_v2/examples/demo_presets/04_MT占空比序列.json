@@ -1,0 +1,30 @@
+{
+  "format": "ris-control-preset",
+  "version": 1,
+  "name": "04_MT占空比序列",
+  "source": "MT时域控制",
+  "action": {
+    "kind": "mt",
+    "summary": "统一MT · 25% / 50% / 75% · 100 kHz · 循环整表",
+    "tag": "",
+    "payload": {
+      "rows": [
+        [
+          "25",
+          "0"
+        ],
+        [
+          "50",
+          "0"
+        ],
+        [
+          "75",
+          "0"
+        ]
+      ],
+      "requested_hz": "100000",
+      "loop": true
+    }
+  },
+  "mapping": null
+}

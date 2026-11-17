@@ -1,0 +1,45 @@
+{
+  "board": "ZC706 / XC7Z045",
+  "architecture": "zynq",
+  "flash_type": "qspi-x8-dual_parallel",
+  "flash_program_offset": "0x0",
+  "flash_capacity_bytes": 33554432,
+  "image_bytes": 13655056,
+  "boot_header_checksum_valid": true,
+  "partition_header_checksums_valid": true,
+  "flash_partitions_nonoverlapping": true,
+  "all_partition_contents_match_inputs": true,
+  "bit_matches_xsa": true,
+  "partitions": [
+    {
+      "name": "fsbl.elf",
+      "flash_offset": "0x1700",
+      "bytes": 65544,
+      "load_address": "0x0",
+      "entry_address": "0x0",
+      "attributes": "0x10",
+      "content_matches_input": true
+    },
+    {
+      "name": "zc706_rx_uplink.bit",
+      "flash_offset": "0x11740",
+      "bytes": 13321408,
+      "load_address": "0x0",
+      "entry_address": "0x0",
+      "attributes": "0x20",
+      "content_matches_input": true
+    },
+    {
+      "name": "zc706_rx_uplink.elf",
+      "flash_offset": "0xcc5c00",
+      "bytes": 262160,
+      "load_address": "0x100000",
+      "entry_address": "0x100000",
+      "attributes": "0x10",
+      "content_matches_input": true
+    }
+  ],
+  "flash_programmed": false,
+  "hardware_boot_tested": false,
+  "boot_sha256": "740dc4e18874315503ee8dca3c689676406f371199ebe5aa6207faa00c797f92"
+}

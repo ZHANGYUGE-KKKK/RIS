@@ -1,0 +1,86 @@
+ZC706 / FMCOMMS3 DMA/DDR 诊断版，2026-10-20
+
+交付
+  使用 export/key_ctrlll_dma_debug.elf；它与 export/key_ctrlll.elf、
+  export/key_ctrlll_2p4.elf 及 Vitis Debug/key_ctrlll.elf 是同一程序。
+  本次只改软件，没有重新生成 BIT/XSA，也没有自动连接或下载板卡。
+  保持 CONFIG2P4、15.36 MSPS、32 KiB/BD、4096组IQ/TLAST及原始BIN格式。
+  单BD 4 MiB对照尚未实现：它需要同时修改RTL的TLAST周期。本版先定位
+  现有SG链、复位过程和CPU读出是否出错，不改变已有硬件数据路径。
+
+重新采集步骤
+  1. 在Vitis中下载运行新的ELF。保留原匹配BIT；启动应看到：
+       RX diagnostic version=5: raw BD/preflight and sampled DDR checks ...
+     AD9361初始化、PN校验和恢复流程仍与原程序一致。
+  2. 关闭并重新启动现有Tk GUI：./run_rx_gui.sh。
+     必须重启GUI，才能使用更新后的Python下载逻辑。
+  3. CuteCom保持115200、8N1，记录串口输出。信号源状态不影响数字格式检查。
+  4. 建议先抓8 MiB，再抓1秒，分别保存不同文件名。采集完成后会自动打印
+     RXDBG。原始IQ即使含非法值也不做修补，完成的DMA窗口仍可下载取证。
+  5. 下载结束后，在CuteCom输入小写 d 并发送，打印本次保存的诊断及READ统计。
+     d不启动DMA、不改变射频、不读取活跃的PL寄存器，也不复位硬件。
+  6. 保留 BIN、同名 BIN.JSON，以及从此次上电到采集后d查询的串口日志。
+     如果在生成BIN前就失败，只需保留串口的RXDBG和具体失败信息。
+
+本版增加的检查
+  ARM前：两次检查全部BD，分别在准备完成、提交给尚未启动的DMA后。
+    检查NEXT及环尾回链、Buffer地址、长度、ID和初始状态。
+  DMA接收：每个完成BD通过volatile读入PS快照，再基于同一个快照进行校验。
+    记录原始状态字、实际长度、完整16个BD字，以及DMA CR/SR/CUR/TAIL。
+  出错：在DMA复位前保存现场；重复读取该BD并记录哪些字发生了变化。
+    现场在后续init/rearm后仍保留，不再只打印一个笼统的packet mismatch。
+  完整采集结束：最多检查16个4 KiB窗口，包含历史异常页、分散位置和尾部。
+    phase 0：所有BD已完成，DMA尚未复位。
+    phase 1：DMA已停止/复位，尚未执行完整PL采集链路复位。
+    phase 2：完成原有PL采集链路复位。
+    每个窗口各执行volatile 32位读取A、再次读取B、memcpy，共三种读回。
+    对三份PS副本分别计算CRC，并统计A副本中各分量的非法12位符号扩展。
+  下载：检查每次READ实际发送的数据，统计各IQ分量的非法字数和首次位置。
+
+RXDBG的解释
+  DMA checked=A/B/C：准备后、提交后和完成的BD检查数量。
+  stage：0=无记录，1=准备，2=提交，3=接收，4=完成。
+  issues：可组合的十六进制位掩码：
+    001=Complete/SOF/EOF异常，002=实际长度不符，004=ID不符，
+    008=Buffer地址不符，010=NEXT链表不符，020=配置长度不符，040=BD硬件错误。
+  raw_status保留实际字节数。正常完整32 KiB包通常为0x8C008000，actual=32768。
+  旧bd_status=0x8C000000是掩码后的标志，不能用它判断实际长度。
+  repeat_diff：位i表示出错BD的第i个32位字在重复读回时不一致。
+
+  SUMMARY的changed_dma/changed_pl/unstable/memcpy_diff均为窗口位掩码，
+  位i对应PROBE i；值为0表示这些采样窗口中未发现对应差异。
+    unstable：同阶段A/B读取CRC不同，先排查读回不稳定或存在非预期写入。
+    memcpy_diff：同阶段A读取与memcpy读回CRC不同，重点对比CPU访问方式。
+    changed_dma：phase0与phase1的A副本CRC不同。
+    changed_pl：phase1与phase2的A副本CRC不同。
+  如果同阶段读取已不稳定，跨阶段CRC不同不能单独证明是复位改变了数据。
+  若读取稳定且复位前后相同，但phase0已有非法字，错误在此检查之前已存在，
+  下一步用DDR独立图案测试和FIFO入口已知序号，区分写入、存储与稳定的读错。
+
+限制
+  窗口检查是有界抽查，不扫描或认证整片DDR；所有位掩码为0不代表整个BIN有效。
+  12位符号扩展合法也不能证明没有低位错误、丢样或重复，需要已知序列进一步验证。
+  诊断发生在采集完成以后，会增加准备导出的等待时间；不会延长已配置的IQ采样窗口。
+  下载非法字数按READ请求累计，包含重复下载和续传请求，不能直接当作唯一坏采样组数。
+
+JSON与命令行
+  更新后的host/rx706.py会额外保存：
+    capture_final：全部READ完成后的状态、非法字统计及原始BD信息；
+    debug：各窗口在三个阶段的详细测量。
+  debug.sampled_only=true；phases的低三位表示已完成的三个阶段。
+  每个窗口的measurements有三个数组，依次对应phase0/1/2；每个数组依次为：
+    [CRC_A, CRC_B, CRC_memcpy, bad_I1, bad_Q1, bad_I2, bad_Q2,
+     first_bad_offset, first_bad_raw]
+  offset均相对本次数据缓冲区起点；first_bad_offset=4294967295表示该窗口无非法字。
+  debug_first_bad_offset指下载过程中首次观察到的非法字，不保证是全文件最早地址。
+  可以只读获取详细诊断（网络可用时）：
+    python3 host/rx706.py --host 192.168.1.10 debug
+  或通过控制台请求打印：
+    python3 host/rx706.py --host 192.168.1.10 key d
+  用户进行网口下载时无需Codex保持有线连接；诊断已保存在本地文件和串口中。
+
+验证记录
+  reports/dma_debug_20261020/保存构建、测试、发布哈希和原版备份。
+  本地通过ASan/UBSan C测试、12项TCP导出测试、9项GUI测试、10项频谱测试，
+  以及5项RF配置兼容性检查；CONFIG915也通过相同的12项TCP测试。
+  首次板级运行及新抓数据仍由用户完成。本版提供定位证据，不声称已修复根因。

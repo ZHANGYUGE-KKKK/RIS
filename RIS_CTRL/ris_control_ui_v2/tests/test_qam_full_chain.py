@@ -78,7 +78,7 @@ class FullChainTests(unittest.TestCase):
         self.page.source.set('测试序列00–FF');self.page.repeats.set('1')
         self.page.pwm_frequency.set('120');self.page.pwm_unit.set('kHz')
         self.page.phase_compensation.set(True);self.page.loop.set(True)
-        prefix=self.directory/'user_prefix.txt';prefix.write_text('(25,0);\n(50,0);\n(75,0);')
+        prefix=self.directory/'user_prefix.txt';prefix.write_text('(25,25);\n(50,50);\n(75,0);')
         self.assertTrue(self.page.load_preamble(prefix));self.root.update()
         path=self.directory/'user_export.zip';self.assertTrue(self.page.export(path))
         self.assertEqual(self.writes(),[])

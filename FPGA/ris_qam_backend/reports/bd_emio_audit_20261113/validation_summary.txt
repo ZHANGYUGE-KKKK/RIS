@@ -1,0 +1,59 @@
+VALIDATE_PASS
+CELL /constant_one xilinx.com:ip:xlconstant:1.1
+CELL /control_bus xilinx.com:ip:axi_interconnect:2.1
+CELL /control_bus/s00_couplers 
+CELL /control_bus/s00_couplers/auto_pc xilinx.com:ip:axi_protocol_converter:2.1
+CELL /controller xilinx.com:module_ref:ris_controller_axi:1.0
+CELL /ps7 xilinx.com:ip:processing_system7:5.5
+CELL /reset_pl xilinx.com:ip:proc_sys_reset:5.0
+CELL /xlconcat_0 xilinx.com:ip:xlconcat:2.1
+PORT /DDR_addr IO undef
+PORT /DDR_ba IO undef
+PORT /DDR_cas_n IO undef
+PORT /DDR_ck_n IO undef
+PORT /DDR_ck_p IO undef
+PORT /DDR_cke IO undef
+PORT /DDR_cs_n IO undef
+PORT /DDR_dm IO undef
+PORT /DDR_dq IO undef
+PORT /DDR_dqs_n IO undef
+PORT /DDR_dqs_p IO undef
+PORT /DDR_odt IO undef
+PORT /DDR_ras_n IO undef
+PORT /DDR_reset_n IO undef
+PORT /DDR_we_n IO undef
+PORT /ENET1_EXT_INTIN_0 I intr
+PORT /FIXED_IO_ddr_vrn IO undef
+PORT /FIXED_IO_ddr_vrp IO undef
+PORT /FIXED_IO_mio IO undef
+PORT /FIXED_IO_ps_clk IO undef
+PORT /FIXED_IO_ps_porb IO undef
+PORT /FIXED_IO_ps_srstb IO undef
+PORT /GMII_ETHERNET_1_0_col I undef
+PORT /GMII_ETHERNET_1_0_crs I undef
+PORT /GMII_ETHERNET_1_0_rx_clk I undef
+PORT /GMII_ETHERNET_1_0_rx_dv I undef
+PORT /GMII_ETHERNET_1_0_rx_er I undef
+PORT /GMII_ETHERNET_1_0_rxd I undef
+PORT /GMII_ETHERNET_1_0_tx_clk I undef
+PORT /GMII_ETHERNET_1_0_tx_en O undef
+PORT /GMII_ETHERNET_1_0_tx_er O undef
+PORT /GMII_ETHERNET_1_0_txd O undef
+PORT /MDIO_ETHERNET_1_0_mdc O undef
+PORT /MDIO_ETHERNET_1_0_mdio_i I undef
+PORT /MDIO_ETHERNET_1_0_mdio_o O undef
+PORT /MDIO_ETHERNET_1_0_mdio_t O undef
+PORT /ris_data O undef
+PORT /ris_mr_n O undef
+PORT /ris_oe_n O undef
+PORT /ris_shcp O undef
+PORT /ris_stcp O undef
+INTERFACE /DDR xilinx.com:interface:ddrx_rtl:1.0
+INTERFACE /FIXED_IO xilinx.com:display_processing_system7:fixedio_rtl:1.0
+INTERFACE /GMII_ETHERNET_1_0 xilinx.com:interface:gmii_rtl:1.0
+INTERFACE /MDIO_ETHERNET_1_0 xilinx.com:interface:mdio_rtl:1.0
+PS_PIN /ps7/ENET1_GMII_TX_CLK 
+PS_PIN /ps7/ENET1_GMII_RX_CLK 
+PS_PIN /ps7/ENET1_EXT_INTIN /ENET1_EXT_INTIN_0_1
+PS_PIN /ps7/IRQ_F2P /xlconcat_0_dout
+CONCAT_INPUT /xlconcat_0/In0 

@@ -1,0 +1,12 @@
+GTX u_system/ris_system_i/eth1_pcs_pma/inst/pcs_pma_block_i/transceiver_inst/gtwizard_inst/inst/gtwizard_i/gt0_GTWIZARD_i/gtxe2_i GTXE2_CHANNEL_X0Y9
+REFCLK_BUFFER u_system/ris_system_i/eth1_pcs_pma/inst/core_clocking_i/ibufds_gtrefclk IBUFDS_GTE2_X0Y5
+pl_eth_sgmii_txp Y2 
+pl_eth_sgmii_txn Y1 
+pl_eth_sgmii_rxp AB6 
+pl_eth_sgmii_rxn AB5 
+pl_eth_refclk_clk_p W8 
+pl_eth_refclk_clk_n W7 
+pl_eth_mdio_mdc L13 LVCMOS15
+pl_eth_mdio_mdio_io K13 LVCMOS15
+pl_eth_reset_n H14 LVCMOS15
+pl_eth_si5324_reset_n W23 LVCMOS25

@@ -1,0 +1,31 @@
+{
+  "status": "development_and_build_validation_pass",
+  "board_role": "transmitter_ris_controller",
+  "gui_bd_saved": true,
+  "original_ris_constraints_unchanged": true,
+  "wns_ns": 0.064,
+  "whs_ns": 0.0,
+  "tns_ns": 0.0,
+  "ths_ns": 0.0,
+  "hardware_build_pass": true,
+  "firmware_full_link_pass": true,
+  "application_and_bsp_sources_verified": true,
+  "board_programmed": false,
+  "physical_link_tested": false,
+  "receiver_project_modified": false,
+  "tests": [
+    "python3 -B tests/run_uplink_tests.py",
+    "python3 -B tests/run_pl_eth_board_tests.py",
+    "python3 -B tests/run_uplink_bsp_tests.py"
+  ],
+  "evidence_sha256": {
+    "export_uplink/hardware_manifest.json": "8640170a71e50eb4ea3dfd773a59aee66d178efe71e57c14206ea5d916153196",
+    "export_uplink/firmware_manifest.json": "b8b0d6d8f077330792aacbdc243c4a6aa77874de4a641fafdef93b40ed69b904",
+    "reports/pl_eth_sgmii_20261113/software/software_validation.json": "ef8e523ecf9024d702c0df0513542292f0349dbf370e237244fde87b6e76ad92",
+    "reports/pl_eth_sgmii_20261113/software/uplink_bsp_fault_tests.log": "3bd1e961470f9aa9ca8fa8b42e93abb5dc9f0f9049a2b7bcd1aecc65c18e1a2e",
+    "scripts/patch_uplink_bsp.py": "ea9f16c5aa6396ab4df3ff44e2c7c01f54af6d7ee6b0c9fb508d33fefc4fd28e",
+    "tests/run_uplink_bsp_tests.py": "44287b1ebe930ce9f5f7f05f93c6be936773e3ef06ed3d45dbe286b94805a7a9",
+    "tests/uplink_bsp/test_phy.c": "85233783a51c4837b2303a1f35f8ccc6651970d4dd9c1803ec8b689606235cf4"
+  },
+  "transmitter_jtag_board_test": "reports/pl_eth_sgmii_20261113/board_test/result.json"
+}

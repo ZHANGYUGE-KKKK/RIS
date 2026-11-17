@@ -179,7 +179,7 @@ class ConsoleTests(unittest.TestCase):
         return page
 
     def test_one_major_page_and_one_settings_pane_visible(self):
-        self.assertEqual(list(FEATURES.values()), ["全板控制", "MT时域控制", "图案切换控制", "全板设置"])
+        self.assertEqual(list(FEATURES.values()), ["全板控制", "MT时域控制", "图案切换控制", "全板设置", "演示模式"])
         for page in ("home", *FEATURES):
             self.app.show_page(page)
             self.root.update()

@@ -1,0 +1,19 @@
+{
+  "ris_ctrl_unit.xsa": {
+    "bytes": 1073897,
+    "sha256": "dc5acc4c2486807bc977287f5b55f2c5e9725a101d739e2d700ca8862377bf62"
+  },
+  "ris_ctrl_unit.bit": {
+    "bytes": 13321517,
+    "sha256": "5fd3ad76afed4c267be71632f843cb164a4aa65c7e64c7dfdac9d96a70e8ea6c"
+  },
+  "handoff_sha256": {
+    "ris_system.hwh": "d9d1f12508e5bddec6f426392c8c617f442de33c2cd153671e31cebf801e7289",
+    "ps7_init.tcl": "71a6420d75012b977590d027ac8f5fca8c87cd756676a357698556892446bb38",
+    "ps7_init.c": "f3638d30b846e4cfc837da60a55c8366612e0da8727c3d0d031b0556657eace5",
+    "ps7_init.h": "44b644d2bf32dca676b2de6e0207ba490a8d61edb138c470b99887fec95eb623"
+  },
+  "synth_final_handoff_identical": true,
+  "source_manifest": "/home/wenhan/PROJECTS/RIS/FPGA/ris_qam_backend/reports/pl_eth_sgmii_20261113/hardware/source_sha256.txt",
+  "exact_bit_xsa_pair": true
+}

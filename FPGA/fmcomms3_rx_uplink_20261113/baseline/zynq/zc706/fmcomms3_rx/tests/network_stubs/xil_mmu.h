@@ -1,0 +1,3 @@
+#define NORM_NONCACHE 0x11de2U
+
+#define DEVICE_MEMORY 0xc06U

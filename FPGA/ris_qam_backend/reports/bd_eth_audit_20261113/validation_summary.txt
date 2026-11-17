@@ -1,0 +1,54 @@
+VALIDATE_PASS
+CELL ps7
+CELL axi_ethernetlite_0
+CELL control_bus
+CELL reset_pl
+CELL xlconcat_0
+PORT /DDR_addr IO undef
+PORT /DDR_ba IO undef
+PORT /DDR_cas_n IO undef
+PORT /DDR_ck_n IO undef
+PORT /DDR_ck_p IO undef
+PORT /DDR_cke IO undef
+PORT /DDR_cs_n IO undef
+PORT /DDR_dm IO undef
+PORT /DDR_dq IO undef
+PORT /DDR_dqs_n IO undef
+PORT /DDR_dqs_p IO undef
+PORT /DDR_odt IO undef
+PORT /DDR_ras_n IO undef
+PORT /DDR_reset_n IO undef
+PORT /DDR_we_n IO undef
+PORT /FIXED_IO_ddr_vrn IO undef
+PORT /FIXED_IO_ddr_vrp IO undef
+PORT /FIXED_IO_mio IO undef
+PORT /FIXED_IO_ps_clk IO undef
+PORT /FIXED_IO_ps_porb IO undef
+PORT /FIXED_IO_ps_srstb IO undef
+PORT /MDIO_0_mdc O undef
+PORT /MDIO_0_mdio_i I undef
+PORT /MDIO_0_mdio_o O undef
+PORT /MDIO_0_mdio_t O undef
+PORT /MII_0_col I undef
+PORT /MII_0_crs I undef
+PORT /MII_0_rst_n O undef
+PORT /MII_0_rx_clk I undef
+PORT /MII_0_rx_dv I undef
+PORT /MII_0_rx_er I undef
+PORT /MII_0_rxd I undef
+PORT /MII_0_tx_clk I undef
+PORT /MII_0_tx_en O undef
+PORT /MII_0_txd O undef
+PORT /ris_data O undef
+PORT /ris_mr_n O undef
+PORT /ris_oe_n O undef
+PORT /ris_shcp O undef
+PORT /ris_stcp O undef
+INTERFACE /DDR xilinx.com:interface:ddrx_rtl:1.0
+INTERFACE /FIXED_IO xilinx.com:display_processing_system7:fixedio_rtl:1.0
+INTERFACE /MDIO_0 xilinx.com:interface:mdio_rtl:1.0
+INTERFACE /MII_0 xilinx.com:interface:mii_rtl:1.0
+NET axi_ethernetlite_0/s_axi_aclk /ps7_FCLK_CLK0 /ps7/FCLK_CLK0 /ps7/M_AXI_GP0_ACLK /reset_pl/slowest_sync_clk /control_bus/ACLK /control_bus/S00_ACLK /control_bus/M00_ACLK /controller/s_axi_aclk /axi_ethernetlite_0/s_axi_aclk /control_bus/M01_ACLK
+NET axi_ethernetlite_0/s_axi_aresetn /reset_pl_interconnect_aresetn /reset_pl/interconnect_aresetn /control_bus/ARESETN /control_bus/S00_ARESETN /control_bus/M00_ARESETN /axi_ethernetlite_0/s_axi_aresetn /control_bus/M01_ARESETN
+NET axi_ethernetlite_0/ip2intc_irpt /axi_ethernetlite_0_ip2intc_irpt /axi_ethernetlite_0/ip2intc_irpt /xlconcat_0/In0
+NET ps7/IRQ_F2P /xlconcat_0_dout /xlconcat_0/dout /ps7/IRQ_F2P

@@ -1,0 +1,57 @@
+{
+  "recorded_at": "2026-11-13T13:56:11.221061+08:00",
+  "working_directory": "/home/wenhan/PROJECTS/RIS/FPGA/ris_qam_backend",
+  "hardware_tested": false,
+  "external_network_used": false,
+  "scope": "Actual C sources compiled with host mocks; Python localhost TCP and JSONL tests. No board programming, PHY measurement or dual-board validation.",
+  "tests": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "tests/run_uplink_tests.py"
+      ],
+      "return_code": 0,
+      "log": "uplink_host_tests.log",
+      "elapsed_seconds": 0.231,
+      "log_sha256": "2b4606238b34034b22714a3550cfb4ff80ba647730a63425a2d0b17fb0372b39"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "tests/run_pl_eth_board_tests.py"
+      ],
+      "return_code": 0,
+      "log": "pl_eth_board_tests.log",
+      "elapsed_seconds": 0.121,
+      "log_sha256": "4cec21a7605d8dc92df0874edd16c9c04c1ed50e7880f5e4cb78df6fd20d74c1"
+    }
+  ],
+  "source_sha256": {
+    "software/network/ris_network.c": "0f81122d49aefaf1eba487826f3e0b7583f60978ed11f75a4bca9baf23e487c9",
+    "software/network/ris_network.h": "22a76eebf76d25347cac218e77e7448cee73a4196d3d740fc5bb60562eda80b8",
+    "software/network/ris_uplink.c": "aa7b3d16417021c716239d80cb361551fc1c8010fe95552ba79ac4af8219956c",
+    "software/network/ris_uplink.h": "080570c88860b61b4ee9d817f2904442d126d90eebb4dce169b6e35288c233d0",
+    "software/network/ris_uplink_core.c": "40159afdec5c85b5d3c78c44ebb460b0258b431917e9539ac965dbe261f10a49",
+    "software/network/ris_uplink_core.h": "388a9ecd9508da59c7f19d253152829edb829d73ce82edf0ef670da70d158c12",
+    "software/network/ris_pl_eth_board.c": "a966b5d2a2184831734760dfc9edd44b96458b92674524781d0fe308c393d1fb",
+    "software/network/ris_pl_eth_board.h": "257d9fb00bd43761afa6ed0dae955426e8660e2e30042ba67f9177dcb3821e72",
+    "scripts/monitor_uplink.py": "0bf15e3aebbcedb7b489877727bf7781f79b1cce71aa6fa98a8de924b4b1b85f",
+    "tests/run_uplink_tests.py": "763dafe11b8b59e9202852b54aba61d48f1f8e4e6db5c0777863f7d7a7f26790",
+    "tests/test_uplink_network.c": "d9a74c6f63ee046b4eb8d6a931a9b9c7aab7c04e585f4f9bf0be5578400a1b0c",
+    "tests/test_monitor_uplink.py": "6265c2023e072972ab6e3e79ebf817767836c850810a4f1cf1d7d3b72a2c3272",
+    "tests/run_pl_eth_board_tests.py": "3820ff989230cde38aff54a2fbdfa4c13df8565372fdb9f3e185c9ba3225404e",
+    "UPLINK.md": "30be35606cf7140960d649cf20f3f2547e97f695f692464026d5010b96f50923",
+    "tests/pl_eth_board/sleep.h": "e4fec5a9543b4652f07161c967c74d25767b900aa3f153f187ff205bd0660dc7",
+    "tests/pl_eth_board/test_board.c": "53b89884cbea59ca9be9e095e68c179ee14f02077f60805b7ff990dd72ce3ed7",
+    "tests/pl_eth_board/test_common.h": "fdc5bae559577b318a665abe3c2385d93b95a9d8d98235a5822b7467abc4cbd6",
+    "tests/pl_eth_board/xgpiops.h": "e4fec5a9543b4652f07161c967c74d25767b900aa3f153f187ff205bd0660dc7",
+    "tests/pl_eth_board/xiicps.h": "e4fec5a9543b4652f07161c967c74d25767b900aa3f153f187ff205bd0660dc7",
+    "tests/pl_eth_board/xiicps_hw.h": "e4fec5a9543b4652f07161c967c74d25767b900aa3f153f187ff205bd0660dc7",
+    "tests/pl_eth_board/xil_printf.h": "e4fec5a9543b4652f07161c967c74d25767b900aa3f153f187ff205bd0660dc7",
+    "tests/pl_eth_board/xparameters.h": "e4fec5a9543b4652f07161c967c74d25767b900aa3f153f187ff205bd0660dc7",
+    "tests/pl_eth_board/xtime_l.h": "e4fec5a9543b4652f07161c967c74d25767b900aa3f153f187ff205bd0660dc7",
+    "tests/uplink_stubs/uplink_mock.h": "99d4e70576f084ff010b4c806cfefc60b5baa41b81ff0a46d9b3b9cdf8459ca0"
+  }
+}

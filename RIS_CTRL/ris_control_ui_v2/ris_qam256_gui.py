@@ -10,7 +10,7 @@ from ris_patterns import compile_frame
 from ris_qam_transport import make_plan
 from ris_qam_frequency import plan_qam_frequency, range_text, GLOBAL_MAX_HZ
 from ris_qam_preamble import Preamble
-from ris_mt import load_mt
+from ris_mt import DEFAULT_CONFIG_DIRECTORY, DEFAULT_MT_DIRECTORY, load_mt
 from ris_qam256 import (QamCodebook, ORIENTATIONS, export_plan, integer, parse_symbol,
                         payload_bytes, read_payload, transform_cell, phase_reference_symbols)
 
@@ -80,7 +80,7 @@ class QamPage:
         ttk.Label(action_bar, text="待应用操作：").pack(side="left")
         for value, text in (("play", "连续播放"), ("static", "静态码片核线"), ("stop", "停止 / 保持")):
             ttk.Radiobutton(action_bar, text=text, variable=self.action, value=value).pack(side="left", padx=5)
-        self.export_button = ttk.Button(action_bar, text="导出发送配置包", command=self.export)
+        self.export_button = ttk.Button(action_bar, text="导出离线ZIP", command=self.export)
         self.export_button.pack(side="right")
         ttk.Label(footer, textvariable=self.notice, wraplength=1320, foreground="#245c85").pack(anchor="w", pady=(5, 0))
         self.tabs = ttk.Notebook(self.frame)
@@ -95,7 +95,7 @@ class QamPage:
         ttk.Label(compatibility, textvariable=self.compatibility, wraplength=1050, justify="left").pack(anchor="w", pady=10)
         ttk.Label(compatibility, text="方向和极性需按实物核对，静态码片仍需完整400路映射。\n"
                   "码本状态与GPIO位序在总下发时转换；预览、导出和设置修改不会改变当前运行。\n"
-                  "离线ZIP保存发送配置及输出频率；总按钮将编译并分块上传QAM1表，旧固件不会接受独立播放。",
+                  "演示预设请使用功能栏的“导出当前配置”；离线ZIP用于原有离线编译流程。总按钮应用当前发送配置。",
                   wraplength=1050, justify="left", style="Muted.TLabel").pack(anchor="w", pady=12)
         ttk.Button(compatibility, text="打开方向与极性设置", command=self.app.open_qam_settings).pack(anchor="w", pady=5)
         ttk.Button(compatibility, text="打开FPC—RIS映射", command=self.app.open_mapping).pack(anchor="w", pady=5)
@@ -197,15 +197,16 @@ class QamPage:
         ttk.Label(prefix, textvariable=self.preamble_text, wraplength=1050, foreground="#315b80").pack(anchor="w", pady=6)
         self.preamble_preview = ttk.Frame(prefix)
         self.preamble_preview.pack(fill="x")
-        self.preamble_table = ttk.Treeview(self.preamble_preview, columns=("row", "m", "actual"), show="headings", height=4)
-        for key, title, width in (("row", "周期", 70), ("m", "输入M / %（T必须为0）", 230), ("actual", "实际高电平占比 / %", 230)):
+        self.preamble_table = ttk.Treeview(self.preamble_preview, columns=("row", "m", "t", "actual", "actual_t"), show="headings", height=4)
+        for key, title, width in (("row", "周期", 70), ("m", "输入M / %", 150), ("t", "输入T / %", 150),
+                                  ("actual", "量化M / %", 180), ("actual_t", "量化T / %", 180)):
             self.preamble_table.heading(key, text=title)
             self.preamble_table.column(key, width=width, stretch=True)
         self.preamble_table.pack(side="left", fill="x", expand=True)
         scroll = ttk.Scrollbar(self.preamble_preview, orient="vertical", command=self.preamble_table.yview)
         scroll.pack(side="right", fill="y")
         self.preamble_table.configure(yscrollcommand=scroll.set)
-        ttk.Label(prefix, text="格式沿用(M,T);，最多10行，每行一个PWM周期；相偏补偿点与正式数据均按K播放。\n"
+        ttk.Label(prefix, text="格式沿用(M,T);，M+T不大于100%，最多10行，每行一个PWM周期；相偏补偿点与正式数据均按K播放。\n"
                   "前导码采用同一时间片网格，表中显示量化后的实际占空比；每次整帧循环均包含前导码。",
                   wraplength=1050, style="Muted.TLabel").pack(anchor="w", pady=(6, 0))
         ttk.Label(parent, text="程序自动换算板端时序，按最近可实现频率输出，并在上方显示实际值；超出支持范围时无法下发。\n"
@@ -213,7 +214,8 @@ class QamPage:
                   wraplength=1120, justify="left", style="Muted.TLabel").pack(anchor="w", pady=18)
 
     def choose_preamble(self):
-        path = filedialog.askopenfilename(parent=self.app.root, title="加载前导码MT表", filetypes=[("MT表", "*.txt *.csv *.mt"), ("所有文件", "*")])
+        path = filedialog.askopenfilename(parent=self.app.root, title="加载前导码MT表", initialdir=str(DEFAULT_MT_DIRECTORY),
+                                         filetypes=[("MT表", "*.txt *.csv *.mt"), ("所有文件", "*")])
         if path:
             self.load_preamble(path)
 
@@ -247,17 +249,19 @@ class QamPage:
         self.preamble_table.delete(*self.preamble_table.get_children())
         if not self.preamble_rows:
             self.preamble_preview.pack_forget()
-            self.preamble_text.set("未加载前导码。最多10个周期，所有延时T必须为0。")
+            self.preamble_text.set("未加载前导码。最多10个周期，M、T均为百分比，M+T不大于100%。")
             return
         if not self.preamble_preview.winfo_manager():
             self.preamble_preview.pack(fill="x")
         plan = Preamble.compile(self.preamble_rows, self.book.slots if self.book else 256)
-        for i, ((m, _), width) in enumerate(zip(plan.rows, plan.widths), 1):
-            self.preamble_table.insert("", "end", values=(i, str(m), f"{width*100/plan.slots:.6g}"))
+        for i, ((m, t), width, delay) in enumerate(zip(plan.rows, plan.widths, plan.delays), 1):
+            self.preamble_table.insert("", "end", values=(i, str(m), str(t),
+                                       f"{width*100/plan.slots:.6g}", f"{delay*100/plan.slots:.6g}"))
         self.preamble_text.set(f"{self.preamble_name} · {len(plan.rows)}个周期 · {'已启用' if self.preamble_enabled.get() else '未启用'} · 与QAM共用周期和边界")
 
     def choose_directory(self):
-        picked = filedialog.askdirectory(parent=self.app.root, title=f"选择{self.label}码本目录")
+        picked = filedialog.askdirectory(parent=self.app.root, title=f"选择{self.label}码本目录",
+                                        initialdir=str(Path(__file__).resolve().parents[2] / "QAM_RULES"))
         if picked:
             self.load(picked)
 
@@ -394,8 +398,9 @@ class QamPage:
             # Validate before presenting a save dialog.
             compile_frame(self.book.pattern(direction, 0, 0, orientation, high), self.app.mapping_page.model)
             if path is None:
+                DEFAULT_CONFIG_DIRECTORY.mkdir(parents=True, exist_ok=True)
                 path = filedialog.asksaveasfilename(parent=self.app.root, title="导出当前发送配置包",
-                    initialdir=self.app.qam_data_dir if self.app.qam_data_dir.exists() else Path(__file__).resolve().parent,
+                    initialdir=str(DEFAULT_CONFIG_DIRECTORY),
                     initialfile=f"qam{self.order}_playback_plan.zip", defaultextension=".zip", filetypes=[("播放配置包", "*.zip")])
                 if not path:
                     return False

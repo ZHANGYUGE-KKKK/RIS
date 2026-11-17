@@ -47,15 +47,17 @@ class PreambleTests(unittest.TestCase):
     def oracle(self, rows, data, k, high=True):
         prefix = Preamble.compile(rows, self.book.slots)
         expected = []
-        for width in prefix.widths:
-            expected.extend([bytes([255])*50]*width + [bytes(50)]*(256-width))
+        for (m, t) in rows:
+            delay = int((t*256/100).to_integral_value(rounding="ROUND_HALF_UP"))
+            width = min(int((m*256/100).to_integral_value(rounding="ROUND_HALF_UP")), 256-delay)
+            expected.extend([bytes([255])*50 if delay <= q < delay+width else bytes(50) for q in range(256)])
         for symbol in data:
             cycle = [compile_frame(self.book.pattern(0, symbol, q, "identity", high), self.mapping) for q in range(256)]
             expected.extend(cycle*k)
         return expected
 
     def test_exact_cycles_and_frame_looping_for_all_400_bits(self):
-        rows = parse_mt("(20,0);\n(50,0);\n(80,0);")
+        rows = parse_mt("(20,10);\n(50,25);\n(80,20);")
         plan = self.plan(rows)
         expected = self.oracle(rows, b"\x3f\xa5", 3)
         self.assertEqual(decode(plan, 2), expected*(2*plan.frame_copies))
@@ -77,9 +79,9 @@ class PreambleTests(unittest.TestCase):
         plan = self.plan(rows, b"\0", 1, False, False)
         self.assertEqual(decode(plan), self.oracle(rows, b"\0", 1, False))
 
-    def test_max_ten_rows_and_zero_delay_are_strict(self):
+    def test_max_ten_rows_and_nonwrapping_bounds_are_strict(self):
         self.assertEqual(len(Preamble.compile(parse_mt("(50,0);\n"*10), 256).widths), 10)
-        for rows in ((), parse_mt("(50,0);\n"*11), parse_mt("(50,0.1);"),
+        for rows in ((), parse_mt("(50,0);\n"*11), parse_mt("(80,30);"),
                      ((Decimal("NaN"), Decimal(0)),), parse_mt("(.01,0);"), parse_mt("(99.99,0);")):
             with self.subTest(rows=rows), self.assertRaises(ValueError):
                 Preamble.compile(rows, 256)
@@ -103,14 +105,14 @@ class PreambleTests(unittest.TestCase):
         self.assertEqual(decode(plan), self.oracle(rows, data, 1))
 
     def test_source_export_offline_compiler_matches_live_tables(self):
-        rows = parse_mt("(25,0);\n(75,0);")
+        rows = parse_mt("(25,25);\n(50,50);")
         plan = self.plan(rows, b"\x3f", 3)
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "plan.zip"
             manifest = export_plan(path, self.book, self.mapping, 0, "identity", True, 3, True, b"\x3f", rows)
             self.assertEqual(manifest["preamble"]["cycles"], 2)
             with zipfile.ZipFile(path) as archive:
-                self.assertEqual(archive.read("preamble_mt.txt"), b"(25,0);\n(75,0);\n")
+                self.assertEqual(archive.read("preamble_mt.txt"), b"(25,25);\n(50,50);\n")
             report, writes, f, e, s, p = compile_plan(path, 60, True)
             self.assertEqual(struct.pack(f"<{len(f)}I", *f), plan.blocks[0])
             self.assertEqual(struct.pack(f"<{len(e)}I", *e), plan.blocks[1])

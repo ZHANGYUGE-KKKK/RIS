@@ -35,6 +35,8 @@ CRC32 canonical bytes: seven LE32 words `(ticks,K,L,loop,frames,events,formal_by
 
 ## Validation
 
+The 2026-11-10 host compiler also accepts delayed MT prefix rows with M+T<=100%. It emits low/high/low runs (one to three E entries) whose durations sum to exactly L. No RTL, firmware or protocol changes are required; B, S, payload and loop boundaries continue to share the existing event timer. Host ZIP exports preserve both M and T, plus their quantized widths and delays. `tests/make_prefix_fixture.py --delayed` generates separate delayed-prefix fixtures for the same RTL bench.
+
 `tests/run_prefix_sim.sh` checks real vendor ODDR and595 models against an independent400-bit source-slot oracle: user263-cycle frame and64QAM/K3/10-row frame, once and loop boundaries. Running the bench with `+CHECK_PREFIX` and no fixture additionally checks dense29-tick edges across B/S/P/wrap, capacity, frozen uploads and invalid prefix descriptors/periods.
 
 Host `test_qam_independent_prefix.py` uses the real C parser/driver, including full4096-byte payload, CRC/metadata corruption and old-device gate. `test_qam_full_chain.py` covers real Tk, worker, TCP client and C model using localhost only.

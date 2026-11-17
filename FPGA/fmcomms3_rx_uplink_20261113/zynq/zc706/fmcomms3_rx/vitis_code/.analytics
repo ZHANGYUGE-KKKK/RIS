@@ -1,0 +1,15 @@
+timestamp=[2026-10-19 14:08:53], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:01.951, duration_ms=1951, data={}
+timestamp=[2026-10-19 14:09:54], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:01.799, duration_ms=1799, data={}
+timestamp=[2026-10-19 14:10:32], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:01.457, duration_ms=1457, data={}
+timestamp=[2026-10-19 14:10:37], mode=APP_CREATION, duration=0:00:04.021, duration_ms=4021, data={name=key_ctrlll, project_type=sdk, os=standalone, processor=cortex-a9, runtime=C/C++, platform=key_ctrl, application_type=application}
+timestamp=[2026-10-19 14:10:45], mode=PLATFORM_GENERATION, duration=0:00:07.657, duration_ms=7657, data={name=key_ctrl}
+timestamp=[2026-10-19 14:10:48], mode=BUILD, duration=0:00:01.634, duration_ms=1634, data={name=key_ctrlll, configuration=Debug, clean_build=false}
+timestamp=[2026-10-19 14:15:26], mode=WORKBENCH_START, duration=0:00:04.621, duration_ms=4621, data={}
+timestamp=[2026-10-19 14:15:26], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:00.013, duration_ms=13, data={}
+timestamp=[2026-10-19 14:15:26], mode=WORKBENCH_UI_INIT, duration=0:00:00.225, duration_ms=225, data={editors_count=0, platform_editors_count=0, projects_count=3, platform_projects_count=1, active_platform_editor=false, projects=key_ctrl,key_ctrlll,key_ctrlll_system}
+timestamp=[2026-10-19 14:22:18], mode=PLATFORM_GENERATION, duration=0:00:07.187, duration_ms=7187, data={name=key_ctrl}
+timestamp=[2026-10-19 14:22:21], mode=BUILD, duration=0:00:01.541, duration_ms=1541, data={name=key_ctrlll, configuration=Debug, clean_build=false}
+timestamp=[2026-10-19 14:51:11], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:01.328, duration_ms=1328, data={}
+timestamp=[2026-10-20 15:30:50], mode=WORKBENCH_START, duration=0:00:04.704, duration_ms=4704, data={}
+timestamp=[2026-10-20 15:30:50], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:00.016, duration_ms=16, data={}
+timestamp=[2026-10-20 15:30:50], mode=WORKBENCH_UI_INIT, duration=0:00:00.569, duration_ms=569, data={editors_count=1, platform_editors_count=0, projects_count=4, platform_projects_count=1, active_platform_editor=false, projects=RemoteSystemsTempFiles,key_ctrl,key_ctrlll,key_ctrlll_system}

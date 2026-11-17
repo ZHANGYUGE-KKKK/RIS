@@ -41,12 +41,13 @@ class PrefixTests(unittest.TestCase):
         self.assertEqual(r['qam_crc'],p.crc)
     def test_maximum_formal_payload_and_ten_preamble_rows_k3(self):
         for order in (64,256):
-            p=self.plan(order,bytes(i%order for i in range(4096)),rows=(('0','0'),('100','0'))*5,k=3,freq=160000)
+            p=self.plan(order,bytes(i%order for i in range(4096)),
+                        rows=(('25','25'),('50','50'),('0','100'),('100','0'),('12.5','37.5'))*2,k=3,freq=160000)
             r=self.upload(p)
             self.assertEqual((r['qam_payload'],r['qam_prefix_count'],p.frame_cycles),(4096,14,12310))
             self.assertTrue(self.device.command('STOP')['ok'])
     def test_prefix_optional_and_legacy_timing_path(self):
-        for rows,phase in (((),False),((),True),((('50','0'),),False)):
+        for rows,phase in (((),False),((),True),((('50','25'),),False)):
             p=self.plan(data=b'\x88',rows=rows,phase=phase,freq=100)
             r=self.upload(p)
             self.assertEqual(r['qam_prefix_count'],len(rows)+(4 if phase else 0))

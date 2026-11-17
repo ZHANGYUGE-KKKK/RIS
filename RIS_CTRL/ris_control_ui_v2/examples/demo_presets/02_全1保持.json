@@ -1,0 +1,15 @@
+{
+  "format": "ris-control-preset",
+  "version": 1,
+  "name": "02_全1保持",
+  "source": "全板控制",
+  "action": {
+    "kind": "command",
+    "summary": "全板全1 · 静态保持",
+    "tag": "",
+    "payload": {
+      "command": "ALL 1"
+    }
+  },
+  "mapping": null
+}

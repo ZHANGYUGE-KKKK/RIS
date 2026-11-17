@@ -1,0 +1,88 @@
+{
+  "date": "2026-11-10",
+  "feature": "Ten demo slots and unified JSON output presets",
+  "format": "ris-control-preset",
+  "version": 1,
+  "test_counts": {
+    "preset_codec": 9,
+    "demo_gui": 8,
+    "demo_tcp_c_chain": 3,
+    "console_regression": 25
+  },
+  "total_tests": 45,
+  "console_run_note": "All 25 unique original tests passed. Hidden-window initialization became unusually slow, so its final two ConsoleTests were rerun with the same assertions in normally displayed windows; the pure StatusTests group ran separately. The obsolete hidden run was then terminated.",
+  "console_passed_test_names": [
+    "test_auto_next_only_prepares_new_probe_until_total_apply",
+    "test_board_modes_only_apply_from_total_button_and_report_actual_state",
+    "test_byte_configuration_reads_latest_fields_at_total_apply",
+    "test_cancel_at_last_upload_ack_still_stops_started_mt",
+    "test_cancel_upload_requires_a_second_total_button_click",
+    "test_connect_preserves_prepared_offline_byte_configuration",
+    "test_imported_mapping_saves_in_copy_and_preserves_source",
+    "test_invalid_or_unsupported_new_config_keeps_running_output",
+    "test_local_configuration_replaces_board_panel_without_output",
+    "test_manual_and_mapping_probes_wait_for_total_and_callback_ack",
+    "test_mapping_changes_invalidate_prepared_cell_command",
+    "test_mt_bad_ack_or_rejection_prevents_start_without_retry",
+    "test_mt_constant_modes_and_existing_unknown_run",
+    "test_mt_upload_order_once_loop_and_stop_are_all_gated",
+    "test_offline_config_buttons_never_create_a_connection",
+    "test_once_playlist_finishes_and_does_not_restart_on_poll",
+    "test_one_major_page_and_one_settings_pane_visible",
+    "test_pattern_edit_manual_step_and_playlist_buttons_are_drafts",
+    "test_pattern_run_uses_immutable_snapshot_during_edits_and_page_changes",
+    "test_rejection_keeps_draft_visible_without_retries",
+    "test_settings_oe_is_staged_and_mapping_draft_cannot_leak_to_general",
+    "test_staged_pattern_stop_does_not_cancel_before_total",
+    "test_total_button_uses_only_current_feature_and_retains_other_drafts",
+    "test_unsupported_mt_only_rejects_at_apply_and_preserves_frequency",
+    "test_worker_rejects_direct_writes_and_unapproved_playlist_frames"
+  ],
+  "exported_gui_action_variants": 20,
+  "max_preset_rows": 10,
+  "max_file_bytes": 2097152,
+  "export_is_offline": true,
+  "load_and_selection_are_offline": true,
+  "only_total_button_applies_output": true,
+  "loaded_snapshots_are_persistent": true,
+  "auto_select_or_apply_on_restart": false,
+  "qam_source_files_required_after_import": false,
+  "qam_waveforms_and_crc_preserved": true,
+  "firmware_or_rtl_source_changes": false,
+  "hardware_access_performed": false,
+  "flashed_to_board": false,
+  "layouts": [
+    "1460x980",
+    "1180x760 with all ten rows and scrolling"
+  ],
+  "source_sha256": {
+    "ris_gui.py": "a4537c3578cd49ee4d0f3870d39ab5d688a087219a174e00ddafd96f6a462f87",
+    "ris_demo_gui.py": "c366b21a270f143f2ed45eccb24d17cf34771eaf348a5cc4f35d4132cbae8403",
+    "ris_presets.py": "194fb432692a9391fcc1f992c145191c5ad379cd36b64e98b6790552ef429932",
+    "ris_qam256_gui.py": "dc52005bf8f5d3d34e5e7c453ca4031218161608d11755b54b027669af85ece8",
+    "tests/test_presets.py": "5fb260c88f4d76f8c35a6c413f344e763514221633985e14dc284006b12b7783",
+    "tests/test_demo_gui.py": "422dd4ce1816a2eca969a4966620120da201ee1390efdf8823e49b167b7d58f4",
+    "tests/test_demo_full_chain.py": "f2aad4883373189e061cd7e9a1352cc40f822e0bf90c2d9b765ef7330eb4b51f",
+    "tests/test_console_gui.py": "9b0352377654564c0475d5bc78222ade316dcbf06433c5054bfea302fe186a8d",
+    "tests/preview_demo_ui.py": "1a32935c1e0e95e87a231ade000073d8e84dd6b290a322254b3aa072b9960cbd",
+    "docs/demo_mode.md": "9ab4ebc07d7d792fe6ea494639f6a300af73ae7de2a8a78a23a2623745ac4dda"
+  },
+  "test_logs": {
+    "preset_codec": "reports/demo_mode/preset_codec.log",
+    "demo_gui": "reports/demo_gui_tests.log",
+    "demo_tcp_c_chain": "reports/demo_full_chain_tests.log",
+    "console_hidden_partial": "reports/demo_console_regression.log",
+    "console_last_two_visible": "reports/demo_console_final_visible.log",
+    "console_status": "reports/demo_console_status.log"
+  },
+  "preview_sha256": {
+    "25_demo_mode.png": "8ffc46676a31e71286c2070fe71d4d4c17fe5dbaaa1873b85266c17f22d9a0d7",
+    "26_demo_mode_small.png": "f8844a95d4b0b813d4c5950801706fc2af3160e9c81dc748a715c8bdaf6abc33"
+  },
+  "sample_presets": [
+    "examples/demo_presets/01_全0保持.json",
+    "examples/demo_presets/02_全1保持.json",
+    "examples/demo_presets/03_停止保持.json",
+    "examples/demo_presets/04_MT占空比序列.json"
+  ]
+}

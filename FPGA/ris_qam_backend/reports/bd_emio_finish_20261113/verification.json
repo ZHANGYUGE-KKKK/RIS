@@ -1,0 +1,30 @@
+{
+  "bd_sha256": "97973fc93c1f8015cd8716859f3f606a8f18e30dbc3cf515635ab8ab1b892a9f",
+  "ris_controller_parameters_unchanged": true,
+  "ris_address_map_unchanged": true,
+  "ps_gem0_ddr_qspi_uart_unchanged": true,
+  "original_ris_nets_preserved": true,
+  "unchanged_sources": [
+    "rtl/ris_ctrl_unit_top.v",
+    "scripts/create_project.tcl",
+    "constraints/ris_lpc.xdc",
+    "constraints/signal_pin_mapping.csv",
+    "constraints/ris_fast.xdc",
+    "constraints/zc706_ps_preset.tcl"
+  ],
+  "external_interfaces": [
+    "DDR",
+    "FIXED_IO",
+    "pl_eth_mdio",
+    "pl_eth_rgmii"
+  ],
+  "external_ports": [
+    "ris_data",
+    "ris_shcp",
+    "ris_stcp",
+    "ris_mr_n",
+    "ris_oe_n",
+    "pl_eth_reset_n"
+  ],
+  "firmware_and_bitstream_generated": false
+}

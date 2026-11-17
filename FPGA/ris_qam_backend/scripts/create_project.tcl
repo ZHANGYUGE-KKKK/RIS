@@ -1,4 +1,4 @@
-# Vivado 2020.2: vivado -mode batch -source scripts/create_project.tcl
+# Vivado 2022.2: vivado -mode batch -source scripts/create_project.tcl
 set root [file normalize [file join [file dirname [info script]] ..]]
 set project_dir $root/vivado_qam
 set frame_slots 16
@@ -77,6 +77,8 @@ foreach name {ris_data ris_shcp ris_stcp ris_mr_n ris_oe_n} {
 assign_bd_address -offset 0x41200000 -range 0x10000 \
     -target_address_space [get_bd_addr_spaces ps7/Data] \
     [get_bd_addr_segs -of_objects [get_bd_intf_pins controller/S_AXI]] -force
+# Vendor board J18 is SGMII over GTX. Keep the rebuild path in sync with the GUI.
+source $root/scripts/configure_pl_eth_bd.tcl
 validate_bd_design
 save_bd_design
 set bd [get_files */ris_system.bd]
@@ -86,6 +88,8 @@ set wrapper [make_wrapper -files $bd -top]
 add_files -norecurse $wrapper
 add_files -fileset constrs_1 -norecurse $root/constraints/ris_lpc.xdc
 set_property PROCESSING_ORDER LATE [get_files */ris_lpc.xdc]
+add_files -fileset constrs_1 -norecurse $root/constraints/ris_pl_eth.xdc
+set_property PROCESSING_ORDER LATE [get_files */ris_pl_eth.xdc]
 if {$fast_toggle} {
     add_files -fileset constrs_1 -norecurse $root/constraints/ris_fast.xdc
     set_property PROCESSING_ORDER LATE [get_files */ris_fast.xdc]

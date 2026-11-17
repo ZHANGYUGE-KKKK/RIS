@@ -1,0 +1,33 @@
+{
+  "verified_at": "2026-11-13T14:24:30+08:00",
+  "board": "ZC706 transmitter, XC7Z045",
+  "boot": "JTAG",
+  "flash_written": false,
+  "actual_clock": "Si5326 revision C",
+  "clock_id_registers": [
+    "0x01",
+    "0xa2"
+  ],
+  "reference_clock": "CKOUT2 configured 125 MHz, lock verified by firmware",
+  "gem1_phy": "001C:C916",
+  "gem1_pcs": "0174:0C00",
+  "gem1_link": "1000 Mbps full duplex",
+  "ps_status_ok": true,
+  "ps_status_errors": 0,
+  "ps_status_with_monitor": true,
+  "monitor_cli_test": true,
+  "peer": "Linux test NIC 192.168.2.12, receiver emulator",
+  "verified_payload_lengths": [
+    18,
+    1024
+  ],
+  "crc_rejections": 1,
+  "source_port_rejections": 1,
+  "queue_drops": 0,
+  "host_regression_cases": 17,
+  "two_board_tested": false,
+  "rf_tested": false,
+  "bit_sha256": "5fd3ad76afed4c267be71632f843cb164a4aa65c7e64c7dfdac9d96a70e8ea6c",
+  "elf_sha256": "21df6445916db41054d929dd38d937a02f98d45fe1fe64a71b402e6d977ed5b2",
+  "diagnostics": "The two vendor xadapter.c EMAC type messages are emitted by switch fallthrough after successful netif_add. Both interfaces were verified by live traffic."
+}

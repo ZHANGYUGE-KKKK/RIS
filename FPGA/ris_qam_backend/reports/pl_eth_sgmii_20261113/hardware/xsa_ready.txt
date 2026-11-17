@@ -1,0 +1,2 @@
+SYNTHESIZED_NO_BIT_XSA /home/wenhan/PROJECTS/RIS/FPGA/ris_qam_backend/export_uplink/ris_ctrl_unit.xsa
+SOURCE_MANIFEST /home/wenhan/PROJECTS/RIS/FPGA/ris_qam_backend/reports/pl_eth_sgmii_20261113/hardware/source_sha256.txt

@@ -1,0 +1,10 @@
+{
+  "image_bytes": 13573136,
+  "previous_image_bytes": 13556752,
+  "erase_sector_bytes": 131072,
+  "erase_end_exclusive": "0xd00000",
+  "target_cable": "210299372306",
+  "target": "xc7z045",
+  "latched_boot_mode_at_first_probe": 1,
+  "ready_image": true
+}

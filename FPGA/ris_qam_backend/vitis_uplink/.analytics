@@ -1,0 +1,6 @@
+timestamp=[2026-11-13 13:49:37], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:00.485, duration_ms=485, data={}
+timestamp=[2026-11-13 13:50:54], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:00.443, duration_ms=443, data={}
+timestamp=[2026-11-13 13:56:26], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:00.436, duration_ms=436, data={}
+timestamp=[2026-11-13 13:57:14], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:00.407, duration_ms=407, data={}
+timestamp=[2026-11-13 13:57:20], mode=APP_CREATION, duration=0:00:03.856, duration_ms=3856, data={name=ris_uplink_network, project_type=sdk, os=standalone, processor=cortex-a9, runtime=C/C++, platform=ris_uplink_platform, application_type=application}
+timestamp=[2026-11-13 13:57:21], mode=BUILD, duration=0:00:01.129, duration_ms=1129, data={name=ris_uplink_network, configuration=Debug, clean_build=false}

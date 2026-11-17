@@ -16,6 +16,9 @@ MIN_TICKS = 30  # eight 100 MHz shifts, guard and latch: 100 ns per update
 MAX_TICKS = 0x7fffffff
 MAX_ROWS = 512
 MAX_SEGMENTS = 2048
+MAX_PREAMBLE_ROWS = 10
+DEFAULT_MT_DIRECTORY = Path(__file__).resolve().parents[2] / "matlab"
+DEFAULT_CONFIG_DIRECTORY = DEFAULT_MT_DIRECTORY / "CONFIG"
 NUMBER = r"(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)"
 ROW = re.compile(rf"\(?\s*({NUMBER})\s*,\s*({NUMBER})\s*\)?\s*;?")
 
@@ -49,6 +52,29 @@ def load_mt(path):
 
 def rounded(value):
     return int(value.to_integral_value(rounding=ROUND_HALF_UP))
+
+
+def validate_preamble(rows):
+    if not 1 <= len(rows) <= MAX_PREAMBLE_ROWS:
+        raise ValueError("前导码MT表需要1–10行，每行对应一个PWM周期")
+    saved = []
+    for index, (m, t) in enumerate(rows, 1):
+        m, t = Decimal(m), Decimal(t)
+        if not m.is_finite() or not t.is_finite() or not (0 <= m <= 100 and 0 <= t <= 100):
+            raise ValueError(f"前导码第{index}行：M、T均需在0–100%之间")
+        if m + t > 100:
+            raise ValueError(f"前导码第{index}行：M+T不能大于100%")
+        saved.append((m, t))
+    return tuple(saved)
+
+
+def pulse_ticks(m, t, period):
+    delay, width = rounded(t * period / 100), rounded(m * period / 100)
+    if m + t <= 100:
+        # Independent rounding can otherwise turn M+T=100% into a one-tick
+        # wraparound pulse. Preserve the exact end of the current cycle.
+        width = min(width, period-delay)
+    return delay, width
 
 
 def merge_intervals(intervals):
@@ -105,7 +131,7 @@ def compile_mt(rows, text, unit, loop=True):
         m, t = Decimal(m), Decimal(t)
         if not (0 <= m <= 100 and 0 <= t <= 100):
             raise ValueError(f"第 {index + 1} 行：M、T 超出 0～100%")
-        delay, width = rounded(t * period / 100), rounded(m * period / 100)
+        delay, width = pulse_ticks(m, t, period)
         if m > 0 and width == 0:
             raise ValueError(f"第 {index + 1} 行：高电平不足一个时钟，请降低频率")
         if width:

@@ -1,0 +1,44 @@
+# Local tool and account state.
+/.agents/
+/.aws/
+/.codex/
+
+# Vivado generated workspaces and build products.
+.Xil/
+*.cache/
+*.runs/
+*.sim/
+*.gen/
+*.hw/
+*.ip_user_files/
+*.bit
+*.dcp
+*.rpx
+*.wdb
+*.jou
+*.log
+*.str
+*.pb
+
+# Vitis / Xilinx SDK local state and compiled output.
+.metadata/
+.sdk/
+RemoteSystemsTempFiles/
+Debug/
+Release/
+_ide/
+tempdsa/
+*.o
+*.obj
+*.a
+*.elf
+*.bin
+*.BIN
+
+# Python caches and editor temporary files.
+__pycache__/
+*.py[cod]
+*.lck
+*.lock
+*~
+.DS_Store

@@ -1,0 +1,11 @@
+WORKFLOW_OPERATION simulation,dialog;
+
+DEFINE_MEMORY_TYPE sg_bram_MEM_DEVICE [0x00010000] 32;
+
+ADDRESS_MAP processing_system7_0 ARM 100 processing_system7_0
+   ADDRESS_SPACE sg_bram_ADDR_SPACE sg_bram_MEM_DEVICE  [0x42000000:0x4200FFFF] sg_bram_ctrl
+     BUS_BLOCK
+      sg_bram_BUS_BLK [31:0] INPUT = "design_1_sg_bram_0.mem";
+     END_BUS_BLOCK;
+   END_ADDRESS_SPACE;
+END_ADDRESS_MAP;

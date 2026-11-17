@@ -1,0 +1,42 @@
+{
+  "common_parameter_differences": {
+    "ps7": {
+      "PCW_FTM_CTI_OUT0": {
+        "gui": "<Select>",
+        "rebuild": "DISABLED"
+      },
+      "PCW_FTM_CTI_IN2": {
+        "gui": "<Select>",
+        "rebuild": "DISABLED"
+      },
+      "PCW_FTM_CTI_OUT3": {
+        "gui": "<Select>",
+        "rebuild": "DISABLED"
+      },
+      "PCW_IRQ_F2P_INTR": {
+        "gui": "1",
+        "rebuild": "0"
+      },
+      "PCW_FTM_CTI_IN1": {
+        "gui": "<Select>",
+        "rebuild": "DISABLED"
+      },
+      "PCW_FTM_CTI_OUT2": {
+        "gui": "<Select>",
+        "rebuild": "DISABLED"
+      },
+      "PCW_FTM_CTI_IN0": {
+        "gui": "<Select>",
+        "rebuild": "DISABLED"
+      },
+      "PCW_FTM_CTI_IN3": {
+        "gui": "<Select>",
+        "rebuild": "DISABLED"
+      },
+      "PCW_FTM_CTI_OUT1": {
+        "gui": "<Select>",
+        "rebuild": "DISABLED"
+      }
+    }
+  }
+}

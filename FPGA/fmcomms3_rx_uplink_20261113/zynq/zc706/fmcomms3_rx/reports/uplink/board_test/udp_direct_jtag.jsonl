@@ -1,0 +1,2 @@
+{"source": "192.168.2.12:7061", "destination": "192.168.2.11:7061", "seq": 4201, "kind": 1, "length": 16, "rx_ms": 394019, "host_ms": 61, "crc": "PASS", "bytes_equal": true}
+{"source": "192.168.2.12:7061", "destination": "192.168.2.11:7061", "seq": 4202, "kind": 0, "length": 1024, "rx_ms": 394361, "host_ms": 324, "crc": "PASS", "bytes_equal": true}

@@ -1,0 +1,176 @@
+{
+  "board": "ZC706 receiver",
+  "jtag_cable_serial": "210299995170",
+  "flash_type": "qspi-x8-dual_parallel",
+  "jedec_id": "ef6018",
+  "offset": 0,
+  "image_bytes": 13655056,
+  "image_sha256": "740dc4e18874315503ee8dca3c689676406f371199ebe5aa6207faa00c797f92",
+  "backup_bytes": 33554432,
+  "backup_sha256": "03d138b4132aa413e66ea72c6dd1847819f2ad523277fda705c37a9407ba7a30",
+  "direct_full_byte_compare": "PASS",
+  "preflash_board_replay": {
+    "result": "PWM3_BOARD_REPLAY_PASS",
+    "sequence": 1,
+    "rx_ms": 78134,
+    "source": "192.168.2.12:7061",
+    "destination": "192.168.2.11:7061",
+    "crc": "PASS",
+    "type": "pwm3",
+    "capture_id": "000000053bad8d19",
+    "carrier_hz": 798036,
+    "frames": [
+      {
+        "user": 1,
+        "symbols": "01234567"
+      },
+      {
+        "user": 2,
+        "symbols": "76543210"
+      },
+      {
+        "user": 3,
+        "symbols": "02461357"
+      },
+      {
+        "user": 1,
+        "symbols": "01234567"
+      },
+      {
+        "user": 2,
+        "symbols": "76543210"
+      },
+      {
+        "user": 3,
+        "symbols": "02461357"
+      },
+      {
+        "user": 1,
+        "symbols": "01234567"
+      },
+      {
+        "user": 2,
+        "symbols": "76543210"
+      },
+      {
+        "user": 3,
+        "symbols": "02461357"
+      },
+      {
+        "user": 1,
+        "symbols": "01234567"
+      },
+      {
+        "user": 2,
+        "symbols": "76543210"
+      },
+      {
+        "user": 3,
+        "symbols": "02461357"
+      },
+      {
+        "user": 1,
+        "symbols": "01234567"
+      },
+      {
+        "user": 2,
+        "symbols": "76543210"
+      },
+      {
+        "user": 3,
+        "symbols": "02461357"
+      }
+    ]
+  },
+  "cold_boot": "PASS",
+  "cold_boot_mode": 1,
+  "cold_board_replay": {
+    "result": "PWM3_BOARD_REPLAY_PASS",
+    "sequence": 1,
+    "rx_ms": 90648,
+    "source": "192.168.2.12:7061",
+    "destination": "192.168.2.11:7061",
+    "crc": "PASS",
+    "type": "pwm3",
+    "capture_id": "00000006334b20d2",
+    "carrier_hz": 798036,
+    "frames": [
+      {
+        "user": 1,
+        "symbols": "01234567"
+      },
+      {
+        "user": 2,
+        "symbols": "76543210"
+      },
+      {
+        "user": 3,
+        "symbols": "02461357"
+      },
+      {
+        "user": 1,
+        "symbols": "01234567"
+      },
+      {
+        "user": 2,
+        "symbols": "76543210"
+      },
+      {
+        "user": 3,
+        "symbols": "02461357"
+      },
+      {
+        "user": 1,
+        "symbols": "01234567"
+      },
+      {
+        "user": 2,
+        "symbols": "76543210"
+      },
+      {
+        "user": 3,
+        "symbols": "02461357"
+      },
+      {
+        "user": 1,
+        "symbols": "01234567"
+      },
+      {
+        "user": 2,
+        "symbols": "76543210"
+      },
+      {
+        "user": 3,
+        "symbols": "02461357"
+      },
+      {
+        "user": 1,
+        "symbols": "01234567"
+      },
+      {
+        "user": 2,
+        "symbols": "76543210"
+      },
+      {
+        "user": 3,
+        "symbols": "02461357"
+      }
+    ]
+  },
+  "cold_receiver_state": {
+    "ok": true,
+    "type": "pwm3_status",
+    "enabled": false,
+    "symbol_hz": 10000,
+    "windows": 15,
+    "frames": 15,
+    "reports_queued": 1,
+    "carrier_hz": -96173,
+    "capture_result": 0,
+    "uplink_result": 0,
+    "link_up": true,
+    "init_error": 0
+  },
+  "live_rf_tested": false,
+  "two_board_relay_tested": false
+}
