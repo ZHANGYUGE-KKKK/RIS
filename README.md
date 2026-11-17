@@ -1,86 +1,192 @@
-# RIS 工程目录
+# RIS 控制与射频接收工程
 
-本工程按上位机、FPGA/板端、QAM码本和驱动板硬件分类。软件工具及安装依赖位于 `/home/wenhan/SOFTWARE`；程序从项目内部启动。
+本仓库包含 20×20、400 路 RIS 控制台，配套 Zynq FPGA/ARM 固件，64QAM/256QAM 码本，FMCOMMS3 射频采集与接收分析程序，以及 FMC 驱动板设计和实验配置。控制台支持全板/单元控制、统一 MT、图案播放、独立 QAM 播放及演示预设；收端提供 PWM 测速、256QAM 验证和三用户验证入口。
 
-## 文件结构
+本文按当前目录内容整理，更新日期为 **2026-11-17**。硬件状态依据各次验证记录，具体配置、产物和验收范围以对应报告为准。
+
+## 目录索引
 
 ```text
 RIS/
-├── RIS_CTRL/                         上位机
-│   ├── ris_control_ui_v2/             主控制台、Python客户端和上位机测试
-│   │   ├── start_gui.sh               启动入口
-│   │   ├── docs/                     控制台、QAM链路及前导码说明
-│   │   ├── mappings/                 FPC—RIS接线映射和标定配置
-│   │   ├── patterns/                 图案库
-│   │   ├── qam/                      QAM界面配置
-│   │   ├── matlab/、examples/         MT表及配置示例
-│   │   ├── reports/                  上位机验证日志
-│   │   └── tests/                    上位机与协议联调测试
-│   ├── legacy_mt_host/                原版MT控制台及其测试、示例
-│   ├── fmcomms3_rx_host/              射频采集上位机、频谱分析和采集文件
-│   └── archive/                      上位机源码历史快照
-├── FPGA/                             RTL、板端固件和硬件工程
-│   ├── ris_qam_backend/               与主控制台配套的QAM1板端工程
-│   │   ├── rtl/、constraints/         RTL和引脚/时序约束
-│   │   ├── software/、include/        ARM固件、TCP协议和寄存器定义
-│   │   ├── scripts/、tests/           构建、核验和数字仿真入口
-│   │   ├── vivado_qam/、vitis_qam/    Vivado/Vitis工作区
-│   │   ├── export_qam/                配套BIT、XSA、ELF和初始化文件
-│   │   ├── export_flash/              Flash启动镜像及配套包
-│   │   └── reports/、build/           验证记录与构建产物
-│   ├── zynq/                         既有PZ7035、ZC706控制与射频接收工程
-│   ├── reference/                    PS配置等硬件参考
-│   └── reports/legacy/               根目录原有的调试输出
-├── QAM_RULES/                        QAM映射规则与码本
-│   ├── 256QAM/                       256QAM源码本目录及ZIP
-│   └── 64QAM/                        64QAM码本ZIP
-├── fmc_drive_board/                  FMC驱动板EDA工程、设计说明、核对脚本和备份
-├── deps/                             历史Linux桌面动态库副本
-├── .gitignore                       生成文件忽略规则
-└── README.md                        本目录索引
+├── RIS_CTRL/                              电脑端控制程序
+│   ├── ris_control_ui_v2/                  主控制台、客户端、预设、预览和测试
+│   │   ├── start_gui.sh                    主启动入口
+│   │   ├── docs/                          QAM链路、前导码、频率和演示说明
+│   │   ├── mappings/、patterns/            FPC—RIS映射、标定配置和图案库
+│   │   ├── qam/、examples/                界面配置、MT示例和演示预设
+│   │   ├── presets/                       演示槽位的本地持久化快照
+│   │   └── tests/、reports/、preview/      自动化测试、验证记录和界面截图
+│   ├── legacy_mt_host/                    原版MT控制台
+│   ├── fmcomms3_rx_host/                   原有射频采集、下载和频谱上位机
+│   └── archive/                           上位机源码历史快照
+├── FPGA/                                  RTL、板端固件和硬件工程
+│   ├── ris_qam_backend/                    主控制台配套发端工程
+│   │   ├── rtl/、constraints/              RTL、引脚和时序约束
+│   │   ├── software/、include/             ARM固件、网络协议和寄存器定义
+│   │   ├── scripts/、tests/                构建、数字仿真和主机侧验证
+│   │   ├── vivado_qam/、vitis_qam/         QAM工作区
+│   │   ├── vitis_uplink/                  回传固件/BSP工作区
+│   │   ├── export_qam/、export_uplink/     QAM与PL网口回传配套导出
+│   │   └── export_flash/、reports/、build/ 启动包、验证记录和构建产物
+│   ├── fmcomms3_rx_uplink_20261113/        独立收端工程及快照
+│   │   ├── zynq/zc706/fmcomms3_rx/        ZC706收端硬件、固件、host和测试
+│   │   ├── baseline/、qspi/               基线及QSPI相关工程副本
+│   │   └── staging/                       固件暂存文件
+│   ├── zynq/                              既有PZ7035、ZC706控制与接收工程
+│   ├── reference/                         PS配置等硬件参考
+│   └── reports/legacy/                    历史调试输出
+├── QAM_RULES/                             原始码本目录、ZIP和校验清单
+│   ├── 256QAM/                            64、100、256 slice码本
+│   └── 64QAM/                             16、64、100 slice码本
+├── matlab/                                实验MT表、前导码和CONFIG发送预设
+├── tools/rx706_capture_linux_20261109/     独立Linux采集下载工具
+├── PAPERS/ris_partition_modulation/        分区调制论文、来源和SHA256清单
+├── fmc_drive_board/                       FMC驱动板EDA工程、说明与核对脚本
+├── NA/                                   保留的PS配置摘要
+├── deps/                                 历史Linux桌面动态库副本
+├── single_user_image23.json               单用户接收配置样例
+└── README.md                              项目入口与目录索引
 ```
 
-## 上位机入口
+`FPGA/zynq/zc706/ris_ctrl_unit` 为原版控制工程；主控制台的配套板端为 `FPGA/ris_qam_backend`。`RIS_CTRL/fmcomms3_rx_host` 与独立收端工程中的 `host` 分别保留，新增接收分析功能见下文的独立收端入口。
 
-从工程根目录执行：
+## 环境与启动
+
+本机工具统一放在 `/home/wenhan/SOFTWARE`，每个软件使用独立目录并在其中保存依赖。主控制台默认复用 `/home/wenhan/SOFTWARE/RIS-GUI-V2/runtime`，兼容旧的 `RIS-GUI/runtime`；可用 `RIS_GUI_RUNTIME` 指定兼容运行库。板端构建脚本默认使用该目录下的 Vivado/Vitis 2022.2。
+
+以下命令均从仓库根目录执行。
+
+### RIS 主控制台
 
 ```bash
 ./RIS_CTRL/ris_control_ui_v2/start_gui.sh
 ```
 
-直接进入QAM页面：
+也可直接进入指定页面：
 
 ```bash
+./RIS_CTRL/ris_control_ui_v2/start_gui.sh --mt
 ./RIS_CTRL/ris_control_ui_v2/start_gui.sh --qam
+./RIS_CTRL/ris_control_ui_v2/start_gui.sh --qam64
+./RIS_CTRL/ris_control_ui_v2/start_gui.sh --demo
 ```
 
-原版MT和射频采集上位机入口分别为 `RIS_CTRL/legacy_mt_host/start_gui.sh`、`RIS_CTRL/fmcomms3_rx_host/start_gui.sh`。
+启动默认只打开界面。选择功能、载入文件、预览或选择停止后，均需点击总“下发指令”按钮才应用输出。`--connect` 可主动建立连接并读取状态，输出仍经总按钮应用。
 
-启动脚本按自身位置定位源码，沿用 `/home/wenhan/SOFTWARE/RIS-GUI-V2/runtime` 中的运行库；可通过 `RIS_GUI_RUNTIME` 指定兼容运行库。启动默认不连接板卡，输出配置由界面总“下发指令”按钮应用。
+| 功能 | 使用说明 |
+| --- | --- |
+| 全板、单元、芯片与图案控制 | 全0/全1、保持、慢速循环、硬件方波、接线检查和图案列表，见[控制台说明](RIS_CTRL/ris_control_ui_v2/README.md)。 |
+| 统一400路MT | 支持一次/循环播放、完整波形滚动预览及最多10行前导码；示例见[带延时前导码](RIS_CTRL/ris_control_ui_v2/examples/preamble_mt_with_delay.txt)。 |
+| 256QAM与64QAM | 独立配置、码本导入、正式数据上传、K次重复及整帧循环，见[256QAM链路](RIS_CTRL/ris_control_ui_v2/docs/qam256_end_to_end.md)和[64QAM说明](RIS_CTRL/ris_control_ui_v2/docs/qam64_usage.md)。 |
+| QPR1独立前缀 | 前导码和四个相偏参考点独立于正式QAM索引及数据，见[前导码](RIS_CTRL/ris_control_ui_v2/docs/qam256_preamble.md)和[相偏参考点](RIS_CTRL/ris_control_ui_v2/docs/qam_phase_compensation.md)。 |
+| 演示模式 | 十个槽位加载统一JSON预设；“导出当前配置”保存完整运行参数或表数据，见[操作与恢复规则](RIS_CTRL/ris_control_ui_v2/docs/demo_mode.md)。 |
 
-[控制台说明](RIS_CTRL/ris_control_ui_v2/README.md) · [QAM链路](RIS_CTRL/ris_control_ui_v2/docs/qam256_end_to_end.md) · [前导码](RIS_CTRL/ris_control_ui_v2/docs/qam256_preamble.md)
+统一MT和两种QAM的前导码均采用 `(M,T);` 百分比格式，先低电平T%、再高电平M%、其余低电平；最多10行，要求 `M+T≤100%`。循环时每轮重新播放前导码。QAM的四个相偏参考点沿用当前K，正式数据仍保留完整索引空间。带延时前导码的数字与上位机验证见[记录](RIS_CTRL/ris_control_ui_v2/reports/preamble_delay_validation.md)。
 
-## 分类边界
+QAM输出频率在界面中直接设置，并显示量化后的实际值；slice数决定计时限制，不能仅按调制阶数或码本文件名判断可用频率。规则见[统一PWM频率设置](RIS_CTRL/ris_control_ui_v2/docs/qam_pwm_frequency.md)。码本模型EVM与实际射频接收结果分别记录。
 
-- `RIS_CTRL` 保存电脑端程序和本地配置；板端C固件、RTL、Vivado/Vitis工程及烧写文件归入 `FPGA`。
-- `QAM_RULES` 保存码本原始数据，上位机直接读取，不再维护内置重复ZIP。QAM码本与FPC接线映射用途不同；后者保存在控制台的 `mappings` 中。
-- `FPGA/ris_qam_backend` 是主控制台配套板端工程。`FPGA/zynq/zc706/ris_ctrl_unit` 保存原版控制工程，原上位机已分离到 `RIS_CTRL/legacy_mt_host`。
-- 各部分通过码本文件、网络协议或配套导出文件衔接。跨端联调测试引用另一部分的明确路径，不复制其源码。
-- `fmc_drive_board` 保存实体驱动板设计。`NA/ps7_summary.html` 已归入 `FPGA/reference`；原零散时序和仿真输出已归入 `FPGA/reports/legacy`。
-- `deps` 内是托盘、通知及密钥环相关的历史桌面库；主控制台运行环境由 `runtime_env.sh` 配置。
+### 采集与接收分析
 
-[FPGA工程说明](FPGA/ris_qam_backend/README.md) · [驱动板电源设计](fmc_drive_board/EXT_12V_design.md)
+原有采集上位机与原版MT控制台可分别启动：
 
-## 配套文件与记录
+```bash
+./RIS_CTRL/fmcomms3_rx_host/start_gui.sh
+./RIS_CTRL/legacy_mt_host/start_gui.sh
+```
 
-板端导出文件集中在 `FPGA/ris_qam_backend/export_qam`，Flash包集中在 `export_flash`。BIT、XSA、ELF、PS初始化文件按配套清单使用。目录整理不重建或烧写硬件。
+独立收端工程包含 PWM测速、256QAM验证、三用户验证及板卡采集子窗口。使用已具备 Tkinter、NumPy 和 Matplotlib 的 Python 环境启动：
 
-`reports` 中保留与具体构建、测试及烧写产物对应的记录；第三方源码来源和许可说明随对应代码保留。归档日志中的绝对路径表示记录产生时的位置。
+```bash
+python3 -B FPGA/fmcomms3_rx_uplink_20261113/zynq/zc706/fmcomms3_rx/host/rx706_receiver_gui.py
+```
 
-64QAM已作为独立控制类型接入主控制台（与256QAM并列）；默认码本为 `QAM_RULES/64QAM/ris_64qam_64slice_codebook`，入口 `./RIS_CTRL/ris_control_ui_v2/start_gui.sh --qam64`。操作、时序及配套文件要求见 [64QAM说明](RIS_CTRL/ris_control_ui_v2/docs/qam64_usage.md)。
+可在命令末尾附加采样 `.bin` 路径。启动后选择功能区、打开采样、加载与实际发送一致的配置，再点击“运行接收”；也可通过“连接板卡 / 采集…”获取新数据。启动时不自动连接、采集或解调。分析依赖清单见收端 `host/requirements-fft.txt`，使用流程见[三功能区说明](FPGA/fmcomms3_rx_uplink_20261113/zynq/zc706/fmcomms3_rx/host/RECEIVER_WORKFLOWS_README.md)及[采集与导入](FPGA/fmcomms3_rx_uplink_20261113/zynq/zc706/fmcomms3_rx/host/RECEIVER_CAPTURE_README.md)。
 
-2026-11-09：QAM已同步增加QPR1独立前导码与相偏描述，解除前缀对256项QAM索引的占用。配套[Flash包](FPGA/ris_qam_backend/export_flash/RIS_ZC706_QAM_QSPI_20261109_qpr1.zip)已离线生成并校验，尚未烧写；见[验证记录](FPGA/ris_qam_backend/reports/prefix/validation.md)。
+独立Linux下载包仅依赖Python标准库，有Tk桌面时使用图形界面，否则进入终端菜单：
 
-2026-11-10：上位机新增[演示模式与统一JSON预设](RIS_CTRL/ris_control_ui_v2/docs/demo_mode.md)。功能菜单中选择演示模式，可加载十条预设，再经总按钮应用；各原有下发功能共用“导出当前配置”入口。
+```bash
+bash tools/rx706_capture_linux_20261109/start.sh
+bash tools/rx706_capture_linux_20261109/start.sh --cli
+```
 
-2026-11-10：QPR1镜像已成功烧写开发板，内置比较通过，按用户要求未执行额外独立读回。需由用户断电切回QSPI启动后上电；最新状态见[QPR1实板烧写记录](FPGA/ris_qam_backend/reports/flash_qpr1_20261110/FLASH_REPORT.md)。
+采集数据使用小端 `int16 I1,Q1,I2,Q2`，配套默认采样率为15.36 MS/s；实际参数以采集元数据为准。保留 `.bin` 与同名 `.bin.json`，下载包含逐块CRC、完整文件SHA256与断点续传。容量、DDR释放及搬运校验见[下载工具说明](tools/rx706_capture_linux_20261109/README.txt)。接收分析需匹配真实发送配置；没有已知净荷参考时BER未测，EVM不能替代误码率验收。
+
+## 网络接口与回传
+
+| 用途 | 板端地址/端口 | 电脑端入口 |
+| --- | --- | --- |
+| 发端RIS控制，GEM0 / PS Ethernet | `192.168.1.11:7060` TCP | 主控制台 |
+| 发端接收回传，GEM1 / PL Ethernet | `192.168.2.11:7061` UDP | 接收RUP1，仅允许来源 `192.168.2.12:7061` |
+| 发端回传监视，GEM0 / PS Ethernet | `192.168.1.11:7070` TCP | `monitor_uplink.py`，JSON Lines |
+| 收端采集控制/下载 | `192.168.1.10:5001` TCP | 采集GUI或独立下载工具 |
+| 收端控制台日志 | `192.168.1.10:5000` TCP | 采集工具控制台 |
+
+PS侧电脑网卡可使用 `192.168.1.20/24`，PL侧测试对端使用 `192.168.2.12/24`；各地址需与实际固件一致。
+
+发端监视入口：
+
+```bash
+python3 -B FPGA/ris_qam_backend/scripts/monitor_uplink.py monitor --host 192.168.1.11
+```
+
+RUP1包含序号、类型、时间计数、CRC32及最多1024字节净荷。发端将合法数据排队并通过独立7070连接转发。协议、来源过滤、队列容量、断线行为和JSONL保存方式见[UPLINK.md](FPGA/ris_qam_backend/UPLINK.md)。
+
+## 板端构建与配套文件
+
+[发端工程说明](FPGA/ris_qam_backend/README.md)记录RTL结构、上传顺序、寄存器、容量及时序约束；[QPR1说明](FPGA/ris_qam_backend/QPR1.md)记录独立前缀协议。QAM与回传工程分别导出到 `export_qam/` 和 `export_uplink/`，Flash启动包按日期保存在 `export_flash/`。
+
+QAM构建（从仓库根目录执行）：
+
+```bash
+cd FPGA/ris_qam_backend
+bash scripts/build_qam.sh
+bash scripts/build_firmware.sh
+```
+
+带PL Ethernet回传功能的构建使用独立工作区与BSP（同样从仓库根目录执行）：
+
+```bash
+cd FPGA/ris_qam_backend
+bash scripts/build_uplink.sh
+bash scripts/build_uplink_firmware.sh
+```
+
+两组命令均只构建，不自动下载或烧写。BIT、XSA、ELF、PS初始化文件和BSP应按对应manifest成套使用。码本和正式发送数据由控制台运行时上传。
+
+**版本库与本地产物：** `.gitignore` 忽略部分Vivado/Vitis生成目录及 `*.bit`、`*.elf`、`*.bin` 等文件。本机导出目录或报告中提到的启动包、采样文件不一定包含在Git检出中，使用前需核对实际文件与SHA256清单；缺失的构建产物需由匹配源码和工具链重新生成。
+
+## 验证记录与实板状态
+
+以下是已保存的历史验收事件，不代表所有收发模式均已完成射频验收。
+
+| 范围 | 仓库中的记录 |
+| --- | --- |
+| QAM1与64QAM历史Flash | 分别完成烧写、两次完整读回及断电启动，见[QAM1报告](FPGA/ris_qam_backend/reports/flash/FLASH_REPORT.md)和[64QAM报告](FPGA/ris_qam_backend/reports/flash_qam64_20261105/FLASH_REPORT.md)。 |
+| QPR1，2026-11-10 | 镜像写入及程序内置比较通过，该次未执行额外独立读回和断电网络验收，见[烧写记录](FPGA/ris_qam_backend/reports/flash_qpr1_20261110/FLASH_REPORT.md)。 |
+| PL Ethernet回传，2026-11-13 | 发端J18/SGMII千兆链路、18/1024字节回传、CRC与来源拒绝检查通过；对端为Linux网卡模拟收端，见[JTAG实板记录](FPGA/ris_qam_backend/reports/pl_eth_sgmii_20261113/board_test/result.json)。 |
+| 回传镜像Flash，2026-11-13 | 烧写、直接全字节比较、QSPI冷启动与网络状态检查通过，未执行独立 `program_flash verify`；记录明确未做真实双板及射频测试，见[烧写及冷启动记录](FPGA/ris_qam_backend/reports/flash_uplink_20261113/hardware_programming.json)。 |
+| 演示模式与延时前导码 | 上位机、Tk/TCP/C模型及数字波形验证范围分别见[演示验证](RIS_CTRL/ris_control_ui_v2/reports/demo_mode/validation.md)和[延时前导码验证](RIS_CTRL/ris_control_ui_v2/reports/preamble_delay_validation.md)。 |
+
+发端数字仿真与回传离线测试可从 `FPGA/ris_qam_backend` 运行：
+
+```bash
+bash tests/run_sim.sh icarus
+bash tests/run_qam64_sim.sh
+bash tests/run_prefix_sim.sh
+python3 -B tests/run_uplink_tests.py
+python3 -B tests/run_pl_eth_board_tests.py
+python3 -B tests/run_uplink_bsp_tests.py
+```
+
+脚本需要各自对应的本地仿真器、C编译器或Xilinx工具链。上位机测试在 `RIS_CTRL/ris_control_ui_v2/tests/`；独立收端测试在其 `zynq/zc706/fmcomms3_rx/tests/`。含Tk窗口的测试需要可用图形显示。历史报告中的“通过”仅对应报告列出的配置和范围。
+
+## 实验配置与硬件资料
+
+- `matlab/CONFIG/` 保存统一发送预设，包括256QAM 10K/20K、PWM与三用户配置，可用于演示预设加载；具体频率和表数据以JSON内容为准。
+- `matlab/PRE_10.txt`、`PRE_4.txt` 保存前导码MT表，`MT_3users_60symbols.txt`、`mt_test*.txt` 保存实验MT序列。目录名 `matlab` 下的这些文件也供控制台使用。
+- `single_user_image23.json` 为单用户接收配置；发送预设、接收参数、FPC映射与码本各有独立格式，按相应功能入口加载。
+- `QAM_RULES/` 保存不同阶数和slice数的原始码本与校验清单；FPC接线映射单独位于主控制台 `mappings/`。
+- [分区调制论文](PAPERS/ris_partition_modulation/README.md)附来源、版本及文件校验值。
+- `fmc_drive_board/` 保存嘉立创EDA工程、备份、核对脚本和设计说明，见[外部12V电源](fmc_drive_board/EXT_12V_design.md)与[RIS 1.5V电源](fmc_drive_board/RIS_1V5_design.md)。
+
+各 `reports/` 目录用于追溯构建、仿真、烧写与采集验证；第三方代码的许可及来源随代码保留。历史日志和部分副本说明中的绝对路径表示当时的环境，实际启动以本页入口和当前脚本为准。
